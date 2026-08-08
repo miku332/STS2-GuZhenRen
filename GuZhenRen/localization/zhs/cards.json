@@ -68,6 +68,8 @@
     "GU_ZHEN_REN_CARD_ZHUI_NIAN.selectionScreenPrompt":  "选择1张牌打出并消耗",
     "GU_ZHEN_REN_CARD_PAI_NAN_GU.title":  "排难蛊",
     "GU_ZHEN_REN_CARD_PAI_NAN_GU.description":  "抽到状态牌时，将其消耗并抽{PaiNanPower:diff()}张牌。",
+    "GU_ZHEN_REN_CARD_LE_SHAN_LE_SHUI_GU.title":  "乐山乐水蛊",
+    "GU_ZHEN_REN_CARD_LE_SHAN_LE_SHUI_GU.description":  "获得{YiPower:diff()}层意。本场战斗中获得念时，将其阻止。",
     "GU_ZHEN_REN_CARD_DING_LI.title":  "鼎力",
     "GU_ZHEN_REN_CARD_DING_LI.description":  "获得{Block:diff()}点格挡。格挡值受{StrengthMultiplier}倍力量加成。",
     "GU_ZHEN_REN_CARD_SHI_ZHEN.title":  "时针",

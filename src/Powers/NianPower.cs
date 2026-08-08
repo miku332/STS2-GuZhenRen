@@ -33,6 +33,11 @@ public sealed class NianPower : ModPowerTemplate
         Creature? applier,
         CardModel? cardSource)
     {
+        if (await TryBlockByNianTouShouZu())
+        {
+            return;
+        }
+
         if (Amount > 0 && Owner.Player is not null)
         {
             await ResolveThresholds(
@@ -49,6 +54,11 @@ public sealed class NianPower : ModPowerTemplate
         Creature? applier,
         CardModel? cardSource)
     {
+        if (power == this && amount > 0 && await TryBlockByNianTouShouZu())
+        {
+            return;
+        }
+
         if (power == this && amount > 0 && Owner.Player is not null)
         {
             await ResolveThresholds(
@@ -56,6 +66,20 @@ public sealed class NianPower : ModPowerTemplate
                 applier ?? Owner,
                 cardSource);
         }
+    }
+
+    private async Task<bool> TryBlockByNianTouShouZu()
+    {
+        var blocker = Owner.GetPower<NianTouShouZuPower>();
+        if (blocker is null || Amount <= 0)
+        {
+            return false;
+        }
+
+        blocker.FlashBlocked();
+        SetAmount(0, false);
+        await PowerCmd.Remove(this);
+        return true;
     }
 
     private async Task ResolveThresholds(
