@@ -68,5 +68,9 @@
     "GU_ZHEN_REN_POWER_TUN_HUO_POWER.title":  "吞火",
     "GU_ZHEN_REN_POWER_TUN_HUO_POWER.description":  "灼伤不再对你造成伤害。你消耗灼伤时，将{Amount}张火势加入手牌。",
     "GU_ZHEN_REN_POWER_YANG_MANG_BEI_HUO_YI_POWER.title":  "阳莽背火衣",
-    "GU_ZHEN_REN_POWER_YANG_MANG_BEI_HUO_YI_POWER.description":  "本回合每次受到攻击时，对攻击者施加1层焚烧。剩余{Amount}次。"
+    "GU_ZHEN_REN_POWER_YANG_MANG_BEI_HUO_YI_POWER.description":  "本回合每次受到攻击时，对攻击者施加1层焚烧。剩余{Amount}次。",
+    "GU_ZHEN_REN_POWER_ZHUI_MING_HUO_POWER.title":  "追命火",
+    "GU_ZHEN_REN_POWER_ZHUI_MING_HUO_POWER.description":  "回合开始时，给予5x{Amount}层焚烧。场上存在追命火时，敌人攻击后获得1层追命火。",
+    "GU_ZHEN_REN_POWER_FEN_SHEN_POWER.title":  "焚身",
+    "GU_ZHEN_REN_POWER_FEN_SHEN_POWER.description":  "回合开始时，获得{Amount}点能量，并将{Amount}张灼伤加入手牌。"
 }

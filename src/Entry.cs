@@ -6,6 +6,7 @@ using STS2RitsuLib.Interop;
 using GuZhenRen.Cards;
 using STS2RitsuLib.Patching.Core;
 using GuZhenRen.Patches;
+using GuZhenRen.Powers;
 
 namespace GuZhenRen;
 
@@ -72,6 +73,9 @@ public static class Entry
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CombatEndedEvent>(
                 static _ => XueKuangGu.ClearCombatState(),
+                replayCurrentState: false));
+            _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<AttackEndedEvent>(
+                static evt => ZhuiMingHuoPower.AfterAttackEnded(evt),
                 replayCurrentState: false));
         }
 
