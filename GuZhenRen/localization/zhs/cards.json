@@ -147,6 +147,8 @@
     "GU_ZHEN_REN_CARD_BAI_XIANG_YUAN_LI_GU.description":  "造成{Damage:diff()}点伤害。\\n获得{StrengthPower:diff()}点[gold]力量[/gold]。\\n将1张[gold]白象虚影[/gold]加入手牌。",
     "GU_ZHEN_REN_CARD_BAI_XIANG_XU_YING.title":  "白象虚影",
     "GU_ZHEN_REN_CARD_BAI_XIANG_XU_YING.description":  "{Chance:diff()}%[gold]概率[/gold]触发：\\n造成{Damage:diff()}点伤害。\\n获得{StrengthPower:diff()}点[gold]力量[/gold]。",
+    "GU_ZHEN_REN_CARD_ZHAN_GU_CHE_LUN.title":  "战骨车轮",
+    "GU_ZHEN_REN_CARD_ZHAN_GU_CHE_LUN.description":  "对所有敌人造成{Damage:diff()}点伤害{Times:diff()}次。",
     "GU_ZHEN_REN_CARD_SHI_GUI_FU_LI_GU.title":  "石龟负力蛊",
     "GU_ZHEN_REN_CARD_SHI_GUI_FU_LI_GU.description":  "获得{Block:diff()}点格挡。\\n将1张[gold]龟力虚影[/gold]加入手牌。",
     "GU_ZHEN_REN_CARD_GUI_LI_XU_YING.title":  "龟力虚影",
