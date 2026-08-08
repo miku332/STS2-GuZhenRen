@@ -66,5 +66,7 @@
     "GU_ZHEN_REN_POWER_HUO_MAO_SAN_ZHANG_POWER.title":  "火冒三丈",
     "GU_ZHEN_REN_POWER_HUO_MAO_SAN_ZHANG_POWER.description":  "你给予焚烧时，若层数小于3，将其提高到3。",
     "GU_ZHEN_REN_POWER_TUN_HUO_POWER.title":  "吞火",
-    "GU_ZHEN_REN_POWER_TUN_HUO_POWER.description":  "灼伤不再对你造成伤害。你消耗灼伤时，将{Amount}张火势加入手牌。"
+    "GU_ZHEN_REN_POWER_TUN_HUO_POWER.description":  "灼伤不再对你造成伤害。你消耗灼伤时，将{Amount}张火势加入手牌。",
+    "GU_ZHEN_REN_POWER_YANG_MANG_BEI_HUO_YI_POWER.title":  "阳莽背火衣",
+    "GU_ZHEN_REN_POWER_YANG_MANG_BEI_HUO_YI_POWER.description":  "本回合每次受到攻击时，对攻击者施加1层焚烧。剩余{Amount}次。"
 }
