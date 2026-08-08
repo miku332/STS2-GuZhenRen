@@ -21,6 +21,8 @@
     "GU_ZHEN_REN_POWER_ZHUAN_YI_POWER.description":  "念或意转化时，获得{Amount}点格挡。",
     "GU_ZHEN_REN_POWER_ZHI_HUI_POWER.title":  "智慧",
     "GU_ZHEN_REN_POWER_ZHI_HUI_POWER.description":  "回合开始时，获得{Amount}层念。",
+    "GU_ZHEN_REN_POWER_YI_XIN_ER_YONG_POWER.title":  "一心二用",
+    "GU_ZHEN_REN_POWER_YI_XIN_ER_YONG_POWER.description":  "本回合接下来{Amount}次打出牌时，随机免费打出1张手牌。",
     "GU_ZHEN_REN_POWER_WAN_XING_FEI_YING_POWER.title":  "万星飞萤",
     "GU_ZHEN_REN_POWER_WAN_XING_FEI_YING_POWER.description":  "每打出1张牌，获得{Amount}层念。",
     "GU_ZHEN_REN_POWER_PAI_NAN_POWER.title":  "排难",

@@ -61,6 +61,8 @@
     "GU_ZHEN_REN_CARD_YI_NIAN_GU.title":  "忆念蛊",
     "GU_ZHEN_REN_CARD_YI_NIAN_GU.description":  "从弃牌堆选择{Cards:diff()}张牌放到抽牌堆顶。获得{NianPower:diff()}层念。",
     "GU_ZHEN_REN_CARD_YI_NIAN_GU.selectionScreenPrompt":  "选择牌放到抽牌堆顶",
+    "GU_ZHEN_REN_CARD_YI_XIN_ER_YONG_GU.title":  "一心二用蛊",
+    "GU_ZHEN_REN_CARD_YI_XIN_ER_YONG_GU.description":  "获得{NianPower:diff()}层念。本回合接下来{YiXinErYongPower:diff()}次打出牌时，随机免费打出1张手牌。",
     "GU_ZHEN_REN_CARD_JIN_GANG_NIAN.title":  "金刚念",
     "GU_ZHEN_REN_CARD_JIN_GANG_NIAN.description":  "对目标造成{CalculatedDamage:diff()}点伤害X次。本回合每获得过1层念，此牌伤害额外增加1点。升级后额外攻击1次。",
     "GU_ZHEN_REN_CARD_ZHUI_NIAN.title":  "追念",
