@@ -213,6 +213,8 @@
     "GU_ZHEN_REN_CARD_BAI_LI_XIAN_YUAN.description":  "获得{Energy:diff()}点能量。",
     "GU_ZHEN_REN_CARD_HUANG_XING_XIAN_YUAN.title":  "黄杏仙元",
     "GU_ZHEN_REN_CARD_HUANG_XING_XIAN_YUAN.description":  "获得{Energy:diff()}点能量。\n抽牌直到手牌上限。",
+    "GU_ZHEN_REN_CARD_TIAN_YUAN_BAO_LIAN.title":  "天元宝莲",
+    "GU_ZHEN_REN_CARD_TIAN_YUAN_BAO_LIAN.description":  "获得{Energy:diff()}点能量。\n本场战斗中，从此牌获得的能量减少1。",
     "GU_ZHEN_REN_CARD_TUN_HUO_GU.title":  "吞火蛊",
     "GU_ZHEN_REN_CARD_TUN_HUO_GU.description":  "获得{TunHuoPower:diff()}层吞火。{IfUpgraded:show:\\n额外将{Cards:diff()}张火势加入手牌。|}"
 }
