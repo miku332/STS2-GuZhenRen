@@ -62,5 +62,7 @@
     "GU_ZHEN_REN_POWER_YAN_TONG_POWER.title":  "炎瞳",
     "GU_ZHEN_REN_POWER_YAN_TONG_POWER.description":  "本回合每当你打出以敌人为目标的牌，给予目标{Amount}层焚烧。触发超过4次后，每次触发将1张灼伤加入手牌。",
     "GU_ZHEN_REN_POWER_XING_HUO_LIAO_YUAN_POWER.title":  "星火燎原",
-    "GU_ZHEN_REN_POWER_XING_HUO_LIAO_YUAN_POWER.description":  "获得焚烧时，将新增的焚烧层数给予其他所有敌人。"
+    "GU_ZHEN_REN_POWER_XING_HUO_LIAO_YUAN_POWER.description":  "获得焚烧时，将新增的焚烧层数给予其他所有敌人。",
+    "GU_ZHEN_REN_POWER_HUO_MAO_SAN_ZHANG_POWER.title":  "火冒三丈",
+    "GU_ZHEN_REN_POWER_HUO_MAO_SAN_ZHANG_POWER.description":  "你给予焚烧时，若层数小于3，将其提高到3。"
 }

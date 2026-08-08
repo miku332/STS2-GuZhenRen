@@ -38,6 +38,17 @@ public sealed class FenShaoPower : ModPowerTemplate
         var state = GetInternalData<BurnState>();
         state.SkipNextPositiveAmountChange = true;
 
+        var adjustedAmount = HuoMaoSanZhangPower.GetAdjustedBurnAmount(applier, Amount);
+        if (adjustedAmount > Amount)
+        {
+            await PowerCmd.ModifyAmount(
+                new ThrowingPlayerChoiceContext(),
+                this,
+                adjustedAmount - Amount,
+                applier,
+                cardSource);
+        }
+
         await TriggerBurningDamage(
             new ThrowingPlayerChoiceContext(),
             applier,
@@ -68,10 +79,28 @@ public sealed class FenShaoPower : ModPowerTemplate
             return;
         }
 
+        var effectiveAppliedAmount = amount;
+        if (amount > 0)
+        {
+            var adjustedAmount = HuoMaoSanZhangPower.GetAdjustedBurnAmount(applier, amount);
+            var topUp = adjustedAmount - amount;
+            if (topUp > 0)
+            {
+                state.SkipNextPositiveAmountChange = true;
+                await PowerCmd.ModifyAmount(
+                    choiceContext,
+                    this,
+                    topUp,
+                    applier,
+                    cardSource);
+                effectiveAppliedAmount = adjustedAmount;
+            }
+        }
+
         await TriggerBurningDamage(choiceContext, applier, cardSource);
         if (amount > 0)
         {
-            await TriggerXingHuoLiaoYuan(choiceContext, amount, applier, cardSource);
+            await TriggerXingHuoLiaoYuan(choiceContext, effectiveAppliedAmount, applier, cardSource);
         }
     }
 
