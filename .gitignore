@@ -1,0 +1,17 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# .NET build outputs may contain local absolute paths
+bin/
+obj/
+
+# IDE/editor local state
+.vs/
+.vscode/
+.idea/
+
+# Local logs and temporary exports
+*.log
+*.tmp
+*.pdb

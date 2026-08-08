@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccfy6e2emjf2n"]
+
+[ext_resource type="Texture2D" uid="uid://dw4i7s82oqul6" path="res://GuZhenRen/images/characters/FangYuan/Idle.png" id="1"]
+
+[node name="FangYuanVisuals" type="Node2D"]
+
+[node name="Visuals" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-3.5799973, -241.42003)
+scale = Vector2(0.8967969, 0.90460956)
+texture = ExtResource("1")
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -112.0
+offset_top = -310.0
+offset_right = 115.0
+offset_bottom = -7.0
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -150)
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -88)
+
+[node name="TalkPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(62, -196)

@@ -1,0 +1,61 @@
+﻿<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>true</ImplicitUsings>
+    <LangVersion>13.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+
+    <AssemblyName>GuZhenRen</AssemblyName>
+    <RootNamespace>GuZhenRen</RootNamespace>
+
+    <ModId>GuZhenRen</ModId>
+    <Sts2Dir Condition="'$(Sts2Dir)' == ''">$(STS2_DIR)</Sts2Dir>
+    <Sts2Dir Condition="'$(Sts2Dir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2</Sts2Dir>
+    <Sts2DataDir>$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
+    <ModDeployDir>$(Sts2Dir)\mods\$(ModId)</ModDeployDir>
+    <RitsuLibDeployDir>$(Sts2Dir)\mods\STS2-RitsuLib</RitsuLibDeployDir>
+    <GodotExe Condition="'$(GodotExe)' == ''">$(GODOT_EXE)</GodotExe>
+    <GodotExe Condition="'$(GodotExe)' == ''">godot</GodotExe>
+    <GodotProjectPath>$(MSBuildProjectDirectory)</GodotProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.5.10" />
+
+    <Reference Include="sts2">
+      <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="0Harmony">
+      <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="SmartFormat">
+      <HintPath>$(Sts2DataDir)\SmartFormat.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="Copy Mod" AfterTargets="Build">
+    <Message Text="Copying Gu Zhen Ren mod to Slay the Spire 2..." Importance="high" />
+    <MakeDir Directories="$(ModDeployDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModDeployDir)" />
+    <Copy SourceFiles="$(TargetDir)$(TargetName).pdb"
+          DestinationFolder="$(ModDeployDir)"
+          Condition="Exists('$(TargetDir)$(TargetName).pdb')" />
+    <Copy SourceFiles="$(ProjectDir)mod_manifest.json"
+          DestinationFolder="$(ModDeployDir)" />
+  </Target>
+
+  <Target Name="Export Pck"
+          AfterTargets="Build"
+          Condition="'$(ExportPck)' == 'true'">
+    <Message Text="Exporting Gu Zhen Ren PCK..." Importance="high" />
+    <Exec IgnoreStandardErrorWarningFormat="true"
+          Command="&quot;$(GodotExe)&quot; --headless --path &quot;$(GodotProjectPath)&quot; --export-pack &quot;Windows Desktop&quot; &quot;$(ModDeployDir)\$(ModId).pck&quot;" />
+  </Target>
+</Project>

@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnnwu8bvgrxh7"]
+
+[ext_resource type="Texture2D" uid="uid://cle1gcdfhoeql" path="res://GuZhenRen/images/characters/FangYuan/Portrait.png" id="1"]
+
+[node name="FangYuanBg" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Bg" type="Sprite2D" parent="."]
+position = Vector2(1355.2749, 582.07495)
+scale = Vector2(0.63265336, 0.6549124)
+texture = ExtResource("1")
