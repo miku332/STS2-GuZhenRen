@@ -191,7 +191,7 @@
     "GU_ZHEN_REN_CARD_HUO_SHI.description":  "给予目标{FenShaoPower:diff()}层焚烧。",
     "GU_ZHEN_REN_CARD_HUO_GU.title":  "火蛊",
     "GU_ZHEN_REN_CARD_HUO_GU.description":  "消耗至多{Cards:diff()}张手牌。\\n每消耗1张牌，给予目标{FenShaoPower:diff()}层焚烧1次。{IfUpgraded:show:|\\n虚无。}",
-    "GU_ZHEN_REN_CARD_HUO_GU.selectionScreenPrompt":  "选择至多{Amount}张手牌消耗",
+    "GU_ZHEN_REN_CARD_HUO_GU.selectionScreenPrompt":  "选择至多3张手牌消耗",
     "GU_ZHEN_REN_CARD_HUO_YUAN_GU.title":  "火元蛊",
     "GU_ZHEN_REN_CARD_HUO_YUAN_GU.description":  "消耗1张手牌。\n将{Cards:diff()}张火势加入手牌。\n升级后改为加入火势+。",
     "GU_ZHEN_REN_CARD_HUO_YUAN_GU.selectionScreenPrompt":  "选择1张手牌消耗",
