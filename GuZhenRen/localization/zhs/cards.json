@@ -48,6 +48,8 @@
     "GU_ZHEN_REN_CARD_ZHUAN_YI_GU.description":  "念或意转化时，获得{ZhuanYiPower:diff()}点格挡。",
     "GU_ZHEN_REN_CARD_ZHI_HUI_GU.title":  "智慧蛊",
     "GU_ZHEN_REN_CARD_ZHI_HUI_GU.description":  "回合开始时，获得{ZhiHuiPower:diff()}层念。",
+    "GU_ZHEN_REN_CARD_WAN_XING_FEI_YING.title":  "万星飞萤",
+    "GU_ZHEN_REN_CARD_WAN_XING_FEI_YING.description":  "你每打出1张牌，获得{WanXingFeiYingPower:diff()}层念。",
     "GU_ZHEN_REN_CARD_ZHAN_NIAN_GU.title":  "战念蛊",
     "GU_ZHEN_REN_CARD_ZHAN_NIAN_GU.description":  "造成{Damage:diff()}点伤害。若你打出的上一张牌是攻击牌，获得{NianPower:diff()}层念。",
     "GU_ZHEN_REN_CARD_XING_NIAN_GU.title":  "星念蛊",
