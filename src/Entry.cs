@@ -4,6 +4,8 @@ using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
 using GuZhenRen.Cards;
+using STS2RitsuLib.Patching.Core;
+using GuZhenRen.Patches;
 
 namespace GuZhenRen;
 
@@ -22,6 +24,9 @@ public static class Entry
 
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        var tunHuoPatcher = RitsuLibFramework.CreatePatcher(ModId, "tun-huo");
+        tunHuoPatcher.RegisterPatch<TunHuoPatch>();
+        tunHuoPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(

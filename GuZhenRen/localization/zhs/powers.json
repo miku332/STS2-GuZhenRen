@@ -64,5 +64,7 @@
     "GU_ZHEN_REN_POWER_XING_HUO_LIAO_YUAN_POWER.title":  "星火燎原",
     "GU_ZHEN_REN_POWER_XING_HUO_LIAO_YUAN_POWER.description":  "获得焚烧时，将新增的焚烧层数给予其他所有敌人。",
     "GU_ZHEN_REN_POWER_HUO_MAO_SAN_ZHANG_POWER.title":  "火冒三丈",
-    "GU_ZHEN_REN_POWER_HUO_MAO_SAN_ZHANG_POWER.description":  "你给予焚烧时，若层数小于3，将其提高到3。"
+    "GU_ZHEN_REN_POWER_HUO_MAO_SAN_ZHANG_POWER.description":  "你给予焚烧时，若层数小于3，将其提高到3。",
+    "GU_ZHEN_REN_POWER_TUN_HUO_POWER.title":  "吞火",
+    "GU_ZHEN_REN_POWER_TUN_HUO_POWER.description":  "灼伤不再对你造成伤害。你消耗灼伤时，将{Amount}张火势加入手牌。"
 }

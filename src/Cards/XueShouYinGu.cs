@@ -87,12 +87,7 @@ public sealed class XueShouYinGu : GuZhenRenCardTemplate
             return;
         }
 
-        await CardPileCmd.Add(
-            selected,
-            PileType.Exhaust,
-            CardPilePosition.Top,
-            null,
-            false);
+        await CardCmd.Exhaust(choiceContext, selected);
     }
 
     protected override void OnUpgrade()
