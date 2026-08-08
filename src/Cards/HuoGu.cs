@@ -79,5 +79,6 @@ public sealed class HuoGu : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
+        RemoveKeyword(CardKeyword.Ethereal);
     }
 }
