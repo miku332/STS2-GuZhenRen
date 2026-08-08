@@ -38,6 +38,8 @@ public static class Entry
                         shiZhen.OnCardDrawn();
                     }
 
+                    PaiNanPower.TryHandleCardDrawn(evt.Card);
+
                     if (evt.FromHandDraw)
                     {
                         XueKuangGu.RefreshCachedAdjacentCardsInHand(evt.Card.Owner);
