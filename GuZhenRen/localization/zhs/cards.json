@@ -29,6 +29,8 @@
     "GU_ZHEN_REN_CARD_SHAN_JIAN_GU.description":  "造成{Damage:diff()}点伤害。抽{Cards:diff()}张牌，然后弃掉其中所有非攻击牌。",
     "GU_ZHEN_REN_CARD_JIAN_LANG_SAN_DIE.title":  "剑浪三叠",
     "GU_ZHEN_REN_CARD_JIAN_LANG_SAN_DIE.description":  "重复3次：对所有敌人造成{Damage:diff()}点伤害，并施加{JianHenPower:diff()}层剑痕。",
+    "GU_ZHEN_REN_CARD_WU_ZHI_QUAN_XIN_JIAN.title":  "五指拳心剑",
+    "GU_ZHEN_REN_CARD_WU_ZHI_QUAN_XIN_JIAN.description":  "造成{Damage:diff()}点伤害。\n本场战斗中，此牌造成的基础伤害变为{Multiplier:diff()}倍。",
     "GU_ZHEN_REN_CARD_JIANG_HE_RI_XIA_GU.title":  "江河日下蛊",
     "GU_ZHEN_REN_CARD_JIANG_HE_RI_XIA_GU.description":  "根据手牌中的光道牌数量，对所有敌人重复攻击。",
     "GU_ZHEN_REN_CARD_LANG_JIAN.title":  "浪剑",
