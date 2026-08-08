@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -17,10 +18,6 @@ namespace GuZhenRen.Cards;
 [RegisterCard(typeof(GuZhenRenCardPool))]
 public sealed class YuHuo : GuZhenRenCardTemplate
 {
-    private static ICombatState? s_trackedCombatState;
-    private static int s_trackedTurnNumber = -1;
-    private static readonly HashSet<CardModel> s_exhaustedCardsThisTurn = [];
-
     public override int Rank => IsUpgraded ? 7 : 6;
 
     public override CardAssetProfile AssetProfile => new(
@@ -69,21 +66,6 @@ public sealed class YuHuo : GuZhenRenCardTemplate
         }
     }
 
-    public override Task AfterCardExhausted(
-        PlayerChoiceContext choiceContext,
-        CardModel card,
-        bool causedByEthereal)
-    {
-        ResetTrackerIfNeeded();
-
-        if (card.Owner == Owner)
-        {
-            s_exhaustedCardsThisTurn.Add(card);
-        }
-
-        return Task.CompletedTask;
-    }
-
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
@@ -91,20 +73,10 @@ public sealed class YuHuo : GuZhenRenCardTemplate
 
     private int CountExhaustedThisTurn()
     {
-        ResetTrackerIfNeeded();
-        return s_exhaustedCardsThisTurn.Count;
-    }
-
-    private void ResetTrackerIfNeeded()
-    {
-        var combatState = CombatState;
-        var turnNumber = Owner.PlayerCombatState?.TurnNumber ?? -1;
-        if (!ReferenceEquals(s_trackedCombatState, combatState)
-            || s_trackedTurnNumber != turnNumber)
-        {
-            s_trackedCombatState = combatState;
-            s_trackedTurnNumber = turnNumber;
-            s_exhaustedCardsThisTurn.Clear();
-        }
+        return CombatManager.Instance.History.Entries
+            .OfType<CardExhaustedEntry>()
+            .Count(entry =>
+                entry.HappenedThisTurn(CombatState)
+                && entry.Card.Owner == Owner);
     }
 }
