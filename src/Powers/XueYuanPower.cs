@@ -32,7 +32,7 @@ public sealed class XueYuanPower : ModPowerTemplate
     {
         if (target != Owner
             || Owner.Player is null
-            || result.TotalDamage <= 0)
+            || result.UnblockedDamage <= 0)
         {
             return;
         }
@@ -63,7 +63,7 @@ public sealed class XueYuanPower : ModPowerTemplate
             await CreatureCmd.Damage(
                 choiceContext,
                 entry.Enemy,
-                result.TotalDamage * entry.Mark!.Amount,
+                result.UnblockedDamage * entry.Mark!.Amount,
                 ValueProp.Unblockable | ValueProp.Unpowered,
                 Owner,
                 null);
