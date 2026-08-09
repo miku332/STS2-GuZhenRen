@@ -94,5 +94,9 @@
     "GU_ZHEN_REN_POWER_SHE_XIN_DRAW_REDUCTION_POWER.title": "摄心",
     "GU_ZHEN_REN_POWER_SHE_XIN_DRAW_REDUCTION_POWER.description": "下回合少抽{Amount}张牌。",
     "GU_ZHEN_REN_POWER_WU_JIN_XUAN_GUANG_QI_POWER.title": "五禁玄光气",
-    "GU_ZHEN_REN_POWER_WU_JIN_XUAN_GUANG_QI_POWER.description": "缓慢每增长1次，本轮失去{Amount}点力量。"
+    "GU_ZHEN_REN_POWER_WU_JIN_XUAN_GUANG_QI_POWER.description": "缓慢每增长1次，本轮失去{Amount}点力量。",
+    "GU_ZHEN_REN_POWER_HAO_YOU_POWER.title": "好友",
+    "GU_ZHEN_REN_POWER_HAO_YOU_POWER.description": "该敌人的攻击伤害减半。你与该敌人互相造成攻击伤害时，减少1层。",
+    "GU_ZHEN_REN_POWER_SONG_YOU_FADING_POWER.title": "消散",
+    "GU_ZHEN_REN_POWER_SONG_YOU_FADING_POWER.description": "将在{Amount}回合后死亡。消散期间，攻击伤害降低至0。"
 }

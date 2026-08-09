@@ -261,5 +261,9 @@
     "GU_ZHEN_REN_CARD_WU_JIN_XUAN_GUANG_QI.title": "五禁玄光气",
     "GU_ZHEN_REN_CARD_WU_JIN_XUAN_GUANG_QI.description": "给予所有敌人缓慢。\\n此后敌人的缓慢每增长1次，本轮失去1点力量。",
     "GU_ZHEN_REN_CARD_GUANG_YIN_FEI_REN.title": "光阴飞刃",
-    "GU_ZHEN_REN_CARD_GUANG_YIN_FEI_REN.description": "抹除一名敌人的存在。\\n还能打出{RemainingUses}次；次数耗尽后，将此牌从你的牌组中移除。"
+    "GU_ZHEN_REN_CARD_GUANG_YIN_FEI_REN.description": "抹除一名敌人的存在。\\n还能打出{RemainingUses}次；次数耗尽后，将此牌从你的牌组中移除。",
+    "GU_ZHEN_REN_CARD_SONG_YOU_FENG.title": "送友风",
+    "GU_ZHEN_REN_CARD_SONG_YOU_FENG.description": "给予目标1层好友。\\n将1张[gold]送友风·送别[/gold]加入弃牌堆；若目标已经拥有好友，改为加入手牌。",
+    "GU_ZHEN_REN_CARD_SONG_YOU_FENG_SONG_BIE.title": "送友风·送别",
+    "GU_ZHEN_REN_CARD_SONG_YOU_FENG_SONG_BIE.description": "若目标拥有好友，给予其{SongYouFadingPower:diff()}层消散并移除好友。"
 }
