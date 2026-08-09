@@ -8,7 +8,9 @@ using GuZhenRen.Cards;
 using STS2RitsuLib.Patching.Core;
 using GuZhenRen.Patches;
 using GuZhenRen.Powers;
+using GuZhenRen.Systems;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Helpers;
 
 namespace GuZhenRen;
 
@@ -143,6 +145,10 @@ public static class Entry
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CreatureDiedEvent>(
                 static evt => ShaGu.AfterCreatureDied(evt),
+                replayCurrentState: false));
+            _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<RoomEnteredEvent>(
+                static evt => TaskHelper.RunSafely(
+                    BenMingGuSelectionCoordinator.TrySelect(evt.Room)),
                 replayCurrentState: false));
         }
 
