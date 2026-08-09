@@ -274,5 +274,7 @@
     "GU_ZHEN_REN_CARD_BIAN_TONG.title": "变通",
     "GU_ZHEN_REN_CARD_BIAN_TONG.description": "移除所有负面状态。\\n每移除1种，获得{BianHuaDaoDaoHenPower:diff()}层变化道道痕。",
     "GU_ZHEN_REN_CARD_WAN_WU_DA_TONG_BIAN.title": "万物大同变",
-    "GU_ZHEN_REN_CARD_WAN_WU_DA_TONG_BIAN.description": "本场战斗中，你的所有状态将转化为同等层数的变化道道痕。"
+    "GU_ZHEN_REN_CARD_WAN_WU_DA_TONG_BIAN.description": "本场战斗中，你的所有状态将转化为同等层数的变化道道痕。",
+    "GU_ZHEN_REN_CARD_BIAN_XING.title": "变形",
+    "GU_ZHEN_REN_CARD_BIAN_XING.description": "获得{BianHuaDaoDaoHenPower:diff()}层变化道道痕。"
 }
