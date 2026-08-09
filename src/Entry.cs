@@ -1,6 +1,7 @@
 using System.Reflection;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
 using GuZhenRen.Cards;
@@ -39,6 +40,11 @@ public static class Entry
                         shiZhen.OnCardDrawn();
                     }
 
+                    if (evt.Card is DiMai diMai)
+                    {
+                        diMai.OnCardDrawn();
+                    }
+
                     PaiNanPower.TryHandleCardDrawn(evt.Card);
 
                     if (evt.FromHandDraw)
@@ -49,9 +55,27 @@ public static class Entry
                     XueKuangGu.TryAutoPlayBloodcrazedCard(evt.Card);
                 },
                 replayCurrentState: false));
+            _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<ShuffledEvent>(
+                static evt =>
+                {
+                    foreach (var card in PileType.Draw.GetPile(evt.Shuffler).Cards.ToList())
+                    {
+                        if (card is DiMai diMai)
+                        {
+                            diMai.KeepAtDrawPileBottom();
+                        }
+                    }
+                },
+                replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardMovedBetweenPilesEvent>(
                 static evt =>
                 {
+                    if (evt.Card.Pile?.Type == PileType.Draw
+                        && evt.Card is DiMai diMai)
+                    {
+                        diMai.KeepAtDrawPileBottom();
+                    }
+
                     if (evt.Card.Pile?.Type == MegaCrit.Sts2.Core.Entities.Cards.PileType.Hand
                         || evt.PreviousPile == MegaCrit.Sts2.Core.Entities.Cards.PileType.Hand)
                     {
@@ -82,7 +106,24 @@ public static class Entry
                 },
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>(
-                static _ => RenRuGu.ResetCombatHistory(),
+                static evt =>
+                {
+                    RenRuGu.ResetCombatHistory();
+
+                    if (evt.CombatState is not null)
+                    {
+                        foreach (var player in evt.CombatState.Players)
+                        {
+                            foreach (var card in PileType.Draw.GetPile(player).Cards.ToList())
+                            {
+                                if (card is DiMai diMai)
+                                {
+                                    diMai.KeepAtDrawPileBottom();
+                                }
+                            }
+                        }
+                    }
+                },
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<SideTurnStartedEvent>(
                 static evt =>

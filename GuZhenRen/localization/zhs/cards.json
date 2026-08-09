@@ -247,5 +247,7 @@
     "GU_ZHEN_REN_CARD_TUN_HUO_GU.title":  "吞火蛊",
     "GU_ZHEN_REN_CARD_TUN_HUO_GU.description":  "获得{TunHuoPower:diff()}层吞火。{IfUpgraded:show:\\n额外将{Cards:diff()}张火势加入手牌。|}",
     "GU_ZHEN_REN_CARD_JIU_YE_SHENG_JI_CAO.title": "九叶生机草",
-    "GU_ZHEN_REN_CARD_JIU_YE_SHENG_JI_CAO.description": "获得1瓶生机叶。"
+    "GU_ZHEN_REN_CARD_JIU_YE_SHENG_JI_CAO.description": "获得1瓶生机叶。",
+    "GU_ZHEN_REN_CARD_DI_MAI.title": "地脉",
+    "GU_ZHEN_REN_CARD_DI_MAI.description": "不能被打出。\\n在抽牌堆中始终位于底部。\\n抽到这张牌时，获得等同于{IfUpgraded:show:手牌与|}弃牌堆牌数的格挡。"
 }
