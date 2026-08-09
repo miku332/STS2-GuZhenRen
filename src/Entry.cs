@@ -141,6 +141,9 @@ public static class Entry
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<AttackEndedEvent>(
                 static evt => ZhuiMingHuoPower.AfterAttackEnded(evt),
                 replayCurrentState: false));
+            _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CreatureDiedEvent>(
+                static evt => ShaGu.AfterCreatureDied(evt),
+                replayCurrentState: false));
         }
 
         Logger.Info("Gu Zhen Ren mod initialized.");

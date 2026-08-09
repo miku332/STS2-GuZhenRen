@@ -118,5 +118,7 @@
     "GU_ZHEN_REN_POWER_MU_DAO_DAO_HEN_POWER.title": "木道道痕",
     "GU_ZHEN_REN_POWER_MU_DAO_DAO_HEN_POWER.description": "每层木道道痕使回复效果提高15%。",
     "GU_ZHEN_REN_POWER_WAN_WU_DA_TONG_BIAN_POWER.title": "万物大同变",
-    "GU_ZHEN_REN_POWER_WAN_WU_DA_TONG_BIAN_POWER.description": "你的所有状态将转化为同等层数的变化道道痕。"
+    "GU_ZHEN_REN_POWER_WAN_WU_DA_TONG_BIAN_POWER.description": "你的所有状态将转化为同等层数的变化道道痕。",
+    "GU_ZHEN_REN_POWER_SHA_DAO_DAO_HEN_POWER.title": "杀道道痕",
+    "GU_ZHEN_REN_POWER_SHA_DAO_DAO_HEN_POWER.description": "回合结束时，每层杀道道痕对所有敌人造成3点伤害。"
 }

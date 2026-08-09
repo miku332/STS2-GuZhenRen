@@ -278,5 +278,7 @@
     "GU_ZHEN_REN_CARD_BIAN_XING.title": "变形",
     "GU_ZHEN_REN_CARD_BIAN_XING.description": "获得{BianHuaDaoDaoHenPower:diff()}层变化道道痕。",
     "GU_ZHEN_REN_CARD_REN_GU.title": "刃蛊",
-    "GU_ZHEN_REN_CARD_REN_GU.description": "从{Choices:diff()}张随机剑道蛊虫中选择1张加入手牌，其本回合耗能为0。\\n三转解锁罕见，四转解锁稀有，六转起生成升级牌。\\n五、七、九转起分别获得1、2、3层剑锋。\\n消耗。"
+    "GU_ZHEN_REN_CARD_REN_GU.description": "从{Choices:diff()}张随机剑道蛊虫中选择1张加入手牌，其本回合耗能为0。\\n三转解锁罕见，四转解锁稀有，六转起生成升级牌。\\n五、七、九转起分别获得1、2、3层剑锋。\\n消耗。",
+    "GU_ZHEN_REN_CARD_SHA_GU.title": "杀蛊",
+    "GU_ZHEN_REN_CARD_SHA_GU.description": "失去{HpLoss:diff()}点生命。\\n造成{Damage:diff()}点伤害。\\n任意非爪牙敌人死亡时，此牌伤害永久增加{DamageGrowth:diff()}点。"
 }

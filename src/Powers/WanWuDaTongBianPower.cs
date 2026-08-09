@@ -229,6 +229,10 @@ public sealed class WanWuDaTongBianPower : ModPowerTemplate
         {
             await PowerCmd.Apply<MuDaoDaoHenPower>(choiceContext, Owner, amount, applier, cardSource);
         }
+        else if (activeDaoHenType == typeof(ShaDaoDaoHenPower))
+        {
+            await PowerCmd.Apply<ShaDaoDaoHenPower>(choiceContext, Owner, amount, applier, cardSource);
+        }
         else
         {
             await PowerCmd.Apply<BianHuaDaoDaoHenPower>(choiceContext, Owner, amount, applier, cardSource);

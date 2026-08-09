@@ -23,6 +23,7 @@ public sealed class BaMianWeiFengGu : GuZhenRenCardTemplate
         GuZhenRenTags.JianDao,
         GuZhenRenTags.LiDao,
         GuZhenRenTags.MuDao,
+        GuZhenRenTags.ShaDao,
         GuZhenRenTags.TuDao,
         GuZhenRenTags.XueDao,
         GuZhenRenTags.YanDao

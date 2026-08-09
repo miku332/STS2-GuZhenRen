@@ -69,6 +69,10 @@ public sealed class BianHuaDaoDaoHenPower : ModPowerTemplate
         {
             await ConvertTo<MuDaoDaoHenPower>(cardPlay.Card);
         }
+        else if (cardPlay.Card.Tags.Contains(GuZhenRenTags.ShaDao))
+        {
+            await ConvertTo<ShaDaoDaoHenPower>(cardPlay.Card);
+        }
     }
 
     private async Task ConvertTo<TPower>(CardModel cardSource)
