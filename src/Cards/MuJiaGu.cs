@@ -10,6 +10,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
 using GuZhenRen.Powers;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -20,6 +21,8 @@ public sealed class MuJiaGu : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/MuJiaGu.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.MuDao];
 
     public override bool GainsBlock => true;
 

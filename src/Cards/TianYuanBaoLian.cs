@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -15,6 +16,8 @@ public sealed class TianYuanBaoLian : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/TianYuanBaoLian.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.MuDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

@@ -245,5 +245,7 @@
     "GU_ZHEN_REN_CARD_TIAN_YUAN_BAO_LIAN.title":  "天元宝莲",
     "GU_ZHEN_REN_CARD_TIAN_YUAN_BAO_LIAN.description":  "获得{Energy:diff()}点能量。\n本场战斗中，从此牌获得的能量减少1。",
     "GU_ZHEN_REN_CARD_TUN_HUO_GU.title":  "吞火蛊",
-    "GU_ZHEN_REN_CARD_TUN_HUO_GU.description":  "获得{TunHuoPower:diff()}层吞火。{IfUpgraded:show:\\n额外将{Cards:diff()}张火势加入手牌。|}"
+    "GU_ZHEN_REN_CARD_TUN_HUO_GU.description":  "获得{TunHuoPower:diff()}层吞火。{IfUpgraded:show:\\n额外将{Cards:diff()}张火势加入手牌。|}",
+    "GU_ZHEN_REN_CARD_JIU_YE_SHENG_JI_CAO.title": "九叶生机草",
+    "GU_ZHEN_REN_CARD_JIU_YE_SHENG_JI_CAO.description": "获得1瓶生机叶。"
 }
