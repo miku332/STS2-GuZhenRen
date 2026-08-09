@@ -33,6 +33,15 @@ public sealed class NianPower : ModPowerTemplate
         Creature? applier,
         CardModel? cardSource)
     {
+        if (await TryConvertByZhiZhang(
+                new ThrowingPlayerChoiceContext(),
+                Amount,
+                applier,
+                cardSource))
+        {
+            return;
+        }
+
         if (await TryBlockByNianTouShouZu())
         {
             return;
@@ -54,18 +63,63 @@ public sealed class NianPower : ModPowerTemplate
         Creature? applier,
         CardModel? cardSource)
     {
+        if (power == this
+            && amount > 0
+            && Owner.GetPower<NianPower>() == this
+            && await TryConvertByZhiZhang(
+                choiceContext,
+                amount,
+                applier,
+                cardSource))
+        {
+            return;
+        }
+
         if (power == this && amount > 0 && await TryBlockByNianTouShouZu())
         {
             return;
         }
 
-        if (power == this && amount > 0 && Owner.Player is not null)
+        if (power == this
+            && amount > 0
+            && Owner.Player is not null
+            && Owner.GetPower<NianPower>() == this)
         {
+            await XingLuoQiBuPower.TriggerBeforeNianGain(Owner, amount);
             await ResolveThresholds(
                 choiceContext,
                 applier ?? Owner,
                 cardSource);
         }
+    }
+
+    private async Task<bool> TryConvertByZhiZhang(
+        PlayerChoiceContext choiceContext,
+        decimal gainedAmount,
+        Creature? applier,
+        CardModel? cardSource)
+    {
+        var converter = Owner.GetPower<ZhiZhangPower>();
+        if (converter is null || gainedAmount <= 0)
+        {
+            return false;
+        }
+
+        converter.FlashConversion();
+        await PowerCmd.Apply<TemporaryHpPower>(
+            choiceContext,
+            Owner,
+            gainedAmount,
+            applier ?? Owner,
+            cardSource);
+
+        if (Owner.GetPower<NianPower>() == this)
+        {
+            SetAmount(0, false);
+            await PowerCmd.Remove(this);
+        }
+
+        return true;
     }
 
     private async Task<bool> TryBlockByNianTouShouZu()
