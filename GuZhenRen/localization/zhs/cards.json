@@ -253,5 +253,7 @@
     "GU_ZHEN_REN_CARD_LEI_GU_DUN_GU.title": "肋骨盾蛊",
     "GU_ZHEN_REN_CARD_LEI_GU_DUN_GU.description": "失去{HpLoss:diff()}点生命。\\n获得{Block:diff()}点格挡。\\n在本回合将你格挡的攻击伤害反弹给攻击者。",
     "GU_ZHEN_REN_CARD_RUI_YI_GU.title": "锐意蛊",
-    "GU_ZHEN_REN_CARD_RUI_YI_GU.description": "获得{JianFengPower:diff()}层剑锋。\\n本场战斗中所有流派的牌均视为剑道。"
+    "GU_ZHEN_REN_CARD_RUI_YI_GU.description": "获得{JianFengPower:diff()}层剑锋。\\n本场战斗中所有流派的牌均视为剑道。",
+    "GU_ZHEN_REN_CARD_HUANG_SHA.title": "黄沙",
+    "GU_ZHEN_REN_CARD_HUANG_SHA.description": "失去格挡时，对所有敌人造成等同于失去格挡值的伤害。"
 }

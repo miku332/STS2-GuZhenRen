@@ -30,6 +30,10 @@ public static class Entry
         var tunHuoPatcher = RitsuLibFramework.CreatePatcher(ModId, "tun-huo");
         tunHuoPatcher.RegisterPatch<TunHuoPatch>();
         tunHuoPatcher.PatchAll();
+        var huaShaPatcher = RitsuLibFramework.CreatePatcher(ModId, "hua-sha");
+        huaShaPatcher.RegisterPatch<HuaShaLoseBlockPatch>();
+        huaShaPatcher.RegisterPatch<HuaShaClearBlockPatch>();
+        huaShaPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(

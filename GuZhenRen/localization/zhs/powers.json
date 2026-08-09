@@ -88,5 +88,7 @@
     "GU_ZHEN_REN_POWER_GU_CI_POWER.title": "骨刺",
     "GU_ZHEN_REN_POWER_GU_CI_POWER.description": "将你格挡的攻击伤害反弹给攻击者。持续{Amount}回合。",
     "GU_ZHEN_REN_POWER_RUI_YI_POWER.title": "锐意",
-    "GU_ZHEN_REN_POWER_RUI_YI_POWER.description": "本场战斗中所有流派的牌均视为剑道。"
+    "GU_ZHEN_REN_POWER_RUI_YI_POWER.description": "本场战斗中所有流派的牌均视为剑道。",
+    "GU_ZHEN_REN_POWER_HUA_SHA_POWER.title": "化沙",
+    "GU_ZHEN_REN_POWER_HUA_SHA_POWER.description": "失去格挡时，对所有敌人造成等同于失去格挡值的伤害。"
 }
