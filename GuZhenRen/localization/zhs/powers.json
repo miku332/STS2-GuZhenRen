@@ -84,5 +84,7 @@
     "GU_ZHEN_REN_POWER_FEI_XING_POWER.title":  "飞行",
     "GU_ZHEN_REN_POWER_FEI_XING_POWER.description":  "受到攻击伤害减半。受到未被格挡的攻击伤害后，失去1层飞行。",
     "GU_ZHEN_REN_POWER_ZHEN_CHI_GAO_FEI_POWER.title":  "振翅高飞",
-    "GU_ZHEN_REN_POWER_ZHEN_CHI_GAO_FEI_POWER.description":  "回合开始时，若你拥有飞行，获得{Amount}点格挡。"
+    "GU_ZHEN_REN_POWER_ZHEN_CHI_GAO_FEI_POWER.description":  "回合开始时，若你拥有飞行，获得{Amount}点格挡。",
+    "GU_ZHEN_REN_POWER_GU_CI_POWER.title": "骨刺",
+    "GU_ZHEN_REN_POWER_GU_CI_POWER.description": "将你格挡的攻击伤害反弹给攻击者。持续{Amount}回合。"
 }

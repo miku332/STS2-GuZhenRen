@@ -249,5 +249,7 @@
     "GU_ZHEN_REN_CARD_JIU_YE_SHENG_JI_CAO.title": "九叶生机草",
     "GU_ZHEN_REN_CARD_JIU_YE_SHENG_JI_CAO.description": "获得1瓶生机叶。",
     "GU_ZHEN_REN_CARD_DI_MAI.title": "地脉",
-    "GU_ZHEN_REN_CARD_DI_MAI.description": "不能被打出。\\n在抽牌堆中始终位于底部。\\n抽到这张牌时，获得等同于{IfUpgraded:show:手牌与|}弃牌堆牌数的格挡。"
+    "GU_ZHEN_REN_CARD_DI_MAI.description": "不能被打出。\\n在抽牌堆中始终位于底部。\\n抽到这张牌时，获得等同于{IfUpgraded:show:手牌与|}弃牌堆牌数的格挡。",
+    "GU_ZHEN_REN_CARD_LEI_GU_DUN_GU.title": "肋骨盾蛊",
+    "GU_ZHEN_REN_CARD_LEI_GU_DUN_GU.description": "失去{HpLoss:diff()}点生命。\\n获得{Block:diff()}点格挡。\\n在本回合将你格挡的攻击伤害反弹给攻击者。"
 }
