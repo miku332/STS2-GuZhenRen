@@ -107,7 +107,7 @@ internal static class BenMingGuSelectionCoordinator
             result.cardAdded.Pile?.InvokeCardAddFinished();
         }
 
-        if (!RunManager.Instance.IsSingleplayerOrFakeMultiplayer)
+        if (result.success && !RunManager.Instance.IsSingleplayerOrFakeMultiplayer)
         {
             RunManager.Instance.RewardSynchronizer.SyncLocalObtainedCard(card);
         }

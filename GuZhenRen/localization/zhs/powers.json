@@ -120,5 +120,7 @@
     "GU_ZHEN_REN_POWER_WAN_WU_DA_TONG_BIAN_POWER.title": "万物大同变",
     "GU_ZHEN_REN_POWER_WAN_WU_DA_TONG_BIAN_POWER.description": "你的所有状态将转化为同等层数的变化道道痕。",
     "GU_ZHEN_REN_POWER_SHA_DAO_DAO_HEN_POWER.title": "杀道道痕",
-    "GU_ZHEN_REN_POWER_SHA_DAO_DAO_HEN_POWER.description": "回合结束时，每层杀道道痕对所有敌人造成3点伤害。"
+    "GU_ZHEN_REN_POWER_SHA_DAO_DAO_HEN_POWER.description": "回合结束时，每层杀道道痕对所有敌人造成3点伤害。",
+    "GU_ZHEN_REN_POWER_ZHUAN_YUN_POWER.title": "转运",
+    "GU_ZHEN_REN_POWER_ZHUAN_YUN_POWER.description": "每当你的[gold]概率[/gold]牌触发失败时，使其概率提高{Amount}%。"
 }

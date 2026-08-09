@@ -5,11 +5,12 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.Powers;
+using GuZhenRen.Systems;
 using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
-public abstract class AbstractXuYingCard : GuZhenRenCardTemplate
+public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCard
 {
     private static int _nestedXuYingEffectDepth;
 
@@ -60,10 +61,9 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate
         }
 
         var chance = Owner.Creature.GetPower<QuanLiYiFuPower>() is not null
-            ? 100f
-            : (float)DynamicVars["Chance"].BaseValue;
-        var roll = Owner.RunState.Rng.CombatCardSelection.NextFloat(100f);
-        if (roll >= chance)
+            ? 100m
+            : DynamicVars["Chance"].BaseValue;
+        if (!ProbabilitySystem.Roll(this, chance))
         {
             return;
         }
@@ -108,6 +108,15 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate
     protected abstract Task TriggerXuYingEffect(
         PlayerChoiceContext choiceContext,
         CardPlay triggerCardPlay);
+
+    public void IncreaseBaseChance(decimal percentagePoints)
+    {
+        var chance = DynamicVars["Chance"];
+        chance.BaseValue = Math.Clamp(
+            chance.BaseValue + percentagePoints,
+            0m,
+            100m);
+    }
 
     private async Task TriggerXuYingEffectWithRecursionGuard(
         PlayerChoiceContext choiceContext,

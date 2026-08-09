@@ -33,7 +33,9 @@ public sealed class TaiGuRongYaoZhiGuangPower : ModPowerTemplate
         if (target != Owner
             || dealer?.Player is null
             || cardSource is null
-            || !cardSource.Tags.Contains(GuZhenRenTags.GuangDao)
+            || !GuZhenRenTagRules.HasEffectiveTag(
+                cardSource,
+                GuZhenRenTags.GuangDao)
             || result.TotalDamage <= 0)
         {
             return;

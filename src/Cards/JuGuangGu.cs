@@ -39,7 +39,9 @@ public sealed class JuGuangGu : GuZhenRenCardTemplate
             {
                 var hand = PileType.Hand.GetPile(card.Owner);
                 var handCount = hand.Cards.Count(
-                    handCard => handCard.Tags.Contains(GuZhenRenTags.GuangDao));
+                    handCard => GuZhenRenTagRules.HasEffectiveTag(
+                        handCard,
+                        GuZhenRenTags.GuangDao));
 
                 return handCount + (card.Pile?.Type == PileType.Hand ? 0 : 1);
             })

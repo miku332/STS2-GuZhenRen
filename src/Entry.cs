@@ -36,6 +36,10 @@ public static class Entry
         huaShaPatcher.RegisterPatch<HuaShaLoseBlockPatch>();
         huaShaPatcher.RegisterPatch<HuaShaClearBlockPatch>();
         huaShaPatcher.PatchAll();
+        var benMingGuPatcher = RitsuLibFramework.CreatePatcher(ModId, "ben-ming-gu");
+        benMingGuPatcher.RegisterPatch<BenMingGuUniquenessPatch>();
+        benMingGuPatcher.RegisterPatch<XianGuCanHaiSmithRestSitePatch>();
+        benMingGuPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(
@@ -49,6 +53,11 @@ public static class Entry
                     if (evt.Card is DiMai diMai)
                     {
                         diMai.OnCardDrawn();
+                    }
+
+                    if (evt.Card is EYun eyun)
+                    {
+                        eyun.OnCardDrawn();
                     }
 
                     PaiNanPower.TryHandleCardDrawn(evt.Card);
@@ -105,16 +114,19 @@ public static class Entry
                 },
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CombatEndedEvent>(
-                static _ =>
+                static evt =>
                 {
                     XueKuangGu.ClearCombatState();
                     RenRuGu.ResetCombatHistory();
+                    AnTuZhongShanBao.ResetCombatState();
+                    TaskHelper.RunSafely(HandleEyunCombatEnded(evt));
                 },
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>(
                 static evt =>
                 {
                     RenRuGu.ResetCombatHistory();
+                    AnTuZhongShanBao.ResetCombatState();
 
                     if (evt.CombatState is not null)
                     {
@@ -137,6 +149,11 @@ public static class Entry
                     if (evt.Side == CombatSide.Player)
                     {
                         RenRuGu.RecordPlayerTurnStart(evt.CombatState);
+                        foreach (var player in evt.CombatState.Players)
+                        {
+                            TaskHelper.RunSafely(
+                                AbstractXianGuWuCard.ReturnAllToHand(player));
+                        }
                     }
                 },
                 replayCurrentState: false));
@@ -153,5 +170,16 @@ public static class Entry
         }
 
         Logger.Info("Gu Zhen Ren mod initialized.");
+    }
+
+    private static async Task HandleEyunCombatEnded(CombatEndedEvent evt)
+    {
+        foreach (var player in evt.RunState.Players)
+        {
+            foreach (var card in player.Deck.Cards.OfType<EYun>().ToList())
+            {
+                await card.OnCombatEnded();
+            }
+        }
     }
 }

@@ -16,19 +16,6 @@ namespace GuZhenRen.Cards;
 [RegisterCard(typeof(GuZhenRenCardPool))]
 public sealed class BaMianWeiFengGu : GuZhenRenCardTemplate
 {
-    private static readonly HashSet<CardTag> DaoTags =
-    [
-        GuZhenRenTags.FengDao,
-        GuZhenRenTags.GuangDao,
-        GuZhenRenTags.JianDao,
-        GuZhenRenTags.LiDao,
-        GuZhenRenTags.MuDao,
-        GuZhenRenTags.ShaDao,
-        GuZhenRenTags.TuDao,
-        GuZhenRenTags.XueDao,
-        GuZhenRenTags.YanDao
-    ];
-
     public override int Rank => IsUpgraded ? 8 : 7;
 
     public override string Title => IsUpgraded
@@ -91,7 +78,9 @@ public sealed class BaMianWeiFengGu : GuZhenRenCardTemplate
 
         foreach (var card in cards)
         {
-            var cardDaos = card.Tags.Where(DaoTags.Contains).ToList();
+            var cardDaos = GuZhenRenTagRules
+                .GetEffectiveDaoTags(card)
+                .ToList();
             if (cardDaos.Count == 0)
             {
                 continue;

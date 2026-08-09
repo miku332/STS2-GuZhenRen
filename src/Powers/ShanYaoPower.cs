@@ -59,7 +59,9 @@ public sealed class ShanYaoPower : ModPowerTemplate
     {
         if (dealer != Owner
             || cardSource is null
-            || !cardSource.Tags.Contains(GuZhenRenTags.GuangDao)
+            || !GuZhenRenTagRules.HasEffectiveTag(
+                cardSource,
+                GuZhenRenTags.GuangDao)
             || !props.IsPoweredAttack())
         {
             return 1m;
@@ -74,7 +76,9 @@ public sealed class ShanYaoPower : ModPowerTemplate
     {
         if (cardPlay.Card.Owner.Creature != Owner
             || cardPlay.Card.Type != CardType.Attack
-            || !cardPlay.Card.Tags.Contains(GuZhenRenTags.GuangDao))
+            || !GuZhenRenTagRules.HasEffectiveTag(
+                cardPlay.Card,
+                GuZhenRenTags.GuangDao))
         {
             return;
         }

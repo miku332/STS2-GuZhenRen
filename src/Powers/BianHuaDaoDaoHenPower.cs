@@ -25,7 +25,9 @@ public sealed class BianHuaDaoDaoHenPower : ModPowerTemplate
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner.Creature != Owner
-            || cardPlay.Card.Tags.Contains(GuZhenRenTags.BianHuaDao)
+            || GuZhenRenTagRules.HasEffectiveTag(
+                cardPlay.Card,
+                GuZhenRenTags.BianHuaDao)
             || Amount <= 0)
         {
             return;
@@ -37,39 +39,39 @@ public sealed class BianHuaDaoDaoHenPower : ModPowerTemplate
             return;
         }
 
-        if (cardPlay.Card.Tags.Contains(GuZhenRenTags.LiDao))
+        if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.LiDao))
         {
             await ConvertTo<LiDaoDaoHenPower>(cardPlay.Card);
         }
-        else if (cardPlay.Card.Tags.Contains(GuZhenRenTags.YanDao))
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.YanDao))
         {
             await ConvertTo<YanDaoDaoHenPower>(cardPlay.Card);
         }
-        else if (cardPlay.Card.Tags.Contains(GuZhenRenTags.JianDao))
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.JianDao))
         {
             await ConvertTo<JianDaoDaoHenPower>(cardPlay.Card);
         }
-        else if (cardPlay.Card.Tags.Contains(GuZhenRenTags.XueDao))
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.XueDao))
         {
             await ConvertTo<XueDaoDaoHenPower>(cardPlay.Card);
         }
-        else if (cardPlay.Card.Tags.Contains(GuZhenRenTags.GuangDao))
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.GuangDao))
         {
             await ConvertTo<GuangDaoDaoHenPower>(cardPlay.Card);
         }
-        else if (cardPlay.Card.Tags.Contains(GuZhenRenTags.FengDao))
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.FengDao))
         {
             await ConvertTo<FengDaoDaoHenPower>(cardPlay.Card);
         }
-        else if (cardPlay.Card.Tags.Contains(GuZhenRenTags.TuDao))
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.TuDao))
         {
             await ConvertTo<TuDaoDaoHenPower>(cardPlay.Card);
         }
-        else if (cardPlay.Card.Tags.Contains(GuZhenRenTags.MuDao))
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.MuDao))
         {
             await ConvertTo<MuDaoDaoHenPower>(cardPlay.Card);
         }
-        else if (cardPlay.Card.Tags.Contains(GuZhenRenTags.ShaDao))
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.ShaDao))
         {
             await ConvertTo<ShaDaoDaoHenPower>(cardPlay.Card);
         }

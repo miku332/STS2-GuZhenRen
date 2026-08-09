@@ -33,7 +33,9 @@ public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
             {
                 var hand = PileType.Hand.GetPile(card.Owner);
                 return hand.Cards.Count(
-                    handCard => handCard.Tags.Contains(GuZhenRenTags.GuangDao));
+                    handCard => GuZhenRenTagRules.HasEffectiveTag(
+                        handCard,
+                        GuZhenRenTags.GuangDao));
             })
     ];
 
@@ -49,7 +51,9 @@ public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
         ArgumentNullException.ThrowIfNull(CombatState);
 
         var handLightDaoCount = PileType.Hand.GetPile(Owner).Cards.Count(
-            card => card.Tags.Contains(GuZhenRenTags.GuangDao));
+            card => GuZhenRenTagRules.HasEffectiveTag(
+                card,
+                GuZhenRenTags.GuangDao));
         var hits = handLightDaoCount + (Pile?.Type == PileType.Hand ? 0 : 1);
 
         for (var i = 0; i < hits; i++)

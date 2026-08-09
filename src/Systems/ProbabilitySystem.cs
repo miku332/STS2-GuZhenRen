@@ -1,0 +1,81 @@
+using GuZhenRen.Powers;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+
+namespace GuZhenRen.Systems;
+
+public static class ProbabilitySystem
+{
+    public static bool Roll(CardModel card, decimal chancePercent)
+    {
+        ArgumentNullException.ThrowIfNull(card.Owner);
+
+        var chance = Math.Clamp(chancePercent, 0m, 100m);
+        var success = card.Owner.RunState.Rng.CombatCardSelection.NextFloat(100f)
+            < (float)chance;
+        if (!success)
+        {
+            card.Owner.Creature.GetPower<ZhuanYunPower>()?.OnProbabilityRollFailed(card);
+            RefreshCardVisuals(card);
+        }
+
+        return success;
+    }
+
+    public static void IncreaseHandProbabilities(
+        Player player,
+        decimal percentagePoints)
+    {
+        foreach (var card in PileType.Hand
+                     .GetPile(player)
+                     .Cards
+                     .OfType<IProbabilityCard>()
+                     .ToList())
+        {
+            card.IncreaseBaseChance(percentagePoints);
+
+            if (card is CardModel model)
+            {
+                RefreshCardVisuals(model);
+            }
+        }
+    }
+
+    public static void DecreaseCombatProbabilities(
+        MegaCrit.Sts2.Core.Entities.Players.Player player,
+        decimal percentagePoints)
+    {
+        foreach (var card in CardPile.GetCards(
+                     player,
+                     PileType.Hand,
+                     PileType.Draw,
+                     PileType.Discard,
+                     PileType.Exhaust,
+                     PileType.Play)
+                 .OfType<IProbabilityCard>()
+                 .ToList())
+        {
+            card.IncreaseBaseChance(-percentagePoints);
+
+            if (card is CardModel model)
+            {
+                RefreshCardVisuals(model);
+            }
+        }
+    }
+
+    private static void RefreshCardVisuals(CardModel card)
+    {
+        var node = NCard.FindOnTable(card);
+        if (node is null)
+        {
+            return;
+        }
+
+        node.UpdateVisuals(
+            card.Pile?.Type ?? PileType.Hand,
+            CardPreviewMode.Normal);
+    }
+}

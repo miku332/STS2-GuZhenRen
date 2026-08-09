@@ -19,6 +19,6 @@ public sealed class RuiYiPower : ModPowerTemplate
         BigIconPath: "res://GuZhenRen/images/powers/RuiYiPower_p.png");
 
     public static bool TreatsAsJianDao(CardModel card) =>
-        card.Tags.Contains(GuZhenRenTags.JianDao)
+        GuZhenRenTagRules.HasEffectiveTag(card, GuZhenRenTags.JianDao)
         || card.Owner.Creature.GetPower<RuiYiPower>() is not null;
 }

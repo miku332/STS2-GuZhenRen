@@ -18,7 +18,9 @@ public sealed class GuangDaoDaoHenPower : AbstractDaoHenPower
     {
         if (dealer != Owner
             || cardSource is null
-            || !cardSource.Tags.Contains(GuZhenRenTags.GuangDao)
+            || !GuZhenRenTagRules.HasEffectiveTag(
+                cardSource,
+                GuZhenRenTags.GuangDao)
             || !props.IsPoweredAttack()
             || Owner.GetPower<ShanYaoPower>() is not null)
         {
