@@ -13,12 +13,21 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class ZhiHuiGu : GuZhenRenCardTemplate
+public sealed class ZhiHuiGu : AbstractBenMingGuCard
 {
-    public override int Rank => 1;
-
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/ZhiHuiGu.png");
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords
+    {
+        get
+        {
+            if (Rank >= 9)
+            {
+                yield return CardKeyword.Innate;
+            }
+        }
+    }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -26,7 +35,7 @@ public sealed class ZhiHuiGu : GuZhenRenCardTemplate
     ];
 
     public ZhiHuiGu()
-        : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self, true)
+        : base(1, CardType.Power, CardRarity.Token, TargetType.Self)
     {
     }
 
@@ -44,6 +53,19 @@ public sealed class ZhiHuiGu : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["ZhiHuiPower"].UpgradeValueBy(1);
+        DynamicVars["ZhiHuiPower"].UpgradeValueBy(
+            GetNianAmount(Rank) - DynamicVars["ZhiHuiPower"].BaseValue);
+
+        if (Rank >= 9)
+        {
+            AddKeyword(CardKeyword.Innate);
+        }
+        else
+        {
+            RemoveKeyword(CardKeyword.Innate);
+        }
     }
+
+    private static int GetNianAmount(int rank) =>
+        Math.Min(rank + 1, 9);
 }
