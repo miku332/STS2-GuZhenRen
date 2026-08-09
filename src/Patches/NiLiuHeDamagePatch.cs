@@ -1,0 +1,67 @@
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Patching.Models;
+
+namespace GuZhenRen.Patches;
+
+public sealed class NiLiuHeDamagePatch : IPatchMethod
+{
+    public static string PatchId => "ni_liu_he_damage_reflection";
+
+    public static string Description =>
+        "Ni Liu He redirects enemy attack damage to the attacker";
+
+    public static bool IsCritical => false;
+
+    public static ModPatchTarget[] GetTargets() =>
+    [
+        new ModPatchTarget(
+            typeof(CreatureCmd),
+            nameof(CreatureCmd.Damage),
+            [
+                typeof(PlayerChoiceContext),
+                typeof(IEnumerable<Creature>),
+                typeof(decimal),
+                typeof(ValueProp),
+                typeof(Creature),
+                typeof(CardModel)
+            ])
+    ];
+
+    public static void Prefix(
+        ref IEnumerable<Creature> targets,
+        ValueProp props,
+        Creature? dealer)
+    {
+        if (dealer is null)
+        {
+            return;
+        }
+
+        var originalTargets = targets.ToList();
+        var redirectedTargets = new List<Creature>(originalTargets.Count);
+        var changed = false;
+
+        foreach (var target in originalTargets)
+        {
+            if (NiLiuHeReflectionState.TryRedirectAttack(
+                    target,
+                    props,
+                    dealer,
+                    out var redirectedTarget))
+            {
+                changed = true;
+            }
+
+            redirectedTargets.Add(redirectedTarget);
+        }
+
+        if (changed)
+        {
+            targets = redirectedTargets;
+        }
+    }
+}
