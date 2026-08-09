@@ -65,7 +65,14 @@ public sealed class GuCiPower : ModPowerTemplate
     {
         if (side == CombatSide.Enemy)
         {
-            await PowerCmd.Remove(this);
+            if (Amount <= 1)
+            {
+                await PowerCmd.Remove(this);
+            }
+            else
+            {
+                await PowerCmd.Decrement(this);
+            }
         }
     }
 }
