@@ -59,7 +59,7 @@ public sealed class JuGuangGu : GuZhenRenCardTemplate
 
         if (amount > 0)
         {
-            await PowerCmd.Apply<ShanYaoPower>(
+            await ShanYaoPower.Apply(
                 choiceContext,
                 cardPlay.Card.Owner.Creature,
                 amount,

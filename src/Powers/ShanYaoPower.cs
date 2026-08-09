@@ -22,6 +22,34 @@ public sealed class ShanYaoPower : ModPowerTemplate
         IconPath: "res://GuZhenRen/images/powers/ShanYaoPower.png",
         BigIconPath: "res://GuZhenRen/images/powers/ShanYaoPower_p.png");
 
+    public static async Task Apply(
+        PlayerChoiceContext choiceContext,
+        Creature target,
+        decimal amount,
+        Creature? applier,
+        CardModel? cardSource)
+    {
+        var amountBefore = target.GetPowerAmount<ShanYaoPower>();
+        await PowerCmd.Apply<ShanYaoPower>(
+            choiceContext,
+            target,
+            amount,
+            applier,
+            cardSource);
+
+        var amountGained = target.GetPowerAmount<ShanYaoPower>() - amountBefore;
+        if (amountGained > 0)
+        {
+            await PowerCmd.Apply<ShanYaoHistoryPower>(
+                choiceContext,
+                target,
+                amountGained,
+                applier,
+                cardSource,
+                silent: true);
+        }
+    }
+
     public override decimal ModifyDamageMultiplicative(
         Creature? target,
         decimal amount,

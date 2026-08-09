@@ -43,7 +43,7 @@ public sealed class XiaoGuangGu : GuZhenRenCardTemplate
     {
         var owner = cardPlay.Card.Owner.Creature;
 
-        await PowerCmd.Apply<ShanYaoPower>(
+        await ShanYaoPower.Apply(
             choiceContext,
             owner,
             DynamicVars["ShanYaoPower"].BaseValue,
