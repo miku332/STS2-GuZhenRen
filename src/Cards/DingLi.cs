@@ -9,6 +9,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -19,6 +20,8 @@ public sealed class DingLi : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/DingLi.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.LiDao];
 
     public override bool GainsBlock => true;
 

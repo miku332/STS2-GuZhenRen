@@ -10,6 +10,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
 using GuZhenRen.Powers;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -23,6 +24,8 @@ public sealed class LongLinGu : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/LongLinGu.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.BianHuaDao];
 
     public override bool GainsBlock => true;
 

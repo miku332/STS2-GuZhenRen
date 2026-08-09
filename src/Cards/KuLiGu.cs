@@ -7,6 +7,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
 using GuZhenRen.Powers;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -17,6 +18,8 @@ public sealed class KuLiGu : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/KuLiGu.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.LiDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

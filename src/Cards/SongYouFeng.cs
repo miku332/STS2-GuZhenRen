@@ -1,5 +1,6 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Powers;
+using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -15,6 +16,8 @@ public sealed class SongYouFeng : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/SongYouFeng.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.FengDao];
 
     public SongYouFeng()
         : base(1, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy, false)

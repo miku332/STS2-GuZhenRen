@@ -8,6 +8,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -18,6 +19,8 @@ public sealed class TaiDuGu : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/TaiDuGu.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.BianHuaDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
