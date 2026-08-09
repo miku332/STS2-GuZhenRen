@@ -12,6 +12,7 @@ public static class GuZhenRenTagRules
         GuZhenRenTags.BianHuaDao,
         GuZhenRenTags.FengDao,
         GuZhenRenTags.GuangDao,
+        GuZhenRenTags.GuDao,
         GuZhenRenTags.JianDao,
         GuZhenRenTags.LiDao,
         GuZhenRenTags.LuDao,
