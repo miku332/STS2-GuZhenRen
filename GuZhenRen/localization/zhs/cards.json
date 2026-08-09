@@ -257,5 +257,7 @@
     "GU_ZHEN_REN_CARD_HUANG_SHA.title": "黄沙",
     "GU_ZHEN_REN_CARD_HUANG_SHA.description": "失去格挡时，对所有敌人造成等同于失去格挡值的伤害。",
     "GU_ZHEN_REN_CARD_SHE_XIN_GU.title": "摄心蛊",
-    "GU_ZHEN_REN_CARD_SHE_XIN_GU.description": "{IfUpgraded:show:使所有敌人眩晕。|使目标眩晕。}\\n下回合少抽{SheXinDrawReductionPower:diff()}张牌。"
+    "GU_ZHEN_REN_CARD_SHE_XIN_GU.description": "{IfUpgraded:show:使所有敌人眩晕。|使目标眩晕。}\\n下回合少抽{SheXinDrawReductionPower:diff()}张牌。",
+    "GU_ZHEN_REN_CARD_WU_JIN_XUAN_GUANG_QI.title": "五禁玄光气",
+    "GU_ZHEN_REN_CARD_WU_JIN_XUAN_GUANG_QI.description": "给予所有敌人缓慢。\\n此后敌人的缓慢每增长1次，本轮失去1点力量。"
 }

@@ -92,5 +92,7 @@
     "GU_ZHEN_REN_POWER_HUA_SHA_POWER.title": "化沙",
     "GU_ZHEN_REN_POWER_HUA_SHA_POWER.description": "失去格挡时，对所有敌人造成等同于失去格挡值的伤害。",
     "GU_ZHEN_REN_POWER_SHE_XIN_DRAW_REDUCTION_POWER.title": "摄心",
-    "GU_ZHEN_REN_POWER_SHE_XIN_DRAW_REDUCTION_POWER.description": "下回合少抽{Amount}张牌。"
+    "GU_ZHEN_REN_POWER_SHE_XIN_DRAW_REDUCTION_POWER.description": "下回合少抽{Amount}张牌。",
+    "GU_ZHEN_REN_POWER_WU_JIN_XUAN_GUANG_QI_POWER.title": "五禁玄光气",
+    "GU_ZHEN_REN_POWER_WU_JIN_XUAN_GUANG_QI_POWER.description": "缓慢每增长1次，本轮失去{Amount}点力量。"
 }
