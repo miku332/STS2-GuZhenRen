@@ -267,5 +267,8 @@
     "GU_ZHEN_REN_CARD_SONG_YOU_FENG_SONG_BIE.title": "送友风·送别",
     "GU_ZHEN_REN_CARD_SONG_YOU_FENG_SONG_BIE.description": "若目标拥有好友，给予其{SongYouFadingPower:diff()}层消散并移除好友。",
     "GU_ZHEN_REN_CARD_SAN_SHI_SAN_TIAN_GUANG.title": "三十三天光",
-    "GU_ZHEN_REN_CARD_SAN_SHI_SAN_TIAN_GUANG.description": "对所有敌人造成{Damage:diff()}点伤害。\\n获得等同于本场战斗累计获得过的闪耀总层数的闪耀。\\n（当前{ShanYaoGained:diff()}层）"
+    "GU_ZHEN_REN_CARD_SAN_SHI_SAN_TIAN_GUANG.description": "对所有敌人造成{Damage:diff()}点伤害。\\n获得等同于本场战斗累计获得过的闪耀总层数的闪耀。\\n（当前{ShanYaoGained:diff()}层）",
+    "GU_ZHEN_REN_CARD_BA_MIAN_WEI_FENG_GU.title": "七面威风蛊",
+    "GU_ZHEN_REN_CARD_BA_MIAN_WEI_FENG_GU.upgradeTitle": "八面威风蛊",
+    "GU_ZHEN_REN_CARD_BA_MIAN_WEI_FENG_GU.description": "抽牌直到手牌有{Cards:diff()}张。\\n本次每抽到一种不同流派的牌，对所有敌人造成{Damage:diff()}点伤害。"
 }

@@ -6,6 +6,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 namespace GuZhenRen.Tags;
 
 [RegisterOwnedCardTag(nameof(GuangDao))]
+[RegisterOwnedCardTag(nameof(FengDao))]
 [RegisterOwnedCardTag(nameof(JianDao))]
 [RegisterOwnedCardTag(nameof(LiDao))]
 [RegisterOwnedCardTag(nameof(MuDao))]
@@ -15,6 +16,9 @@ namespace GuZhenRen.Tags;
 [RegisterOwnedCardTag(nameof(XuYing))]
 public sealed class GuZhenRenTags
 {
+    public static readonly CardTag FengDao =
+        ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(FengDao)).GetModCardTag();
+
     public static readonly CardTag GuangDao =
         ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(GuangDao)).GetModCardTag();
 
