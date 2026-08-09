@@ -17,6 +17,11 @@ public sealed class JianDaoDaoHenPower : AbstractDaoHenPower
 
     protected override object InitInternalData() => new Data();
 
+    public override int GetDerivedPowerAmount(PowerModel power) =>
+        power is JianFengPower
+            ? GetInternalData<Data>().JianFengGranted
+            : 0;
+
     public override async Task AfterPowerAmountChanged(
         PlayerChoiceContext choiceContext,
         PowerModel power,

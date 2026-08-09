@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace GuZhenRen.Powers;
@@ -18,6 +19,8 @@ public abstract class AbstractDaoHenPower : ModPowerTemplate
     public override PowerAssetProfile AssetProfile => new(
         IconPath: $"res://GuZhenRen/images/powers/{GetType().Name}.png",
         BigIconPath: $"res://GuZhenRen/images/powers/{GetType().Name}_p.png");
+
+    public virtual int GetDerivedPowerAmount(PowerModel power) => 0;
 
     public sealed override async Task AfterPlayerTurnStart(
         PlayerChoiceContext choiceContext,
