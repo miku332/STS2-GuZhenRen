@@ -6,13 +6,15 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableDynamicLoading>true</EnableDynamicLoading>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PathMap>$(MSBuildProjectDirectory)=/_/GuZhenRen,$(USERPROFILE)=/_/User</PathMap>
 
     <AssemblyName>GuZhenRen</AssemblyName>
     <RootNamespace>GuZhenRen</RootNamespace>
 
     <ModId>GuZhenRen</ModId>
     <Sts2Dir Condition="'$(Sts2Dir)' == ''">$(STS2_DIR)</Sts2Dir>
-    <Sts2Dir Condition="'$(Sts2Dir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2</Sts2Dir>
     <Sts2DataDir>$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
     <ModDeployDir>$(Sts2Dir)\mods\$(ModId)</ModDeployDir>
     <RitsuLibDeployDir>$(Sts2Dir)\mods\STS2-RitsuLib</RitsuLibDeployDir>
@@ -39,6 +41,12 @@
       <Private>false</Private>
     </Reference>
   </ItemGroup>
+
+  <Target Name="ValidateLocalPaths"
+          BeforeTargets="ResolveReferences"
+          Condition="'$(Sts2Dir)' == ''">
+    <Error Text="Set STS2_DIR or pass -p:Sts2Dir=... before building GuZhenRen." />
+  </Target>
 
   <Target Name="Copy Mod" AfterTargets="Build">
     <Message Text="Copying Gu Zhen Ren mod to Slay the Spire 2..." Importance="high" />

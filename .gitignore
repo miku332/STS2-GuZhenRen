@@ -13,5 +13,29 @@ obj/
 
 # Local logs and temporary exports
 *.log
+*.binlog
 *.tmp
+*.temp
+*.bak
+*.old
 *.pdb
+*.dll
+*.pck
+*.zip
+
+# Local secrets and machine-specific settings
+.env
+.env.*
+!.env.example
+*.user
+*.suo
+Directory.Build.local.props
+
+# Test and coverage outputs
+TestResults/
+coverage/
+artifacts/
+
+# OS metadata
+.DS_Store
+Thumbs.db
