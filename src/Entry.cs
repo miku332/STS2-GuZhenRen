@@ -7,6 +7,7 @@ using GuZhenRen.Cards;
 using STS2RitsuLib.Patching.Core;
 using GuZhenRen.Patches;
 using GuZhenRen.Powers;
+using MegaCrit.Sts2.Core.Combat;
 
 namespace GuZhenRen;
 
@@ -74,7 +75,23 @@ public static class Entry
                 },
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CombatEndedEvent>(
-                static _ => XueKuangGu.ClearCombatState(),
+                static _ =>
+                {
+                    XueKuangGu.ClearCombatState();
+                    RenRuGu.ResetCombatHistory();
+                },
+                replayCurrentState: false));
+            _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>(
+                static _ => RenRuGu.ResetCombatHistory(),
+                replayCurrentState: false));
+            _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<SideTurnStartedEvent>(
+                static evt =>
+                {
+                    if (evt.Side == CombatSide.Player)
+                    {
+                        RenRuGu.RecordPlayerTurnStart(evt.CombatState);
+                    }
+                },
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<AttackEndedEvent>(
                 static evt => ZhuiMingHuoPower.AfterAttackEnded(evt),

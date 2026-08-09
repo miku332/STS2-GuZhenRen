@@ -224,6 +224,8 @@
     "GU_ZHEN_REN_CARD_HEI_HUO.description":  "不能被打出。\n在你的回合结束时，失去{TurnEndMaxHpLoss:diff()}点最大生命。\n被消耗时，失去{ExhaustMaxHpLoss:diff()}点最大生命。",
     "GU_ZHEN_REN_CARD_HUN_DUN.title":  "混沌",
     "GU_ZHEN_REN_CARD_HUN_DUN.description":  "不能被打出。\n在你的回合结束时，即刻死亡。\n被消耗时，将3张黑火加入手牌。",
+    "GU_ZHEN_REN_CARD_REN_RU_GU.title":  "人如故",
+    "GU_ZHEN_REN_CARD_REN_RU_GU.description":  "将你的生命值回溯到上回合开始时。\n消耗。{IfUpgraded:show:|\n保留。}",
     "GU_ZHEN_REN_CARD_ANGRY_BIRD.title":  "愤怒的小鸟",
     "GU_ZHEN_REN_CARD_ANGRY_BIRD.description":  "造成{Damage:diff()}点伤害。\n给予目标{FenShaoPower:diff()}层焚烧。",
     "GU_ZHEN_REN_CARD_HUO_GU.title":  "火蛊",
