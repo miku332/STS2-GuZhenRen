@@ -255,5 +255,7 @@
     "GU_ZHEN_REN_CARD_RUI_YI_GU.title": "锐意蛊",
     "GU_ZHEN_REN_CARD_RUI_YI_GU.description": "获得{JianFengPower:diff()}层剑锋。\\n本场战斗中所有流派的牌均视为剑道。",
     "GU_ZHEN_REN_CARD_HUANG_SHA.title": "黄沙",
-    "GU_ZHEN_REN_CARD_HUANG_SHA.description": "失去格挡时，对所有敌人造成等同于失去格挡值的伤害。"
+    "GU_ZHEN_REN_CARD_HUANG_SHA.description": "失去格挡时，对所有敌人造成等同于失去格挡值的伤害。",
+    "GU_ZHEN_REN_CARD_SHE_XIN_GU.title": "摄心蛊",
+    "GU_ZHEN_REN_CARD_SHE_XIN_GU.description": "{IfUpgraded:show:使所有敌人眩晕。|使目标眩晕。}\\n下回合少抽{SheXinDrawReductionPower:diff()}张牌。"
 }

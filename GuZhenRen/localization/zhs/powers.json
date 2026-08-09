@@ -90,5 +90,7 @@
     "GU_ZHEN_REN_POWER_RUI_YI_POWER.title": "锐意",
     "GU_ZHEN_REN_POWER_RUI_YI_POWER.description": "本场战斗中所有流派的牌均视为剑道。",
     "GU_ZHEN_REN_POWER_HUA_SHA_POWER.title": "化沙",
-    "GU_ZHEN_REN_POWER_HUA_SHA_POWER.description": "失去格挡时，对所有敌人造成等同于失去格挡值的伤害。"
+    "GU_ZHEN_REN_POWER_HUA_SHA_POWER.description": "失去格挡时，对所有敌人造成等同于失去格挡值的伤害。",
+    "GU_ZHEN_REN_POWER_SHE_XIN_DRAW_REDUCTION_POWER.title": "摄心",
+    "GU_ZHEN_REN_POWER_SHE_XIN_DRAW_REDUCTION_POWER.description": "下回合少抽{Amount}张牌。"
 }
