@@ -19,5 +19,11 @@
   "GU_ZHEN_REN_RELIC_XIAN_GU_CAN_HAI.flavor": "仙蛊毁灭后留下的残骸，仍然残留着部分道痕。",
   "GU_ZHEN_REN_RELIC_LI_DAO_DAO_HEN.title": "力道道痕",
   "GU_ZHEN_REN_RELIC_LI_DAO_DAO_HEN.description": "每场战斗开始时，获得等同于此遗物层数的力量。",
-  "GU_ZHEN_REN_RELIC_LI_DAO_DAO_HEN.flavor": "铭刻于蛊师身上的力道痕迹，积累之后便化作真正的力量。"
+  "GU_ZHEN_REN_RELIC_LI_DAO_DAO_HEN.flavor": "铭刻于蛊师身上的力道痕迹，积累之后便化作真正的力量。",
+  "GU_ZHEN_REN_RELIC_NI_LIU_HE.title": "逆流河",
+  "GU_ZHEN_REN_RELIC_NI_LIU_HE.description": "将你受到的下{Water}次攻击伤害逆反给攻击者。你每前进一层，补充1层逆流河水。逆流河水至多存储{MaxWater}层。",
+  "GU_ZHEN_REN_RELIC_NI_LIU_HE.flavor": "律道天地秘境，能够逆反一切攻势。",
+  "GU_ZHEN_REN_RELIC_JIAN_MIAN_CENG_XIANG_SHI_RELIC.title": "见面曾相识",
+  "GU_ZHEN_REN_RELIC_JIAN_MIAN_CENG_XIANG_SHI_RELIC.description": "接下来{Battles}场战斗开始时，给予所有敌人{FriendStacks}层好友。效果耗尽或右键此遗物时，转为卡牌并返回你的牌组。",
+  "GU_ZHEN_REN_RELIC_JIAN_MIAN_CENG_XIANG_SHI_RELIC.flavor": "变化道仙级杀招，源自盗天魔尊。"
 }

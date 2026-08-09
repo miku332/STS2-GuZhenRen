@@ -122,5 +122,19 @@
     "GU_ZHEN_REN_POWER_SHA_DAO_DAO_HEN_POWER.title": "杀道道痕",
     "GU_ZHEN_REN_POWER_SHA_DAO_DAO_HEN_POWER.description": "回合结束时，每层杀道道痕对所有敌人造成3点伤害。",
     "GU_ZHEN_REN_POWER_ZHUAN_YUN_POWER.title": "转运",
-    "GU_ZHEN_REN_POWER_ZHUAN_YUN_POWER.description": "每当你的[gold]概率[/gold]牌触发失败时，使其概率提高{Amount}%。"
+    "GU_ZHEN_REN_POWER_ZHUAN_YUN_POWER.description": "每当你的[gold]概率[/gold]牌触发失败时，使其概率提高{Amount}%。",
+    "GU_ZHEN_REN_POWER_NI_LIU_HU_SHEN_YIN_POWER.title": "逆流护身印",
+    "GU_ZHEN_REN_POWER_NI_LIU_HU_SHEN_YIN_POWER.description": "在你的回合开始时，获得{Amount}层逆流河水。",
+    "GU_ZHEN_REN_POWER_XING_LUO_QI_BU_POWER.title": "星罗棋布",
+    "GU_ZHEN_REN_POWER_XING_LUO_QI_BU_POWER.description": "下回合开始前，每获得1层念，就获得{Amount}点格挡。",
+    "GU_ZHEN_REN_POWER_BU_MIE_XING_BIAO_POWER.title": "不灭星标",
+    "GU_ZHEN_REN_POWER_BU_MIE_XING_BIAO_POWER.description": "该敌人的回合开始时，你获得{Amount}层念，然后不灭星标增加1层。",
+    "GU_ZHEN_REN_POWER_TENG_NUO_EXTRA_TURN_POWER.title": "腾挪",
+    "GU_ZHEN_REN_POWER_TENG_NUO_EXTRA_TURN_POWER.description": "本回合结束后额外获得一回合。",
+    "GU_ZHEN_REN_POWER_ZHI_ZHANG_POWER.title": "智障",
+    "GU_ZHEN_REN_POWER_ZHI_ZHANG_POWER.description": "所有获得念的效果改为获得等量临时生命。",
+    "GU_ZHEN_REN_POWER_TEMPORARY_HP_POWER.title": "临时生命",
+    "GU_ZHEN_REN_POWER_TEMPORARY_HP_POWER.description": "受到生命伤害时，优先消耗临时生命，防止等量生命损失。",
+    "GU_ZHEN_REN_POWER_XUE_DIAN_XING_BAN_POWER.title": "血殿刑办",
+    "GU_ZHEN_REN_POWER_XUE_DIAN_XING_BAN_POWER.description": "下回合开始前，被血缘标记的敌人对你造成的攻击伤害减半。"
 }

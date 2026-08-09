@@ -11,6 +11,7 @@ using GuZhenRen.Powers;
 using GuZhenRen.Systems;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Rooms;
 
 namespace GuZhenRen;
 
@@ -40,6 +41,15 @@ public static class Entry
         benMingGuPatcher.RegisterPatch<BenMingGuUniquenessPatch>();
         benMingGuPatcher.RegisterPatch<XianGuCanHaiSmithRestSitePatch>();
         benMingGuPatcher.PatchAll();
+        var aiQingGuPatcher = RitsuLibFramework.CreatePatcher(ModId, "ai-qing-gu");
+        aiQingGuPatcher.RegisterPatch<AiQingGuEscapeRewardPatch>();
+        aiQingGuPatcher.PatchAll();
+        var niLiuHePatcher = RitsuLibFramework.CreatePatcher(ModId, "ni-liu-he");
+        niLiuHePatcher.RegisterPatch<NiLiuHeDamagePatch>();
+        niLiuHePatcher.RegisterPatch<NiLiuHePowerApplyPatch>();
+        niLiuHePatcher.RegisterPatch<NiLiuHePowerLookupPatch>();
+        niLiuHePatcher.RegisterPatch<NiLiuHePowerModifyPatch>();
+        niLiuHePatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(
@@ -58,6 +68,11 @@ public static class Entry
                     if (evt.Card is EYun eyun)
                     {
                         eyun.OnCardDrawn();
+                    }
+
+                    if (evt.FromHandDraw && evt.Card is AiQingGu aiQingGu)
+                    {
+                        aiQingGu.OnCardDrawn();
                     }
 
                     PaiNanPower.TryHandleCardDrawn(evt.Card);
@@ -116,17 +131,23 @@ public static class Entry
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CombatEndedEvent>(
                 static evt =>
                 {
+                    NiLiuHeReflectionState.Clear();
                     XueKuangGu.ClearCombatState();
                     RenRuGu.ResetCombatHistory();
                     AnTuZhongShanBao.ResetCombatState();
+                    XingXiuQiPan.ResetCombatState();
+                    ZhuMoBang.ResetCombatState();
                     TaskHelper.RunSafely(HandleEyunCombatEnded(evt));
                 },
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>(
                 static evt =>
                 {
+                    NiLiuHeReflectionState.Clear();
                     RenRuGu.ResetCombatHistory();
                     AnTuZhongShanBao.ResetCombatState();
+                    XingXiuQiPan.ResetCombatState();
+                    ZhuMoBang.ResetCombatState();
 
                     if (evt.CombatState is not null)
                     {
@@ -148,6 +169,7 @@ public static class Entry
                 {
                     if (evt.Side == CombatSide.Player)
                     {
+                        NiLiuHeReflectionState.Clear();
                         RenRuGu.RecordPlayerTurnStart(evt.CombatState);
                         foreach (var player in evt.CombatState.Players)
                         {
@@ -164,8 +186,17 @@ public static class Entry
                 static evt => ShaGu.AfterCreatureDied(evt),
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<RoomEnteredEvent>(
-                static evt => TaskHelper.RunSafely(
-                    BenMingGuSelectionCoordinator.TrySelect(evt.Room)),
+                static evt =>
+                {
+                    TaskHelper.RunSafely(
+                        BenMingGuSelectionCoordinator.TrySelect(evt.Room));
+
+                    if (evt.Room is MerchantRoom)
+                    {
+                        TaskHelper.RunSafely(
+                            GuQiangGuShopExchange.ExchangeAll(evt.RunState));
+                    }
+                },
                 replayCurrentState: false));
         }
 
