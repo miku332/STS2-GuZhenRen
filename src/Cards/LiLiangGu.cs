@@ -2,7 +2,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -13,19 +12,24 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class LiLiangGu : GuZhenRenCardTemplate
+public sealed class LiLiangGu : AbstractBenMingGuCard
 {
-    public override int Rank => IsUpgraded ? 2 : 1;
-
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/LiLiangGu.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.LiDao];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-    [
-        CardKeyword.Exhaust
-    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords
+    {
+        get
+        {
+            yield return CardKeyword.Exhaust;
+            if (Rank >= 6)
+            {
+                yield return CardKeyword.Innate;
+            }
+        }
+    }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -34,7 +38,7 @@ public sealed class LiLiangGu : GuZhenRenCardTemplate
     ];
 
     public LiLiangGu()
-        : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
+        : base(0, CardType.Skill, CardRarity.Token, TargetType.Self)
     {
     }
 
@@ -69,6 +73,35 @@ public sealed class LiLiangGu : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["LiLiangGuStrengthDownPower"].UpgradeValueBy(-1);
+        SetUpgradedValue("StrengthPower", GetStrength(Rank));
+        SetUpgradedValue(
+            "LiLiangGuStrengthDownPower",
+            GetTemporaryStrength(Rank));
+
+        if (Rank >= 6)
+        {
+            AddKeyword(CardKeyword.Innate);
+        }
+    }
+
+    private static int GetStrength(int rank) =>
+        rank switch
+        {
+            <= 2 => 2,
+            <= 4 => 3,
+            5 => 4,
+            6 => 5,
+            7 => 6,
+            8 => 7,
+            _ => 8
+        };
+
+    private static int GetTemporaryStrength(int rank) =>
+        rank is 1 or 3 ? 1 : 0;
+
+    private void SetUpgradedValue(string name, decimal targetValue)
+    {
+        var dynamicVar = DynamicVars[name];
+        dynamicVar.UpgradeValueBy(targetValue - dynamicVar.BaseValue);
     }
 }

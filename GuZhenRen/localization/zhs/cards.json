@@ -142,7 +142,7 @@
     "GU_ZHEN_REN_CARD_XUE_KUANG_GU.title":  "血狂蛊",
     "GU_ZHEN_REN_CARD_XUE_KUANG_GU.description":  "使左右相邻的手牌获得血狂：立即免费自动打出一次，打出前失去2点生命。",
     "GU_ZHEN_REN_CARD_LI_LIANG_GU.title":  "力量蛊",
-    "GU_ZHEN_REN_CARD_LI_LIANG_GU.description":  "获得{StrengthPower:diff()}点力量。未升级时，回合结束失去{LiLiangGuStrengthDownPower:diff()}点力量。\\n消耗。",
+    "GU_ZHEN_REN_CARD_LI_LIANG_GU.description":  "获得{StrengthPower:diff()}点力量。\\n一、三转时，回合结束失去1点力量。\\n六转起固有。\\n消耗。",
     "GU_ZHEN_REN_CARD_WAN_WO_DA_SHOU_YIN.title":  "万我大手印",
     "GU_ZHEN_REN_CARD_WAN_WO_DA_SHOU_YIN.description":  "对所有敌人造成{CalculatedDamage:diff()}点伤害。\\n力量在此牌上发挥{StrengthMultiplier:diff()}倍效果。",
     "GU_ZHEN_REN_CARD_LONG_XING_HU_BU_GU.title":  "龙行虎步蛊",
