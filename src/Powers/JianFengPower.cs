@@ -36,7 +36,7 @@ public sealed class JianFengPower : ModPowerTemplate
         if (dealer != Owner
             || target == Owner
             || cardSource is null
-            || !cardSource.Tags.Contains(GuZhenRenTags.JianDao)
+            || !RuiYiPower.TreatsAsJianDao(cardSource)
             || !props.IsPoweredAttack()
             || result.TotalDamage <= 0)
         {

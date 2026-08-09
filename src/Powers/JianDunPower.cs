@@ -29,7 +29,7 @@ public sealed class JianDunPower : ModPowerTemplate
         CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner.Creature == Owner
-            && cardPlay.Card.Tags.Contains(GuZhenRenTags.JianDao))
+            && RuiYiPower.TreatsAsJianDao(cardPlay.Card))
         {
             await CreatureCmd.GainBlock(
                 Owner,

@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
@@ -53,7 +54,7 @@ public sealed class LangJian : GuZhenRenCardTemplate
             || Pile?.Type != PileType.Discard
             || cardPlay.Card.Owner != Owner
             || cardPlay.Card.Type != CardType.Attack
-            || !cardPlay.Card.Tags.Contains(GuZhenRenTags.JianDao))
+            || !RuiYiPower.TreatsAsJianDao(cardPlay.Card))
         {
             return;
         }

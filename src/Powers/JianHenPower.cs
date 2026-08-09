@@ -34,7 +34,7 @@ public sealed class JianHenPower : ModPowerTemplate
     {
         if (target != Owner
             || cardSource is null
-            || !cardSource.Tags.Contains(GuZhenRenTags.JianDao)
+            || !RuiYiPower.TreatsAsJianDao(cardSource)
             || !props.IsPoweredAttack())
         {
             return 0m;
