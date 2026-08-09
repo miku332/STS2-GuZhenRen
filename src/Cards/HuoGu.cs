@@ -13,17 +13,28 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class HuoGu : GuZhenRenCardTemplate
+public sealed class HuoGu : AbstractBenMingGuCard
 {
-    public override int Rank => IsUpgraded ? 2 : 1;
-
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/HuoGu.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.YanDao];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        IsUpgraded ? [] : [CardKeyword.Ethereal];
+    public override IEnumerable<CardKeyword> CanonicalKeywords
+    {
+        get
+        {
+            if (Rank == 1)
+            {
+                yield return CardKeyword.Ethereal;
+            }
+
+            if (Rank >= 6)
+            {
+                yield return CardKeyword.Retain;
+            }
+        }
+    }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -32,7 +43,7 @@ public sealed class HuoGu : GuZhenRenCardTemplate
     ];
 
     public HuoGu()
-        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy, true)
+        : base(1, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy)
     {
     }
 
@@ -50,7 +61,7 @@ public sealed class HuoGu : GuZhenRenCardTemplate
 
         var maxSelect = Math.Min(
             hand.Cards.Count,
-            (int)DynamicVars["Cards"].BaseValue);
+            DynamicVars["Cards"].IntValue);
         var selectorPrefs = new CardSelectorPrefs(
             SelectionScreenPrompt,
             0,
@@ -71,7 +82,7 @@ public sealed class HuoGu : GuZhenRenCardTemplate
             await PowerCmd.Apply<FenShaoPower>(
                 choiceContext,
                 cardPlay.Target,
-                DynamicVars["FenShaoPower"].BaseValue,
+                DynamicVars["FenShaoPower"].IntValue,
                 Owner.Creature,
                 this);
         }
@@ -79,6 +90,39 @@ public sealed class HuoGu : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Ethereal);
+        DynamicVars["Cards"].UpgradeValueBy(
+            GetCards(Rank) - DynamicVars["Cards"].BaseValue);
+
+        if (Rank == 1)
+        {
+            AddKeyword(CardKeyword.Ethereal);
+        }
+        else
+        {
+            RemoveKeyword(CardKeyword.Ethereal);
+        }
+
+        if (Rank >= 6)
+        {
+            AddKeyword(CardKeyword.Retain);
+        }
+        else
+        {
+            RemoveKeyword(CardKeyword.Retain);
+        }
     }
+
+    private static int GetCards(int rank) =>
+        rank switch
+        {
+            <= 2 => 3,
+            3 => 4,
+            4 => 5,
+            5 => 6,
+            6 => 7,
+            7 => 8,
+            8 => 8,
+            _ => 9
+        };
+
 }
