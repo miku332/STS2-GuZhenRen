@@ -11,14 +11,25 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class XinXue : GuZhenRenCardTemplate
+public sealed class XinXue : AbstractBenMingGuCard
 {
-    public override int Rank => 1;
+    protected override int MaxRank => 8;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/XinXue.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.XueDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords
+    {
+        get
+        {
+            if (Rank >= 6)
+            {
+                yield return CardKeyword.Innate;
+            }
+        }
+    }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -27,7 +38,7 @@ public sealed class XinXue : GuZhenRenCardTemplate
     ];
 
     public XinXue()
-        : base(1, CardType.Power, CardRarity.Rare, TargetType.Self, false)
+        : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
     }
 
@@ -46,4 +57,40 @@ public sealed class XinXue : GuZhenRenCardTemplate
             Owner.Creature,
             this);
     }
+
+    protected override void OnUpgrade()
+    {
+        DynamicVars["HealAmount"].UpgradeValueBy(
+            GetHealAmount(Rank) - DynamicVars["HealAmount"].BaseValue);
+        DynamicVars["XinXuePower"].UpgradeValueBy(
+            GetMultiplier(Rank) - DynamicVars["XinXuePower"].BaseValue);
+
+        if (Rank >= 6)
+        {
+            AddKeyword(CardKeyword.Innate);
+        }
+        else
+        {
+            RemoveKeyword(CardKeyword.Innate);
+        }
+    }
+
+    private static int GetHealAmount(int rank) =>
+        rank switch
+        {
+            1 or 2 => 2,
+            3 or 4 => 3,
+            5 or 6 => 4,
+            _ => 5
+        };
+
+    private static int GetMultiplier(int rank) =>
+        rank switch
+        {
+            1 => 1,
+            2 or 3 => 2,
+            4 or 5 => 3,
+            6 or 7 => 4,
+            _ => 5
+        };
 }
