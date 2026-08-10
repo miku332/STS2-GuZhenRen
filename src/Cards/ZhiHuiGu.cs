@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
+using GuZhenRen.Keywords;
 
 namespace GuZhenRen.Cards;
 
@@ -22,6 +23,8 @@ public sealed class ZhiHuiGu : AbstractBenMingGuCard
     {
         get
         {
+            yield return GuZhenRenKeywords.Nian;
+
             if (Rank >= 9)
             {
                 yield return CardKeyword.Innate;

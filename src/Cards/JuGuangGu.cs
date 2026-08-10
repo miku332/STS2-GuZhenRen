@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
+using GuZhenRen.Keywords;
 
 namespace GuZhenRen.Cards;
 
@@ -28,6 +29,9 @@ public sealed class JuGuangGu : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/JuGuangGu.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.GuangDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.ShanYao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

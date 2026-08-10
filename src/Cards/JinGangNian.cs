@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 
 namespace GuZhenRen.Cards;
@@ -23,6 +24,9 @@ public sealed class JinGangNian : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/JinGangNian.png");
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.Nian];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

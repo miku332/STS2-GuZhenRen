@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,7 +19,7 @@ public sealed class OptionFangHuXingXiuQiPan : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/XingXiuQiPan.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Unplayable];
+        [CardKeyword.Unplayable, GuZhenRenKeywords.Nian];
 
     public override bool CanBeGeneratedInCombat => false;
 

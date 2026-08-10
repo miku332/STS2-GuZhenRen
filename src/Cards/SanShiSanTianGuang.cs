@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
@@ -25,6 +26,9 @@ public sealed class SanShiSanTianGuang : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/SanShiSanTianGuang.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.GuangDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.ShanYao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

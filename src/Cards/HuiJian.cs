@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
+using GuZhenRen.Keywords;
 
 namespace GuZhenRen.Cards;
 
@@ -22,6 +23,9 @@ public sealed class HuiJian : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/HuiJian.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.JianDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.Nian];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
