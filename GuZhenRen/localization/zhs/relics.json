@@ -25,5 +25,8 @@
   "GU_ZHEN_REN_RELIC_NI_LIU_HE.flavor": "律道天地秘境，能够逆反一切攻势。",
   "GU_ZHEN_REN_RELIC_JIAN_MIAN_CENG_XIANG_SHI_RELIC.title": "见面曾相识",
   "GU_ZHEN_REN_RELIC_JIAN_MIAN_CENG_XIANG_SHI_RELIC.description": "接下来{Battles}场战斗开始时，给予所有敌人{FriendStacks}层好友。效果耗尽或右键此遗物时，转为卡牌并返回你的牌组。",
-  "GU_ZHEN_REN_RELIC_JIAN_MIAN_CENG_XIANG_SHI_RELIC.flavor": "变化道仙级杀招，源自盗天魔尊。"
+  "GU_ZHEN_REN_RELIC_JIAN_MIAN_CENG_XIANG_SHI_RELIC.flavor": "变化道仙级杀招，源自盗天魔尊。",
+  "GU_ZHEN_REN_RELIC_TU_DUI_GU.title": "土堆蛊",
+  "GU_ZHEN_REN_RELIC_TU_DUI_GU.description": "你可以跨回合保留最多3点格挡。",
+  "GU_ZHEN_REN_RELIC_TU_DUI_GU.flavor": "二转土道蛊虫，可产生土堆，稳固防守。"
 }
