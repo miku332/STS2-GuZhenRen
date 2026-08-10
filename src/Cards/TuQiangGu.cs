@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -22,6 +23,9 @@ public sealed class TuQiangGu : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/TuQiangGu.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.TuDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.JiTu];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

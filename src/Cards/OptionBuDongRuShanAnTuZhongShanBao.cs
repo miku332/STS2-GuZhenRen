@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -20,7 +21,7 @@ public sealed class OptionBuDongRuShanAnTuZhongShanBao
         PortraitPath: "res://GuZhenRen/images/cards/AnTuZhongShanBao.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Unplayable];
+        [CardKeyword.Unplayable, GuZhenRenKeywords.JiTu];
 
     public override bool CanBeGeneratedInCombat => false;
 
