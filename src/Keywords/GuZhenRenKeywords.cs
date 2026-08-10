@@ -13,6 +13,7 @@ namespace GuZhenRen.Keywords;
 [RegisterOwnedCardKeyword(nameof(ZhuanYun))]
 [RegisterOwnedCardKeyword(nameof(JianFeng))]
 [RegisterOwnedCardKeyword(nameof(JianHen))]
+[RegisterOwnedCardKeyword(nameof(JianQi))]
 public sealed class GuZhenRenKeywords
 {
     public static readonly CardKeyword ShanYao =
@@ -38,4 +39,7 @@ public sealed class GuZhenRenKeywords
 
     public static readonly CardKeyword JianHen =
         ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(JianHen)).GetModCardKeyword();
+
+    public static readonly CardKeyword JianQi =
+        ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(JianQi)).GetModCardKeyword();
 }

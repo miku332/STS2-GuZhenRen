@@ -14,5 +14,7 @@
     "GU_ZHEN_REN_KEYWORD_JIAN_FENG.title": "剑锋",
     "GU_ZHEN_REN_KEYWORD_JIAN_FENG.description": "剑道攻击造成伤害后，给予目标等同于剑锋层数的剑痕。",
     "GU_ZHEN_REN_KEYWORD_JIAN_HEN.title": "剑痕",
-    "GU_ZHEN_REN_KEYWORD_JIAN_HEN.description": "每层使剑道攻击对该目标额外造成1点伤害。敌方回合结束时移除。"
+    "GU_ZHEN_REN_KEYWORD_JIAN_HEN.description": "每层使剑道攻击对该目标额外造成1点伤害。敌方回合结束时移除。",
+    "GU_ZHEN_REN_KEYWORD_JIAN_QI.title": "剑气",
+    "GU_ZHEN_REN_KEYWORD_JIAN_QI.description": "敌方回合结束时，转化为等量剑痕。"
 }

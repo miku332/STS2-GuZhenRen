@@ -12,7 +12,7 @@
     "GU_ZHEN_REN_CARD_GUANG_GU.title":  "光蛊",
     "GU_ZHEN_REN_CARD_GUANG_GU.description":  "获得{ShanYaoPower:diff()}层[gold]闪耀[/gold]。\\n接下来{RiGuangPower:diff()}次打出光道攻击牌时，不会消耗[gold]闪耀[/gold]。",
     "GU_ZHEN_REN_CARD_JIAN_QI_GU.title":  "剑气蛊",
-    "GU_ZHEN_REN_CARD_JIAN_QI_GU.description":  "造成{Damage:diff()}点伤害。\\n施加{JianQiPower:diff()}层剑气。",
+    "GU_ZHEN_REN_CARD_JIAN_QI_GU.description":  "造成{Damage:diff()}点伤害。\\n施加{JianQiPower:diff()}层[gold]剑气[/gold]。",
     "GU_ZHEN_REN_CARD_JIAN_DUN.title":  "剑盾",
     "GU_ZHEN_REN_CARD_JIAN_DUN.description":  "造成{Damage:diff()}点伤害。\\n获得{JianDunPower:diff()}层剑盾。",
     "GU_ZHEN_REN_CARD_JIAN_YING_GU.title":  "剑影蛊",
