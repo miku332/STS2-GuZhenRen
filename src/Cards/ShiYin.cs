@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -16,6 +17,8 @@ public sealed class ShiYin : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/ShiYin.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhouDao];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded ? [] : [CardKeyword.Ethereal];

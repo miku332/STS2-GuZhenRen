@@ -30,7 +30,7 @@ public sealed class HuangXingXianYuan : GuZhenRenCardTemplate
     ];
 
     public HuangXingXianYuan()
-        : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self, false)
+        : base(0, CardType.Skill, CardRarity.Token, TargetType.Self, false)
     {
     }
 

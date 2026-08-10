@@ -13,7 +13,7 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class AngryBird : GuZhenRenCardTemplate
+public sealed class AngryBird : AbstractShaZhaoCard
 {
     public override int Rank => 1;
 
@@ -29,7 +29,7 @@ public sealed class AngryBird : GuZhenRenCardTemplate
     ];
 
     public AngryBird()
-        : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy, false)
+        : base(2, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy, false)
     {
     }
 

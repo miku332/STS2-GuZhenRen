@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class WanWuDaTongBian : GuZhenRenCardTemplate
+public sealed class WanWuDaTongBian : AbstractShaZhaoCard
 {
     public override int Rank => 0;
 

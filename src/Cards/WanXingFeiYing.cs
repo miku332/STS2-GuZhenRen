@@ -12,7 +12,7 @@ using GuZhenRen.Powers;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class WanXingFeiYing : GuZhenRenCardTemplate
+public sealed class WanXingFeiYing : AbstractShaZhaoCard
 {
     public override int Rank => 0;
 
@@ -26,7 +26,7 @@ public sealed class WanXingFeiYing : GuZhenRenCardTemplate
     ];
 
     public WanXingFeiYing()
-        : base(1, CardType.Power, CardRarity.Rare, TargetType.Self, false)
+        : base(1, CardType.Power, CardRarity.Token, TargetType.Self, false)
     {
     }
 

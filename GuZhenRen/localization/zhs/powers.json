@@ -136,5 +136,7 @@
     "GU_ZHEN_REN_POWER_TEMPORARY_HP_POWER.title": "临时生命",
     "GU_ZHEN_REN_POWER_TEMPORARY_HP_POWER.description": "受到生命伤害时，优先消耗临时生命，防止等量生命损失。",
     "GU_ZHEN_REN_POWER_XUE_DIAN_XING_BAN_POWER.title": "血殿刑办",
-    "GU_ZHEN_REN_POWER_XUE_DIAN_XING_BAN_POWER.description": "下回合开始前，被血缘标记的敌人对你造成的攻击伤害减半。"
+    "GU_ZHEN_REN_POWER_XUE_DIAN_XING_BAN_POWER.description": "下回合开始前，被血缘标记的敌人对你造成的攻击伤害减半。",
+    "GU_ZHEN_REN_POWER_YONG_SHENG_POWER.title": "永生",
+    "GU_ZHEN_REN_POWER_YONG_SHENG_POWER.description": "你不会失去生命；你打出的牌不消耗能量；你的手牌会尽量补满。"
 }

@@ -38,7 +38,7 @@ public sealed class XinXue : AbstractBenMingGuCard
     ];
 
     public XinXue()
-        : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+        : base(1, CardType.Power, CardRarity.Token, TargetType.Self)
     {
     }
 

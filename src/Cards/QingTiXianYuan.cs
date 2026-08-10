@@ -28,7 +28,7 @@ public sealed class QingTiXianYuan : GuZhenRenCardTemplate
     ];
 
     public QingTiXianYuan()
-        : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self, false)
+        : base(0, CardType.Skill, CardRarity.Token, TargetType.Self, false)
     {
     }
 

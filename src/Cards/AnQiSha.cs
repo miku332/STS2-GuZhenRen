@@ -13,7 +13,7 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class AnQiSha : GuZhenRenCardTemplate
+public sealed class AnQiSha : AbstractShaZhaoCard
 {
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/AnQiSha.png");
@@ -26,7 +26,7 @@ public sealed class AnQiSha : GuZhenRenCardTemplate
     ];
 
     public AnQiSha()
-        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy, false)
+        : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy, false)
     {
     }
 

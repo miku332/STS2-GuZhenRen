@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -19,6 +20,8 @@ public sealed class RenRuGu : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/RenRuGu.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhouDao];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded ? [CardKeyword.Exhaust, CardKeyword.Retain] : [CardKeyword.Exhaust];

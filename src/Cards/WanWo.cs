@@ -11,7 +11,7 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class WanWo : GuZhenRenCardTemplate
+public sealed class WanWo : AbstractShaZhaoCard
 {
     protected override bool HasEnergyCostX => true;
 
@@ -32,7 +32,7 @@ public sealed class WanWo : GuZhenRenCardTemplate
         [PreviewCard<WoLiXuYing>(upgraded: true)];
 
     public WanWo()
-        : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self, false)
+        : base(0, CardType.Skill, CardRarity.Token, TargetType.Self, false)
     {
     }
 

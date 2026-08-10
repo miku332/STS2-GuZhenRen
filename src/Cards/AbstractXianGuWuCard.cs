@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 
 namespace GuZhenRen.Cards;
 
-public abstract class AbstractXianGuWuCard : GuZhenRenCardTemplate
+public abstract class AbstractXianGuWuCard : AbstractShaZhaoCard
 {
     public override int Rank => 0;
 

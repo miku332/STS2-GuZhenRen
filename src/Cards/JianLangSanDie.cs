@@ -13,7 +13,7 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class JianLangSanDie : GuZhenRenCardTemplate
+public sealed class JianLangSanDie : AbstractShaZhaoCard
 {
     public override int Rank => 0;
 
@@ -29,7 +29,7 @@ public sealed class JianLangSanDie : GuZhenRenCardTemplate
     ];
 
     public JianLangSanDie()
-        : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies, false)
+        : base(2, CardType.Attack, CardRarity.Token, TargetType.AllEnemies, false)
     {
     }
 

@@ -13,7 +13,7 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class WanWoDaShouYin : GuZhenRenCardTemplate
+public sealed class WanWoDaShouYin : AbstractShaZhaoCard
 {
     private const int BaseDamage = 24;
 
@@ -46,7 +46,7 @@ public sealed class WanWoDaShouYin : GuZhenRenCardTemplate
     ];
 
     public WanWoDaShouYin()
-        : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies, false)
+        : base(2, CardType.Attack, CardRarity.Token, TargetType.AllEnemies, false)
     {
     }
 

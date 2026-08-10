@@ -12,7 +12,7 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class ZhuiMingHuo : GuZhenRenCardTemplate
+public sealed class ZhuiMingHuo : AbstractShaZhaoCard
 {
     public override int Rank => 0;
 
@@ -29,7 +29,7 @@ public sealed class ZhuiMingHuo : GuZhenRenCardTemplate
     ];
 
     public ZhuiMingHuo()
-        : base(2, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy, false)
+        : base(2, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy, false)
     {
     }
 

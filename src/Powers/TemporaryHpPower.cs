@@ -40,6 +40,11 @@ public sealed class TemporaryHpPower : ModPowerTemplate
             return amount;
         }
 
+        if (props.HasFlag(ValueProp.Unblockable))
+        {
+            return amount;
+        }
+
         var absorbed = Math.Min(Amount, amount);
         GetInternalData<AbsorptionState>().PendingAmount += absorbed;
         return amount - absorbed;

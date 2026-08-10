@@ -1,4 +1,5 @@
 using GuZhenRen.Powers;
+using GuZhenRen.Relics;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
@@ -13,6 +14,11 @@ public static class ProbabilitySystem
         ArgumentNullException.ThrowIfNull(card.Owner);
 
         var chance = Math.Clamp(chancePercent, 0m, 100m);
+        if (card.Owner.GetRelic<HongYunQiTianGu>() is not null)
+        {
+            chance = Math.Clamp(chance + 40m, 0m, 100m);
+        }
+
         var success = card.Owner.RunState.Rng.CombatCardSelection.NextFloat(100f)
             < (float)chance;
         if (!success)

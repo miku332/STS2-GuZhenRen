@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class JianMianCengXiangShi : GuZhenRenCardTemplate
+public sealed class JianMianCengXiangShi : AbstractShaZhaoCard
 {
     public const int Duration = 5;
     public const int FriendStacks = 5;

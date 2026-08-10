@@ -8,6 +8,7 @@ using GuZhenRen.Cards;
 using STS2RitsuLib.Patching.Core;
 using GuZhenRen.Patches;
 using GuZhenRen.Powers;
+using GuZhenRen.Relics;
 using GuZhenRen.Systems;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Helpers;
@@ -33,6 +34,24 @@ public static class Entry
         var tunHuoPatcher = RitsuLibFramework.CreatePatcher(ModId, "tun-huo");
         tunHuoPatcher.RegisterPatch<TunHuoPatch>();
         tunHuoPatcher.PatchAll();
+        var yongShengPatcher = RitsuLibFramework.CreatePatcher(
+            ModId,
+            "yong-sheng");
+        yongShengPatcher.RegisterPatch<YongShengLoseMaxHpPatch>();
+        yongShengPatcher.RegisterPatch<YongShengKillPatch>();
+        yongShengPatcher.PatchAll();
+        var guiBuJuePatcher = RitsuLibFramework.CreatePatcher(
+            ModId,
+            "gui-bu-jue");
+        guiBuJuePatcher.RegisterPatch<GuiBuJueMoveTargetPatch>();
+        guiBuJuePatcher.RegisterPatch<GuiBuJueAttackTargetPatch>();
+        guiBuJuePatcher.PatchAll();
+        var jianChiGuPatcher = RitsuLibFramework.CreatePatcher(
+            ModId,
+            "jian-chi-gu");
+        jianChiGuPatcher.RegisterPatch<JianChiGuDurationPatch>();
+        jianChiGuPatcher.RegisterPatch<JianChiGuDecrementPatch>();
+        jianChiGuPatcher.PatchAll();
         var huaShaPatcher = RitsuLibFramework.CreatePatcher(ModId, "hua-sha");
         huaShaPatcher.RegisterPatch<HuaShaLoseBlockPatch>();
         huaShaPatcher.RegisterPatch<HuaShaClearBlockPatch>();
@@ -40,6 +59,8 @@ public static class Entry
         var benMingGuPatcher = RitsuLibFramework.CreatePatcher(ModId, "ben-ming-gu");
         benMingGuPatcher.RegisterPatch<BenMingGuUniquenessPatch>();
         benMingGuPatcher.RegisterPatch<XianGuCanHaiSmithRestSitePatch>();
+        benMingGuPatcher.RegisterPatch<CunGuangYinSmithPatch>();
+        benMingGuPatcher.RegisterPatch<CunGuangYinSmithCountPatch>();
         benMingGuPatcher.PatchAll();
         var aiQingGuPatcher = RitsuLibFramework.CreatePatcher(ModId, "ai-qing-gu");
         aiQingGuPatcher.RegisterPatch<AiQingGuEscapeRewardPatch>();
@@ -55,6 +76,12 @@ public static class Entry
             "card-display");
         cardDisplayPatcher.RegisterPatch<CardRankDescriptionPatch>();
         cardDisplayPatcher.PatchAll();
+        var shaZhaoPoolPatcher = RitsuLibFramework.CreatePatcher(
+            ModId,
+            "sha-zhao-pools");
+        shaZhaoPoolPatcher.RegisterPatch<ShaZhaoRewardPoolPatch>();
+        shaZhaoPoolPatcher.RegisterPatch<ShaZhaoMerchantPoolPatch>();
+        shaZhaoPoolPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(
@@ -188,7 +215,11 @@ public static class Entry
                 static evt => ZhuiMingHuoPower.AfterAttackEnded(evt),
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CreatureDiedEvent>(
-                static evt => ShaGu.AfterCreatureDied(evt),
+                static evt =>
+                {
+                    ShaGu.AfterCreatureDied(evt);
+                    TaskHelper.RunSafely(ChiXiang.AfterCreatureDied(evt));
+                },
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<RoomEnteredEvent>(
                 static evt =>

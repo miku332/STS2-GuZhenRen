@@ -78,7 +78,7 @@ public sealed class ChiLi : GuZhenRenCardTemplate
             return;
         }
 
-        var remaining = KillsRemaining - 1;
+        var remaining = KillsRemaining - ChiXiang.GetFatalCounterReduction(Owner);
         if (remaining == 0)
         {
             remaining = InitialKillsRemaining;

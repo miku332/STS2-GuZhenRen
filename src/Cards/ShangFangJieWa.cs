@@ -15,7 +15,7 @@ using GuZhenRen.Tags;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class ShangFangJieWa : GuZhenRenCardTemplate
+public sealed class ShangFangJieWa : AbstractShaZhaoCard
 {
     private const int BaseDamage = 10;
 
@@ -48,7 +48,7 @@ public sealed class ShangFangJieWa : GuZhenRenCardTemplate
     ];
 
     public ShangFangJieWa()
-        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy, false)
+        : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy, false)
     {
     }
 

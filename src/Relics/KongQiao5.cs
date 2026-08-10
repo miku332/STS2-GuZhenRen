@@ -13,5 +13,5 @@ public sealed class KongQiao5 : AbstractKongQiaoRelic
 
     protected override string RelicImageName => "KongQiao_5";
 
-    protected override RelicModel? NextStage => null;
+    protected override RelicModel? NextStage => ModelDb.Relic<XianQiao6>();
 }

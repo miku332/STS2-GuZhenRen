@@ -45,7 +45,34 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
     public override Task BeforeCombatStart()
     {
         _effectUsedThisCombat = false;
-        return Task.CompletedTask;
+
+        if (Rank < 6 || Owner.Creature.CombatState is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        CardModel essence = Rank switch
+        {
+            6 => Owner.Creature.CombatState.CreateCard<QingTiXianYuan>(Owner),
+            7 => Owner.Creature.CombatState.CreateCard<HongZaoXianYuan>(Owner),
+            8 => Owner.Creature.CombatState.CreateCard<BaiLiXianYuan>(Owner),
+            _ => Owner.Creature.CombatState.CreateCard<HuangXingXianYuan>(Owner)
+        };
+
+        Flash();
+        return CardPileCmd.AddGeneratedCardToCombat(
+            essence,
+            PileType.Hand,
+            Owner,
+            CardPilePosition.Bottom);
+    }
+
+    public override async Task AfterObtained()
+    {
+        if (Rank >= 6)
+        {
+            await CreatureCmd.GainMaxHp(Owner.Creature, Rank);
+        }
     }
 
     public override Task AfterCardPlayed(
@@ -106,6 +133,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
     private bool QualifiesForFreePlay(CardModel card)
     {
         return Rank > 1 &&
+               Rank <= 5 &&
                card.Owner == Owner &&
                card is GuZhenRenCardTemplate guCard &&
                guCard.Rank >= 1 &&

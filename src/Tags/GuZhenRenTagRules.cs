@@ -23,7 +23,8 @@ public static class GuZhenRenTagRules
         GuZhenRenTags.XueDao,
         GuZhenRenTags.YanDao,
         GuZhenRenTags.ZhiDao,
-        GuZhenRenTags.YunDao
+        GuZhenRenTags.YunDao,
+        GuZhenRenTags.ZhouDao
     ];
 
     public static bool HasEffectiveTag(CardModel card, CardTag tag)

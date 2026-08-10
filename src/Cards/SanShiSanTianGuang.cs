@@ -16,7 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class SanShiSanTianGuang : GuZhenRenCardTemplate
+public sealed class SanShiSanTianGuang : AbstractShaZhaoCard
 {
     private int _pendingShanYaoGain;
 

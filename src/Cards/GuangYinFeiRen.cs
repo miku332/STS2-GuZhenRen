@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -10,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class GuangYinFeiRen : GuZhenRenCardTemplate
+public sealed class GuangYinFeiRen : AbstractShaZhaoCard
 {
     private const int InitialUses = 3;
 
@@ -20,6 +21,8 @@ public sealed class GuangYinFeiRen : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/GuangYinFeiRen.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhouDao];
 
     [SavedProperty]
     public int RemainingUses

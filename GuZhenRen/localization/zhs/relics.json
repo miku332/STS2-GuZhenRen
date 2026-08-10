@@ -14,6 +14,18 @@
   "GU_ZHEN_REN_RELIC_KONG_QIAO5.title": "五转空窍",
   "GU_ZHEN_REN_RELIC_KONG_QIAO5.description": "每场战斗，首张低于五转的蛊虫免费打出。",
   "GU_ZHEN_REN_RELIC_KONG_QIAO5.flavor": "五转蛊师空窍，产出紫晶真元。",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO6.title": "六转仙窍",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO6.description": "获得时，最大生命值增加6。在每场战斗开始时，将1张青提仙元加入手牌。",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO6.flavor": "六转蛊仙仙窍，产出青提仙元。",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO7.title": "七转仙窍",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO7.description": "获得时，最大生命值增加7。在每场战斗开始时，将1张红枣仙元加入手牌。",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO7.flavor": "七转蛊仙仙窍，产出红枣仙元。",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO8.title": "八转仙窍",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO8.description": "获得时，最大生命值增加8。在每场战斗开始时，将1张白荔仙元加入手牌。",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO8.flavor": "八转蛊仙仙窍，产出白荔仙元。",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO9.title": "九转仙窍",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO9.description": "获得时，最大生命值增加9。在每场战斗开始时，将1张黄杏仙元加入手牌。",
+  "GU_ZHEN_REN_RELIC_XIAN_QIAO9.flavor": "“世人谨记，我古月方源乃是大爱仙尊！”",
   "GU_ZHEN_REN_RELIC_XIAN_GU_CAN_HAI.title": "仙蛊残骸",
   "GU_ZHEN_REN_RELIC_XIAN_GU_CAN_HAI.description": "你在篝火处的下一次锻造不消耗行动次数。剩余{ExtraSmith}次。",
   "GU_ZHEN_REN_RELIC_XIAN_GU_CAN_HAI.flavor": "仙蛊毁灭后留下的残骸，仍然残留着部分道痕。",
@@ -52,7 +64,19 @@
   "GU_ZHEN_REN_RELIC_YAN_XIN_GU.flavor": "炎心蛊寄托在心脏当中，有增强火类蛊虫的效果。",
   "GU_ZHEN_REN_RELIC_NENG_LI_GU.title": "能力蛊",
   "GU_ZHEN_REN_RELIC_NENG_LI_GU.description": "每当你打出一张能力牌时，获得1点[gold]力量[/gold]。",
-  "GU_ZHEN_REN_RELIC_NENG_LI_GU.flavor": "八转力道仙蛊，在《人祖传》中有载，能够在灾劫中不断壮大。"
+  "GU_ZHEN_REN_RELIC_NENG_LI_GU.flavor": "八转力道仙蛊，在《人祖传》中有载，能够在灾劫中不断壮大。",
+  "GU_ZHEN_REN_RELIC_CHI_XIANG.title": "吃香",
+  "GU_ZHEN_REN_RELIC_CHI_XIANG.description": "杀死非爪牙的敌人时，回复1点生命。食道牌的斩杀收益翻倍。",
+  "GU_ZHEN_REN_RELIC_CHI_XIANG.flavor": "六转食道仙蛊，形如木盒，体格小巧。",
+  "GU_ZHEN_REN_RELIC_FEI_LI_GU.title": "费力蛊",
+  "GU_ZHEN_REN_RELIC_FEI_LI_GU.description": "拥有力量的敌人在其回合结束时失去1点力量。",
+  "GU_ZHEN_REN_RELIC_FEI_LI_GU.flavor": "能让敌人一举一动都更加浪费力气，加倍力量上的损耗。",
+  "GU_ZHEN_REN_RELIC_FEI_GU_DUN_GU.title": "飞骨盾蛊",
+  "GU_ZHEN_REN_RELIC_FEI_GU_DUN_GU.description": "抵消接下来{Uses}次受到的非生命损失伤害。",
+  "GU_ZHEN_REN_RELIC_FEI_GU_DUN_GU.flavor": "骨道蛊虫，能够飞出骨盾，抵挡外来攻势。",
+  "GU_ZHEN_REN_RELIC_CUN_GUANG_YIN.title": "寸光阴",
+  "GU_ZHEN_REN_RELIC_CUN_GUANG_YIN.description": "在篝火处锻造时，额外升级1张牌。",
+  "GU_ZHEN_REN_RELIC_CUN_GUANG_YIN.flavor": "光阴似箭，寸金难买寸光阴。"
   ,"GU_ZHEN_REN_RELIC_ROU_BAI_GU.title": "肉白骨",
   "GU_ZHEN_REN_RELIC_ROU_BAI_GU.description": "本场战斗中失去生命后，战斗胜利时恢复{Heal}点生命。",
   "GU_ZHEN_REN_RELIC_ROU_BAI_GU.flavor": "肉白骨，生死人。",
@@ -64,5 +88,101 @@
   "GU_ZHEN_REN_RELIC_SI_XU_RU_DIAN_GU.flavor": "思绪如电，念动即发。",
   "GU_ZHEN_REN_RELIC_SHUI_WEN_GU.title": "水文蛊",
   "GU_ZHEN_REN_RELIC_SHUI_WEN_GU.description": "你打出的牌名称每累计{Threshold}个字，获得{Gold}金币。",
-  "GU_ZHEN_REN_RELIC_SHUI_WEN_GU.flavor": "这是水文蛊，快撤，我们读者最怕水文了。"
+  "GU_ZHEN_REN_RELIC_SHUI_WEN_GU.flavor": "这是水文蛊，快撤，我们读者最怕水文了。",
+  "GU_ZHEN_REN_RELIC_GOU_SHI_YUN.title": "狗屎运",
+  "GU_ZHEN_REN_RELIC_GOU_SHI_YUN.description": "战斗奖励中有{Chance}%概率额外掉落1个遗物。",
+  "GU_ZHEN_REN_RELIC_GOU_SHI_YUN.flavor": "气运真传的精髓之一，可显著增强气运。",
+  "GU_ZHEN_REN_RELIC_HONG_YUN_QI_TIAN_GU.title": "鸿运齐天蛊",
+  "GU_ZHEN_REN_RELIC_HONG_YUN_QI_TIAN_GU.description": "概率类卡牌的成功率提高{ProbabilityBonus}个百分点，稀有卡牌奖励出现概率翻倍。",
+  "GU_ZHEN_REN_RELIC_HONG_YUN_QI_TIAN_GU.flavor": "鸿运齐天，气运如虹。",
+  "GU_ZHEN_REN_RELIC_FENG_XIONG_HUA_JI.title": "逢凶化吉",
+  "GU_ZHEN_REN_RELIC_FENG_XIONG_HUA_JI.description": "每当你获得一张诅咒牌时，将其转化为一张当前角色的随机卡牌。",
+  "GU_ZHEN_REN_RELIC_FENG_XIONG_HUA_JI.flavor": "将灾祸转化为机缘的运道蛊。"
+  ,"GU_ZHEN_REN_RELIC_TOU_SHENG.title": "偷生",
+  "GU_ZHEN_REN_RELIC_TOU_SHENG.description": "战斗中右键以盗取所有敌人{StealAmount}点最大生命。还可使用{Uses}次。",
+  "GU_ZHEN_REN_RELIC_TOU_SHENG.flavor": "八转偷道仙蛊，可以偷取一切生命体内的寿命。"
+  ,"GU_ZHEN_REN_RELIC_XIAN_QIAO10.title": "十转仙窍"
+  ,"GU_ZHEN_REN_RELIC_XIAN_QIAO10.description": "获得时，最大生命增加10并回满生命。战斗开始时，将1张黄杏仙元加入手牌并获得永生。"
+  ,"GU_ZHEN_REN_RELIC_XIAN_QIAO10.flavor": "曲折途穷天地窄，重重灾劫生死微。"
+  ,"GU_ZHEN_REN_RELIC_DING_XIAN_YOU.title": "定仙游"
+  ,"GU_ZHEN_REN_RELIC_DING_XIAN_YOU.description": "选择下一层房间时，可以无视当前路线。"
+  ,"GU_ZHEN_REN_RELIC_DING_XIAN_YOU.flavor": "《人祖传》记载的传奇宇道仙蛊，天下之大，无处不可去。"
+  ,"GU_ZHEN_REN_RELIC_GUI_BU_JUE.title": "鬼不觉"
+  ,"GU_ZHEN_REN_RELIC_GUI_BU_JUE.description": "幽灵类敌人的行动无法指定你为目标。"
+  ,"GU_ZHEN_REN_RELIC_GUI_BU_JUE.flavor": "九转偷道杀招，可防备鬼魂的感知。"
+  ,"GU_ZHEN_REN_RELIC_JIAN_CHI_GU.title": "坚持蛊"
+  ,"GU_ZHEN_REN_RELIC_JIAN_CHI_GU.description": "你拥有的每项正面状态在首次因持续时间结束而消失时，将其保留一次。"
+  ,"GU_ZHEN_REN_RELIC_JIAN_CHI_GU.flavor": "坚持并不难，难的是坚持到底。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_ANGRY_BIRD.title": "愤怒的小鸟蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_ANGRY_BIRD.description": "可在篝火处消耗升级后的熔岩炸裂蛊与任意六至九转炎道蛊虫，合炼杀招“愤怒的小鸟”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_ANGRY_BIRD.flavor": "炎道杀招蛊方，将炽烈火势凝作一击。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_YANG_MANG_BEI_HUO_YI.title": "阳莽背火衣蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_YANG_MANG_BEI_HUO_YI.description": "可在篝火处消耗升级后的炎胄蛊与任意六转以上炎道蛊虫，合炼杀招“阳莽背火衣”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_YANG_MANG_BEI_HUO_YI.flavor": "使头发熊熊燃烧，化为巨大的火焰披风，护卫周身，乃是炎道的极致奥义。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_ZHUI_MING_HUO.title": "追命火蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_ZHUI_MING_HUO.description": "可在篝火处消耗升级后的燎原火与任意六转以上炎道蛊虫，合炼杀招“追命火”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_ZHUI_MING_HUO.flavor": "能够感应攻势，追根溯源，直烧仙窍。生命不息，此火就燃烧不止。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_XING_FEI_YING.title": "万星飞萤蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_XING_FEI_YING.description": "可在篝火处消耗升级后的星念蛊与任意六转以上智道蛊虫，合炼杀招“万星飞萤”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_XING_FEI_YING.flavor": "此招一出天地晦暗，方圆千里夜幕降临，蛊仙的一思一念都会形成星念。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XING_XIU_QI_PAN.title": "星宿棋盘蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XING_XIU_QI_PAN.description": "可在篝火处消耗智慧蛊与任意六转以上智道蛊虫，合炼杀招“星宿棋盘”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XING_XIU_QI_PAN.flavor": "历史上第一座仙蛊屋，有着天下第一的推算能力。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_JIAN_LANG_SAN_DIE.title": "剑浪三叠蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_JIAN_LANG_SAN_DIE.description": "可在篝火处消耗升级后的浪剑蛊与任意一至九转剑道蛊虫，合炼杀招“剑浪三叠”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_JIAN_LANG_SAN_DIE.flavor": "剑浪一叠高过一叠，三浪连环，威力层层递增。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_JIAN_MIAN_CENG_XIANG_SHI.title": "见面曾相识蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_JIAN_MIAN_CENG_XIANG_SHI.description": "可在篝火处消耗升级后的态度蛊与任意一至九转变化道或偷道蛊虫，合炼杀招“见面曾相识”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_JIAN_MIAN_CENG_XIANG_SHI.flavor": "变化道仙级杀招，源自盗天魔尊。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_SAN_SHI_SAN_TIAN_GUANG.title": "三十三天光蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_SAN_SHI_SAN_TIAN_GUANG.description": "可在篝火处消耗升级后的江河日下蛊与任意一至九转光道蛊虫，合炼杀招“三十三天光”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_SAN_SHI_SAN_TIAN_GUANG.flavor": "光道杀招，积蓄的闪耀越多，爆发越是惊人。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_SHANG_FANG_JIE_WA.title": "上房揭瓦蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_SHANG_FANG_JIE_WA.description": "可在篝火处消耗升级后的横冲直撞蛊与任意六至九转力道蛊虫，合炼杀招“上房揭瓦”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_SHANG_FANG_JIE_WA.flavor": "极为克制防御类状态，连坚固的防御手段也能强行破除。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_SONG_YOU_FENG.title": "送友风蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_SONG_YOU_FENG.description": "可在篝火处消耗升级后的八面威风蛊与任意一至九转风道或偷道蛊虫，合炼杀招“送友风”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_SONG_YOU_FENG.flavor": "风道杀招，送君一程，结下好友因果。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_AN_QI_SHA.title": "暗歧杀蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_AN_QI_SHA.description": "可在篝火处消耗升级后的飞剑蛊与剑影蛊、多重剑影蛊或叠影蛊，合炼杀招“暗歧杀”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_AN_QI_SHA.flavor": "剑势极快，迅雷不及掩耳。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_JIAN_HEN_SUO_MING.title": "剑痕索命蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_JIAN_HEN_SUO_MING.description": "可在篝火处消耗升级后的飞剑蛊与任意六至九转剑道蛊虫，合炼杀招“剑痕索命”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_JIAN_HEN_SUO_MING.flavor": "剑痕刻入目标弱点，索命于无形。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_WO.title": "万我蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_WO.description": "可在篝火处消耗升级后的我力蛊与任意一至九转力道蛊虫，合炼杀招“万我”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_WO.flavor": "万般皆是我。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_WO_DA_SHOU_YIN.title": "万我大手印蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_WO_DA_SHOU_YIN.description": "可在篝火处消耗升级后的拔山蛊与任意六转以上力道蛊虫，合炼杀招“万我大手印”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_WO_DA_SHOU_YIN.flavor": "凝聚群力于一掌之间。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WU_ZHI_QUAN_XIN_JIAN.title": "五指拳心剑蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WU_ZHI_QUAN_XIN_JIAN.description": "可在篝火处消耗升级后的慧剑蛊与任意一至九转剑道蛊虫，合炼杀招“五指拳心剑”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WU_ZHI_QUAN_XIN_JIAN.flavor": "经历五十四次劫，劫云依旧漫遮天。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XUE_JIAN_LENG.title": "血渐冷蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XUE_JIAN_LENG.description": "可在篝火处消耗升级后的冷血蛊与任意一至九转血道蛊虫，合炼杀招“血渐冷”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XUE_JIAN_LENG.flavor": "以冷血蛊为核心，使敌人的血液迅速冷却，直至冻结。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XUE_PIAO_LIU.title": "血漂流蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XUE_PIAO_LIU.description": "可在篝火处消耗升级后的血走蛊与任意六至九转血道蛊虫，合炼杀招“血漂流”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XUE_PIAO_LIU.flavor": "血光长河承载使用者在空中飞行，所到之处皆逸散浓烈的血腥之气。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_ZHU_MO_BANG.title": "诛魔榜蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_ZHU_MO_BANG.description": "可在篝火处消耗升级后的血缘蛊与任意六至九转血道蛊虫，合炼杀招“诛魔榜”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_ZHU_MO_BANG.flavor": "天庭所创的八转血道仙蛊屋，记录着五域魔道的信息，几乎没有短板。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_TIAN_PU_GUANG_HE.title": "天瀑光河蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_TIAN_PU_GUANG_HE.description": "可在篝火处消耗升级后的太光蛊与任意一至九转光道蛊虫，合炼杀招“天瀑光河”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_TIAN_PU_GUANG_HE.flavor": "光河滚滚，洪波翻腾，滔天的光水每一滴都好似太阳碎片，璀璨耀眼至极。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WU_JIN_XUAN_GUANG_QI.title": "五禁玄光气蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WU_JIN_XUAN_GUANG_QI.description": "可在篝火处消耗升级后的限蛊与任意一至九转律道蛊虫，合炼杀招“五禁玄光气”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WU_JIN_XUAN_GUANG_QI.flavor": "五禁玄光两天昏，八转杀招困双尊。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_WU_DA_TONG_BIAN.title": "万物大同变蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_WU_DA_TONG_BIAN.description": "可在篝火处消耗升级后的变通与任意一至九转变化道或力道蛊虫，合炼杀招“万物大同变”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WAN_WU_DA_TONG_BIAN.flavor": "变化道的至高奥义，能使得万道归变，万物大同。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_GUANG_YIN_FEI_REN.title": "光阴飞刃蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_GUANG_YIN_FEI_REN.description": "可在篝火处消耗刃蛊与任意六至九转宙道蛊虫，合炼杀招“光阴飞刃”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_GUANG_YIN_FEI_REN.flavor": "“此刃一出，例无虚发，无不中的，中无不死。”"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_BAI_GU_ZHAN_CHE.title": "白骨战车蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_BAI_GU_ZHAN_CHE.description": "可在篝火处消耗升级后的战骨车轮与任意一至九转骨道蛊虫，合炼杀招“白骨战车”。防伪蛊+可代替任意一种材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_BAI_GU_ZHAN_CHE.flavor": "凡道第一杀招，威力强悍，可媲美六转仙蛊。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_AN_TU_ZHONG_SHAN_BAO.title": "安土重山堡蛊方"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_AN_TU_ZHONG_SHAN_BAO.description": "可在篝火处消耗3张任意一至九转土道蛊虫，合炼杀招“安土重山堡”。防伪蛊+可代替其中一张材料。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_AN_TU_ZHONG_SHAN_BAO.flavor": "八转土道仙蛊屋，防御能力堪称八转之最。"
 }
