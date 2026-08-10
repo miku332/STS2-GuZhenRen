@@ -25,7 +25,7 @@ public sealed class HuiJian : GuZhenRenCardTemplate
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.JianDao];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.Nian, GuZhenRenKeywords.Qing];
+        [GuZhenRenKeywords.Nian, GuZhenRenKeywords.Qing, GuZhenRenKeywords.JianFeng];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

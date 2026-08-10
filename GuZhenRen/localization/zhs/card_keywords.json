@@ -10,5 +10,7 @@
     "GU_ZHEN_REN_KEYWORD_JI_TU.title": "积土",
     "GU_ZHEN_REN_KEYWORD_JI_TU.description": "回合开始时，保留至多等同于积土层数的格挡。",
     "GU_ZHEN_REN_KEYWORD_ZHUAN_YUN.title": "转运",
-    "GU_ZHEN_REN_KEYWORD_ZHUAN_YUN.description": "概率牌触发失败时，使该牌的基础概率提高等同于当前转运层数的百分点。"
+    "GU_ZHEN_REN_KEYWORD_ZHUAN_YUN.description": "概率牌触发失败时，使该牌的基础概率提高等同于当前转运层数的百分点。",
+    "GU_ZHEN_REN_KEYWORD_JIAN_FENG.title": "剑锋",
+    "GU_ZHEN_REN_KEYWORD_JIAN_FENG.description": "剑道攻击造成伤害后，给予目标等同于剑锋层数的剑痕。"
 }

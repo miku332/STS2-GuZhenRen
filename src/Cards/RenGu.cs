@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
@@ -22,6 +23,7 @@ public sealed class RenGu : AbstractBenMingGuCard
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
+        GuZhenRenKeywords.JianFeng,
         CardKeyword.Exhaust
     ];
 
