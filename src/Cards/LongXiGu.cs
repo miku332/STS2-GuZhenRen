@@ -21,7 +21,7 @@ public sealed class LongXiGu : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/LongXiGu.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.FenShao];
+        [GuZhenRenKeywords.FenShao, GuZhenRenKeywords.JianHen];
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.BianHuaDao];
 
