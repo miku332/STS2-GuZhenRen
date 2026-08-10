@@ -8,5 +8,7 @@
     "GU_ZHEN_REN_KEYWORD_FEN_SHAO.title": "焚烧",
     "GU_ZHEN_REN_KEYWORD_FEN_SHAO.description": "焚烧层数变动时，受到等同于当前层数的伤害。回合结束时，焚烧层数减半。",
     "GU_ZHEN_REN_KEYWORD_JI_TU.title": "积土",
-    "GU_ZHEN_REN_KEYWORD_JI_TU.description": "回合开始时，保留至多等同于积土层数的格挡。"
+    "GU_ZHEN_REN_KEYWORD_JI_TU.description": "回合开始时，保留至多等同于积土层数的格挡。",
+    "GU_ZHEN_REN_KEYWORD_ZHUAN_YUN.title": "转运",
+    "GU_ZHEN_REN_KEYWORD_ZHUAN_YUN.description": "概率牌触发失败时，使该牌的基础概率提高等同于当前转运层数的百分点。"
 }
