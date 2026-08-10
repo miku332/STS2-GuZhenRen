@@ -16,5 +16,7 @@
     "GU_ZHEN_REN_KEYWORD_JIAN_HEN.title": "剑痕",
     "GU_ZHEN_REN_KEYWORD_JIAN_HEN.description": "每层使剑道攻击对该目标额外造成1点伤害。敌方回合结束时移除。",
     "GU_ZHEN_REN_KEYWORD_JIAN_QI.title": "剑气",
-    "GU_ZHEN_REN_KEYWORD_JIAN_QI.description": "敌方回合结束时，转化为等量剑痕。"
+    "GU_ZHEN_REN_KEYWORD_JIAN_QI.description": "敌方回合结束时，转化为等量剑痕。",
+    "GU_ZHEN_REN_KEYWORD_GAI_LV.title": "概率",
+    "GU_ZHEN_REN_KEYWORD_GAI_LV.description": "触发时按卡面显示的百分比进行判定。概率可被相关效果提高或降低。"
 }

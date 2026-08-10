@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Tags;
 using GuZhenRen.Systems;
 using MegaCrit.Sts2.Core.Commands;
@@ -20,6 +21,9 @@ public sealed class ShiBaiGu : GuZhenRenCardTemplate, IProbabilityCard
         PortraitPath: "res://GuZhenRen/images/cards/ShiBaiGu.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.LuDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.GaiLv];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

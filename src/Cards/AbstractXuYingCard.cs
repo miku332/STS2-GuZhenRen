@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
 using STS2RitsuLib.Scaffolding.Content;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Systems;
 using GuZhenRen.Tags;
@@ -24,6 +25,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
+        GuZhenRenKeywords.GaiLv,
         CardKeyword.Retain,
         CardKeyword.Unplayable
     ];

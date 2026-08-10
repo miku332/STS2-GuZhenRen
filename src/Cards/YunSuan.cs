@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Systems;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -21,6 +22,9 @@ public sealed class YunSuan : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/YunSuan.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.GaiLv];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
