@@ -25,6 +25,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
+        GuZhenRenKeywords.XuYing,
         GuZhenRenKeywords.GaiLv,
         CardKeyword.Retain,
         CardKeyword.Unplayable

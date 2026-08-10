@@ -24,8 +24,8 @@ public sealed class QuanLiYiFuGu : GuZhenRenCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded
-            ? [GuZhenRenKeywords.GaiLv, CardKeyword.Retain]
-            : [GuZhenRenKeywords.GaiLv];
+            ? [GuZhenRenKeywords.XuYing, GuZhenRenKeywords.GaiLv, CardKeyword.Retain]
+            : [GuZhenRenKeywords.XuYing, GuZhenRenKeywords.GaiLv];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

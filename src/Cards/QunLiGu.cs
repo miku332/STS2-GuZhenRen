@@ -7,6 +7,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
@@ -22,6 +23,9 @@ public sealed class QunLiGu : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/QunLiGu.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.LiDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.XuYing];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

@@ -9,6 +9,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
@@ -25,6 +26,7 @@ public sealed class FeiXiongZhiLiGu : GuZhenRenCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
+        GuZhenRenKeywords.XuYing,
         CardKeyword.Exhaust
     ];
 

@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
@@ -25,6 +26,7 @@ public sealed class ShiGuiFuLiGu : GuZhenRenCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
+        GuZhenRenKeywords.XuYing,
         CardKeyword.Exhaust
     ];
 
