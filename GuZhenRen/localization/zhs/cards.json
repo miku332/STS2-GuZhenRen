@@ -39,7 +39,7 @@
     "GU_ZHEN_REN_CARD_JIAN_QIAO_GU.description":  "获得{Block:diff()}点格挡。\\n选择1张攻击牌置于抽牌堆顶。其下次打出免费。",
     "GU_ZHEN_REN_CARD_JIAN_QIAO_GU.selectionScreenPrompt":  "选择1张攻击牌置于抽牌堆顶",
     "GU_ZHEN_REN_CARD_HUI_JIAN.title":  "慧剑",
-    "GU_ZHEN_REN_CARD_HUI_JIAN.description":  "造成{Damage:diff()}点伤害。获得{NianPower:diff()}层[gold]念[/gold]。若拥有情，消耗1层情并获得1层剑锋。",
+    "GU_ZHEN_REN_CARD_HUI_JIAN.description":  "造成{Damage:diff()}点伤害。获得{NianPower:diff()}层[gold]念[/gold]。若拥有[gold]情[/gold]，消耗1层[gold]情[/gold]并获得1层剑锋。",
     "GU_ZHEN_REN_CARD_SHA_YI_GU.title":  "杀意蛊",
     "GU_ZHEN_REN_CARD_SHA_YI_GU.description":  "对所有敌人造成{Damage:diff()}点伤害。每命中一名敌人，获得{YiPower:diff()}层意。",
     "GU_ZHEN_REN_CARD_ZI_YI_GU.title":  "恣意蛊",
