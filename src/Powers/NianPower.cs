@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using GuZhenRen.Relics;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -47,6 +48,11 @@ public sealed class NianPower : ModPowerTemplate
             return;
         }
 
+        if (Amount > 0 && Owner.Player?.GetRelic<SiXuRuDianGu>() is { } relic)
+        {
+            await relic.OnNianGained(new ThrowingPlayerChoiceContext());
+        }
+
         if (Amount > 0 && Owner.Player is not null)
         {
             await ResolveThresholds(
@@ -78,6 +84,11 @@ public sealed class NianPower : ModPowerTemplate
         if (power == this && amount > 0 && await TryBlockByNianTouShouZu())
         {
             return;
+        }
+
+        if (power == this && amount > 0 && Owner.Player?.GetRelic<SiXuRuDianGu>() is { } relic)
+        {
+            await relic.OnNianGained(choiceContext);
         }
 
         if (power == this
