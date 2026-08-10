@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Cards;
 using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -25,6 +26,9 @@ public sealed class YanTongGu : GuZhenRenCardTemplate
     [
         new PowerVar<YanTongPower>(1).WithPowerTooltip()
     ];
+
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<Burn>()];
 
     public YanTongGu()
         : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)

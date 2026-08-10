@@ -29,6 +29,9 @@ public sealed class JianYingGu : GuZhenRenCardTemplate
         new PowerVar<JianHenPower>(2).WithPowerTooltip()
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<JianYing>()];
+
     public JianYingGu()
         : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true)
     {

@@ -24,6 +24,9 @@ public sealed class SongYouFeng : GuZhenRenCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new PowerVar<HaoYouPower>(1).WithPowerTooltip()];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<SongYouFengSongBie>()];
+
     public SongYouFeng()
         : base(1, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy, false)
     {

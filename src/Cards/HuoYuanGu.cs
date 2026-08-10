@@ -26,6 +26,9 @@ public sealed class HuoYuanGu : GuZhenRenCardTemplate
         new CardsVar(2)
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<HuoShi>(IsUpgraded)];
+
     public HuoYuanGu()
         : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
     {

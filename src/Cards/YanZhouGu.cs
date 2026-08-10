@@ -28,6 +28,9 @@ public sealed class YanZhouGu : GuZhenRenCardTemplate
         new BlockVar(12, ValueProp.Move)
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<Burn>()];
+
     public YanZhouGu()
         : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
     {

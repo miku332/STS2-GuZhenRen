@@ -35,6 +35,9 @@ public sealed class HeiMangChanLiGu : GuZhenRenCardTemplate
         new PowerVar<ConstrictPower>(4).WithPowerTooltip()
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<HeiMangXuYing>(IsUpgraded)];
+
     public HeiMangChanLiGu()
         : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies, true)
     {

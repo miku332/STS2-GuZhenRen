@@ -31,6 +31,9 @@ public sealed class ShiBaiGu : GuZhenRenCardTemplate, IProbabilityCard
         new DynamicVar("Chance", 1)
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<ChengGongGu>()];
+
     public ShiBaiGu()
         : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
     {

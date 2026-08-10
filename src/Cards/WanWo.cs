@@ -28,6 +28,9 @@ public sealed class WanWo : GuZhenRenCardTemplate
         CardKeyword.Exhaust
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<WoLiXuYing>(upgraded: true)];
+
     public WanWo()
         : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self, false)
     {

@@ -32,6 +32,9 @@ public sealed class ChiMaJunLiGu : GuZhenRenCardTemplate
         new CardsVar(2)
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<MaLiXuYing>(IsUpgraded)];
+
     public ChiMaJunLiGu()
         : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
     {

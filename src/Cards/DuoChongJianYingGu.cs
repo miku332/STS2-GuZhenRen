@@ -24,6 +24,9 @@ public sealed class DuoChongJianYingGu : GuZhenRenCardTemplate
         new CardsVar(3)
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<JianYing>(IsUpgraded)];
+
     public DuoChongJianYingGu()
         : base(1, CardType.Skill, CardRarity.Common, TargetType.Self, true)
     {

@@ -35,6 +35,9 @@ public sealed class ShiGuiFuLiGu : GuZhenRenCardTemplate
         new BlockVar(11, ValueProp.Move)
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<GuiLiXuYing>(IsUpgraded)];
+
     public ShiGuiFuLiGu()
         : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
     {

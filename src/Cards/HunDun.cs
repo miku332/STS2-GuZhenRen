@@ -35,6 +35,9 @@ public sealed class HunDun : GuZhenRenCardTemplate
 
     public override bool CanBeGeneratedByModifiers => false;
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<HeiHuo>()];
+
     protected override Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay) =>

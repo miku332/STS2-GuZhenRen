@@ -29,6 +29,9 @@ public sealed class LiaoYuanHuo : GuZhenRenCardTemplate
         new PowerVar<FenShaoPower>(3).WithPowerTooltip()
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<Burn>()];
+
     public LiaoYuanHuo()
         : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies, true)
     {

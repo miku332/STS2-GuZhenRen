@@ -32,6 +32,9 @@ public sealed class QingNiuLaoLiGu : GuZhenRenCardTemplate
         new DamageVar(5, ValueProp.Move)
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<NiuLiXuYing>(IsUpgraded)];
+
     public QingNiuLaoLiGu()
         : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy, true)
     {

@@ -36,6 +36,9 @@ public sealed class FeiXiongZhiLiGu : GuZhenRenCardTemplate
         new PowerVar<VulnerablePower>(2).WithPowerTooltip()
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<FeiXiongXuYing>(IsUpgraded)];
+
     public FeiXiongZhiLiGu()
         : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies, true)
     {

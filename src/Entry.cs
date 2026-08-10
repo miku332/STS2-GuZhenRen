@@ -50,6 +50,11 @@ public static class Entry
         niLiuHePatcher.RegisterPatch<NiLiuHePowerLookupPatch>();
         niLiuHePatcher.RegisterPatch<NiLiuHePowerModifyPatch>();
         niLiuHePatcher.PatchAll();
+        var cardDisplayPatcher = RitsuLibFramework.CreatePatcher(
+            ModId,
+            "card-display");
+        cardDisplayPatcher.RegisterPatch<CardRankDescriptionPatch>();
+        cardDisplayPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(

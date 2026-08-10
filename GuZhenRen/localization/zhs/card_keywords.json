@@ -2,5 +2,16 @@
     "GU_ZHEN_REN_KEYWORD_GAI_LV.title": "概率",
     "GU_ZHEN_REN_KEYWORD_GAI_LV.description": "触发时按卡面显示的百分比进行判定。概率可被相关效果提高或降低。",
     "GU_ZHEN_REN_KEYWORD_XU_YING.title": "虚影",
-    "GU_ZHEN_REN_KEYWORD_XU_YING.description": "在手牌中时，每当你打出一张非虚影攻击牌，按卡面概率触发其效果。"
+    "GU_ZHEN_REN_KEYWORD_XU_YING.description": "在手牌中时，每当你打出一张非虚影攻击牌，按卡面概率触发其效果。",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE.title": "品阶",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE.description": "蛊虫分为一转至九转。六转及以上为仙蛊。部分蛊虫升级时会提升品阶。",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE_1.title": "一转",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE_2.title": "二转",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE_3.title": "三转",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE_4.title": "四转",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE_5.title": "五转",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE_6.title": "六转",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE_7.title": "七转",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE_8.title": "八转",
+    "GU_ZHEN_REN_KEYWORD_PIN_JIE_9.title": "九转"
 }

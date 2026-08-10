@@ -34,6 +34,9 @@ public sealed class BaiXiangYuanLiGu : GuZhenRenCardTemplate
         new PowerVar<StrengthPower>(2).WithPowerTooltip()
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<BaiXiangXuYing>(IsUpgraded)];
+
     public BaiXiangYuanLiGu()
         : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true)
     {

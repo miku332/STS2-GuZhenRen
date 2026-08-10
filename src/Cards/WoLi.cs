@@ -33,6 +33,9 @@ public sealed class WoLi : GuZhenRenCardTemplate
         new PowerVar<WoLiPower>(1)
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<WoLiXuYing>(IsUpgraded)];
+
     public WoLi()
         : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self, true)
     {

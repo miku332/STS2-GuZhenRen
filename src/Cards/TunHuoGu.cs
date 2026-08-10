@@ -27,6 +27,9 @@ public sealed class TunHuoGu : GuZhenRenCardTemplate
         new CardsVar(2)
     ];
 
+    protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
+        [PreviewCard<HuoShi>()];
+
     public TunHuoGu()
         : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self, true)
     {
