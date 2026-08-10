@@ -23,8 +23,9 @@ public sealed class ZiYiGu : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<YiPower>(3),
-        new PowerVar<VulnerablePower>(3)
+        new PowerVar<YiPower>(3).WithPowerTooltip(),
+        new PowerVar<StrengthPower>(1).WithPowerTooltip(),
+        new PowerVar<VulnerablePower>(3).WithPowerTooltip()
     ];
 
     public ZiYiGu()
@@ -48,7 +49,7 @@ public sealed class ZiYiGu : GuZhenRenCardTemplate
             await PowerCmd.Apply<StrengthPower>(
                 choiceContext,
                 enemy,
-                1,
+                DynamicVars["StrengthPower"].BaseValue,
                 Owner.Creature,
                 this);
 

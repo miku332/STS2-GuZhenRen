@@ -27,7 +27,7 @@ public sealed class TaiGuangGu : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<TaiGuRongYaoZhiGuangPower>(1)
+        new PowerVar<TaiGuRongYaoZhiGuangPower>(1).WithPowerTooltip()
     ];
 
     public TaiGuangGu()

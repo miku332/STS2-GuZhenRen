@@ -23,8 +23,6 @@ public sealed class ZhiHuiGu : AbstractBenMingGuCard
     {
         get
         {
-            yield return GuZhenRenKeywords.Nian;
-
             if (Rank >= 9)
             {
                 yield return CardKeyword.Innate;
@@ -34,7 +32,8 @@ public sealed class ZhiHuiGu : AbstractBenMingGuCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<ZhiHuiPower>(2)
+        new PowerVar<ZhiHuiPower>(2),
+        new PowerVar<NianPower>(0).WithPowerTooltip()
     ];
 
     public ZhiHuiGu()

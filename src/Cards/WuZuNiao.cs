@@ -20,7 +20,7 @@ public sealed class WuZuNiao : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiXingPower>(1),
+        new PowerVar<FeiXingPower>(1).WithPowerTooltip(),
         new PowerVar<ZhenChiGaoFeiPower>(3)
     ];
 

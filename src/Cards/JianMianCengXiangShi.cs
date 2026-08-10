@@ -1,10 +1,12 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Relics;
+using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -30,7 +32,8 @@ public sealed class JianMianCengXiangShi : GuZhenRenCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Battles", Duration),
-        new DynamicVar("FriendStacks", FriendStacks)
+        new DynamicVar("FriendStacks", FriendStacks),
+        new PowerVar<HaoYouPower>(0).WithPowerTooltip()
     ];
 
     public override bool CanBeGeneratedInCombat => false;

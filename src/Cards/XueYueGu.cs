@@ -25,7 +25,7 @@ public sealed class XueYueGu : GuZhenRenCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(5, ValueProp.Move),
-        new PowerVar<XueLiuBuZhiPower>(3)
+        new PowerVar<XueLiuBuZhiPower>(3).WithPowerTooltip()
     ];
 
     public XueYueGu()

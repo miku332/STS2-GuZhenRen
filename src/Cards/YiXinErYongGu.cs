@@ -19,12 +19,9 @@ public sealed class YiXinErYongGu : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/YiXinErYongGu.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.Nian];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<NianPower>(3),
+        new PowerVar<NianPower>(3).WithPowerTooltip(),
         new PowerVar<YiXinErYongPower>(1)
     ];
 

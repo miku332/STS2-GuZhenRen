@@ -6,7 +6,6 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
-using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -20,14 +19,12 @@ public sealed class LongXiGu : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/LongXiGu.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.FenShao, GuZhenRenKeywords.JianHen];
-
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.BianHuaDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FenShaoPower>(6)
+        new PowerVar<FenShaoPower>(6).WithPowerTooltip(),
+        new PowerVar<JianHenPower>(0).WithPowerTooltip()
     ];
 
     public LongXiGu()

@@ -26,7 +26,7 @@ public sealed class JianDun : GuZhenRenCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(7, ValueProp.Move),
-        new PowerVar<JianDunPower>(4)
+        new PowerVar<JianDunPower>(4).WithPowerTooltip()
     ];
 
     public JianDun()

@@ -29,7 +29,8 @@ public sealed class SongYouFengSongBie : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<SongYouFadingPower>(2)
+        new PowerVar<SongYouFadingPower>(2).WithPowerTooltip(),
+        new PowerVar<HaoYouPower>(0).WithPowerTooltip()
     ];
 
     public SongYouFengSongBie()

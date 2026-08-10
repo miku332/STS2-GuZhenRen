@@ -21,12 +21,11 @@ public sealed class ZhuanYiGu : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/ZhuanYiGu.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.Nian];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<ZhuanYiPower>(3)
+        new PowerVar<ZhuanYiPower>(3),
+        new PowerVar<NianPower>(0).WithPowerTooltip(),
+        new PowerVar<YiPower>(0).WithPowerTooltip()
     ];
 
     public ZhuanYiGu()

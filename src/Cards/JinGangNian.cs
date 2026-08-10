@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
@@ -25,11 +26,9 @@ public sealed class JinGangNian : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/JinGangNian.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.Nian];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
+        new PowerVar<NianPower>(0).WithPowerTooltip(),
         new CalculationBaseVar(6),
         new ExtraDamageVar(1),
         new CalculatedDamageVar(ValueProp.Move)

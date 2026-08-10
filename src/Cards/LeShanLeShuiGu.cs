@@ -21,14 +21,13 @@ public sealed class LeShanLeShuiGu : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/LeShanLeShuiGu.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-    [
-        GuZhenRenKeywords.Nian,
-        CardKeyword.Exhaust
-    ];
+        [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<YiPower>(8)
+        new PowerVar<YiPower>(8).WithPowerTooltip(),
+        new PowerVar<NianPower>(0).WithPowerTooltip(),
+        new PowerVar<NianTouShouZuPower>(1).WithPowerTooltip()
     ];
 
     public LeShanLeShuiGu()
@@ -50,7 +49,7 @@ public sealed class LeShanLeShuiGu : GuZhenRenCardTemplate
         await PowerCmd.Apply<NianTouShouZuPower>(
             choiceContext,
             Owner.Creature,
-            1,
+            DynamicVars["NianTouShouZuPower"].BaseValue,
             Owner.Creature,
             this);
     }

@@ -4,6 +4,8 @@ using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -19,6 +21,9 @@ public sealed class HuangSha : GuZhenRenCardTemplate
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.TuDao];
 
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new PowerVar<HuaShaPower>(1)];
+
     public HuangSha()
         : base(3, CardType.Power, CardRarity.Rare, TargetType.Self, true)
     {
@@ -33,7 +38,7 @@ public sealed class HuangSha : GuZhenRenCardTemplate
             await PowerCmd.Apply<HuaShaPower>(
                 choiceContext,
                 Owner.Creature,
-                1,
+                DynamicVars["HuaShaPower"].BaseValue,
                 Owner.Creature,
                 this);
         }

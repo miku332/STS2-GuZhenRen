@@ -8,7 +8,6 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
-using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -22,15 +21,12 @@ public sealed class LiaoYuanHuo : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/LiaoYuanHuo.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.FenShao];
-
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.YanDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Times", 2),
-        new PowerVar<FenShaoPower>(3)
+        new PowerVar<FenShaoPower>(3).WithPowerTooltip()
     ];
 
     public LiaoYuanHuo()

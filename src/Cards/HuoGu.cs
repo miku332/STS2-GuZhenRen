@@ -7,7 +7,6 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
-using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -25,8 +24,6 @@ public sealed class HuoGu : AbstractBenMingGuCard
     {
         get
         {
-            yield return GuZhenRenKeywords.FenShao;
-
             if (Rank == 1)
             {
                 yield return CardKeyword.Ethereal;
@@ -42,7 +39,7 @@ public sealed class HuoGu : AbstractBenMingGuCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(3),
-        new PowerVar<FenShaoPower>(1)
+        new PowerVar<FenShaoPower>(1).WithPowerTooltip()
     ];
 
     public HuoGu()

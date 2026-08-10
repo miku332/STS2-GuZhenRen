@@ -20,13 +20,10 @@ public sealed class YiNianGu : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/YiNianGu.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.Nian];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(1),
-        new PowerVar<NianPower>(3)
+        new PowerVar<NianPower>(3).WithPowerTooltip()
     ];
 
     public YiNianGu()

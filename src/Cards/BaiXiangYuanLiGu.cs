@@ -31,7 +31,7 @@ public sealed class BaiXiangYuanLiGu : GuZhenRenCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(10, ValueProp.Move),
-        new PowerVar<StrengthPower>(2)
+        new PowerVar<StrengthPower>(2).WithPowerTooltip()
     ];
 
     public BaiXiangYuanLiGu()

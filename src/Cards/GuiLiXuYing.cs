@@ -25,6 +25,7 @@ public sealed class GuiLiXuYing : AbstractXuYingCard
 
     protected override IEnumerable<DynamicVar> AdditionalVars =>
     [
+        new PowerVar<StrengthPower>(0).WithPowerTooltip(),
         ModCardVars.ComputedBlock(
             "CalculatedBlock",
             BaseBlock,

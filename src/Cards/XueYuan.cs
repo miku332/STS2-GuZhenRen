@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
-using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
@@ -29,7 +28,8 @@ public sealed class XueYuan : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<XueYuanMarkPower>(2)
+        new PowerVar<XueYuanPower>(1),
+        new PowerVar<XueYuanMarkPower>(2).WithPowerTooltip()
     ];
 
     public XueYuan()
@@ -48,7 +48,7 @@ public sealed class XueYuan : GuZhenRenCardTemplate
             await PowerCmd.Apply<XueYuanPower>(
                 choiceContext,
                 Owner.Creature,
-                1,
+                DynamicVars["XueYuanPower"].BaseValue,
                 Owner.Creature,
                 this);
         }

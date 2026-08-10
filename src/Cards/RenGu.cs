@@ -22,15 +22,12 @@ public sealed class RenGu : AbstractBenMingGuCard
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.JianDao];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-    [
-        GuZhenRenKeywords.JianFeng,
-        CardKeyword.Exhaust
-    ];
+        [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Choices", 1),
-        new PowerVar<JianFengPower>(0)
+        new PowerVar<JianFengPower>(0).WithPowerTooltip()
     ];
 
     public RenGu()

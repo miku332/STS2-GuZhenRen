@@ -21,13 +21,10 @@ public sealed class XingNianGu : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/XingNianGu.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.Nian];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(2),
-        new PowerVar<NianPower>(3)
+        new PowerVar<NianPower>(3).WithPowerTooltip()
     ];
 
     public XingNianGu()

@@ -26,8 +26,8 @@ public sealed class TaiDuGu : GuZhenRenCardTemplate
     [
         new DamageVar(8, ValueProp.Move),
         new BlockVar(8, ValueProp.Move),
-        new PowerVar<WeakPower>(1),
-        new PowerVar<VulnerablePower>(1)
+        new PowerVar<WeakPower>(1).WithPowerTooltip(),
+        new PowerVar<VulnerablePower>(1).WithPowerTooltip()
     ];
 
     public TaiDuGu()

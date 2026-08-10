@@ -33,7 +33,7 @@ public sealed class LiLiangGu : AbstractBenMingGuCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<StrengthPower>(2),
+        new PowerVar<StrengthPower>(2).WithPowerTooltip(),
         new PowerVar<LiLiangGuStrengthDownPower>(1)
     ];
 

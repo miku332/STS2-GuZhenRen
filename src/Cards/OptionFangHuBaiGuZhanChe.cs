@@ -27,7 +27,7 @@ public sealed class OptionFangHuBaiGuZhanChe : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<ThornsPower>(3),
+        new PowerVar<ThornsPower>(3).WithPowerTooltip(),
         new PowerVar<GuCiPower>(3)
     ];
 

@@ -23,6 +23,7 @@ public sealed class FeiXiongXuYing : AbstractXuYingCard
 
     protected override IEnumerable<DynamicVar> AdditionalVars =>
     [
+        new PowerVar<StrengthPower>(0).WithPowerTooltip(),
         ModCardVars.ComputedDamage(
             "CalculatedDamage",
             BaseDamage,

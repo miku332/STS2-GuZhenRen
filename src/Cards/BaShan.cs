@@ -25,6 +25,7 @@ public sealed class BaShan : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
+        new PowerVar<StrengthPower>(0).WithPowerTooltip(),
         ModCardVars.ComputedDamage(
             "Damage",
             15,

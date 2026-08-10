@@ -8,7 +8,6 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
-using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -24,13 +23,10 @@ public sealed class JianYingGu : GuZhenRenCardTemplate
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.JianDao];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.JianHen];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(4, ValueProp.Move),
-        new PowerVar<JianHenPower>(2)
+        new PowerVar<JianHenPower>(2).WithPowerTooltip()
     ];
 
     public JianYingGu()

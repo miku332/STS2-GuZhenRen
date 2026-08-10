@@ -22,7 +22,7 @@ public sealed class ShiYin : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<IntangiblePower>(1)
+        new PowerVar<IntangiblePower>(1).WithPowerTooltip()
     ];
 
     protected override bool IsPlayable =>

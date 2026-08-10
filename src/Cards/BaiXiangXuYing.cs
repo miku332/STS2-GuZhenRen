@@ -18,7 +18,7 @@ public sealed class BaiXiangXuYing : AbstractXuYingCard
     protected override IEnumerable<DynamicVar> AdditionalVars =>
     [
         new DamageVar(5, ValueProp.Move),
-        new PowerVar<StrengthPower>(1)
+        new PowerVar<StrengthPower>(1).WithPowerTooltip()
     ];
 
     public override int Rank => 4;

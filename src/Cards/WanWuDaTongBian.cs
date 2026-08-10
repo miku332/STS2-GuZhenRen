@@ -4,6 +4,8 @@ using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -18,6 +20,12 @@ public sealed class WanWuDaTongBian : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/WanWuDaTongBian.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.BianHuaDao];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new PowerVar<WanWuDaTongBianPower>(1),
+        new PowerVar<BianHuaDaoDaoHenPower>(0).WithPowerTooltip()
+    ];
 
     public WanWuDaTongBian()
         : base(1, CardType.Power, CardRarity.Token, TargetType.Self, false)
@@ -36,7 +44,7 @@ public sealed class WanWuDaTongBian : GuZhenRenCardTemplate
         await PowerCmd.Apply<WanWuDaTongBianPower>(
             choiceContext,
             Owner.Creature,
-            1,
+            DynamicVars["WanWuDaTongBianPower"].BaseValue,
             Owner.Creature,
             this);
     }

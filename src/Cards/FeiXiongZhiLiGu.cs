@@ -33,7 +33,7 @@ public sealed class FeiXiongZhiLiGu : GuZhenRenCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(12, ValueProp.Move),
-        new PowerVar<VulnerablePower>(2)
+        new PowerVar<VulnerablePower>(2).WithPowerTooltip()
     ];
 
     public FeiXiongZhiLiGu()

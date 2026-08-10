@@ -24,7 +24,7 @@ public sealed class ShaYiGu : GuZhenRenCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(7, ValueProp.Move),
-        new PowerVar<YiPower>(1)
+        new PowerVar<YiPower>(1).WithPowerTooltip()
     ];
 
     public ShaYiGu()

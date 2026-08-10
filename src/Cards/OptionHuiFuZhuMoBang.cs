@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -16,7 +17,11 @@ public sealed class OptionHuiFuZhuMoBang : GuZhenRenCardTemplate
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Unplayable];
     public override bool CanBeGeneratedInCombat => false;
     public override bool CanBeGeneratedByModifiers => false;
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Drain", 5)];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new DynamicVar("Drain", 5),
+        new PowerVar<XueYuanMarkPower>(0).WithPowerTooltip()
+    ];
 
     public OptionHuiFuZhuMoBang()
         : base(-2, CardType.Skill, CardRarity.Token, TargetType.None, false)

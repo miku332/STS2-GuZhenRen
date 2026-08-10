@@ -22,12 +22,9 @@ public sealed class ZhuanYun : GuZhenRenCardTemplate
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.YunDao];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.ZhuanYun];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<ZhuanYunPower>(4)
+        new PowerVar<ZhuanYunPower>(4).WithPowerTooltip()
     ];
 
     public ZhuanYun()

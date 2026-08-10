@@ -7,7 +7,6 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
-using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -21,9 +20,6 @@ public sealed class YangMangBeiHuoYi : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/YangMangBeiHuoYi.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.FenShao];
-
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.YanDao];
 
     public override bool GainsBlock => true;
@@ -31,7 +27,7 @@ public sealed class YangMangBeiHuoYi : GuZhenRenCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(24, ValueProp.Move),
-        new PowerVar<FenShaoPower>(1),
+        new PowerVar<FenShaoPower>(1).WithPowerTooltip(),
         new PowerVar<YangMangBeiHuoYiPower>(3)
     ];
 

@@ -19,7 +19,7 @@ public sealed class OptionZhenChaZhuMoBang : GuZhenRenCardTemplate
     public override bool CanBeGeneratedInCombat => false;
     public override bool CanBeGeneratedByModifiers => false;
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<XueYuanMarkPower>(1)];
+        [new PowerVar<XueYuanMarkPower>(1).WithPowerTooltip()];
 
     public OptionZhenChaZhuMoBang()
         : base(-2, CardType.Skill, CardRarity.Token, TargetType.None, false)

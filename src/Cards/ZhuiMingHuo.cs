@@ -25,7 +25,7 @@ public sealed class ZhuiMingHuo : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<ZhuiMingHuoPower>(1)
+        new PowerVar<ZhuiMingHuoPower>(1).WithPowerTooltip()
     ];
 
     public ZhuiMingHuo()

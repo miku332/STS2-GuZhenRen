@@ -5,6 +5,8 @@ using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -20,8 +22,12 @@ public sealed class ZhiZhang : GuZhenRenCardTemplate
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.Nian];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new PowerVar<NianPower>(0).WithPowerTooltip(),
+        new PowerVar<ZhiZhangPower>(1),
+        new PowerVar<TemporaryHpPower>(0).WithPowerTooltip()
+    ];
 
     public ZhiZhang()
         : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self, true)
@@ -41,7 +47,7 @@ public sealed class ZhiZhang : GuZhenRenCardTemplate
         await PowerCmd.Apply<ZhiZhangPower>(
             choiceContext,
             Owner.Creature,
-            1,
+            DynamicVars["ZhiZhangPower"].BaseValue,
             Owner.Creature,
             this);
     }

@@ -1,6 +1,9 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -20,6 +23,9 @@ public sealed class OptionTengNuoXingXiuQiPan : GuZhenRenCardTemplate
     public override bool CanBeGeneratedInCombat => false;
 
     public override bool CanBeGeneratedByModifiers => false;
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new PowerVar<TengNuoExtraTurnPower>(1)];
 
     public OptionTengNuoXingXiuQiPan()
         : base(-2, CardType.Skill, CardRarity.Token, TargetType.None, false)

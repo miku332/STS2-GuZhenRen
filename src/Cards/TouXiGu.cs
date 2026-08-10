@@ -23,7 +23,7 @@ public sealed class TouXiGu : GuZhenRenCardTemplate
     [
         new DamageVar(3, ValueProp.Move | ValueProp.Unblockable),
         new DynamicVar("Hits", 1),
-        new PowerVar<VulnerablePower>(1)
+        new PowerVar<VulnerablePower>(1).WithPowerTooltip()
     ];
 
     public TouXiGu()

@@ -27,7 +27,7 @@ public sealed class OptionGongFaBaiGuZhanChe : GuZhenRenCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Damage", 0),
-        new PowerVar<WeakPower>(2)
+        new PowerVar<WeakPower>(2).WithPowerTooltip()
     ];
 
     public OptionGongFaBaiGuZhanChe()

@@ -19,12 +19,10 @@ public sealed class RuiYiGu : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/RuiYiGu.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.JianFeng];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<JianFengPower>(1)
+        new PowerVar<JianFengPower>(1).WithPowerTooltip(),
+        new PowerVar<RuiYiPower>(1)
     ];
 
     public RuiYiGu()
@@ -48,7 +46,7 @@ public sealed class RuiYiGu : GuZhenRenCardTemplate
             await PowerCmd.Apply<RuiYiPower>(
                 choiceContext,
                 Owner.Creature,
-                1,
+                DynamicVars["RuiYiPower"].BaseValue,
                 Owner.Creature,
                 this);
         }

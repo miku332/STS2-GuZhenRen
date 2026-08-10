@@ -6,7 +6,6 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
-using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -20,14 +19,12 @@ public sealed class HuoMaoSanZhangGu : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/HuoMaoSanZhangGu.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.FenShao];
-
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.YanDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FenShaoPower>(3)
+        new PowerVar<FenShaoPower>(3).WithPowerTooltip(),
+        new PowerVar<HuoMaoSanZhangPower>(1).WithPowerTooltip()
     ];
 
     public HuoMaoSanZhangGu()
@@ -59,7 +56,7 @@ public sealed class HuoMaoSanZhangGu : GuZhenRenCardTemplate
             await PowerCmd.Apply<HuoMaoSanZhangPower>(
                 choiceContext,
                 Owner.Creature,
-                1,
+                DynamicVars["HuoMaoSanZhangPower"].BaseValue,
                 Owner.Creature,
                 this);
         }

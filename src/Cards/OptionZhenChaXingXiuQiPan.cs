@@ -26,7 +26,7 @@ public sealed class OptionZhenChaXingXiuQiPan : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<BuMieXingBiaoPower>(1)
+        new PowerVar<BuMieXingBiaoPower>(1).WithPowerTooltip()
     ];
 
     public OptionZhenChaXingXiuQiPan()

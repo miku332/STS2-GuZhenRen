@@ -30,11 +30,9 @@ public sealed class LongLinGu : GuZhenRenCardTemplate
 
     public override bool GainsBlock => true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.JianFeng];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
+        new PowerVar<JianFengPower>(0).WithPowerTooltip(),
         new BlockVar(BaseBlock, ValueProp.Move),
         new CalculationBaseVar(BaseTimes),
         new CalculationExtraVar(1),

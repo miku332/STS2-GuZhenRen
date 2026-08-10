@@ -9,7 +9,6 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
-using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -27,12 +26,12 @@ public sealed class JianYing : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(4, ValueProp.Move)
+        new DamageVar(4, ValueProp.Move),
+        new PowerVar<JianHenPower>(0).WithPowerTooltip()
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        GuZhenRenKeywords.JianHen,
         CardKeyword.Unplayable,
         CardKeyword.Ethereal
     ];

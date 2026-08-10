@@ -19,7 +19,7 @@ public sealed class OptionTuiSuanXingXiuQiPan : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/XingXiuQiPan.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Unplayable, GuZhenRenKeywords.Nian];
+        [CardKeyword.Unplayable];
 
     public override bool CanBeGeneratedInCombat => false;
 
@@ -27,7 +27,7 @@ public sealed class OptionTuiSuanXingXiuQiPan : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<NianPower>(8)
+        new PowerVar<NianPower>(8).WithPowerTooltip()
     ];
 
     public OptionTuiSuanXingXiuQiPan()

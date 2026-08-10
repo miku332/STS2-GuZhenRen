@@ -7,7 +7,6 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
-using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -25,12 +24,13 @@ public sealed class XingHuoLiaoYuanGu : GuZhenRenCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded
-            ? [GuZhenRenKeywords.FenShao, CardKeyword.Exhaust, CardKeyword.Innate]
-            : [GuZhenRenKeywords.FenShao, CardKeyword.Exhaust];
+            ? [CardKeyword.Exhaust, CardKeyword.Innate]
+            : [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FenShaoPower>(1)
+        new PowerVar<FenShaoPower>(1).WithPowerTooltip(),
+        new PowerVar<XingHuoLiaoYuanPower>(1).WithPowerTooltip()
     ];
 
     public XingHuoLiaoYuanGu()
@@ -54,7 +54,7 @@ public sealed class XingHuoLiaoYuanGu : GuZhenRenCardTemplate
         await PowerCmd.Apply<XingHuoLiaoYuanPower>(
             choiceContext,
             cardPlay.Target,
-            1,
+            DynamicVars["XingHuoLiaoYuanPower"].BaseValue,
             Owner.Creature,
             this);
     }

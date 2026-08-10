@@ -7,7 +7,6 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
-using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -21,15 +20,12 @@ public sealed class AngryBird : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/AngryBird.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.FenShao];
-
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.YanDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(19, ValueProp.Move),
-        new PowerVar<FenShaoPower>(19)
+        new PowerVar<FenShaoPower>(19).WithPowerTooltip()
     ];
 
     public AngryBird()

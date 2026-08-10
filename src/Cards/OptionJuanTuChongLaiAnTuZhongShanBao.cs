@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Powers;
 using GuZhenRen.Keywords;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,7 +19,7 @@ public sealed class OptionJuanTuChongLaiAnTuZhongShanBao
         PortraitPath: "res://GuZhenRen/images/cards/AnTuZhongShanBao.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Unplayable, GuZhenRenKeywords.JiTu];
+        [CardKeyword.Unplayable];
 
     public override bool CanBeGeneratedInCombat => false;
 
@@ -27,7 +28,8 @@ public sealed class OptionJuanTuChongLaiAnTuZhongShanBao
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Cards", 0),
-        new DynamicVar("JiTu", 0)
+        new DynamicVar("JiTu", 0),
+        new PowerVar<JiTuPower>(0).WithPowerTooltip()
     ];
 
     public OptionJuanTuChongLaiAnTuZhongShanBao()

@@ -31,8 +31,8 @@ public sealed class HeiMangChanLiGu : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<WeakPower>(2),
-        new PowerVar<ConstrictPower>(4)
+        new PowerVar<WeakPower>(2).WithPowerTooltip(),
+        new PowerVar<ConstrictPower>(4).WithPowerTooltip()
     ];
 
     public HeiMangChanLiGu()

@@ -23,7 +23,7 @@ public sealed class TunHuoGu : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<TunHuoPower>(1),
+        new PowerVar<TunHuoPower>(1).WithPowerTooltip(),
         new CardsVar(2)
     ];
 

@@ -23,7 +23,7 @@ public sealed class YanTongGu : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<YanTongPower>(1)
+        new PowerVar<YanTongPower>(1).WithPowerTooltip()
     ];
 
     public YanTongGu()

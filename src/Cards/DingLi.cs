@@ -32,6 +32,7 @@ public sealed class DingLi : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
+        new PowerVar<StrengthPower>(0).WithPowerTooltip(),
         ModCardVars.ComputedBlock(
             "Block",
             10,

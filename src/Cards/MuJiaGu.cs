@@ -9,7 +9,6 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
-using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -29,14 +28,13 @@ public sealed class MuJiaGu : GuZhenRenCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        GuZhenRenKeywords.FenShao,
         CardKeyword.Exhaust
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(8, ValueProp.Move),
-        new PowerVar<FenShaoPower>(5)
+        new PowerVar<FenShaoPower>(5).WithPowerTooltip()
     ];
 
     public MuJiaGu()

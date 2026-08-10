@@ -21,7 +21,7 @@ public sealed class OptionBuDongRuShanAnTuZhongShanBao
         PortraitPath: "res://GuZhenRen/images/cards/AnTuZhongShanBao.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Unplayable, GuZhenRenKeywords.JiTu];
+        [CardKeyword.Unplayable];
 
     public override bool CanBeGeneratedInCombat => false;
 
@@ -30,7 +30,7 @@ public sealed class OptionBuDongRuShanAnTuZhongShanBao
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(30, ValueProp.Move),
-        new PowerVar<JiTuPower>(30)
+        new PowerVar<JiTuPower>(30).WithPowerTooltip()
     ];
 
     public OptionBuDongRuShanAnTuZhongShanBao()

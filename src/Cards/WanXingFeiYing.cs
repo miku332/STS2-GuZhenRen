@@ -19,12 +19,10 @@ public sealed class WanXingFeiYing : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/WanXingFeiYing.png");
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.Nian];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<WanXingFeiYingPower>(1)
+        new PowerVar<WanXingFeiYingPower>(1),
+        new PowerVar<NianPower>(0).WithPowerTooltip()
     ];
 
     public WanXingFeiYing()

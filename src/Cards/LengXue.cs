@@ -29,7 +29,7 @@ public sealed class LengXue : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<LengXuePower>(3)
+        new PowerVar<LengXuePower>(3).WithPowerTooltip()
     ];
 
     public LengXue()

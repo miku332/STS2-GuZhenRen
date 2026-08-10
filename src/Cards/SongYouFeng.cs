@@ -4,6 +4,8 @@ using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -18,6 +20,9 @@ public sealed class SongYouFeng : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/SongYouFeng.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.FengDao];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new PowerVar<HaoYouPower>(1).WithPowerTooltip()];
 
     public SongYouFeng()
         : base(1, CardType.Skill, CardRarity.Token, TargetType.AnyEnemy, false)
@@ -42,7 +47,7 @@ public sealed class SongYouFeng : GuZhenRenCardTemplate
         await PowerCmd.Apply<HaoYouPower>(
             choiceContext,
             cardPlay.Target,
-            1,
+            DynamicVars["HaoYouPower"].BaseValue,
             Owner.Creature,
             this);
     }

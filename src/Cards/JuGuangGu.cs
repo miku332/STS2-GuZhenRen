@@ -30,12 +30,9 @@ public sealed class JuGuangGu : GuZhenRenCardTemplate
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.GuangDao];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.ShanYao];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<ShanYaoPower>(1),
+        new PowerVar<ShanYaoPower>(1).WithPowerTooltip(),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("CalculatedShanYao")

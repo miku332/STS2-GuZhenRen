@@ -17,7 +17,7 @@ public sealed class HeiMangXuYing : AbstractXuYingCard
 
     protected override IEnumerable<DynamicVar> AdditionalVars =>
     [
-        new PowerVar<ConstrictPower>(4)
+        new PowerVar<ConstrictPower>(4).WithPowerTooltip()
     ];
 
     public override int Rank => 3;

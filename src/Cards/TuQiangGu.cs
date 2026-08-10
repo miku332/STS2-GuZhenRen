@@ -24,13 +24,10 @@ public sealed class TuQiangGu : GuZhenRenCardTemplate
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.TuDao];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [GuZhenRenKeywords.JiTu];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(12, ValueProp.Move),
-        new PowerVar<JiTuPower>(4)
+        new PowerVar<JiTuPower>(4).WithPowerTooltip()
     ];
 
     public TuQiangGu()

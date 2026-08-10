@@ -23,7 +23,7 @@ public sealed class BianXing : AbstractBenMingGuCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<BianHuaDaoDaoHenPower>(1)
+        new PowerVar<BianHuaDaoDaoHenPower>(1).WithPowerTooltip()
     ];
 
     public BianXing()
