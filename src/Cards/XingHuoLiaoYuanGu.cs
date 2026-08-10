@@ -7,6 +7,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -23,7 +24,9 @@ public sealed class XingHuoLiaoYuanGu : GuZhenRenCardTemplate
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.YanDao];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        IsUpgraded ? [CardKeyword.Exhaust, CardKeyword.Innate] : [CardKeyword.Exhaust];
+        IsUpgraded
+            ? [GuZhenRenKeywords.FenShao, CardKeyword.Exhaust, CardKeyword.Innate]
+            : [GuZhenRenKeywords.FenShao, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

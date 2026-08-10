@@ -7,6 +7,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -24,6 +25,8 @@ public sealed class HuoGu : AbstractBenMingGuCard
     {
         get
         {
+            yield return GuZhenRenKeywords.FenShao;
+
             if (Rank == 1)
             {
                 yield return CardKeyword.Ethereal;

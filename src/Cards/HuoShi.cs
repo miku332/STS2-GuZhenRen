@@ -6,6 +6,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -23,6 +24,7 @@ public sealed class HuoShi : GuZhenRenCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
+        GuZhenRenKeywords.FenShao,
         CardKeyword.Exhaust,
         CardKeyword.Retain
     ];

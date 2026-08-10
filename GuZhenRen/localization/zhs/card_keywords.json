@@ -4,5 +4,7 @@
     "GU_ZHEN_REN_KEYWORD_NIAN.title": "念",
     "GU_ZHEN_REN_KEYWORD_NIAN.description": "每累积3层念，转化为1层意并抽1张牌。",
     "GU_ZHEN_REN_KEYWORD_QING.title": "情",
-    "GU_ZHEN_REN_KEYWORD_QING.description": "每3层情，回合开始时额外抽1张牌。"
+    "GU_ZHEN_REN_KEYWORD_QING.description": "每3层情，回合开始时额外抽1张牌。",
+    "GU_ZHEN_REN_KEYWORD_FEN_SHAO.title": "焚烧",
+    "GU_ZHEN_REN_KEYWORD_FEN_SHAO.description": "焚烧层数变动时，受到等同于当前层数的伤害。回合结束时，焚烧层数减半。"
 }
