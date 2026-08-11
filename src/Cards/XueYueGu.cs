@@ -45,6 +45,11 @@ public sealed class XueYueGu : GuZhenRenCardTemplate
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
+        if (!cardPlay.Target.IsAlive)
+        {
+            return;
+        }
+
         await PowerCmd.Apply<XueLiuBuZhiPower>(
             choiceContext,
             cardPlay.Target,

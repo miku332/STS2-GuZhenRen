@@ -30,7 +30,7 @@ public sealed class ChengGongGu : GuZhenRenCardTemplate
     public override bool CanBeGeneratedByModifiers => false;
 
     public ChengGongGu()
-        : base(0, CardType.Skill, CardRarity.Rare, TargetType.None, false)
+        : base(0, CardType.Skill, CardRarity.Token, TargetType.None, false)
     {
     }
 

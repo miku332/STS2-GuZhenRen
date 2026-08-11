@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
 using GuZhenRen.Cards;
+using GuZhenRen.Potions;
 using STS2RitsuLib.Patching.Core;
 using GuZhenRen.Patches;
 using GuZhenRen.Powers;
@@ -58,6 +59,7 @@ public static class Entry
         huaShaPatcher.PatchAll();
         var benMingGuPatcher = RitsuLibFramework.CreatePatcher(ModId, "ben-ming-gu");
         benMingGuPatcher.RegisterPatch<BenMingGuUniquenessPatch>();
+        benMingGuPatcher.RegisterPatch<BenMingGuSelectionHeaderPatch>();
         benMingGuPatcher.RegisterPatch<XianGuCanHaiSmithRestSitePatch>();
         benMingGuPatcher.RegisterPatch<CunGuangYinSmithPatch>();
         benMingGuPatcher.RegisterPatch<CunGuangYinSmithCountPatch>();
@@ -82,16 +84,22 @@ public static class Entry
         shaZhaoPoolPatcher.RegisterPatch<ShaZhaoRewardPoolPatch>();
         shaZhaoPoolPatcher.RegisterPatch<ShaZhaoMerchantPoolPatch>();
         shaZhaoPoolPatcher.PatchAll();
+        var monsterCompatibilityPatcher = RitsuLibFramework.CreatePatcher(
+            ModId,
+            "monster-compatibility");
+        monsterCompatibilityPatcher.RegisterPatch<CeremonialBeastStunPatch>();
+        monsterCompatibilityPatcher.PatchAll();
+        var potionPatcher = RitsuLibFramework.CreatePatcher(ModId, "potion-state");
+        potionPatcher.RegisterPatch<FuRenXinPotionRemovalPatch>();
+        potionPatcher.PatchAll();
+        var haoJiePatcher = RitsuLibFramework.CreatePatcher(ModId, "hao-jie");
+        haoJiePatcher.RegisterPatch<GuiGuaYiIntentPatch>();
+        haoJiePatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(
                 static evt =>
                 {
-                    if (evt.FromHandDraw && evt.Card is ShiZhen shiZhen)
-                    {
-                        shiZhen.OnCardDrawn();
-                    }
-
                     if (evt.Card is DiMai diMai)
                     {
                         diMai.OnCardDrawn();
@@ -102,7 +110,7 @@ public static class Entry
                         eyun.OnCardDrawn();
                     }
 
-                    if (evt.FromHandDraw && evt.Card is AiQingGu aiQingGu)
+                    if (evt.Card is AiQingGu aiQingGu)
                     {
                         aiQingGu.OnCardDrawn();
                     }
@@ -169,6 +177,8 @@ public static class Entry
                     AnTuZhongShanBao.ResetCombatState();
                     XingXiuQiPan.ResetCombatState();
                     ZhuMoBang.ResetCombatState();
+                    TouDaoDaoHenPower.ResetCombatState();
+                    ShaZhaoRecipeDropSystem.TryAddCombatReward(evt);
                     TaskHelper.RunSafely(HandleEyunCombatEnded(evt));
                 },
                 replayCurrentState: false));
@@ -180,6 +190,7 @@ public static class Entry
                     AnTuZhongShanBao.ResetCombatState();
                     XingXiuQiPan.ResetCombatState();
                     ZhuMoBang.ResetCombatState();
+                    TouDaoDaoHenPower.ResetCombatState();
 
                     if (evt.CombatState is not null)
                     {
@@ -219,6 +230,16 @@ public static class Entry
                 {
                     ShaGu.AfterCreatureDied(evt);
                     TaskHelper.RunSafely(ChiXiang.AfterCreatureDied(evt));
+                    FuRenXin.AfterCreatureDied(evt);
+                },
+                replayCurrentState: false));
+            _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<PotionProcuredEvent>(
+                static evt =>
+                {
+                    if (evt.Potion is FuRenXin fuRenXin)
+                    {
+                        FuRenXin.OnProcured(fuRenXin);
+                    }
                 },
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<RoomEnteredEvent>(

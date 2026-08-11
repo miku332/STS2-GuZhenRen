@@ -22,7 +22,11 @@ public abstract class AbstractDaoHenPower : ModPowerTemplate
 
     public virtual int GetDerivedPowerAmount(PowerModel power) => 0;
 
-    public sealed override async Task AfterPlayerTurnStart(
+    public override Task AfterPlayerTurnStart(
+        PlayerChoiceContext choiceContext,
+        Player player) => ResetToBianHua(choiceContext, player);
+
+    protected async Task ResetToBianHua(
         PlayerChoiceContext choiceContext,
         Player player)
     {

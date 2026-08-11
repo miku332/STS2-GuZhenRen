@@ -1,6 +1,6 @@
 {
   "GU_ZHEN_REN_RELIC_KONG_QIAO1.title": "一转空窍",
-  "GU_ZHEN_REN_RELIC_KONG_QIAO1.description": "",
+  "GU_ZHEN_REN_RELIC_KONG_QIAO1.description": "战斗胜利后获得道行。积满1点道行时，升炼为二转空窍。",
   "GU_ZHEN_REN_RELIC_KONG_QIAO1.flavor": "一转蛊师空窍，产出青铜真元。",
   "GU_ZHEN_REN_RELIC_KONG_QIAO2.title": "二转空窍",
   "GU_ZHEN_REN_RELIC_KONG_QIAO2.description": "每场战斗，首张低于二转的蛊虫免费打出。",
@@ -185,4 +185,10 @@
   ,"GU_ZHEN_REN_RELIC_RECIPE_AN_TU_ZHONG_SHAN_BAO.title": "安土重山堡蛊方"
   ,"GU_ZHEN_REN_RELIC_RECIPE_AN_TU_ZHONG_SHAN_BAO.description": "可在篝火处消耗3张任意一至九转土道蛊虫，合炼杀招“安土重山堡”。防伪蛊+可代替其中一张材料。"
   ,"GU_ZHEN_REN_RELIC_RECIPE_AN_TU_ZHONG_SHAN_BAO.flavor": "八转土道仙蛊屋，防御能力堪称八转之最。"
+  ,"GU_ZHEN_REN_RELIC_SHEN_BU_ZHI.title": "神不知"
+  ,"GU_ZHEN_REN_RELIC_SHEN_BU_ZHI.description": "屏蔽天意的探测。"
+  ,"GU_ZHEN_REN_RELIC_SHEN_BU_ZHI.flavor": "九转偷道杀招，可屏蔽天意的探测。"
+  ,"GU_ZHEN_REN_RELIC_CHUN_QIU_CHAN.title": "\u6625\u79cb\u8749"
+  ,"GU_ZHEN_REN_RELIC_CHUN_QIU_CHAN.description": "\u6218\u6597\u5916\u53f3\u952e\u4ee5\u56de\u6eaf\u81f3\u8f83\u65e9\u7684\u65f6\u95f4\u8282\u70b9\u3002\u56de\u6eaf\u5931\u8d25\u7387\u4e3a{FailChance}%\uff0c\u6bcf\u6b21\u4f7f\u7528\u540e\u589e\u52a010%\u3002\u56de\u6eaf\u540e\u4f11\u7720{Cooldown}\u5c42\u3002\u5f53\u524d\u4fdd\u5b58{Snapshots}\u4e2a\u65f6\u95f4\u8282\u70b9\u3002"
+  ,"GU_ZHEN_REN_RELIC_CHUN_QIU_CHAN.flavor": "\u6625\u79cb\u8749\u4ee5\u5149\u9634\u957f\u6cb3\u7684\u6cb3\u6c34\u7ef4\u6301\u751f\u673a\uff0c\u6709\u4ee4\u4eba\u91cd\u751f\u5230\u8fc7\u53bb\u7684\u80fd\u529b\u3002"
 }

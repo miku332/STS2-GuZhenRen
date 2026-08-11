@@ -8,6 +8,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -23,7 +24,8 @@ public sealed class YuPiGu : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/YuPiGu.png");
 
-    public override IEnumerable<CardTag> Tags => [CardTag.Defend];
+    public override IEnumerable<CardTag> Tags =>
+        [CardTag.Defend, GuZhenRenTags.JinDao];
 
     public override bool GainsBlock => true;
 

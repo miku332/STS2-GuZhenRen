@@ -10,12 +10,14 @@ namespace GuZhenRen.Tags;
 [RegisterOwnedCardTag(nameof(GuDao))]
 [RegisterOwnedCardTag(nameof(FengDao))]
 [RegisterOwnedCardTag(nameof(JianDao))]
+[RegisterOwnedCardTag(nameof(JinDao))]
 [RegisterOwnedCardTag(nameof(LiDao))]
 [RegisterOwnedCardTag(nameof(LuDao))]
 [RegisterOwnedCardTag(nameof(MuDao))]
 [RegisterOwnedCardTag(nameof(ShaDao))]
 [RegisterOwnedCardTag(nameof(ShiDao))]
 [RegisterOwnedCardTag(nameof(TuDao))]
+[RegisterOwnedCardTag(nameof(TouDao))]
 [RegisterOwnedCardTag(nameof(YanDao))]
 [RegisterOwnedCardTag(nameof(XueDao))]
 [RegisterOwnedCardTag(nameof(XuYing))]
@@ -39,6 +41,9 @@ public sealed class GuZhenRenTags
     public static readonly CardTag JianDao =
         ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(JianDao)).GetModCardTag();
 
+    public static readonly CardTag JinDao =
+        ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(JinDao)).GetModCardTag();
+
     public static readonly CardTag LiDao =
         ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(LiDao)).GetModCardTag();
 
@@ -56,6 +61,9 @@ public sealed class GuZhenRenTags
 
     public static readonly CardTag TuDao =
         ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(TuDao)).GetModCardTag();
+
+    public static readonly CardTag TouDao =
+        ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(TouDao)).GetModCardTag();
 
     public static readonly CardTag YanDao =
         ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(YanDao)).GetModCardTag();

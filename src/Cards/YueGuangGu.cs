@@ -24,7 +24,9 @@ public sealed class YueGuangGu : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/YueGuangGu.png");
 
-    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.GuangDao];
+    // Keep the vanilla Strike tag so relics such as Oni's Amulet can find this starter attack.
+    public override IEnumerable<CardTag> Tags =>
+        [CardTag.Strike, GuZhenRenTags.GuangDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

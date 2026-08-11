@@ -5,15 +5,13 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Multiplayer;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
-using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rooms;
-using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -23,6 +21,8 @@ namespace GuZhenRen.Cards;
 [RegisterCard(typeof(GuZhenRenCardPool))]
 public sealed class AiQingGu : GuZhenRenCardTemplate
 {
+    private bool _resolvingDrawEffect;
+
     public override int Rank => 9;
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
@@ -47,214 +47,203 @@ public sealed class AiQingGu : GuZhenRenCardTemplate
 
     public void OnCardDrawn()
     {
-        if (CombatState is null)
+        if (CombatState is null || _resolvingDrawEffect)
         {
             return;
         }
 
-        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(
-            new AiQingGuDrawAction(Owner, this));
+        _resolvingDrawEffect = true;
+        var choiceContext = new HookPlayerChoiceContext(
+            this,
+            Owner.NetId,
+            CombatState,
+            GameActionType.Combat);
+        var effectTask = ResolveDrawEffect(choiceContext);
+        TaskHelper.RunSafely(
+            choiceContext.AssignTaskAndWaitForPauseOrCompletion(effectTask));
     }
 
     protected override Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay) => Task.CompletedTask;
 
-    private sealed class AiQingGuDrawAction : GameAction
+    private async Task ResolveDrawEffect(PlayerChoiceContext choiceContext)
     {
-        private readonly Player _owner;
-        private readonly AiQingGu _card;
-
-        public AiQingGuDrawAction(Player owner, AiQingGu card)
+        try
         {
-            _owner = owner;
-            _card = card;
-        }
-
-        public override ulong OwnerId => _owner.NetId;
-
-        public override GameActionType ActionType => GameActionType.Combat;
-
-        public override bool RecordableToReplay => false;
-
-        protected override async Task ExecuteAction()
-        {
-            if (_owner.Creature.IsDead || _card.Pile?.Type != PileType.Hand)
+            if (Owner.Creature.IsDead || Pile?.Type != PileType.Hand)
             {
                 return;
             }
 
-            var choiceContext = new GameActionPlayerChoiceContext(this);
             var escapeAfterEffects = await ResolvePositiveEffect(choiceContext);
             await ResolveNegativeEffect(choiceContext);
-            await CardCmd.Exhaust(choiceContext, _card);
+            await CardCmd.Exhaust(choiceContext, this);
 
-            if (escapeAfterEffects && _owner.Creature.IsAlive)
+            if (escapeAfterEffects && Owner.Creature.IsAlive)
             {
                 await EscapeCombat();
             }
         }
-
-        private async Task<bool> ResolvePositiveEffect(
-            PlayerChoiceContext choiceContext)
+        finally
         {
-            var roll = _owner.RunState.Rng.CombatCardSelection.NextFloat(100f);
-            if (roll < 60f)
-            {
-                await AddRandomShaZhao();
-                return false;
-            }
+            _resolvingDrawEffect = false;
+        }
+    }
 
-            if (roll < 75f)
-            {
-                await ObtainRandomRelic();
-                return false;
-            }
-
-            if (roll < 90f)
-            {
-                await CreatureCmd.Heal(_owner.Creature, 15m);
-                return false;
-            }
-
-            return true;
+    private async Task<bool> ResolvePositiveEffect(
+        PlayerChoiceContext choiceContext)
+    {
+        var roll = Owner.RunState.Rng.CombatCardSelection.NextFloat(100f);
+        if (roll < 60f)
+        {
+            await AddRandomShaZhao();
+            return false;
         }
 
-        private async Task ResolveNegativeEffect(
-            PlayerChoiceContext choiceContext)
+        if (roll < 75f)
         {
-            var roll = _owner.RunState.Rng.CombatCardSelection.NextFloat(100f);
-            if (roll < 25f)
-            {
-                await CreatureCmd.Damage(
-                    choiceContext,
-                    _owner.Creature,
-                    6m,
-                    ValueProp.Unblockable | ValueProp.Unpowered,
-                    _owner.Creature,
-                    _card);
-                return;
-            }
+            await ObtainRandomRelic();
+            return false;
+        }
 
-            if (roll < 50f)
-            {
-                await CreatureCmd.LoseMaxHp(
-                    choiceContext,
-                    _owner.Creature,
-                    3m,
-                    true);
-                return;
-            }
+        if (roll < 90f)
+        {
+            await CreatureCmd.Heal(Owner.Creature, 15m);
+            return false;
+        }
 
-            if (roll < 75f)
-            {
-                await PowerCmd.Apply<StrengthPower>(
-                    choiceContext,
-                    _owner.Creature,
-                    -2,
-                    _owner.Creature,
-                    _card);
-                return;
-            }
+        return true;
+    }
 
-            await PowerCmd.Apply<DexterityPower>(
+    private async Task ResolveNegativeEffect(
+        PlayerChoiceContext choiceContext)
+    {
+        var roll = Owner.RunState.Rng.CombatCardSelection.NextFloat(100f);
+        if (roll < 25f)
+        {
+            await CreatureCmd.Damage(
                 choiceContext,
-                _owner.Creature,
+                Owner.Creature,
+                6m,
+                ValueProp.Unblockable | ValueProp.Unpowered,
+                Owner.Creature,
+                this);
+            return;
+        }
+
+        if (roll < 50f)
+        {
+            await CreatureCmd.LoseMaxHp(
+                choiceContext,
+                Owner.Creature,
+                3m,
+                true);
+            return;
+        }
+
+        if (roll < 75f)
+        {
+            await PowerCmd.Apply<StrengthPower>(
+                choiceContext,
+                Owner.Creature,
                 -2,
-                _owner.Creature,
-                _card);
+                Owner.Creature,
+                this);
+            return;
         }
 
-        private async Task AddRandomShaZhao()
+        await PowerCmd.Apply<DexterityPower>(
+            choiceContext,
+            Owner.Creature,
+            -2,
+            Owner.Creature,
+            this);
+    }
+
+    private async Task AddRandomShaZhao()
+    {
+        var candidates = new CardModel[]
         {
-            var candidates = new CardModel[]
-            {
-                ModelDb.Card<AngryBird>(),
-                ModelDb.Card<AnQiSha>(),
-                ModelDb.Card<GuangYinFeiRen>(),
-                ModelDb.Card<JianHenSuoMing>(),
-                ModelDb.Card<JianLangSanDie>(),
-                ModelDb.Card<SanShiSanTianGuang>(),
-                ModelDb.Card<ShangFangJieWa>(),
-                ModelDb.Card<SongYouFeng>(),
-                ModelDb.Card<TianPuGuangHe>(),
-                ModelDb.Card<WanWo>(),
-                ModelDb.Card<WanWoDaShouYin>(),
-                ModelDb.Card<WanWuDaTongBian>(),
-                ModelDb.Card<WanXingFeiYing>(),
-                ModelDb.Card<WuJinXuanGuangQi>(),
-                ModelDb.Card<WuZhiQuanXinJian>(),
-                ModelDb.Card<XueJianLeng>(),
-                ModelDb.Card<XuePiaoLiu>(),
-                ModelDb.Card<YangMangBeiHuoYi>(),
-                ModelDb.Card<ZhuiMingHuo>()
-            };
-            var canonical = _owner.RunState.Rng.CombatCardSelection.NextItem(candidates);
-            if (canonical is null || _card.CombatState is null)
-            {
-                return;
-            }
-
-            var copy = _card.CombatState.CreateCard(canonical, _owner);
-            await CardPileCmd.AddGeneratedCardToCombat(
-                copy,
-                PileType.Hand,
-                _owner,
-                CardPilePosition.Bottom);
-        }
-
-        private async Task ObtainRandomRelic()
+            ModelDb.Card<AngryBird>(),
+            ModelDb.Card<AnQiSha>(),
+            ModelDb.Card<GuangYinFeiRen>(),
+            ModelDb.Card<JianHenSuoMing>(),
+            ModelDb.Card<JianLangSanDie>(),
+            ModelDb.Card<SanShiSanTianGuang>(),
+            ModelDb.Card<ShangFangJieWa>(),
+            ModelDb.Card<SongYouFeng>(),
+            ModelDb.Card<TianPuGuangHe>(),
+            ModelDb.Card<WanWo>(),
+            ModelDb.Card<WanWoDaShouYin>(),
+            ModelDb.Card<WanWuDaTongBian>(),
+            ModelDb.Card<WanXingFeiYing>(),
+            ModelDb.Card<WuJinXuanGuangQi>(),
+            ModelDb.Card<WuZhiQuanXinJian>(),
+            ModelDb.Card<XueJianLeng>(),
+            ModelDb.Card<XuePiaoLiu>(),
+            ModelDb.Card<YangMangBeiHuoYi>(),
+            ModelDb.Card<ZhuiMingHuo>()
+        };
+        var canonical = Owner.RunState.Rng.CombatCardSelection.NextItem(candidates);
+        if (canonical is null || CombatState is null)
         {
-            _owner.PopulateRelicGrabBagIfNecessary(_owner.RunState.Rng.UpFront);
-
-            var roll = _owner.RunState.Rng.CombatCardSelection.NextFloat();
-            var rarity = roll < 0.5f
-                ? RelicRarity.Common
-                : roll < 0.85f
-                    ? RelicRarity.Uncommon
-                    : RelicRarity.Rare;
-            var relic = _owner.RelicGrabBag.PullFromFront(
-                rarity,
-                IsAllowedRandomRelic,
-                _owner.RunState);
-            if (relic is not null)
-            {
-                await RelicCmd.Obtain(relic.ToMutable(), _owner);
-            }
+            return;
         }
 
-        private async Task EscapeCombat()
+        var copy = CombatState.CreateCard(canonical, Owner);
+        await CardPileCmd.AddGeneratedCardToCombat(
+            copy,
+            PileType.Hand,
+            Owner,
+            CardPilePosition.Bottom);
+    }
+
+    private async Task ObtainRandomRelic()
+    {
+        Owner.PopulateRelicGrabBagIfNecessary(Owner.RunState.Rng.UpFront);
+
+        var roll = Owner.RunState.Rng.CombatCardSelection.NextFloat();
+        var rarity = roll < 0.5f
+            ? RelicRarity.Common
+            : roll < 0.85f
+                ? RelicRarity.Uncommon
+                : RelicRarity.Rare;
+        var relic = Owner.RelicGrabBag.PullFromFront(
+            rarity,
+            IsAllowedRandomRelic,
+            Owner.RunState);
+        if (relic is not null)
         {
-            if (_card.CombatState is null
-                || _owner.RunState.CurrentRoom is not CombatRoom room)
-            {
-                return;
-            }
-
-            AiQingGuEscapeRewardPatch.SkipRewardsFor(room);
-
-            foreach (var enemy in _card.CombatState.Enemies
-                         .Where(enemy => enemy.IsAlive)
-                         .ToList())
-            {
-                await CreatureCmd.Escape(enemy);
-            }
-
-            await CombatManager.Instance.CheckWinCondition();
+            await RelicCmd.Obtain(relic.ToMutable(), Owner);
         }
+    }
 
-        private bool IsAllowedRandomRelic(RelicModel relic)
+    private async Task EscapeCombat()
+    {
+        if (CombatState is null
+            || Owner.RunState.CurrentRoom is not CombatRoom room)
         {
-            var entry = relic.Id.Entry;
-            return relic.IsAllowed(_owner.RunState)
-                && !entry.Contains("Bottled", StringComparison.OrdinalIgnoreCase)
-                && !entry.Contains("ChunQiuChan", StringComparison.OrdinalIgnoreCase);
+            return;
         }
 
-        public override INetAction ToNetAction()
+        AiQingGuEscapeRewardPatch.SkipRewardsFor(room);
+
+        foreach (var enemy in CombatState.Enemies
+                     .Where(enemy => enemy.IsAlive)
+                     .ToList())
         {
-            throw new NotSupportedException(
-                "GuZhenRen AiQingGu is single-player only for now.");
+            await CreatureCmd.Escape(enemy);
         }
+
+        await CombatManager.Instance.CheckWinCondition();
+    }
+
+    private bool IsAllowedRandomRelic(RelicModel relic)
+    {
+        var entry = relic.Id.Entry;
+        return relic.IsAllowed(Owner.RunState)
+            && !entry.Contains("Bottled", StringComparison.OrdinalIgnoreCase)
+            && !entry.Contains("ChunQiuChan", StringComparison.OrdinalIgnoreCase);
     }
 }

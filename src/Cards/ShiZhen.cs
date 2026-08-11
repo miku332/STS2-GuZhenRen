@@ -2,6 +2,8 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -35,11 +37,25 @@ public sealed class ShiZhen : GuZhenRenCardTemplate
     {
     }
 
-    public void OnCardDrawn()
+    public override Task AfterCardDrawn(
+        PlayerChoiceContext choiceContext,
+        CardModel card,
+        bool fromHandDraw)
     {
+        if (card != this)
+        {
+            return Task.CompletedTask;
+        }
+
         var growth = DynamicVars["Growth"].BaseValue;
         DynamicVars.Damage.BaseValue += growth;
         DynamicVars.Block.BaseValue += growth;
+
+        NCard.FindOnTable(this)?.UpdateVisuals(
+            Pile?.Type ?? PileType.Hand,
+            CardPreviewMode.Normal);
+
+        return Task.CompletedTask;
     }
 
     protected override async Task OnPlay(

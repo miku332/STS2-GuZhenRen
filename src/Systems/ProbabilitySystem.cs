@@ -13,11 +13,18 @@ public static class ProbabilitySystem
     {
         ArgumentNullException.ThrowIfNull(card.Owner);
 
-        var chance = Math.Clamp(chancePercent, 0m, 100m);
+        var chance = chancePercent;
         if (card.Owner.GetRelic<HongYunQiTianGu>() is not null)
         {
-            chance = Math.Clamp(chance + 40m, 0m, 100m);
+            chance += 40m;
         }
+
+        if (card.Owner.Creature.GetPower<YunDaoDaoHenPower>() is { } yunDao)
+        {
+            chance += yunDao.ProbabilityBonus;
+        }
+
+        chance = Math.Clamp(chance, 0m, 100m);
 
         var success = card.Owner.RunState.Rng.CombatCardSelection.NextFloat(100f)
             < (float)chance;

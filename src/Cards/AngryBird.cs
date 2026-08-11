@@ -15,8 +15,6 @@ namespace GuZhenRen.Cards;
 [RegisterCard(typeof(GuZhenRenCardPool))]
 public sealed class AngryBird : AbstractShaZhaoCard
 {
-    public override int Rank => 1;
-
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/AngryBird.png");
 

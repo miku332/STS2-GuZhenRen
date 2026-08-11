@@ -24,8 +24,7 @@ public sealed class XueLiuBuZhiPower : ModPowerTemplate
         IconPath: "res://GuZhenRen/images/powers/XueLiuBuZhiPower.png",
         BigIconPath: "res://GuZhenRen/images/powers/XueLiuBuZhiPower_p.png");
 
-    public override async Task BeforeSideTurnStart(
-        PlayerChoiceContext choiceContext,
+    public override async Task AfterSideTurnStart(
         CombatSide side,
         IReadOnlyList<Creature> participants,
         ICombatState combatState)
@@ -37,11 +36,16 @@ public sealed class XueLiuBuZhiPower : ModPowerTemplate
 
         Flash();
         await CreatureCmd.Damage(
-            choiceContext,
+            new ThrowingPlayerChoiceContext(),
             Owner,
             Amount,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner,
             null);
+
+        if (!Owner.IsAlive)
+        {
+            await Cmd.CustomScaledWait(0.1f, 0.25f);
+        }
     }
 }

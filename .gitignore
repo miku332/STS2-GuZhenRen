@@ -23,6 +23,9 @@ obj/
 *.pck
 *.zip
 
+# Accidental duplicate asset staging directory; shipped assets live in GuZhenRen/images/
+/images/
+
 # Local secrets and machine-specific settings
 .env
 .env.*

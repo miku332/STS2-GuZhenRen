@@ -47,9 +47,21 @@ public sealed class BianHuaDaoDaoHenPower : ModPowerTemplate
         {
             await ConvertTo<YanDaoDaoHenPower>(cardPlay.Card);
         }
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.ZhiDao))
+        {
+            await ConvertTo<ZhiDaoDaoHenPower>(cardPlay.Card);
+        }
         else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.JianDao))
         {
             await ConvertTo<JianDaoDaoHenPower>(cardPlay.Card);
+        }
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.JinDao))
+        {
+            await ConvertTo<JinDaoDaoHenPower>(cardPlay.Card);
+        }
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.TouDao))
+        {
+            await ConvertTo<TouDaoDaoHenPower>(cardPlay.Card);
         }
         else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.XueDao))
         {
@@ -70,6 +82,26 @@ public sealed class BianHuaDaoDaoHenPower : ModPowerTemplate
         else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.MuDao))
         {
             await ConvertTo<MuDaoDaoHenPower>(cardPlay.Card);
+        }
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.GuDao))
+        {
+            await ConvertTo<GuDaoDaoHenPower>(cardPlay.Card);
+        }
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.LuDao))
+        {
+            await ConvertTo<LuDaoDaoHenPower>(cardPlay.Card);
+        }
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.ShiDao))
+        {
+            await ConvertTo<ShiDaoDaoHenPower>(cardPlay.Card);
+        }
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.YunDao))
+        {
+            await ConvertTo<YunDaoDaoHenPower>(cardPlay.Card);
+        }
+        else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.ZhouDao))
+        {
+            await ConvertTo<ZhouDaoDaoHenPower>(cardPlay.Card);
         }
         else if (GuZhenRenTagRules.HasEffectiveTag(cardPlay.Card, GuZhenRenTags.ShaDao))
         {

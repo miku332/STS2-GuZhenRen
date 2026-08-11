@@ -1,4 +1,6 @@
 {
-    "GU_ZHEN_REN_POTION_SHENG_JI_YE.title": "生机叶",
-    "GU_ZHEN_REN_POTION_SHENG_JI_YE.description": "恢复{Heal:diff()}点生命。"
+  "GU_ZHEN_REN_POTION_SHENG_JI_YE.title": "生机叶",
+  "GU_ZHEN_REN_POTION_SHENG_JI_YE.description": "恢复{Heal:diff()}点生命。",
+  "GU_ZHEN_REN_POTION_FU_REN_XIN.title": "妇人心",
+  "GU_ZHEN_REN_POTION_FU_REN_XIN.description": "给予{PoisonPower}层中毒。每当你击杀一名非爪牙敌人，额外获得3层中毒。"
 }

@@ -16,6 +16,8 @@ namespace GuZhenRen.Cards;
 [RegisterCard(typeof(GuZhenRenCardPool))]
 public sealed class ZhiHuiGu : AbstractBenMingGuCard
 {
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
+
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/ZhiHuiGu.png");
 

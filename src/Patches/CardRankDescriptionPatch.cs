@@ -1,5 +1,6 @@
 using System.Reflection;
 using GuZhenRen.Cards;
+using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization;
@@ -49,21 +50,42 @@ public sealed class CardRankDescriptionPatch : IPatchMethod
                 "Upgrade",
                 StringComparison.Ordinal);
         var rank = ResolveDisplayedRank(card, isUpgradePreview);
-        if (rank <= 0)
-        {
-            return;
-        }
+        var rankText = rank > 0
+            ? new LocString(
+                    "card_keywords",
+                    $"GU_ZHEN_REN_KEYWORD_PIN_JIE_{rank}.title")
+                .GetFormattedText()
+            : string.Empty;
 
-        var rankText = new LocString(
+        var shaZhaoText = card is AbstractShaZhaoCard
+            ? new LocString(
+                    "card_keywords",
+                    "GU_ZHEN_REN_KEYWORD_SHA_ZHAO.title")
+                .GetFormattedText()
+            : string.Empty;
+
+        var daoTexts = GuZhenRenTagRules.GetEffectiveDaoTags(card)
+            .Select(GuZhenRenCardTemplate.GetDaoKeywordStem)
+            .Where(static stem => stem is not null)
+            .Select(static stem => new LocString(
                 "card_keywords",
-                $"GU_ZHEN_REN_KEYWORD_PIN_JIE_{rank}.title")
-            .GetFormattedText();
-        if (string.IsNullOrWhiteSpace(rankText))
+                $"GU_ZHEN_REN_KEYWORD_{stem}.title").GetFormattedText())
+            .Where(static text => !string.IsNullOrWhiteSpace(text))
+            .ToList();
+        if (string.IsNullOrWhiteSpace(shaZhaoText)
+            && string.IsNullOrWhiteSpace(rankText)
+            && daoTexts.Count == 0)
         {
             return;
         }
 
-        __result = $"[gold]{rankText}[/gold]\n{__result}";
+        var rankAndDaoText = string.Join(
+            " ",
+            new[] { shaZhaoText, rankText }
+                .Where(static text => !string.IsNullOrWhiteSpace(text))
+                .Concat(daoTexts));
+
+        __result = $"[gold]{rankAndDaoText}[/gold]\n{__result}";
     }
 
     private static int ResolveDisplayedRank(

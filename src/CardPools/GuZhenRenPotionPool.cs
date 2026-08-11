@@ -12,5 +12,5 @@ public sealed class GuZhenRenPotionPool : TypeListPotionPoolModel
         "res://GuZhenRen/images/energy_guzhenren.png";
 
     public override string? BigEnergyIconPath =>
-        "res://GuZhenRen/images/energy_guzhenren_big.svg";
+        "res://GuZhenRen/images/energy_guzhenren_big.png";
 }

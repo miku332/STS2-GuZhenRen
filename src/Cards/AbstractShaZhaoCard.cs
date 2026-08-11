@@ -5,6 +5,8 @@ namespace GuZhenRen.Cards;
 
 public abstract class AbstractShaZhaoCard : GuZhenRenCardTemplate
 {
+    public override int Rank => 0;
+
     public override bool CanBeGeneratedInCombat => false;
 
     public override bool CanBeGeneratedByModifiers => false;

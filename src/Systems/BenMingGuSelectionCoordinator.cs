@@ -1,5 +1,6 @@
 using GuZhenRen.Cards;
 using GuZhenRen.Characters;
+using GuZhenRen.Patches;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -33,12 +34,20 @@ internal static class BenMingGuSelectionCoordinator
         }
 
         _isSelecting = true;
+        NChooseACardSelectionScreen? selectionScreen = null;
         try
         {
             var choices = GetChoices(player);
-            var selectionScreen = NChooseACardSelectionScreen.ShowScreen(
+            selectionScreen = NChooseACardSelectionScreen.ShowScreen(
                 choices,
                 false);
+            if (selectionScreen is not null)
+            {
+                BenMingGuSelectionHeaderPatch.Refresh(
+                    selectionScreen,
+                    choices);
+            }
+
             var selected = selectionScreen is null
                 ? choices[0]
                 : (await selectionScreen.CardsSelected()).FirstOrDefault();
@@ -50,6 +59,11 @@ internal static class BenMingGuSelectionCoordinator
         }
         finally
         {
+            if (selectionScreen is not null)
+            {
+                BenMingGuSelectionHeaderPatch.Clear(selectionScreen);
+            }
+
             _isSelecting = false;
         }
     }

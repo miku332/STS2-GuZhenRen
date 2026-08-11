@@ -16,14 +16,14 @@ public sealed class GuZhenRenCardPool : TypeListCardPoolModel
         "res://GuZhenRen/images/energy_guzhenren.png";
 
     public override string? BigEnergyIconPath =>
-        "res://GuZhenRen/images/energy_guzhenren_big.svg";
+        "res://GuZhenRen/images/energy_guzhenren_big.png";
 
-    public override Color DeckEntryCardColor => new(0.82f, 0.65f, 0.22f);
+    public override Color DeckEntryCardColor => new(0.62f, 0.63f, 0.67f);
 
-    public override Color EnergyOutlineColor => new(0.82f, 0.65f, 0.22f);
+    public override Color EnergyOutlineColor => new(0.62f, 0.63f, 0.67f);
 
     private static readonly Material? _poolFrameMaterial =
-        MaterialUtils.CreateReplaceHueShaderMaterial(0.82f, 0.65f, 0.22f);
+        MaterialUtils.CreateReplaceHueShaderMaterial(0.62f, 0.63f, 0.67f);
 
     public override Material? PoolFrameMaterial => _poolFrameMaterial;
 

@@ -28,7 +28,8 @@ public sealed class ShaZhaoRewardPoolPatch : IPatchMethod
     public static void Postfix(ref IEnumerable<CardModel> __result)
     {
         __result = __result.Where(
-            static card => card is not AbstractShaZhaoCard);
+            static card => card is not AbstractShaZhaoCard
+                && card is not ChengGongGu);
     }
 }
 
@@ -64,6 +65,7 @@ public sealed class ShaZhaoMerchantPoolPatch : IPatchMethod
     public static void Prefix(ref IEnumerable<CardModel> options)
     {
         options = options.Where(
-            static card => card is not AbstractShaZhaoCard);
+            static card => card is not AbstractShaZhaoCard
+                && card is not ChengGongGu);
     }
 }

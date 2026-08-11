@@ -15,6 +15,10 @@ namespace GuZhenRen.Powers;
 public sealed class FenShaoPower : ModPowerTemplate
 {
     private static bool s_isSpreading;
+    private static bool s_isResolvingBurningDamage;
+
+    public static bool IsResolvingBurningDamage =>
+        s_isResolvingBurningDamage;
 
     private sealed class BurnState
     {
@@ -116,13 +120,21 @@ public sealed class FenShaoPower : ModPowerTemplate
 
         Flash();
         Entry.Logger.Info($"[FenShao] Burning damage: amount={Amount}, source={cardSource?.Id.ToString() ?? "<none>"}");
-        await CreatureCmd.Damage(
-            choiceContext,
-            Owner,
-            Amount,
-            ValueProp.Unpowered,
-            applier,
-            cardSource);
+        s_isResolvingBurningDamage = true;
+        try
+        {
+            await CreatureCmd.Damage(
+                choiceContext,
+                Owner,
+                Amount,
+                ValueProp.Unpowered,
+                applier,
+                cardSource);
+        }
+        finally
+        {
+            s_isResolvingBurningDamage = false;
+        }
     }
 
     private async Task TriggerXingHuoLiaoYuan(

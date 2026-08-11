@@ -15,8 +15,6 @@ namespace GuZhenRen.Cards;
 [RegisterCard(typeof(GuZhenRenCardPool))]
 public sealed class XueJianLeng : AbstractShaZhaoCard
 {
-    public override int Rank => 6;
-
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/XueJianLeng.png");
 

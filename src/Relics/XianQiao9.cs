@@ -9,9 +9,9 @@ public sealed class XianQiao9 : AbstractKongQiaoRelic
 {
     public override int Rank => 9;
 
-    protected override int NeededXp => 0;
+    protected override int NeededXp => 18;
 
     protected override string RelicImageName => "XianQiao_9";
 
-    protected override RelicModel? NextStage => null;
+    protected override RelicModel? NextStage => ModelDb.Relic<XianQiao10>();
 }

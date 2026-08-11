@@ -8,6 +8,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -15,6 +16,8 @@ namespace GuZhenRen.Cards;
 public sealed class TouXiGu : GuZhenRenCardTemplate
 {
     public override int Rank => 2;
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.TouDao];
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/TouXiGu.png");
