@@ -1,6 +1,7 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
+using GuZhenRen.Patches;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -136,10 +137,14 @@ public sealed class RenGu : AbstractBenMingGuCard
             return false;
         }
 
+        if (!BenMingGuUniquenessPatch.IsUniqueImmortalGu(candidate, generatedRank))
+        {
+            return false;
+        }
+
         return Owner.Deck.Cards.Any(card =>
             card.Id == candidate.Id
-            && card is GuZhenRenCardTemplate guCard
-            && guCard.Rank >= 6);
+            && BenMingGuUniquenessPatch.IsUniqueImmortalGu(card));
     }
 
     private static bool IsRarityAllowed(CardRarity rarity, int rank) =>

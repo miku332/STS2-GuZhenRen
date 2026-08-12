@@ -65,9 +65,17 @@ internal static class ShaZhaoRecipeSystem
             return false;
         }
 
-        foreach (var ingredient in selectedIngredients)
+        AbstractBenMingGuCard.IsSynthesizing = true;
+        try
         {
-            await CardPileCmd.RemoveFromDeck(ingredient, showPreview: false);
+            foreach (var ingredient in selectedIngredients)
+            {
+                await CardPileCmd.RemoveFromDeck(ingredient, showPreview: false);
+            }
+        }
+        finally
+        {
+            AbstractBenMingGuCard.IsSynthesizing = false;
         }
 
         var reward = player.RunState.CreateCard(recipe.RewardCard, player);

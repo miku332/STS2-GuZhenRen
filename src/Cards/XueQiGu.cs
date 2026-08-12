@@ -69,5 +69,6 @@ public sealed class XueQiGu : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
+        AddKeyword(CardKeyword.Retain);
     }
 }

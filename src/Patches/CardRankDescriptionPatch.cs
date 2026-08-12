@@ -57,6 +57,22 @@ public sealed class CardRankDescriptionPatch : IPatchMethod
                 .GetFormattedText()
             : string.Empty;
 
+        var benMingGuText = card is AbstractBenMingGuCard
+            ? new LocString(
+                    "card_keywords",
+                    "GU_ZHEN_REN_KEYWORD_BEN_MING_GU_TYPE.title")
+                .GetFormattedText()
+            : string.Empty;
+
+        var xianGuText = rank >= 6
+            && card is not AbstractShaZhaoCard
+            && card is not AbstractBenMingGuCard
+            ? new LocString(
+                    "card_keywords",
+                    "GU_ZHEN_REN_KEYWORD_XIAN_GU_TYPE.title")
+                .GetFormattedText()
+            : string.Empty;
+
         var shaZhaoText = card is AbstractShaZhaoCard
             ? new LocString(
                     "card_keywords",
@@ -83,7 +99,9 @@ public sealed class CardRankDescriptionPatch : IPatchMethod
             " ",
             new[] { shaZhaoText, rankText }
                 .Where(static text => !string.IsNullOrWhiteSpace(text))
-                .Concat(daoTexts));
+                .Concat(daoTexts)
+                .Concat(new[] { benMingGuText, xianGuText }
+                    .Where(static text => !string.IsNullOrWhiteSpace(text))));
 
         __result = $"[gold]{rankAndDaoText}[/gold]\n{__result}";
     }

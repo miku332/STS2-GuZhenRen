@@ -56,5 +56,6 @@ public sealed class QuanLiYiFuGu : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
+        AddKeyword(CardKeyword.Retain);
     }
 }

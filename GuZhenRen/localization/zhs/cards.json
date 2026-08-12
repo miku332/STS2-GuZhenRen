@@ -32,7 +32,7 @@
     "GU_ZHEN_REN_CARD_WU_ZHI_QUAN_XIN_JIAN.title":  "五指拳心剑",
     "GU_ZHEN_REN_CARD_WU_ZHI_QUAN_XIN_JIAN.description":  "造成{Damage:diff()}点伤害。\n本场战斗中，每次打出后基础伤害变为{Multiplier:diff()}倍。\n还能打出{RemainingUses:diff()}次；次数耗尽后消耗。",
     "GU_ZHEN_REN_CARD_JIANG_HE_RI_XIA_GU.title":  "江河日下蛊",
-    "GU_ZHEN_REN_CARD_JIANG_HE_RI_XIA_GU.description":  "根据手牌中的光道牌数量，对所有敌人重复攻击。",
+    "GU_ZHEN_REN_CARD_JIANG_HE_RI_XIA_GU.description":  "根据手牌中的光道牌数量，对所有敌人重复攻击，每次造成{Damage:diff()}点伤害。",
     "GU_ZHEN_REN_CARD_LANG_JIAN.title":  "浪剑",
     "GU_ZHEN_REN_CARD_LANG_JIAN.description":  "造成{Damage:diff()}点伤害。\\n当你打出其他剑道攻击牌时，若此牌在弃牌堆中，则返回手牌。",
     "GU_ZHEN_REN_CARD_JIAN_QIAO_GU.title":  "剑窍蛊",

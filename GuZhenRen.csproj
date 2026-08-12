@@ -51,10 +51,8 @@
   <Target Name="Copy Mod" AfterTargets="Build">
     <Message Text="Copying Gu Zhen Ren mod to Slay the Spire 2..." Importance="high" />
     <MakeDir Directories="$(ModDeployDir)" />
+    <Delete Files="$(ModDeployDir)\$(TargetName).pdb" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModDeployDir)" />
-    <Copy SourceFiles="$(TargetDir)$(TargetName).pdb"
-          DestinationFolder="$(ModDeployDir)"
-          Condition="Exists('$(TargetDir)$(TargetName).pdb')" />
     <Copy SourceFiles="$(ProjectDir)mod_manifest.json"
           DestinationFolder="$(ModDeployDir)" />
   </Target>
@@ -64,6 +62,6 @@
           Condition="'$(ExportPck)' == 'true'">
     <Message Text="Exporting Gu Zhen Ren PCK..." Importance="high" />
     <Exec IgnoreStandardErrorWarningFormat="true"
-          Command="&quot;$(GodotExe)&quot; --headless --path &quot;$(GodotProjectPath)&quot; --export-pack &quot;Windows Desktop&quot; &quot;$(ModDeployDir)\$(ModId).pck&quot;" />
+          Command="set &quot;STS2_DIR=$(Sts2Dir)&quot; &amp;&amp; &quot;$(GodotExe)&quot; --headless --path &quot;$(GodotProjectPath)&quot; --export-pack &quot;Windows Desktop&quot; &quot;$(ModDeployDir)\$(ModId).pck&quot;" />
   </Target>
 </Project>

@@ -19,6 +19,22 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
             "card_keywords",
             "GU_ZHEN_REN_KEYWORD_PIN_JIE.description"));
 
+    private static readonly IHoverTip XianGuHoverTip = new HoverTip(
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_XIAN_GU.title"),
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_XIAN_GU.description"));
+
+    private static readonly IHoverTip BenMingGuHoverTip = new HoverTip(
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_BEN_MING_GU_TYPE.title"),
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_BEN_MING_GU_TYPE.description"));
+
     private static readonly IHoverTip ShaZhaoHoverTip = new HoverTip(
         new LocString(
             "card_keywords",
@@ -50,6 +66,18 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
             if (Rank > 0)
             {
                 yield return RankHoverTip;
+            }
+
+            if (Rank >= 6
+                && this is not AbstractShaZhaoCard
+                && this is not AbstractBenMingGuCard)
+            {
+                yield return XianGuHoverTip;
+            }
+
+            if (this is AbstractBenMingGuCard)
+            {
+                yield return BenMingGuHoverTip;
             }
 
             foreach (var daoTag in GuZhenRenTagRules.GetEffectiveDaoTags(this))

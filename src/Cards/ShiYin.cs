@@ -54,6 +54,7 @@ public sealed class ShiYin : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
+        RemoveKeyword(CardKeyword.Ethereal);
     }
 
     private bool IsOddPlayerTurn()

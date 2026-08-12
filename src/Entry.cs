@@ -59,6 +59,8 @@ public static class Entry
         huaShaPatcher.PatchAll();
         var benMingGuPatcher = RitsuLibFramework.CreatePatcher(ModId, "ben-ming-gu");
         benMingGuPatcher.RegisterPatch<BenMingGuUniquenessPatch>();
+        benMingGuPatcher.RegisterPatch<XianGuUpgradeUniquenessPatch>();
+        benMingGuPatcher.RegisterPatch<BenMingGuRemovalPenaltyPatch>();
         benMingGuPatcher.RegisterPatch<BenMingGuSelectionHeaderPatch>();
         benMingGuPatcher.RegisterPatch<XianGuCanHaiSmithRestSitePatch>();
         benMingGuPatcher.RegisterPatch<CunGuangYinSmithPatch>();
@@ -83,6 +85,7 @@ public static class Entry
             "sha-zhao-pools");
         shaZhaoPoolPatcher.RegisterPatch<ShaZhaoRewardPoolPatch>();
         shaZhaoPoolPatcher.RegisterPatch<ShaZhaoMerchantPoolPatch>();
+        shaZhaoPoolPatcher.RegisterPatch<XianGuCardRewardResultPatch>();
         shaZhaoPoolPatcher.PatchAll();
         var monsterCompatibilityPatcher = RitsuLibFramework.CreatePatcher(
             ModId,
@@ -245,6 +248,12 @@ public static class Entry
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<RoomEnteredEvent>(
                 static evt =>
                 {
+                    foreach (var player in evt.RunState.Players)
+                    {
+                        TaskHelper.RunSafely(
+                            BenMingGuUniquenessPatch.EnforceDeckUniqueness(player));
+                    }
+
                     TaskHelper.RunSafely(
                         BenMingGuSelectionCoordinator.TrySelect(evt.Room));
 

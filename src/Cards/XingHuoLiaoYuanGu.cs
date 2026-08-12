@@ -61,5 +61,6 @@ public sealed class XingHuoLiaoYuanGu : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
+        AddKeyword(CardKeyword.Innate);
     }
 }

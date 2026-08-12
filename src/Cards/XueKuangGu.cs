@@ -30,7 +30,7 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
     private CardModel? _leftCard;
     private CardModel? _rightCard;
 
-    public override int Rank => 4;
+    public override int Rank => IsUpgraded ? 5 : 4;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/XueKuangGu.png");

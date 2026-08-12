@@ -90,6 +90,7 @@ public sealed class XueShenZi : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 
     private void GrowLinkedCards(int amount)

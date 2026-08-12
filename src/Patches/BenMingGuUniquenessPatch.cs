@@ -3,6 +3,7 @@ using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using GuZhenRen.Relics;
 using STS2RitsuLib.Patching.Models;
@@ -11,9 +12,12 @@ namespace GuZhenRen.Patches;
 
 public sealed class BenMingGuUniquenessPatch : IPatchMethod
 {
+    internal static bool IsRemovingDuplicate { get; private set; }
+
     public static string PatchId => "ben-ming-gu-deck-uniqueness";
 
-    public static string Description => "Enforces BenMingGu uniqueness in the deck and combat.";
+    public static string Description =>
+        "Enforces BenMingGu and ordinary XianGu uniqueness in the deck and combat.";
 
     public static bool IsCritical => false;
 
@@ -59,14 +63,23 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
             .Select(result => result.cardAdded)
             .ToList();
 
-        if (newBenMingGuCards.Count == 0)
+        var newXianGuCards = mutableResults
+            .Where(result =>
+                result.success &&
+                result.oldPile is null &&
+                IsUniqueImmortalGu(result.cardAdded) &&
+                !IsCopy(result.cardAdded))
+            .Select(result => result.cardAdded)
+            .ToList();
+
+        if (newBenMingGuCards.Count == 0 && newXianGuCards.Count == 0)
         {
             return mutableResults;
         }
 
         var duplicates = deck.Type == PileType.Deck
-            ? GetDeckDuplicates(deck, newBenMingGuCards)
-            : GetCombatDuplicates(newBenMingGuCards);
+            ? GetDeckDuplicates(deck, newBenMingGuCards, newXianGuCards)
+            : GetCombatDuplicates(newXianGuCards);
         foreach (var duplicate in duplicates)
         {
             if (deck.Type == PileType.Deck)
@@ -93,11 +106,40 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
 
     private static IEnumerable<CardModel> GetDeckDuplicates(
         CardPile deck,
-        IReadOnlyList<CardModel> newCards)
+        IReadOnlyList<CardModel> newBenMingGuCards,
+        IReadOnlyList<CardModel> newXianGuCards)
     {
-        var existingCount = deck.Cards.Count(card =>
-            card is AbstractBenMingGuCard && !newCards.Contains(card));
-        return existingCount >= 1 ? newCards : newCards.Skip(1);
+        var duplicates = new List<CardModel>();
+        var existingBenMingGu = deck.Cards.Any(card =>
+            card is AbstractBenMingGuCard && !newBenMingGuCards.Contains(card));
+
+        foreach (var card in newBenMingGuCards)
+        {
+            if (existingBenMingGu)
+            {
+                duplicates.Add(card);
+            }
+            else
+            {
+                existingBenMingGu = true;
+            }
+        }
+
+        var existingXianGuIds = deck.Cards
+            .Where(card => IsUniqueImmortalGu(card) && !newXianGuCards.Contains(card))
+            .Select(card => card.Id)
+            .ToHashSet();
+
+        foreach (var card in newXianGuCards.Where(card =>
+                     card is not AbstractBenMingGuCard))
+        {
+            if (!existingXianGuIds.Add(card.Id))
+            {
+                duplicates.Add(card);
+            }
+        }
+
+        return duplicates.Distinct();
     }
 
     private static IEnumerable<CardModel> GetCombatDuplicates(
@@ -111,8 +153,7 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
                 PileType.Exhaust,
                 PileType.Play)
             .Where(card => !newCards.Contains(card))
-            .OfType<AbstractBenMingGuCard>()
-            .Where(card => card.Rank >= 6 && !IsCopy(card))
+            .Where(static card => IsUniqueImmortalGu(card))
             .Select(card => card.Id)
             .ToHashSet();
 
@@ -128,12 +169,65 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
         return duplicates;
     }
 
-    private static bool IsCopy(CardModel card) =>
+    internal static bool IsCopy(CardModel card) =>
         card.IsClone ||
         card.IsDupe ||
         card.Tags.Contains(GuZhenRenTags.XuYing);
 
-    private static async Task DestroyDuplicateCard(CardModel card)
+    internal static bool IsUniqueImmortalGu(
+        CardModel card,
+        int? rankOverride = null)
+    {
+        if (card is not GuZhenRenCardTemplate guCard)
+        {
+            return false;
+        }
+
+        var rank = rankOverride ?? guCard.Rank;
+        return rank >= 6
+            && card is not AbstractShaZhaoCard
+            && (card is AbstractBenMingGuCard || card.Rarity != CardRarity.Token);
+    }
+
+    internal static async Task EnforceDeckUniqueness(Player owner)
+    {
+        var duplicates = new List<CardModel>();
+        var foundBenMingGu = false;
+        var xianGuIds = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (var card in owner.Deck.Cards.ToList())
+        {
+            if (IsCopy(card))
+            {
+                continue;
+            }
+
+            if (card is AbstractBenMingGuCard)
+            {
+                if (foundBenMingGu)
+                {
+                    duplicates.Add(card);
+                    continue;
+                }
+
+                foundBenMingGu = true;
+            }
+
+            if (card is not AbstractBenMingGuCard
+                && IsUniqueImmortalGu(card)
+                && !xianGuIds.Add(card.Id.Entry))
+            {
+                duplicates.Add(card);
+            }
+        }
+
+        foreach (var duplicate in duplicates)
+        {
+            await DestroyDuplicateCard(duplicate);
+        }
+    }
+
+    internal static async Task DestroyDuplicateCard(CardModel card)
     {
         if (card.Pile?.Type != PileType.Deck)
         {
@@ -142,11 +236,18 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
 
         var owner = card.Owner;
         var grantsXianGuCanHai = owner is not null
-            && card is AbstractBenMingGuCard { Rank: >= 6 }
-            && !CombatManager.Instance.IsInProgress;
+            && IsUniqueImmortalGu(card);
 
-        Entry.Logger.Info($"Destroyed duplicate BenMingGu card: {card.Id.Entry}");
-        await CardPileCmd.RemoveFromDeck(card, showPreview: false);
+        Entry.Logger.Info($"Destroyed duplicate unique Gu card: {card.Id.Entry}");
+        IsRemovingDuplicate = true;
+        try
+        {
+            await CardPileCmd.RemoveFromDeck(card, showPreview: false);
+        }
+        finally
+        {
+            IsRemovingDuplicate = false;
+        }
 
         if (!grantsXianGuCanHai || owner is null)
         {

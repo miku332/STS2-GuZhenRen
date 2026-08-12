@@ -4,6 +4,10 @@ namespace GuZhenRen.Cards;
 
 public abstract class AbstractBenMingGuCard : GuZhenRenCardTemplate
 {
+    // Ingredients consumed while assembling a killer move do not trigger the
+    // BenMingGu removal penalty in the original mod.
+    internal static bool IsSynthesizing { get; set; }
+
     protected virtual int MaxRank => 9;
 
     public sealed override int Rank => CurrentUpgradeLevel + 1;
