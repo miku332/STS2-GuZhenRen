@@ -27,7 +27,7 @@ public sealed class LeShanLeShuiGu : GuZhenRenCardTemplate
     [
         new PowerVar<YiPower>(8).WithPowerTooltip(),
         new PowerVar<NianPower>(0).WithPowerTooltip(),
-        new PowerVar<NianTouShouZuPower>(1).WithPowerTooltip()
+        new PowerVar<NianTouShouZuPower>(1)
     ];
 
     public LeShanLeShuiGu()

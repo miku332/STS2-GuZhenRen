@@ -31,7 +31,7 @@ public sealed class TaiChuGuangGu : GuZhenRenCardTemplate
     [
         new PowerVar<ShanYaoPower>(3).WithPowerTooltip(),
         new PowerVar<WeakPower>(2).WithPowerTooltip(),
-        new PowerVar<TaiChuGuangPower>(1).WithPowerTooltip()
+        new PowerVar<TaiChuGuangPower>(1)
     ];
 
     public TaiChuGuangGu()

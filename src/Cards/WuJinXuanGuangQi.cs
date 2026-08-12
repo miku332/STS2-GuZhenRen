@@ -27,7 +27,7 @@ public sealed class WuJinXuanGuangQi : AbstractShaZhaoCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<SlowPower>(1).WithPowerTooltip(),
-        new PowerVar<WuJinXuanGuangQiPower>(1).WithPowerTooltip(),
+        new PowerVar<WuJinXuanGuangQiPower>(1),
         new PowerVar<StrengthPower>(0).WithPowerTooltip()
     ];
 

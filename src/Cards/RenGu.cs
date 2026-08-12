@@ -6,6 +6,7 @@ using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Cards.DynamicVars;
@@ -28,12 +29,32 @@ public sealed class RenGu : AbstractBenMingGuCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("Choices", 1),
-        new PowerVar<JianFengPower>(0).WithPowerTooltip()
+        new PowerVar<JianFengPower>(0),
+        .. Enumerable.Range(1, 9)
+            .Select(rank => new DynamicVar(
+                $"Rank{rank}",
+                rank == 1 ? 1 : 0))
     ];
 
     public RenGu()
         : base(1, CardType.Skill, CardRarity.Token, TargetType.Self)
     {
+    }
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips
+    {
+        get
+        {
+            foreach (var hoverTip in base.AdditionalHoverTips)
+            {
+                yield return hoverTip;
+            }
+
+            if (Rank >= 5)
+            {
+                yield return HoverTipFactory.FromPower<JianFengPower>();
+            }
+        }
     }
 
     protected override async Task OnPlay(
@@ -81,6 +102,11 @@ public sealed class RenGu : AbstractBenMingGuCard
     {
         SetUpgradedValue("Choices", GetChoices(Rank));
         SetUpgradedValue("JianFengPower", GetJianFeng(Rank));
+
+        foreach (var rank in Enumerable.Range(1, 9))
+        {
+            SetUpgradedValue($"Rank{rank}", rank == Rank ? 1 : 0);
+        }
     }
 
     private List<CardModel> CreateOptions()

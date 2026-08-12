@@ -95,15 +95,23 @@ public sealed class CardRankDescriptionPatch : IPatchMethod
             return;
         }
 
+        var separator = new LocString(
+                "card_keywords",
+                "GU_ZHEN_REN_KEYWORD_HEADER_SEPARATOR")
+            .GetFormattedText();
+        var terminator = new LocString(
+                "card_keywords",
+                "GU_ZHEN_REN_KEYWORD_HEADER_TERMINATOR")
+            .GetFormattedText();
         var rankAndDaoText = string.Join(
-            " ",
-            new[] { shaZhaoText, rankText }
+            separator,
+            new[] { rankText }
                 .Where(static text => !string.IsNullOrWhiteSpace(text))
                 .Concat(daoTexts)
-                .Concat(new[] { benMingGuText, xianGuText }
+                .Concat(new[] { benMingGuText, xianGuText, shaZhaoText }
                     .Where(static text => !string.IsNullOrWhiteSpace(text))));
 
-        __result = $"[gold]{rankAndDaoText}[/gold]\n{__result}";
+        __result = $"[gold]{rankAndDaoText}{terminator}[/gold]\n{__result}";
     }
 
     private static int ResolveDisplayedRank(

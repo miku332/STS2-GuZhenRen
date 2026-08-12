@@ -12,7 +12,15 @@ namespace GuZhenRen.Patches;
 
 public sealed class BenMingGuUniquenessPatch : IPatchMethod
 {
+    private static readonly AsyncLocal<int> CombatBypassDepth = new();
+
     internal static bool IsRemovingDuplicate { get; private set; }
+
+    internal static IDisposable EnterCombatBypassScope()
+    {
+        CombatBypassDepth.Value++;
+        return new CombatBypassScope();
+    }
 
     public static string PatchId => "ben-ming-gu-deck-uniqueness";
 
@@ -39,6 +47,11 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
         CardPile newPile,
         ref Task<IReadOnlyList<CardPileAddResult>> __result)
     {
+        if (newPile.IsCombatPile && CombatBypassDepth.Value > 0)
+        {
+            return;
+        }
+
         if (newPile.Type != PileType.Deck && !newPile.IsCombatPile)
         {
             return;
@@ -263,6 +276,24 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
         {
             relic.Counter++;
             relic.Flash();
+        }
+    }
+
+    private sealed class CombatBypassScope : IDisposable
+    {
+        private bool _disposed;
+
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _disposed = true;
+            CombatBypassDepth.Value = Math.Max(
+                0,
+                CombatBypassDepth.Value - 1);
         }
     }
 }

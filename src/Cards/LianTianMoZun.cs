@@ -18,7 +18,7 @@ public sealed class LianTianMoZun : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/LianTianMoZun.jpg",
         VisualStyle: CardVisualStyle.Ancient);
 
-    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.GuDao];
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.GuChongDao];
 
     public override bool CanBeGeneratedInCombat => false;
 

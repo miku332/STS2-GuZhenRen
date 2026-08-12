@@ -11,14 +11,6 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
 {
     private readonly bool _upgrades;
 
-    private static readonly IHoverTip RankHoverTip = new HoverTip(
-        new LocString(
-            "card_keywords",
-            "GU_ZHEN_REN_KEYWORD_PIN_JIE.title"),
-        new LocString(
-            "card_keywords",
-            "GU_ZHEN_REN_KEYWORD_PIN_JIE.description"));
-
     private static readonly IHoverTip XianGuHoverTip = new HoverTip(
         new LocString(
             "card_keywords",
@@ -43,6 +35,14 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
             "card_keywords",
             "GU_ZHEN_REN_KEYWORD_SHA_ZHAO.description"));
 
+    private static readonly IHoverTip XueKuangHoverTip = new HoverTip(
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_XUE_KUANG.title"),
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_XUE_KUANG.description"));
+
     protected readonly record struct GeneratedCardPreview(
         CardModel Card,
         bool Upgraded);
@@ -58,14 +58,18 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
     {
         get
         {
-            if (this is AbstractShaZhaoCard)
-            {
-                yield return ShaZhaoHoverTip;
-            }
-
             if (Rank > 0)
             {
-                yield return RankHoverTip;
+                yield return CreateRankHoverTip(Rank);
+            }
+
+            foreach (var daoTag in GuZhenRenTagRules.GetEffectiveDaoTags(this))
+            {
+                var hoverTip = CreateDaoHoverTip(daoTag);
+                if (hoverTip is not null)
+                {
+                    yield return hoverTip;
+                }
             }
 
             if (Rank >= 6
@@ -80,13 +84,14 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
                 yield return BenMingGuHoverTip;
             }
 
-            foreach (var daoTag in GuZhenRenTagRules.GetEffectiveDaoTags(this))
+            if (this is AbstractShaZhaoCard)
             {
-                var hoverTip = CreateDaoHoverTip(daoTag);
-                if (hoverTip is not null)
-                {
-                    yield return hoverTip;
-                }
+                yield return ShaZhaoHoverTip;
+            }
+
+            if (this is XueKuangGu)
+            {
+                yield return XueKuangHoverTip;
             }
 
             foreach (var preview in GeneratedCardPreviews)
@@ -112,11 +117,20 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
                     $"GU_ZHEN_REN_KEYWORD_{keywordStem}.description"));
     }
 
+    private static IHoverTip CreateRankHoverTip(int rank) => new HoverTip(
+        new LocString(
+            "card_keywords",
+            $"GU_ZHEN_REN_KEYWORD_PIN_JIE_{rank}.title"),
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_PIN_JIE.description"));
+
     internal static string? GetDaoKeywordStem(CardTag tag) =>
         tag == GuZhenRenTags.BianHuaDao ? "BIAN_HUA_DAO"
             : tag == GuZhenRenTags.FengDao ? "FENG_DAO"
             : tag == GuZhenRenTags.GuangDao ? "GUANG_DAO"
             : tag == GuZhenRenTags.GuDao ? "GU_DAO"
+            : tag == GuZhenRenTags.GuChongDao ? "GU_CHONG_DAO"
             : tag == GuZhenRenTags.JianDao ? "JIAN_DAO"
             : tag == GuZhenRenTags.JinDao ? "JIN_DAO"
             : tag == GuZhenRenTags.LiDao ? "LI_DAO"

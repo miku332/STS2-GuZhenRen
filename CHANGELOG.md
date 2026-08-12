@@ -1,5 +1,45 @@
 # 更新日志 / Changelog
 
+## 0.4.0
+
+### 中文
+
+#### 新增
+- 空窍悬停提示新增修为、当前转数、渡劫进度、下一灾劫及剩余战斗场数。
+- 空窍升转时，本命蛊将播放塔2原生升级动画。
+
+#### 优化
+- 防伪蛊现在可以在战斗中复制已经存在的同名仙蛊。
+- 防伪蛊的临时复制不会破坏牌组、奖励和其他来源的仙蛊唯一机制。
+- 卡牌转数、流派、仙蛊等关键词按统一顺序显示。
+- 参考塔1精简关键词介绍与卡牌描述，减少重复和过多提示。
+- 刃蛊现在只显示当前转数对应的效果。
+- 虚影牌不再重复显示“虚影”通用解释。
+- 调整部分卡牌文本，使升级效果和当前状态表达更加清晰。
+
+#### 修复
+- 修复防伪蛊选择页面显示默认文字“Info text”的问题。
+- 修复防伪蛊选择卡牌时可能出现异常、无法正常复制的问题。
+
+### English
+
+#### Added
+- Added Aperture hover tips showing cultivation, current rank, tribulation progress, the next tribulation, and remaining combats.
+- Vital Gu now plays the native Slay the Spire 2 upgrade animation when the Aperture advances.
+
+#### Improvements
+- Anti-Counterfeit Gu can now copy an Immortal Gu already present in combat.
+- Temporary copies created by Anti-Counterfeit Gu do not affect Immortal Gu uniqueness rules for the deck, rewards, or other sources.
+- Standardized the display order of card rank, path, and Immortal Gu tooltips.
+- Simplified keyword explanations and card descriptions based on the original Slay the Spire 1 mod, reducing repetition and excessive tooltips.
+- Blade Gu now displays only the effect corresponding to its current rank.
+- Phantom cards no longer repeat the general Phantom explanation.
+- Improved several card descriptions to present upgrade effects and current behavior more clearly.
+
+#### Fixes
+- Fixed the default “Info text” appearing on Anti-Counterfeit Gu’s card selection screen.
+- Fixed an error that could prevent Anti-Counterfeit Gu from selecting and copying cards.
+
 ## 0.3.0
 
 ### 中文

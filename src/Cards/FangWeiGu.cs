@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Patches;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -54,6 +55,8 @@ public sealed class FangWeiGu : GuZhenRenCardTemplate
 
         var canonical = ModelDb.GetById<CardModel>(selected.Id);
         var copy = CombatState.CreateCard(canonical, Owner);
+        using var uniquenessBypass =
+            BenMingGuUniquenessPatch.EnterCombatBypassScope();
         await CardPileCmd.AddGeneratedCardToCombat(
             copy,
             PileType.Hand,
@@ -79,6 +82,7 @@ public sealed class FangWeiGu : GuZhenRenCardTemplate
 
         return cards
             .DistinctBy(card => card.Id)
+            .Select(card => CombatState!.CreateCard(card, Owner))
             .ToList();
     }
 

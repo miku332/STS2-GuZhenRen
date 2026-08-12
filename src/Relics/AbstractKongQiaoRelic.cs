@@ -2,7 +2,10 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using GuZhenRen.Powers;
@@ -89,6 +92,22 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
         IconPath: $"res://GuZhenRen/images/relics/{RelicImageName}.png",
         IconOutlinePath: $"res://GuZhenRen/images/relics/outline/{RelicImageName}.png",
         BigIconPath: $"res://GuZhenRen/images/relics/{RelicImageName}.png");
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips
+    {
+        get
+        {
+            var currentAperture = GetCurrentAperture();
+            yield return new HoverTip(
+                GetProgressLoc("title"),
+                currentAperture.BuildProgressDescription(),
+                null);
+            yield return new HoverTip(
+                currentAperture.GetRankTitle(),
+                GetProgressLoc("rank_description"),
+                null);
+        }
+    }
 
     public override async Task BeforeCombatStart()
     {
@@ -220,6 +239,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
                 _state = KongQiaoState.Countdown;
                 _battlesToNextTribulation = BattlesPerTribulation;
             }
+            LogProgress("tribulation cleared");
             return;
         }
 
@@ -247,6 +267,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
             {
                 _state = KongQiaoState.TribulationPending;
             }
+            LogProgress("countdown advanced");
         }
     }
 
@@ -283,7 +304,9 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
         {
             while (benMingGu.Rank < targetRank && benMingGu.IsUpgradable)
             {
-                CardCmd.Upgrade(benMingGu, default);
+                CardCmd.Upgrade(
+                    benMingGu,
+                    CardPreviewStyle.HorizontalLayout);
             }
 
             Entry.Logger.Info(
@@ -330,6 +353,122 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
         var delta = desiredBonus - MaxHpBonusApplied;
         MaxHpBonusApplied = desiredBonus;
         await CreatureCmd.GainMaxHp(Owner.Creature, delta);
+    }
+
+    private string BuildProgressDescription()
+    {
+        if (this is XianTaiGu)
+        {
+            if (Rank >= 9)
+            {
+                return GetProgressText("sovereign_max");
+            }
+
+            return GetProgressText(
+                "sovereign",
+                ("Current", Xp),
+                ("Needed", NeededXp));
+        }
+
+        if (Rank < 5)
+        {
+            return GetProgressText(
+                "mortal",
+                ("Current", Xp),
+                ("Needed", NeededXp));
+        }
+
+        var tribulation = GetTribulationName(
+            TribulationSystem.GetNextType(Rank, Xp));
+        var tribulationDisabled = IsMutable && IsTribulationDisabled();
+
+        if (Rank == 5)
+        {
+            if (_state != KongQiaoState.TribulationPending)
+            {
+                return GetProgressText(
+                    "rank_five",
+                    ("Current", Xp),
+                    ("Needed", NeededXp),
+                    ("Tribulation", tribulation));
+            }
+
+            return GetProgressText(
+                tribulationDisabled
+                    ? "rank_five_pending_disabled"
+                    : "rank_five_pending",
+                ("Tribulation", tribulation));
+        }
+
+        if (Rank >= 10)
+        {
+            return GetProgressText("terminal_complete");
+        }
+
+        return _state switch
+        {
+            KongQiaoState.TribulationPending => GetProgressText(
+                tribulationDisabled
+                    ? "immortal_pending_disabled"
+                    : "immortal_pending",
+                ("Current", Xp),
+                ("Needed", NeededXp),
+                ("Tribulation", tribulation)),
+            KongQiaoState.Countdown => GetProgressText(
+                tribulationDisabled
+                    ? "immortal_countdown_disabled"
+                    : "immortal_countdown",
+                ("Current", Xp),
+                ("Needed", NeededXp),
+                ("Battles", BattlesToNextTribulation),
+                ("Tribulation", tribulation)),
+            _ => GetProgressText(
+                "immortal_preparing",
+                ("Current", Xp),
+                ("Needed", NeededXp),
+                ("Tribulation", tribulation))
+        };
+    }
+
+    private AbstractKongQiaoRelic GetCurrentAperture()
+    {
+        if (!IsMutable)
+        {
+            return this;
+        }
+
+        return Owner.GetRelic<AbstractKongQiaoRelic>() ?? this;
+    }
+
+    private void LogProgress(string reason) => Entry.Logger.Info(
+        $"[Aperture] {reason}: rank={Rank}, state={_state}, " +
+        $"tribulations={Xp}/{NeededXp}, battles={BattlesToNextTribulation}.");
+
+    private LocString GetRankTitle() => Rank is >= 1 and <= 9
+        ? new LocString(
+            "card_keywords",
+            $"GU_ZHEN_REN_KEYWORD_PIN_JIE_{Rank}.title")
+        : GetProgressLoc("rank_10_title");
+
+    private static string GetTribulationName(TribulationType type) =>
+        GetProgressLoc($"tribulation_{type.ToString().ToLowerInvariant()}")
+            .GetFormattedText();
+
+    private static LocString GetProgressLoc(string suffix) => new(
+        "relics",
+        $"GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.{suffix}");
+
+    private static string GetProgressText(
+        string suffix,
+        params (string Name, object Value)[] variables)
+    {
+        var locString = GetProgressLoc(suffix);
+        foreach (var (name, value) in variables)
+        {
+            locString.AddObj(name, value);
+        }
+
+        return locString.GetFormattedText();
     }
 
 }

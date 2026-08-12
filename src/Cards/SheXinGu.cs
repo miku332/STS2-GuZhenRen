@@ -28,7 +28,7 @@ public sealed class SheXinGu : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<SheXinDrawReductionPower>(1).WithPowerTooltip()
+        new PowerVar<SheXinDrawReductionPower>(1)
     ];
 
     public SheXinGu()

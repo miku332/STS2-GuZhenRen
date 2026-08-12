@@ -29,7 +29,7 @@ public sealed class XueChou : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<XueChouPower>(1).WithPowerTooltip()
+        new PowerVar<XueChouPower>(1)
     ];
 
     public XueChou()
