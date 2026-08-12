@@ -1,5 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
+.godot-user-data/
+.godot-local-data/
 /android/
 
 # .NET build outputs may contain local absolute paths

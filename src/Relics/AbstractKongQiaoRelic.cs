@@ -26,6 +26,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
     private int _xp;
     private KongQiaoState _state;
     private int _battlesToNextTribulation;
+    private int _maxHpBonusApplied;
 
     public abstract int Rank { get; }
 
@@ -70,6 +71,17 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
         {
             AssertMutable();
             _battlesToNextTribulation = Math.Max(0, value);
+        }
+    }
+
+    [SavedProperty]
+    public int MaxHpBonusApplied
+    {
+        get => _maxHpBonusApplied;
+        set
+        {
+            AssertMutable();
+            _maxHpBonusApplied = Math.Max(0, value);
         }
     }
 
@@ -139,7 +151,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
     {
         if (Rank >= 6)
         {
-            await CreatureCmd.GainMaxHp(Owner.Creature, Rank);
+            await EnsureMaxHpBonusApplied();
             if (_state == KongQiaoState.XpGathering)
             {
                 _state = KongQiaoState.Countdown;
@@ -253,14 +265,17 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
         nextKongQiao.BattlesToNextTribulation = nextKongQiao.Rank >= 6
             ? BattlesPerTribulation
             : 0;
+        nextKongQiao.MaxHpBonusApplied = MaxHpBonusApplied > 0
+            ? MaxHpBonusApplied
+            : Rank >= 6 ? Rank : 0;
         await RelicCmd.Replace(this, nextKongQiao);
         await UpgradeBenMingGuToRank(nextKongQiao.Rank);
     }
 
-    private bool IsTribulationDisabled() =>
+    protected virtual bool IsTribulationDisabled() =>
         Owner.GetRelic<ShenBuZhi>() is not null;
 
-    private Task UpgradeBenMingGuToRank(int targetRank)
+    protected Task UpgradeBenMingGuToRank(int targetRank)
     {
         foreach (var benMingGu in Owner.Deck.Cards
                      .OfType<AbstractBenMingGuCard>()
@@ -278,7 +293,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
         return Task.CompletedTask;
     }
 
-    private bool QualifiesForFreePlay(CardModel card)
+    protected bool QualifiesForFreePlay(CardModel card)
     {
         return Rank > 1 &&
                Rank <= 5 &&
@@ -288,7 +303,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
                guCard.Rank < Rank;
     }
 
-    private static int GetXpReward(RoomType roomType)
+    protected static int GetXpReward(RoomType roomType)
     {
         return roomType switch
         {
@@ -298,4 +313,23 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
             _ => 0
         };
     }
+
+    protected async Task EnsureMaxHpBonusApplied()
+    {
+        if (Rank < 6)
+        {
+            return;
+        }
+
+        var desiredBonus = Rank;
+        if (MaxHpBonusApplied >= desiredBonus)
+        {
+            return;
+        }
+
+        var delta = desiredBonus - MaxHpBonusApplied;
+        MaxHpBonusApplied = desiredBonus;
+        await CreatureCmd.GainMaxHp(Owner.Creature, delta);
+    }
+
 }

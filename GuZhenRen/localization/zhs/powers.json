@@ -1,6 +1,10 @@
 ﻿{
     "GU_ZHEN_REN_POWER_XIAN_ATTACK_POWER.title": "限（内部效果）",
     "GU_ZHEN_REN_POWER_XIAN_ATTACK_POWER.description": "限的临时伤害结算效果。",
+    "GU_ZHEN_REN_POWER_SHAN_YAO_HISTORY_POWER.title": "闪耀记录（内部效果）",
+    "GU_ZHEN_REN_POWER_SHAN_YAO_HISTORY_POWER.description": "记录本回合获得的闪耀。",
+    "GU_ZHEN_REN_POWER_TAI_CHU_GUANG_POWER.title": "太初光",
+    "GU_ZHEN_REN_POWER_TAI_CHU_GUANG_POWER.description": "本回合，闪耀不会因打出光道攻击牌而消失。",
     "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.title":  "闪耀",
     "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.description":  "光道攻击造成的伤害提高50%。",
     "GU_ZHEN_REN_POWER_RI_GUANG_POWER.title":  "日光",
@@ -221,5 +225,7 @@
     "GU_ZHEN_REN_POWER_TONG_XIN_POWER.title": "通心",
     "GU_ZHEN_REN_POWER_TONG_XIN_POWER.description": "每当玩家手动打出一张牌，随机从手牌中自动打出一张能够支付费用的牌。",
     "GU_ZHEN_REN_POWER_DOU_ZHUAN_POWER.title": "斗转",
-    "GU_ZHEN_REN_POWER_DOU_ZHUAN_POWER.description": "敌方回合开始时，若当前生命低于已损失生命，回复生命至已损失生命。"
+    "GU_ZHEN_REN_POWER_DOU_ZHUAN_POWER.description": "敌方回合开始时，若当前生命低于已损失生命，回复生命至已损失生命。",
+    "GU_ZHEN_REN_POWER_LIAN_TIAN_MO_ZUN_POWER.title": "炼天魔尊",
+    "GU_ZHEN_REN_POWER_LIAN_TIAN_MO_ZUN_POWER.description": "每回合第一次消耗一张有流派的非状态牌时，从3张共享流派的普通蛊虫中选择1张。该牌本回合耗能为0，并获得消耗和虚无。"
 }

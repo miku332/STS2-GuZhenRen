@@ -1,0 +1,6 @@
+{
+  "GU_ZHEN_REN_POTION_SHENG_JI_YE.title": "Potion Sheng Ji Ye",
+  "GU_ZHEN_REN_POTION_SHENG_JI_YE.description": "Heal {Heal:diff()} HP.",
+  "GU_ZHEN_REN_POTION_FU_REN_XIN.title": "Potion Fu Ren Xin",
+  "GU_ZHEN_REN_POTION_FU_REN_XIN.description": "Apply {PoisonPower} Poison. Whenever you kill a non-Minion enemy, gain 3 additional Poison."
+}

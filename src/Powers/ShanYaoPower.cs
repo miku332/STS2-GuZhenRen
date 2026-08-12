@@ -83,6 +83,11 @@ public sealed class ShanYaoPower : ModPowerTemplate
             return;
         }
 
+        if (Owner.GetPower<TaiChuGuangPower>() is not null)
+        {
+            return;
+        }
+
         var riGuang = Owner.GetPower<RiGuangPower>();
         if (riGuang is not null && riGuang.Amount > 0)
         {

@@ -1,5 +1,51 @@
 # 更新日志 / Changelog
 
+## 0.3.0
+
+### 中文
+
+- 新增先古能力牌「炼天魔尊」。
+  - 每回合首次消耗有流派的非状态牌时，从 3 张相同流派的一至五转普通蛊虫中选择 1 张加入手牌。
+  - 生成牌本回合耗能为 0，并获得消耗和虚无。
+- 新增先古卡牌「太初光蛊」。
+  - 获得 3 层闪耀。
+  - 给予所有敌人 2 层虚弱。
+  - 本回合闪耀不会因打出光道攻击牌而消失。
+- 新增遗物「九转至尊仙胎蛊」。
+  - 作为方源获得「欧洛巴斯之触」后的升级初始遗物。
+  - 获得时继承当前空窍的转数与修炼进度。
+  - 至尊仙窍无需渡劫。
+- 修复直接获得「古老牙齿」时，无法将「小光蛊」变化为「太初光蛊」的问题。
+- 修复空窍遗物替换或升级时，最大生命值可能重复增加的问题。
+- 优化「九转至尊仙胎蛊」预览，不再默认显示一转凡窍，避免产生误解。
+- 增加新增卡牌、能力、遗物的中文和英文文本。
+- 增加英文语言文件，完善双语本地化支持。
+- 增加 Godot 本地用户数据目录的忽略规则，降低个人环境信息进入版本库的风险。
+
+本 mod 使用 AI 进行开发，可能会存在错误。遇到问题时，请尽量提供复现步骤、截图和游戏日志。
+
+### English
+
+- Added the Ancient card "Refining Heaven Demon Venerable".
+  - The first time each turn you exhaust a non-Status card with a Dao path, choose 1 ordinary rank 1-5 Gu worm from 3 cards sharing that Dao path.
+  - The generated card costs 0 this turn and gains Exhaust and Ethereal.
+- Added the Ancient card "Primordial Light Gu".
+  - Gain 3 stacks of Radiance.
+  - Apply 2 Weak to all enemies.
+  - This turn, Radiance is not removed by playing Light Dao Attacks.
+- Added the relic "Rank Nine Sovereign Immortal Fetus Gu".
+  - It replaces Touch of Orobas as Fang Yuan's upgraded starter relic.
+  - When obtained, it inherits the current aperture's rank and cultivation progress.
+  - The Sovereign Immortal Aperture does not require tribulations.
+- Fixed direct acquisition of Archaic Tooth failing to transform Xiao Guang Gu into Primordial Light Gu.
+- Fixed aperture relic replacement or advancement potentially granting duplicate Max HP bonuses.
+- Improved the Rank Nine Sovereign Immortal Fetus Gu preview so it no longer defaults to a rank 1 mortal aperture.
+- Added Chinese and English text for the new cards, powers, and relics.
+- Added English localization files and improved bilingual localization support.
+- Added ignore rules for Godot local user-data directories to reduce the risk of committing machine-specific information.
+
+This mod is developed with AI assistance and may contain errors. Please report reproducible issues with steps, screenshots, and game logs when possible.
+
 ## 0.2.0
 
 ### 中文

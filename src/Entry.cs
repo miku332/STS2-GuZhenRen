@@ -32,6 +32,7 @@ public static class Entry
 
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<XiaoGuangGu, TaiChuGuangGu>(ModId);
         var tunHuoPatcher = RitsuLibFramework.CreatePatcher(ModId, "tun-huo");
         tunHuoPatcher.RegisterPatch<TunHuoPatch>();
         tunHuoPatcher.PatchAll();
@@ -98,6 +99,13 @@ public static class Entry
         var haoJiePatcher = RitsuLibFramework.CreatePatcher(ModId, "hao-jie");
         haoJiePatcher.RegisterPatch<GuiGuaYiIntentPatch>();
         haoJiePatcher.PatchAll();
+        var orobasPatcher = RitsuLibFramework.CreatePatcher(ModId, "orobas-fang-yuan");
+        orobasPatcher.RegisterPatch<OrobasFangYuanSetupPatch>();
+        orobasPatcher.RegisterPatch<OrobasFangYuanObtainPatch>();
+        orobasPatcher.RegisterPatch<OrobasFangYuanUpgradePatch>();
+        orobasPatcher.RegisterPatch<XianTaiGuTransferPatch>();
+        orobasPatcher.RegisterPatch<ArchaicToothFangYuanSetupPatch>();
+        orobasPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(
