@@ -5,24 +5,25 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Powers;
-using STS2RitsuLib.Combat.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace GuZhenRen.Powers;
 
 [RegisterPower]
-public sealed class LuDaoStrengthDownPower
-    : ModTemporaryAppliedPowerTemplate<LuDaoDaoHenPower, StrengthPower>
+public sealed class XianStrengthDownPower
+    : ModPowerTemplate
 {
-    protected override bool IsPositive => false;
+    public override PowerType Type => PowerType.Debuff;
+
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterSideTurnEnd(
         PlayerChoiceContext choiceContext,
         CombatSide side,
         IEnumerable<Creature> participants)
     {
-        if (side != Owner.Side
+        if (side != CombatSide.Enemy
             || !participants.Contains(Owner)
             || Amount <= 0)
         {
@@ -38,6 +39,8 @@ public sealed class LuDaoStrengthDownPower
             Owner,
             null,
             silent: true);
+        Entry.Logger.Info(
+            $"[Xian] RestoredStrength={amountToRestore} at enemy turn end.");
         await PowerCmd.Remove(this);
     }
 
@@ -47,5 +50,5 @@ public sealed class LuDaoStrengthDownPower
 
     public override LocString Description => new(
         "powers",
-        "GU_ZHEN_REN_POWER_LU_DAO_STRENGTH_DOWN_POWER.description");
+        "GU_ZHEN_REN_POWER_XIAN_STRENGTH_DOWN_POWER.description");
 }

@@ -1,4 +1,6 @@
 ﻿{
+    "GU_ZHEN_REN_POWER_XIAN_ATTACK_POWER.title": "限（内部效果）",
+    "GU_ZHEN_REN_POWER_XIAN_ATTACK_POWER.description": "限的临时伤害结算效果。",
     "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.title":  "闪耀",
     "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.description":  "光道攻击造成的伤害提高50%。",
     "GU_ZHEN_REN_POWER_RI_GUANG_POWER.title":  "日光",
@@ -126,6 +128,8 @@
     "GU_ZHEN_REN_POWER_LU_DAO_DAO_HEN_POWER.description": "回合结束时，使所有敌人暂时失去{Amount}点力量。",
     "GU_ZHEN_REN_POWER_LU_DAO_STRENGTH_DOWN_POWER.title": "律道压制",
     "GU_ZHEN_REN_POWER_LU_DAO_STRENGTH_DOWN_POWER.description": "暂时失去{Amount}点力量。敌方回合结束时恢复。",
+    "GU_ZHEN_REN_POWER_XIAN_STRENGTH_DOWN_POWER.title": "限",
+    "GU_ZHEN_REN_POWER_XIAN_STRENGTH_DOWN_POWER.description": "本回合暂时失去{Amount}点力量。敌方回合结束时恢复。",
     "GU_ZHEN_REN_POWER_SHI_DAO_DAO_HEN_POWER.title": "食道道痕",
     "GU_ZHEN_REN_POWER_SHI_DAO_DAO_HEN_POWER.description": "使用攻击击杀非爪牙敌人时，回复{Amount}点生命。",
     "GU_ZHEN_REN_POWER_YUN_DAO_DAO_HEN_POWER.title": "运道道痕",

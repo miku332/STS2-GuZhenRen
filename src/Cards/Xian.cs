@@ -7,6 +7,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Powers;
 
 namespace GuZhenRen.Cards;
 
@@ -35,26 +36,19 @@ public sealed class Xian : GuZhenRenCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        await PowerCmd.Apply<XianAttackPower>(
+            choiceContext,
+            Owner.Creature,
+            1,
+            Owner.Creature,
+            this,
+            silent: true);
+
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash");
-        await attack.Execute(choiceContext);
-
-        var unblockedDamage = attack.Results
-            .SelectMany(static hit => hit)
-            .Where(result => result.Receiver == cardPlay.Target)
-            .Sum(result => result.UnblockedDamage);
-
-        if (unblockedDamage > 0)
-        {
-            await PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.StrengthPower>(
-                choiceContext,
-                cardPlay.Target,
-                -unblockedDamage,
-                Owner.Creature,
-                this);
-        }
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
