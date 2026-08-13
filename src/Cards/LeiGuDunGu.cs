@@ -1,5 +1,6 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Powers;
+using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,6 +19,8 @@ public sealed class LeiGuDunGu : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/LeiGuDunGu.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.GuDao];
 
     public override bool GainsBlock => true;
 

@@ -38,6 +38,11 @@ public sealed class JuGuangGu : GuZhenRenCardTemplate
         new CalculatedVar("CalculatedShanYao")
             .WithMultiplier(static (CardModel card, Creature? _) =>
             {
+                if (card.CombatState is null)
+                {
+                    return 1;
+                }
+
                 var hand = PileType.Hand.GetPile(card.Owner);
                 var handCount = hand.Cards.Count(
                     handCard => GuZhenRenTagRules.HasEffectiveTag(

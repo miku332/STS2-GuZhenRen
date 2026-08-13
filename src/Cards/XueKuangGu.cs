@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Enchantments;
 using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
@@ -44,6 +45,7 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
 
     public static void ClearCombatState()
     {
+        ClearBloodcrazeEnchantments();
         _bloodcrazedCards.Clear();
         _autoPlayingCards.Clear();
         _queuedAutoPlayCards.Clear();
@@ -123,6 +125,21 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
         }
 
         _bloodcrazedCards.Add(card);
+        if (card.Enchantment is null)
+        {
+            CardCmd.Enchant<XueKuangEnchantment>(card, 1);
+        }
+    }
+
+    private static void ClearBloodcrazeEnchantments()
+    {
+        foreach (var card in _bloodcrazedCards.ToList())
+        {
+            if (card.Enchantment is XueKuangEnchantment)
+            {
+                CardCmd.ClearEnchantment(card);
+            }
+        }
     }
 
     private static async Task TryAutoPlayBloodcrazedCardAsync(

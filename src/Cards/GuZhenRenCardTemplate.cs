@@ -19,6 +19,22 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
             "card_keywords",
             "GU_ZHEN_REN_KEYWORD_XIAN_GU.description"));
 
+    private static readonly IHoverTip XianGuWuHoverTip = new HoverTip(
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_XIAN_GU_WU.title"),
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_XIAN_GU_WU.description"));
+
+    private static readonly IHoverTip FanGuWuHoverTip = new HoverTip(
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.title"),
+        new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.description"));
+
     private static readonly IHoverTip BenMingGuHoverTip = new HoverTip(
         new LocString(
             "card_keywords",
@@ -87,6 +103,16 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
             if (this is AbstractShaZhaoCard)
             {
                 yield return ShaZhaoHoverTip;
+            }
+
+            if (Tags.Contains(GuZhenRenTags.XianGuWu))
+            {
+                yield return XianGuWuHoverTip;
+            }
+
+            if (Tags.Contains(GuZhenRenTags.FanGuWu))
+            {
+                yield return FanGuWuHoverTip;
             }
 
             if (this is XueKuangGu)

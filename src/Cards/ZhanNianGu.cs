@@ -11,6 +11,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 using GuZhenRen.Powers;
 using GuZhenRen.Keywords;
 
@@ -23,6 +24,8 @@ public sealed class ZhanNianGu : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/ZhanNianGu.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

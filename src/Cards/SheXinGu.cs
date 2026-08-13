@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 using GuZhenRen.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -17,6 +18,8 @@ public sealed class SheXinGu : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/SheXinGu.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
 
     public override TargetType TargetType =>
         IsUpgraded ? TargetType.AllEnemies : TargetType.AnyEnemy;

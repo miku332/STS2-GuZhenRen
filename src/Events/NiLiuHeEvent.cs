@@ -17,7 +17,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace GuZhenRen.Events;
 
-[RegisterActEvent(typeof(Glory))]
+[RegisterSharedEvent]
 public sealed class NiLiuHeEvent : ModEventTemplate
 {
     private const int MaxProgress = 18;

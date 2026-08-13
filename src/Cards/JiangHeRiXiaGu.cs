@@ -31,6 +31,11 @@ public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
         new CalculatedVar("CalculatedHits")
             .WithMultiplier(static (CardModel card, Creature? _) =>
             {
+                if (card.CombatState is null)
+                {
+                    return 1;
+                }
+
                 var hand = PileType.Hand.GetPile(card.Owner);
                 return hand.Cards.Count(
                     handCard => GuZhenRenTagRules.HasEffectiveTag(

@@ -1,5 +1,6 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Powers;
+using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,6 +19,8 @@ public sealed class WuJinXuanGuangQi : AbstractShaZhaoCard
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/WuJinXuanGuangQi.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.LuDao];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

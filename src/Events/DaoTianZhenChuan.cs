@@ -15,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace GuZhenRen.Events;
 
-[RegisterActEvent(typeof(Glory))]
+[RegisterSharedEvent]
 public sealed class DaoTianZhenChuan : ModEventTemplate
 {
     private const int HpLoss = 8;

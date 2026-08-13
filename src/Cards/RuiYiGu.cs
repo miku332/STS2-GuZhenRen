@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using MegaCrit.Sts2.Core.Commands;
@@ -18,6 +19,8 @@ public sealed class RuiYiGu : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/RuiYiGu.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

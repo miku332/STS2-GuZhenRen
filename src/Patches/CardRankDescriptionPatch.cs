@@ -80,6 +80,18 @@ public sealed class CardRankDescriptionPatch : IPatchMethod
                 .GetFormattedText()
             : string.Empty;
 
+        var guWuText = card.Tags.Contains(GuZhenRenTags.XianGuWu)
+            ? new LocString(
+                    "card_keywords",
+                    "GU_ZHEN_REN_KEYWORD_XIAN_GU_WU.title")
+                .GetFormattedText()
+            : card.Tags.Contains(GuZhenRenTags.FanGuWu)
+                ? new LocString(
+                        "card_keywords",
+                        "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.title")
+                    .GetFormattedText()
+                : string.Empty;
+
         var daoTexts = GuZhenRenTagRules.GetEffectiveDaoTags(card)
             .Select(GuZhenRenCardTemplate.GetDaoKeywordStem)
             .Where(static stem => stem is not null)
@@ -108,7 +120,13 @@ public sealed class CardRankDescriptionPatch : IPatchMethod
             new[] { rankText }
                 .Where(static text => !string.IsNullOrWhiteSpace(text))
                 .Concat(daoTexts)
-                .Concat(new[] { benMingGuText, xianGuText, shaZhaoText }
+                .Concat(new[]
+                    {
+                        benMingGuText,
+                        xianGuText,
+                        shaZhaoText,
+                        guWuText
+                    }
                     .Where(static text => !string.IsNullOrWhiteSpace(text))));
 
         __result = $"[gold]{rankAndDaoText}{terminator}[/gold]\n{__result}";

@@ -12,14 +12,15 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace GuZhenRen.Cards;
 
 [RegisterCard(typeof(GuZhenRenCardPool))]
-public sealed class XingXiuQiPan : AbstractXianGuWuCard
+public sealed class XingXiuQiPan : AbstractGuWuCard
 {
     private static readonly HashSet<ulong> TengNuoUsedByPlayer = [];
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/XingXiuQiPan.png");
 
-    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
+    public override IEnumerable<CardTag> Tags =>
+        [GuZhenRenTags.ZhiDao, GuZhenRenTags.XianGuWu];
 
     public XingXiuQiPan()
         : base(1, CardType.Skill, TargetType.None)

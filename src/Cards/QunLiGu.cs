@@ -66,6 +66,11 @@ public sealed class QunLiGu : GuZhenRenCardTemplate
 
     private decimal CalculateCurrentDamage()
     {
+        if (CombatState is null)
+        {
+            return DynamicVars.Damage.BaseValue;
+        }
+
         var shadows = PileType.Hand.GetPile(Owner)
             .Cards
             .Count(card => card.Tags.Contains(GuZhenRenTags.XuYing));

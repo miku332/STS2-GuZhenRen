@@ -8,6 +8,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
@@ -19,6 +20,8 @@ public sealed class ZhanGuCheLun : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/ZhanGuCheLun.png");
 
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.GuDao];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(6, ValueProp.Move),
@@ -26,7 +29,7 @@ public sealed class ZhanGuCheLun : GuZhenRenCardTemplate
     ];
 
     public ZhanGuCheLun()
-        : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies, true)
+        : base(2, CardType.Attack, CardRarity.Event, TargetType.AllEnemies, true)
     {
     }
 

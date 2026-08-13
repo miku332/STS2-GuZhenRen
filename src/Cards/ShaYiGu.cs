@@ -21,6 +21,8 @@ public sealed class ShaYiGu : GuZhenRenCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/ShaYiGu.png");
 
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(7, ValueProp.Move),

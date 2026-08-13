@@ -61,6 +61,10 @@
   "GU_ZHEN_REN_KEYWORD_ZHOU_DAO.description": "The Time Path.",
   "GU_ZHEN_REN_KEYWORD_SHA_ZHAO.title": "Killer Move",
   "GU_ZHEN_REN_KEYWORD_SHA_ZHAO.description": "A powerful technique formed from a specific combination of Gu worms. It cannot be upgraded.",
+  "GU_ZHEN_REN_KEYWORD_XIAN_GU_WU.title": "Immortal Gu House",
+  "GU_ZHEN_REN_KEYWORD_XIAN_GU_WU.description": "The peak product of Formation Path, integrating multiple functions with few shortcomings.\n[gold]At the start of each turn, return to your hand.[/gold]",
+  "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.title": "Mortal Gu House",
+  "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.description": "A Gu House entirely built with mortal Gu, essentially a solidified killer move.\n[gold]At the start of each turn, return to your hand.[/gold]",
   "GU_ZHEN_REN_KEYWORD_XUE_KUANG.title": "Blood Frenzy",
   "GU_ZHEN_REN_KEYWORD_XUE_KUANG.description": "Automatically played from your hand. Lose [blue]2[/blue] HP when played."
 }

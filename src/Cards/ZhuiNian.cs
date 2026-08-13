@@ -9,6 +9,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Tags;
 using GuZhenRen.Powers;
 using GuZhenRen.Keywords;
 
@@ -21,6 +22,8 @@ public sealed class ZhuiNian : GuZhenRenCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/ZhuiNian.png");
+
+    public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new PowerVar<NianPower>(0).WithPowerTooltip()];

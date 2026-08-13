@@ -61,6 +61,10 @@
     "GU_ZHEN_REN_KEYWORD_ZHOU_DAO.description": "宙道流派。",
     "GU_ZHEN_REN_KEYWORD_SHA_ZHAO.title": "杀招",
     "GU_ZHEN_REN_KEYWORD_SHA_ZHAO.description": "由特定的蛊虫组合而成的强力手段，无法升级。",
+    "GU_ZHEN_REN_KEYWORD_XIAN_GU_WU.title": "仙蛊屋",
+    "GU_ZHEN_REN_KEYWORD_XIAN_GU_WU.description": "阵道的巅峰产物，集多种功能于一体，鲜有短板。\n[gold]每回合开始时，返回手牌。[/gold]",
+    "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.title": "凡蛊屋",
+    "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.description": "完全由凡蛊搭建的蛊屋，本质是固化定型的杀招。\n[gold]每回合开始时，返回手牌。[/gold]",
     "GU_ZHEN_REN_KEYWORD_XUE_KUANG.title": "血狂",
     "GU_ZHEN_REN_KEYWORD_XUE_KUANG.description": "从手牌中自动打出，打出时失去[blue]2[/blue]点生命。"
 }

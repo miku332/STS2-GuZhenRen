@@ -228,7 +228,7 @@ public static class Entry
                         foreach (var player in evt.CombatState.Players)
                         {
                             TaskHelper.RunSafely(
-                                AbstractXianGuWuCard.ReturnAllToHand(player));
+                                AbstractGuWuCard.ReturnAllToHand(player));
                         }
                     }
                 },

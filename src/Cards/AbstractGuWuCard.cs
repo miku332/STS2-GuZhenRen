@@ -1,24 +1,21 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
+using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
 
-public abstract class AbstractXianGuWuCard : AbstractShaZhaoCard
+public abstract class AbstractGuWuCard : AbstractShaZhaoCard
 {
     public override int Rank => 0;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-    [
-        CardKeyword.Innate,
-        CardKeyword.Retain
-    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
     public override bool CanBeGeneratedInCombat => false;
 
     public override bool CanBeGeneratedByModifiers => false;
 
-    protected AbstractXianGuWuCard(
+    protected AbstractGuWuCard(
         int energyCost,
         CardType cardType,
         TargetType targetType)
@@ -43,7 +40,7 @@ public abstract class AbstractXianGuWuCard : AbstractShaZhaoCard
             var cards = pileType
                 .GetPile(player)
                 .Cards
-                .OfType<AbstractXianGuWuCard>()
+                .OfType<AbstractGuWuCard>()
                 .ToList();
             foreach (var card in cards)
             {
