@@ -291,6 +291,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
             : Rank >= 6 ? Rank : 0;
         await RelicCmd.Replace(this, nextKongQiao);
         await UpgradeBenMingGuToRank(nextKongQiao.Rank);
+        ApertureVoiceSystem.PlayForRank(Owner, nextKongQiao.Rank);
     }
 
     protected virtual bool IsTribulationDisabled() =>

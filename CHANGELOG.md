@@ -1,5 +1,21 @@
 # 更新日志 / Changelog
 
+## 0.4.3
+
+### 中文
+
+#### 新增
+- 新增仙窍升转专属语音。
+- 升炼至九转仙窍时，将根据是否拥有杀蛊播放不同语音。
+- 升炼至十转仙窍时，将播放对应的专属语音。
+
+### English
+
+#### Added
+- Added unique voice lines for Immortal Aperture rank advancement.
+- Advancing to Rank 9 plays a different voice line depending on whether Sha Gu is owned.
+- Advancing to Rank 10 plays its corresponding unique voice line.
+
 ## 0.4.2
 
 ### 中文
