@@ -1,5 +1,17 @@
 # 更新日志 / Changelog
 
+## 0.4.2
+
+### 中文
+
+#### 优化
+- 更新方源的战斗与界面小头像。
+
+### English
+
+#### Improvements
+- Updated Fang Yuan's in-game portrait.
+
 ## 0.4.0
 
 ### 中文
