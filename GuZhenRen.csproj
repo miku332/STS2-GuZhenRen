@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.5.10" />
+    <PackageReference Include="STS2.RitsuLib.Compat.0.107.1" Version="0.5.12" />
 
     <Reference Include="sts2">
       <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
