@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Patching.Models;
 
 namespace GuZhenRen.Patches;
@@ -34,7 +35,29 @@ public sealed class AiQingGuEscapeRewardPatch : IPatchMethod
         }
 
         _roomSkippingRewards = null;
-        TaskHelper.RunSafely(__instance.ProceedWithoutRewards());
+        TaskHelper.RunSafely(ProceedAfterEscape(__instance, room));
         return false;
+    }
+
+    private static async Task ProceedAfterEscape(
+        NCombatUi combatUi,
+        CombatRoom room)
+    {
+        if (room.RoomType != RoomType.Boss)
+        {
+            await combatUi.ProceedWithoutRewards();
+            return;
+        }
+
+        var runState = room.CombatState.RunState;
+        if (runState.Map.SecondBossMapPoint is not null
+            && runState.CurrentMapCoord == runState.Map.BossMapPoint.coord)
+        {
+            await combatUi.ProceedWithoutRewards();
+            return;
+        }
+
+        await MegaCrit.Sts2.Core.Commands.Cmd.Wait(1f);
+        RunManager.Instance.ActChangeSynchronizer.SetLocalPlayerReady();
     }
 }
