@@ -1,5 +1,33 @@
 # 更新日志 / Changelog
 
+## 0.4.4
+
+### 中文
+
+#### 调整
+- 将定仙游从达弗遗物池调整至特兹卡塔拉遗物池。
+
+#### 修复
+- 修复血系效果在仅格挡伤害、没有实际失去生命时错误触发的问题。
+- 修复定仙游遗物池配置错误的问题。
+
+#### 注意
+- 本版本仅支持《杀戮尖塔2》正式版 `v0.107.1`。
+- 测试版 `v0.111.0 public-beta` 请使用 `v0.4.4-beta.1`。
+
+### English
+
+#### Changes
+- Moved Fixed Immortal Travel from Darv's relic pool to Tezcatara's relic pool.
+
+#### Fixes
+- Fixed blood-related effects triggering when damage was fully blocked and no HP was actually lost.
+- Fixed the relic pool configuration for Fixed Immortal Travel.
+
+#### Notice
+- This version supports the official release `v0.107.1` only.
+- For `v0.111.0 public-beta`, use `v0.4.4-beta.1`.
+
 ## 0.4.3
 
 ### 中文
