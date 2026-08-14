@@ -299,7 +299,6 @@ public sealed class NiLiuHeEvent : ModEventTemplate
 
     private async Task ObtainJianChiGu()
     {
-        NiLiuHeMusicSystem.Stop();
         await RelicCmd.Obtain<JianChiGu>(Owner!);
         SetEventState(
             PageDescription("NI_LIU_HE"),

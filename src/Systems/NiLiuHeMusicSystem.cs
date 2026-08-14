@@ -1,3 +1,5 @@
+using Godot;
+using MegaCrit.Sts2.Core.Helpers;
 using STS2RitsuLib.Audio;
 
 namespace GuZhenRen.Systems;
@@ -30,7 +32,7 @@ internal static class NiLiuHeMusicSystem
             AudioSource.StreamingResourceMusic(MusicPath),
             new AudioPlaybackOptions
             {
-                Scope = AudioLifecycleScope.Room,
+                Scope = AudioLifecycleScope.Run,
                 DebugName = MusicChannel,
                 Routing = new AudioRoutingOptions
                 {
@@ -46,9 +48,27 @@ internal static class NiLiuHeMusicSystem
         }
 
         GameFmod.Studio.StopMusic();
+        TaskHelper.RunSafely(RestoreMusicAfterPlayback());
     }
 
-    public static void Stop()
+    private static async Task RestoreMusicAfterPlayback()
+    {
+        if (Engine.GetMainLoop() is not SceneTree tree)
+        {
+            Entry.Logger.Warn("Failed to schedule Ni Liu He music restoration.");
+            return;
+        }
+
+        var stream = ResourceLoader.Load<AudioStream>(MusicPath);
+        var duration = stream?.GetLength() ?? 34.3;
+        await tree.ToSignal(
+            tree.CreateTimer(duration, processAlways: true, ignoreTimeScale: true),
+            SceneTreeTimer.SignalName.Timeout);
+
+        StopAndRestore();
+    }
+
+    private static void StopAndRestore()
     {
         _music?.Dispose();
         _music = null;
