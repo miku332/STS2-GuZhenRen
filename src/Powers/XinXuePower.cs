@@ -58,7 +58,7 @@ public sealed class XinXuePower : ModPowerTemplate
         if (target != Owner
             || Owner.Player is null
             || !_isPlayerTurn
-            || result.TotalDamage <= 0
+            || result.UnblockedDamage <= 0
             || Amount <= 0)
         {
             return;
@@ -71,7 +71,7 @@ public sealed class XinXuePower : ModPowerTemplate
         }
 
         Flash();
-        var hpLoss = result.TotalDamage * Amount;
+        var hpLoss = result.UnblockedDamage * Amount;
         foreach (var enemy in combatState.HittableEnemies.ToList())
         {
             await CreatureCmd.Damage(

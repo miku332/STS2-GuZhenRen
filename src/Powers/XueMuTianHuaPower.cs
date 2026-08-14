@@ -45,7 +45,7 @@ public sealed class XueMuTianHuaPower : ModPowerTemplate
         Creature? dealer,
         CardModel? cardSource)
     {
-        if (target == Owner && result.TotalDamage > 0)
+        if (target == Owner && result.UnblockedDamage > 0)
         {
             _hpLostThisSideTurn = true;
         }
