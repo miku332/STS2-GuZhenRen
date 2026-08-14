@@ -107,6 +107,7 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
     private async Task LootHallTwoShield()
     {
         _hallTwoShieldLooted = true;
+        _totalLootCount++;
         AddEncounterChance(GetHallTwoChanceIncrease());
         await RelicCmd.Obtain<FeiGuDunGu>(Owner!);
         SetEventState(
@@ -117,6 +118,7 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
     private async Task LootHallTwoWing()
     {
         _hallTwoWingLooted = true;
+        _totalLootCount++;
         AddEncounterChance(GetHallTwoChanceIncrease());
         await RelicCmd.Obtain<BiGuYiGu>(Owner!);
         SetEventState(
@@ -135,6 +137,7 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
     private async Task LootHallThree()
     {
         _hallThreeLooted = true;
+        _totalLootCount++;
         AddEncounterChance(HallThreeChanceIncrease);
         await RelicCmd.Obtain<GuCiGu>(Owner!);
         SetEventState(
@@ -324,6 +327,7 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
 
         if (relicCandidates.Count > 0)
         {
+            _totalLootCount++;
             await RelicCmd.Obtain(
                 Owner!.PlayerRng.Rewards.NextItem(relicCandidates)!.ToMutable(),
                 Owner);
