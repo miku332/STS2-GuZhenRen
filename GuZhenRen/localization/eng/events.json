@@ -235,11 +235,11 @@
   "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.NI_LIU_HE.description": "After Perseverance Gu is refined, the pressure on Reverse Flow River completely disappears. You gather the entire river into RelicReverse Flow River.",
   "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.NI_LIU_HE.options.OBTAIN.title": "Obtain",
   "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.NI_LIU_HE.options.OBTAIN.description": "Gain RelicReverse Flow River.",
-  "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.FINAL.description": "You have mastered Strength from Reverse Flow River. If there is Wanlan in deck, it can be sacrificed to deduce Killer MoveReverse Flow Protection Seal.",
+  "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.FINAL.description": "You have mastered Strength from Reverse Flow River. If there is Turning the Tide in deck, it can be sacrificed to deduce Killer MoveReverse Flow Protection Seal.",
   "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.FINAL.options.EXCHANGE.title": "Exchange",
-  "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.FINAL.options.EXCHANGE.description": "Remove Wanlan from deck and obtain Reverse Flow Protection Seal.",
+  "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.FINAL.options.EXCHANGE.description": "Remove Turning the Tide from deck and obtain Reverse Flow Protection Seal.",
   "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.FINAL.options.LEAVE.title": "Leave",
   "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.FINAL.options.LEAVE.description": "Leave Reverse Flow River.",
-  "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.EXCHANGE.description": "You sacrificed Wanlan and successfully launched Reverse Flow Protection Seal.",
+  "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.EXCHANGE.description": "You sacrificed Turning the Tide and successfully launched Reverse Flow Protection Seal.",
   "GU_ZHEN_REN_EVENT_NI_LIU_HE_EVENT.pages.LEAVE.description": "You left Reverse Flow River."
 }
