@@ -145,7 +145,7 @@ public sealed class DuShiChang : ModEventTemplate
             return;
         }
 
-        var canonical = Owner.RunState.Rng.UpFront.NextItem(candidates);
+        var canonical = Owner.PlayerRng.Rewards.NextItem(candidates);
         if (canonical is null)
         {
             SetEventState(

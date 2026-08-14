@@ -1,5 +1,6 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Cards;
+using GuZhenRen.Patches;
 using GuZhenRen.Relics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -134,9 +135,9 @@ public sealed class NiLiuHeEvent : ModEventTemplate
         {
             case 0 when action == "LOOT":
                 await PlayerCmd.GainGold(
-                    Owner!.RunState.Rng.UpFront.NextInt(50, 81),
+                    Owner!.PlayerRng.Rewards.NextInt(50, 81),
                     Owner);
-                if (Owner.RunState.Rng.UpFront.NextFloat(100f) < 25f)
+                if (Owner.PlayerRng.Rewards.NextFloat(100f) < 25f)
                 {
                     await LoseHp(Math.Max(1, (int)(Owner.Creature.MaxHp * 0.10m)));
                 }
@@ -153,7 +154,7 @@ public sealed class NiLiuHeEvent : ModEventTemplate
                 return;
 
             case 3 when action == "REST":
-                if (Owner!.RunState.Rng.UpFront.NextFloat(100f) < 75f)
+                if (Owner!.PlayerRng.Rewards.NextFloat(100f) < 75f)
                 {
                     await CreatureCmd.Heal(
                         Owner.Creature,
@@ -181,7 +182,7 @@ public sealed class NiLiuHeEvent : ModEventTemplate
 
             case 7 when action == "ESCAPE":
                 await LoseHp(3);
-                if (Owner!.RunState.Rng.UpFront.NextFloat(100f) < 50f)
+                if (Owner!.PlayerRng.Rewards.NextFloat(100f) < 50f)
                 {
                     await RemoveRandomNonStarterRelic();
                 }
@@ -202,7 +203,7 @@ public sealed class NiLiuHeEvent : ModEventTemplate
             return;
         }
 
-        await PlayerCmd.GainGold(Owner!.RunState.Rng.UpFront.NextInt(10, 21), Owner);
+        await PlayerCmd.GainGold(Owner!.PlayerRng.Rewards.NextInt(10, 21), Owner);
         await ResolveEncounter();
     }
 
@@ -217,7 +218,7 @@ public sealed class NiLiuHeEvent : ModEventTemplate
             return;
         }
 
-        await PlayerCmd.GainGold(Owner!.RunState.Rng.UpFront.NextInt(25, 36), Owner);
+        await PlayerCmd.GainGold(Owner!.PlayerRng.Rewards.NextInt(25, 36), Owner);
         await ObtainRandomGuRelic();
         await ResolveEncounter();
     }
@@ -438,22 +439,29 @@ public sealed class NiLiuHeEvent : ModEventTemplate
         var available = candidates
             .Where(candidate => Owner!.Relics.All(owned => owned.Id != candidate.Id))
             .ToList();
-        var selected = Owner!.RunState.Rng.UpFront.NextItem(available);
+        var selected = Owner!.PlayerRng.Rewards.NextItem(available);
         if (selected is not null)
         {
             await RelicCmd.Obtain(selected.ToMutable(), Owner);
         }
     }
 
-    private CardModel CreateRandomGuCard() =>
-        Owner!.RunState.Rng.UpFront.NextItem(
-            new CardModel[]
-            {
-                ModelDb.Card<WanLan>(),
-                ModelDb.Card<ShangFangJieWa>(),
-                ModelDb.Card<WuZhiQuanXinJian>(),
-                ModelDb.Card<LiLiangGu>()
-            })!;
+    private CardModel CreateRandomGuCard()
+    {
+        var candidates = ModelDb.AllCards
+            .OfType<GuZhenRenCardTemplate>()
+            .Where(card => card.Rarity is not CardRarity.Basic and not CardRarity.Token)
+            .Where(card => card is not AbstractShaZhaoCard
+                && card is not AbstractBenMingGuCard)
+            .Where(card => !ShaZhaoRewardPoolPatch.IsOwnedUniqueImmortalGu(
+                Owner!,
+                card))
+            .Cast<CardModel>()
+            .ToList();
+
+        return Owner!.PlayerRng.Rewards.NextItem(candidates)
+            ?? ModelDb.AllCards.First(card => card.Id.Entry == "INJURY");
+    }
 
     private async Task AddCardToDeck(CardModel canonical)
     {
@@ -483,7 +491,7 @@ public sealed class NiLiuHeEvent : ModEventTemplate
         var candidates = Owner!.Relics
             .Where(relic => relic.Rarity is not RelicRarity.Starter and not RelicRarity.Event)
             .ToList();
-        var selected = Owner.RunState.Rng.UpFront.NextItem(candidates);
+        var selected = Owner.PlayerRng.Rewards.NextItem(candidates);
         if (selected is not null)
         {
             await RelicCmd.Remove(selected);

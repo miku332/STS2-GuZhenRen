@@ -42,7 +42,7 @@ public sealed class DaoTianZhenChuan : ModEventTemplate
 
     protected override Task BeforeEventStarted(bool isPreFinished)
     {
-        _goldReward = Owner!.RunState.Rng.UpFront.NextInt(MinGold, MaxGold + 1);
+        _goldReward = Owner!.PlayerRng.Rewards.NextInt(MinGold, MaxGold + 1);
         _hasKeyCard = Owner.Deck.Cards.Any(card =>
             card is BaShan or WanWoDaShouYin);
         return Task.CompletedTask;

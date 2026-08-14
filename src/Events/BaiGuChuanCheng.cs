@@ -313,17 +313,17 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
 
         if (cardCandidates.Count > 0
             && (relicCandidates.Count == 0
-                || Owner!.RunState.Rng.UpFront.NextFloat(100f) < 50f))
+                || Owner!.PlayerRng.Rewards.NextFloat(100f) < 50f))
         {
             await AddCardToDeck(
-                Owner!.RunState.Rng.UpFront.NextItem(cardCandidates)!);
+                Owner!.PlayerRng.Rewards.NextItem(cardCandidates)!);
             return;
         }
 
         if (relicCandidates.Count > 0)
         {
             await RelicCmd.Obtain(
-                Owner!.RunState.Rng.UpFront.NextItem(relicCandidates)!.ToMutable(),
+                Owner!.PlayerRng.Rewards.NextItem(relicCandidates)!.ToMutable(),
                 Owner);
             return;
         }
