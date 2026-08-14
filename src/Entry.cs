@@ -107,6 +107,9 @@ public static class Entry
         orobasPatcher.RegisterPatch<XianTaiGuTransferPatch>();
         orobasPatcher.RegisterPatch<ArchaicToothFangYuanSetupPatch>();
         orobasPatcher.PatchAll();
+        var bossRelicPatcher = RitsuLibFramework.CreatePatcher(ModId, "boss-relics");
+        bossRelicPatcher.RegisterPatch<DarvBossRelicPatch>();
+        bossRelicPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(
