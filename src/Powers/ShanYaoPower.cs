@@ -55,7 +55,8 @@ public sealed class ShanYaoPower : ModPowerTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         if (dealer != Owner
             || cardSource is null

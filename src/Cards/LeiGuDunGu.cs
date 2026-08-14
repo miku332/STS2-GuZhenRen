@@ -46,7 +46,8 @@ public sealed class LeiGuDunGu : GuZhenRenCardTemplate
             DynamicVars["HpLoss"].BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner.Creature,
-            this);
+            this,
+            cardPlay);
 
         await CreatureCmd.GainBlock(
             Owner.Creature,

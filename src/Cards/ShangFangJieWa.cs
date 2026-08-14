@@ -58,20 +58,26 @@ public sealed class ShangFangJieWa : AbstractShaZhaoCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        await RemoveDefenses(cardPlay.Target);
+        await RemoveDefenses(choiceContext, cardPlay.Target);
 
         await DamageCmd.Attack(DynamicVars.GetComputedValue("CalculatedDamage"))
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
     }
 
-    private static async Task RemoveDefenses(Creature target)
+    private static async Task RemoveDefenses(
+        PlayerChoiceContext choiceContext,
+        Creature target)
     {
         if (target.Block > 0)
         {
-            await CreatureCmd.LoseBlock(target, target.Block);
+            await CreatureCmd.LoseBlock(
+                choiceContext,
+                target,
+                target.Block,
+                target);
         }
 
         await RemovePowerIfPresent<IntangiblePower>(target);

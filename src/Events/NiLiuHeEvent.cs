@@ -403,6 +403,7 @@ public sealed class NiLiuHeEvent : ModEventTemplate
             amount,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner.Creature,
+            null,
             null);
     }
 

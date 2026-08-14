@@ -56,7 +56,7 @@ public sealed class WuZhiQuanXinJian : AbstractShaZhaoCard
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
@@ -70,8 +70,8 @@ public sealed class WuZhiQuanXinJian : AbstractShaZhaoCard
         }
     }
 
-    protected override PileType GetResultPileTypeForCardPlay() =>
+    protected override CardLocation GetResultLocationForCardPlay() =>
         RemainingUses <= 1
-            ? PileType.Exhaust
-            : base.GetResultPileTypeForCardPlay();
+            ? new CardLocation(Owner, PileType.Exhaust, CardPilePosition.Bottom)
+            : base.GetResultLocationForCardPlay();
 }

@@ -121,6 +121,7 @@ public sealed class ZhuMoBang : AbstractGuWuCard
                     18,
                     ValueProp.Unpowered,
                     Owner.Creature,
+                    null,
                     null);
             }
         }
@@ -149,6 +150,7 @@ public sealed class ZhuMoBang : AbstractGuWuCard
                 amountToDrain,
                 ValueProp.Unblockable | ValueProp.Unpowered,
                 Owner.Creature,
+                null,
                 null);
             totalDrained += Math.Max(0, hpBefore - enemy.CurrentHp);
         }

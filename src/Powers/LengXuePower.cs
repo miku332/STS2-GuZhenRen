@@ -44,6 +44,7 @@ public sealed class LengXuePower : ModPowerTemplate
             damage,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner,
+            null,
             null);
 
         await PowerCmd.Decrement(this);

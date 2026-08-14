@@ -196,6 +196,7 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
             DynamicVars["JumpDamage"].BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner.Creature,
+            null,
             null);
         SetEventFinished(L10NLookup($"{Id.Entry}.pages.JUMP.description"));
     }
@@ -208,6 +209,7 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
             DynamicVars["FlightDamage"].BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner.Creature,
+            null,
             null);
         SetEventFinished(L10NLookup($"{Id.Entry}.pages.FLY.description"));
     }

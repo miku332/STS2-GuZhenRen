@@ -24,7 +24,8 @@ public sealed class XueChouPower : ModPowerTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         if (!props.IsPoweredAttack()
             || (target != Owner && dealer != Owner))

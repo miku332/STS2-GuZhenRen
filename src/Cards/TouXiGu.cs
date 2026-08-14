@@ -49,7 +49,8 @@ public sealed class TouXiGu : GuZhenRenCardTemplate
                 DynamicVars.Damage.BaseValue,
                 ValueProp.Move | ValueProp.Unblockable,
                 Owner.Creature,
-                this);
+                this,
+                cardPlay);
         }
 
         await PowerCmd.Apply<VulnerablePower>(

@@ -57,7 +57,7 @@ public sealed class WanWoDaShouYin : AbstractShaZhaoCard
         ArgumentNullException.ThrowIfNull(CombatState);
 
         await DamageCmd.Attack(DynamicVars.GetComputedValue("CalculatedDamage"))
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);

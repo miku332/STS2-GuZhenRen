@@ -174,7 +174,8 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
                 MegaCrit.Sts2.Core.ValueProps.ValueProp.Unblockable
                     | MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,
                 card.Owner.Creature,
-                card);
+                card,
+                null);
 
             card.SetToFreeThisTurn();
             await CardCmd.AutoPlay(

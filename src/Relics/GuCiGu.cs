@@ -36,6 +36,7 @@ public sealed class GuCiGu : ModRelicTemplate
             HpLoss,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner.Creature,
+            null,
             null);
 
         if (!Owner.Creature.IsAlive)

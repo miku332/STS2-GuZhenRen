@@ -51,6 +51,7 @@ public sealed class HunBaoGuPower : ModPowerTemplate
             Amount,
             ValueProp.Unpowered,
             null,
+            null,
             null);
     }
 }

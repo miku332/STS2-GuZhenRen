@@ -56,7 +56,7 @@ public sealed class FeiJian : GuZhenRenCardTemplate
             }
 
             await DamageCmd.Attack(damage)
-                .FromCard(this)
+                .FromCard(this, cardPlay)
                 .Targeting(target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);

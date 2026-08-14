@@ -27,7 +27,8 @@ public sealed class SongYouFadingPower : ModPowerTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         return dealer == Owner && props.IsPoweredAttack()
             ? 0m

@@ -50,7 +50,8 @@ public sealed class LuoXuanGuQiangGu : GuZhenRenCardTemplate
             DynamicVars.Damage.BaseValue,
             ValueProp.Move | ValueProp.Unblockable,
             Owner.Creature,
-            this);
+            this,
+            cardPlay);
     }
 
     protected override void OnUpgrade()

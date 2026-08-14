@@ -55,6 +55,7 @@ public sealed class GuCiPower : ModPowerTemplate
             blockedDamage,
             ValueProp.Unpowered,
             Owner,
+            null,
             null);
     }
 

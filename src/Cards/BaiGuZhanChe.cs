@@ -79,6 +79,7 @@ public sealed class BaiGuZhanChe : AbstractGuWuCard
                     damage,
                     ValueProp.Unpowered,
                     Owner.Creature,
+                    null,
                     null);
             }
         }
@@ -135,6 +136,7 @@ public sealed class BaiGuZhanChe : AbstractGuWuCard
                     1,
                     ValueProp.Move,
                     enemy,
+                    null,
                     null);
             }
         }

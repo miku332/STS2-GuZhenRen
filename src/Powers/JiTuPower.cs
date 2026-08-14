@@ -53,6 +53,10 @@ public sealed class JiTuPower : ModPowerTemplate
         }
 
         Flash();
-        await CreatureCmd.LoseBlock(Owner, Owner.Block - Amount);
+        await CreatureCmd.LoseBlock(
+            choiceContext,
+            Owner,
+            Owner.Block - Amount,
+            Owner);
     }
 }

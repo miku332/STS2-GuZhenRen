@@ -51,7 +51,7 @@ public sealed class FeiXiongZhiLiGu : GuZhenRenCardTemplate
         ArgumentNullException.ThrowIfNull(CombatState);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);

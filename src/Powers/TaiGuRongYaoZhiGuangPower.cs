@@ -49,6 +49,7 @@ public sealed class TaiGuRongYaoZhiGuangPower : ModPowerTemplate
                 result.TotalDamage,
                 ValueProp.Unpowered,
                 dealer,
+                null,
                 null);
         }
     }

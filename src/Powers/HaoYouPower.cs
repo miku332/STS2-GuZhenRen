@@ -26,7 +26,8 @@ public sealed class HaoYouPower : ModPowerTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         return dealer == Owner && props.IsPoweredAttack()
             ? 0.5m

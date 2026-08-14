@@ -35,6 +35,7 @@ public sealed class ShaDaoDaoHenPower : AbstractDaoHenPower
                 damage,
                 ValueProp.Unpowered,
                 Owner,
+                null,
                 null);
         }
     }

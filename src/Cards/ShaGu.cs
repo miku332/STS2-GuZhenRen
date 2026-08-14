@@ -67,10 +67,11 @@ public sealed class ShaGu : AbstractBenMingGuCard
             DynamicVars["HpLoss"].BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner.Creature,
-            this);
+            this,
+            cardPlay);
 
         await DamageCmd.Attack(DynamicVars.GetComputedValue("Damage"))
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

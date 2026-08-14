@@ -39,7 +39,7 @@ public sealed class WanLan : GuZhenRenCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitCount((int)DynamicVars["Hits"].BaseValue)
             .WithHitFx("vfx/vfx_attack_slash");

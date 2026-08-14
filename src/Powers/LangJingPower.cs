@@ -41,7 +41,8 @@ public sealed class LangJingPower : ModPowerTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         if (target != Owner
             || _reduction <= 0

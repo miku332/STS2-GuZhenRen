@@ -41,6 +41,7 @@ public sealed class XueLiuBuZhiPower : ModPowerTemplate
             Amount,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner,
+            null,
             null);
 
         if (!Owner.IsAlive)

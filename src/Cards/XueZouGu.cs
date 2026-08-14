@@ -44,7 +44,8 @@ public sealed class XueZouGu : GuZhenRenCardTemplate
             DynamicVars["HpLoss"].BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner.Creature,
-            this);
+            this,
+            cardPlay);
 
         await CardPileCmd.Draw(
             choiceContext,

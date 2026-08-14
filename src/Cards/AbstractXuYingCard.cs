@@ -87,6 +87,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             new CardPlay
             {
                 Card = this,
+                Player = Owner,
                 Target = target,
                 ResultPile = PileType.None,
                 Resources = new ResourceInfo

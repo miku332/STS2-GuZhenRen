@@ -47,7 +47,7 @@ public sealed class HengChongZhiZhuangGu : GuZhenRenCardTemplate
             }
 
             var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .FromCard(this, cardPlay)
                 .Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_blunt")
                 .Execute(choiceContext);
@@ -66,7 +66,8 @@ public sealed class HengChongZhiZhuangGu : GuZhenRenCardTemplate
                     DynamicVars["SelfDamage"].BaseValue,
                     ValueProp.Move,
                     Owner.Creature,
-                    this);
+                    this,
+                    cardPlay);
             }
         }
     }

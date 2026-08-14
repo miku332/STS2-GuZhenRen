@@ -63,7 +63,8 @@ public sealed class ChouHenGuPower : ModPowerTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         return dealer == Owner
             && Owner.IsAlive

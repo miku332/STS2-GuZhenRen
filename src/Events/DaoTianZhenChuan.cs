@@ -122,6 +122,7 @@ public sealed class DaoTianZhenChuan : ModEventTemplate
             DynamicVars["HpLoss"].BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner.Creature,
+            null,
             null);
     }
 }

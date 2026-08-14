@@ -19,24 +19,35 @@ public sealed class HuaShaLoseBlockPatch : IPatchMethod
         new ModPatchTarget(
             typeof(CreatureCmd),
             nameof(CreatureCmd.LoseBlock),
-            [typeof(Creature), typeof(decimal)])
+            [
+                typeof(PlayerChoiceContext),
+                typeof(Creature),
+                typeof(decimal),
+                typeof(Creature)
+            ])
     ];
 
-    public static void Prefix(Creature creature, out int __state)
+    public static void Prefix(Creature target, out int __state)
     {
-        __state = creature.Block;
+        __state = target.Block;
     }
 
     public static void Postfix(
-        Creature creature,
+        PlayerChoiceContext choiceContext,
+        Creature target,
         int __state,
         ref Task __result)
     {
-        __result = TriggerAfterOriginal(__result, creature, __state);
+        __result = TriggerAfterOriginal(
+            __result,
+            choiceContext,
+            target,
+            __state);
     }
 
     private static async Task TriggerAfterOriginal(
         Task original,
+        PlayerChoiceContext choiceContext,
         Creature creature,
         int blockBefore)
     {
@@ -46,7 +57,7 @@ public sealed class HuaShaLoseBlockPatch : IPatchMethod
         var power = creature.GetPower<HuaShaPower>();
         if (lostBlock > 0 && power is not null)
         {
-            await power.Trigger(new ThrowingPlayerChoiceContext(), lostBlock);
+            await power.Trigger(choiceContext, lostBlock);
         }
     }
 }

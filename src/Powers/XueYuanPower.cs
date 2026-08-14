@@ -66,6 +66,7 @@ public sealed class XueYuanPower : ModPowerTemplate
                 result.UnblockedDamage * entry.Mark!.Amount,
                 ValueProp.Unblockable | ValueProp.Unpowered,
                 Owner,
+                null,
                 null);
         }
     }

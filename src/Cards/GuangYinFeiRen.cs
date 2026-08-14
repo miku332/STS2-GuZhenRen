@@ -55,11 +55,11 @@ public sealed class GuangYinFeiRen : AbstractShaZhaoCard
         await ConsumeUse();
     }
 
-    protected override PileType GetResultPileTypeForCardPlay()
+    protected override CardLocation GetResultLocationForCardPlay()
     {
         return RemainingUses <= 1
-            ? PileType.None
-            : base.GetResultPileTypeForCardPlay();
+            ? new CardLocation(Owner, PileType.None, CardPilePosition.Bottom)
+            : base.GetResultLocationForCardPlay();
     }
 
     private async Task ConsumeUse()

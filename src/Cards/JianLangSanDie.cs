@@ -42,7 +42,7 @@ public sealed class JianLangSanDie : AbstractShaZhaoCard
         for (var wave = 0; wave < 3; wave++)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .FromCard(this, cardPlay)
                 .TargetingAllOpponents(CombatState)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);

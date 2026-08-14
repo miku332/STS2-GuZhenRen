@@ -80,6 +80,7 @@ public sealed class XinXuePower : ModPowerTemplate
                 hpLoss,
                 ValueProp.Unblockable | ValueProp.Unpowered,
                 Owner,
+                null,
                 null);
         }
     }

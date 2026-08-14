@@ -49,7 +49,8 @@ public sealed class ShiBaiGu : GuZhenRenCardTemplate, IProbabilityCard
             DynamicVars["HpLoss"].BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner.Creature,
-            this);
+            this,
+            cardPlay);
 
         if (Owner.Creature.IsDead)
         {

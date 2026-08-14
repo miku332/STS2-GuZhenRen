@@ -47,6 +47,7 @@ public sealed class SiXuRuDianGu : ModRelicTemplate
             DynamicVars.Damage.BaseValue,
             DynamicVars.Damage.Props,
             Owner.Creature,
+            null,
             null);
     }
 }

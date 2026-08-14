@@ -27,7 +27,8 @@ public sealed class FeiXingPower : ModPowerTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         if (target != Owner || Amount <= 0 || !props.IsPoweredAttack())
         {

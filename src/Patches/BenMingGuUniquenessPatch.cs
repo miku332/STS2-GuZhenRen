@@ -39,6 +39,7 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
                 typeof(CardPile),
                 typeof(CardPilePosition),
                 typeof(AbstractModel),
+                typeof(bool),
                 typeof(bool)
             ])
     ];

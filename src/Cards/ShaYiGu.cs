@@ -43,7 +43,7 @@ public sealed class ShaYiGu : GuZhenRenCardTemplate
         var enemyCount = CombatState.HittableEnemies.Count();
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

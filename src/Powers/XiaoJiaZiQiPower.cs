@@ -94,6 +94,7 @@ public sealed class XiaoJiaZiQiPower : ModPowerTemplate
                 pendingDamage,
                 ValueProp.Unpowered,
                 Owner,
+                null,
                 null);
         }
 

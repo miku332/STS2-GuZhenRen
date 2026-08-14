@@ -94,6 +94,7 @@ public sealed class DaJiaZhiQiPower : ModPowerTemplate
                 Amount,
                 ValueProp.Unpowered,
                 Owner,
+                null,
                 null);
         }
 

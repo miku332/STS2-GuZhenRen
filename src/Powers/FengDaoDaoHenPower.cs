@@ -32,6 +32,7 @@ public sealed class FengDaoDaoHenPower : AbstractDaoHenPower
                 Amount,
                 ValueProp.Unpowered,
                 Owner,
+                null,
                 null);
         }
     }

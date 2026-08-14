@@ -50,7 +50,8 @@ public sealed class SongZhenPower : ModPowerTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         if (dealer != Owner || !props.IsPoweredAttack())
         {

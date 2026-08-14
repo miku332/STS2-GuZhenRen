@@ -23,7 +23,8 @@ public sealed class XueDianXingBanPower : ModPowerTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         return target == Owner
             && dealer?.GetPower<XueYuanMarkPower>() is { Amount: > 0 }

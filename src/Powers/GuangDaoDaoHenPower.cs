@@ -1,4 +1,5 @@
 using GuZhenRen.Tags;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -14,7 +15,8 @@ public sealed class GuangDaoDaoHenPower : AbstractDaoHenPower
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         if (dealer != Owner
             || cardSource is null

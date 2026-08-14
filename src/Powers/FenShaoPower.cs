@@ -129,7 +129,8 @@ public sealed class FenShaoPower : ModPowerTemplate
                 Amount,
                 ValueProp.Unpowered,
                 applier,
-                cardSource);
+                cardSource,
+                null);
         }
         finally
         {

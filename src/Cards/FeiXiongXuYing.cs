@@ -59,7 +59,7 @@ public sealed class FeiXiongXuYing : AbstractXuYingCard
         ArgumentNullException.ThrowIfNull(CombatState);
 
         await DamageCmd.Attack(DynamicVars.GetComputedValue("CalculatedDamage"))
-            .FromCard(this)
+            .FromCard(this, triggerCardPlay)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);

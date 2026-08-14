@@ -55,6 +55,7 @@ public sealed class HongLeiGuPower : ModPowerTemplate
             Damage,
             ValueProp.Unpowered,
             Owner,
+            null,
             null);
 
         if (Owner.IsAlive)

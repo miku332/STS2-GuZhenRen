@@ -63,7 +63,7 @@ public sealed class JinGangNian : GuZhenRenCardTemplate
 
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
             .WithHitCount(hitCount)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);

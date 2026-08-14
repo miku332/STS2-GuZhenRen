@@ -128,7 +128,8 @@ public sealed class AiQingGu : GuZhenRenCardTemplate
                 6m,
                 ValueProp.Unblockable | ValueProp.Unpowered,
                 Owner.Creature,
-                this);
+                this,
+                null);
             return;
         }
 

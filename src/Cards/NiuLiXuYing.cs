@@ -36,7 +36,7 @@ public sealed class NiuLiXuYing : AbstractXuYingCard
         ArgumentNullException.ThrowIfNull(triggerCardPlay.Target);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, triggerCardPlay)
             .Targeting(triggerCardPlay.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);

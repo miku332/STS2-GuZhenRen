@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Multiplayer.Game;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -144,7 +145,9 @@ public sealed class ChunQiuChan : ModRelicTemplate, IModRightClickableRelic
             }
 
             AttachRunData(readResult.SaveData, mergedTargetJson);
-            await SaveManager.Instance.IncrementNumReloads(readResult.SaveData, isMultiplayer: false);
+            await SaveManager.Instance.IncrementNumReloads(
+                readResult.SaveData,
+                NetGameType.Singleplayer);
             var game = NGame.Instance;
             if (game is null)
             {

@@ -61,6 +61,7 @@ public sealed class LeiDianGuPower : ModPowerTemplate
                 DamagePerHit,
                 ValueProp.Unpowered,
                 Owner,
+                null,
                 null);
             if (results.Any(result =>
                     result.Receiver == target && result.UnblockedDamage > 0))

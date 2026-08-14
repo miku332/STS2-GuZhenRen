@@ -4,15 +4,15 @@
   "name": "蛊真人",
   "author": "miku332",
   "description": "Gu Zhen Ren character mod for Slay the Spire 2.",
-  "version": "0.4.3",
-  "min_game_version": "0.107.1",
+  "version": "0.4.3-beta.1",
+  "min_game_version": "0.111.0",
   "has_pck": true,
   "has_dll": true,
   "affects_gameplay": true,
   "dependencies": [
     {
       "id": "STS2-RitsuLib",
-      "min_version": "0.5.10"
+      "min_version": "0.5.12"
     }
   ]
 }
