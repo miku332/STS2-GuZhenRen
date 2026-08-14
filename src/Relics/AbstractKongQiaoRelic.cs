@@ -260,7 +260,9 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
             return;
         }
 
-        if (_state == KongQiaoState.Countdown && !IsTribulationDisabled())
+        // Shen Bu Zhi suppresses the tribulation effect, but it must not
+        // freeze the combat countdown that advances aperture progression.
+        if (_state == KongQiaoState.Countdown)
         {
             _battlesToNextTribulation--;
             if (_battlesToNextTribulation <= 0)
