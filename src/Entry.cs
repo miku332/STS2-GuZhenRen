@@ -33,6 +33,7 @@ public static class Entry
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
         ApertureVoiceSystem.Preload();
+        NiLiuHeMusicSystem.Preload();
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<XiaoGuangGu, TaiChuGuangGu>(ModId);
         var tunHuoPatcher = RitsuLibFramework.CreatePatcher(ModId, "tun-huo");
         tunHuoPatcher.RegisterPatch<TunHuoPatch>();

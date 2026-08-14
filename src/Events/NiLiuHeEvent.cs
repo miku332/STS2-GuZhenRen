@@ -1,6 +1,7 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Cards;
 using GuZhenRen.Relics;
+using GuZhenRen.Systems;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -293,10 +294,12 @@ public sealed class NiLiuHeEvent : ModEventTemplate
         SetEventState(
             PageDescription("JIAN_CHI"),
             [new(this, ObtainJianChiGu, ModOptionKey("JIAN_CHI", "OBTAIN"))]);
+        NiLiuHeMusicSystem.Play();
     }
 
     private async Task ObtainJianChiGu()
     {
+        NiLiuHeMusicSystem.Stop();
         await RelicCmd.Obtain<JianChiGu>(Owner!);
         SetEventState(
             PageDescription("NI_LIU_HE"),
