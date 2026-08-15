@@ -1,6 +1,6 @@
 using GuZhenRen.Cards;
+using Godot;
 using MegaCrit.Sts2.Core.Entities.Players;
-using STS2RitsuLib.Audio;
 
 namespace GuZhenRen.Systems;
 
@@ -12,24 +12,6 @@ internal static class ApertureVoiceSystem
         "res://GuZhenRen/audio/sound/LiuGuanYi.ogg";
     private const string YouHunMoZunPath =
         "res://GuZhenRen/audio/sound/YouHunMoZun.ogg";
-
-    private static readonly string[] VoicePaths =
-    [
-        LianTianMoZunPath,
-        LiuGuanYiPath,
-        YouHunMoZunPath
-    ];
-
-    public static void Preload()
-    {
-        foreach (var path in VoicePaths)
-        {
-            if (!FmodStudioStreamingFiles.TryPreloadResourceAsSound(path))
-            {
-                Entry.Logger.Warn($"Failed to preload aperture voice '{path}'.");
-            }
-        }
-    }
 
     public static void PlayForRank(Player player, int rank)
     {
@@ -47,9 +29,35 @@ internal static class ApertureVoiceSystem
             return;
         }
 
-        if (!FmodStudioStreamingFiles.TryPlayResourceSound(path))
+        try
         {
-            Entry.Logger.Warn($"Failed to play aperture voice '{path}'.");
+            if (Engine.GetMainLoop() is not SceneTree tree)
+            {
+                Entry.Logger.Warn("Failed to find the scene tree for aperture voice playback.");
+                return;
+            }
+
+            var stream = ResourceLoader.Load<AudioStream>(path);
+            if (stream is null)
+            {
+                Entry.Logger.Warn($"Failed to load aperture voice '{path}'.");
+                return;
+            }
+
+            var playerNode = new AudioStreamPlayer
+            {
+                Stream = stream,
+                ProcessMode = Node.ProcessModeEnum.Always
+            };
+            playerNode.Finished += playerNode.QueueFree;
+            tree.Root.AddChild(playerNode);
+            playerNode.Play();
+        }
+        catch (Exception exception)
+        {
+            Entry.Logger.Warn(
+                $"Failed to play aperture voice '{path}': " +
+                $"{exception.GetType().Name}: {exception.Message}");
         }
     }
 }
