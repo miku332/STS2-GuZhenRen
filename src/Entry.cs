@@ -109,6 +109,9 @@ public static class Entry
         var tezcataraRelicPatcher = RitsuLibFramework.CreatePatcher(ModId, "tezcatara-relic-pool");
         tezcataraRelicPatcher.RegisterPatch<TezcataraRelicPoolPatch>();
         tezcataraRelicPatcher.PatchAll();
+        var eventAssetPatcher = RitsuLibFramework.CreatePatcher(ModId, "event-assets");
+        eventAssetPatcher.RegisterPatch<EventPortraitPreloadPatch>();
+        eventAssetPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(
