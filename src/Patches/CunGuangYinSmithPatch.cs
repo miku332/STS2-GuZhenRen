@@ -33,24 +33,24 @@ public sealed class CunGuangYinSmithPatch : IPatchMethod
             Type.EmptyTypes)
     ];
 
-    public static void Postfix(SmithRestSiteOption __instance, Player player)
+    public static void Postfix(SmithRestSiteOption __instance)
     {
-        if (player.GetRelic<CunGuangYin>() is null)
-        {
-            return;
-        }
-
-        __instance.SmithCount = 2;
+        SetSmithCount(__instance);
     }
 
     public static void Prefix(SmithRestSiteOption __instance)
     {
-        if (OwnerProperty.GetValue(__instance) is not Player player
-            || player.GetRelic<CunGuangYin>() is null)
+        SetSmithCount(__instance);
+    }
+
+    private static void SetSmithCount(SmithRestSiteOption option)
+    {
+        if (OwnerProperty.GetValue(option) is not Player owner
+            || owner.GetRelic<CunGuangYin>() is null)
         {
             return;
         }
 
-        __instance.SmithCount = 2;
+        option.SmithCount = 2;
     }
 }
