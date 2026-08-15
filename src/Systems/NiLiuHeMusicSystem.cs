@@ -8,70 +8,80 @@ internal static class NiLiuHeMusicSystem
 {
     private const string MusicPath =
         "res://GuZhenRen/audio/sound/NiLiuHe.ogg";
-    private const string MusicChannel = "GuZhenRen.NiLiuHeMusic";
 
-    private static AudioMusicHandle? _music;
-
-    public static void Preload()
-    {
-        if (!FmodStudioStreamingFiles.TryPreloadResourceAsStreamingMusic(MusicPath))
-        {
-            Entry.Logger.Warn($"Failed to preload Ni Liu He music '{MusicPath}'.");
-        }
-    }
+    private static AudioStreamPlayer? _music;
 
     public static void Play()
     {
-        if (_music is { IsValid: true })
+        if (GodotObject.IsInstanceValid(_music) && _music!.Playing)
         {
             return;
         }
 
-        _music?.Dispose();
-        _music = GameAudioService.Shared.PlayMusic(
-            AudioSource.StreamingResourceMusic(MusicPath),
-            new AudioPlaybackOptions
+        try
+        {
+            DisposePlayer();
+
+            if (Engine.GetMainLoop() is not SceneTree tree)
             {
-                Scope = AudioLifecycleScope.Run,
-                DebugName = MusicChannel,
-                Routing = new AudioRoutingOptions
-                {
-                    Channel = MusicChannel,
-                    ChannelMode = AudioChannelMode.ReplaceExisting
-                }
-            });
+                Entry.Logger.Warn("Failed to find the scene tree for Ni Liu He music playback.");
+                return;
+            }
 
-        if (_music is null)
-        {
-            Entry.Logger.Warn($"Failed to play Ni Liu He music '{MusicPath}'.");
-            return;
+            var stream = ResourceLoader.Load<AudioStream>(MusicPath);
+            if (stream is null)
+            {
+                Entry.Logger.Warn($"Failed to load Ni Liu He music '{MusicPath}'.");
+                return;
+            }
+
+            var playerNode = new AudioStreamPlayer
+            {
+                Stream = stream,
+                ProcessMode = Node.ProcessModeEnum.Always
+            };
+            playerNode.Finished += StopAndRestore;
+            tree.Root.AddChild(playerNode);
+            _music = playerNode;
+
+            GameFmod.Studio.StopMusic();
+            playerNode.Play();
         }
-
-        GameFmod.Studio.StopMusic();
-        TaskHelper.RunSafely(RestoreMusicAfterPlayback());
-    }
-
-    private static async Task RestoreMusicAfterPlayback()
-    {
-        if (Engine.GetMainLoop() is not SceneTree tree)
+        catch (Exception exception)
         {
-            Entry.Logger.Warn("Failed to schedule Ni Liu He music restoration.");
-            return;
+            Entry.Logger.Warn(
+                $"Failed to play Ni Liu He music '{MusicPath}': " +
+                $"{exception.GetType().Name}: {exception.Message}");
+            StopAndRestore();
         }
-
-        var stream = ResourceLoader.Load<AudioStream>(MusicPath);
-        var duration = stream?.GetLength() ?? 34.3;
-        await tree.ToSignal(
-            tree.CreateTimer(duration, processAlways: true, ignoreTimeScale: true),
-            SceneTreeTimer.SignalName.Timeout);
-
-        StopAndRestore();
     }
 
     private static void StopAndRestore()
     {
-        _music?.Dispose();
+        DisposePlayer();
+
+        try
+        {
+            AudioVanillaBridge.RefreshRunMusic();
+        }
+        catch (Exception exception)
+        {
+            Entry.Logger.Warn(
+                "Failed to restore run music after Ni Liu He playback: " +
+                $"{exception.GetType().Name}: {exception.Message}");
+        }
+    }
+
+    private static void DisposePlayer()
+    {
+        if (!GodotObject.IsInstanceValid(_music))
+        {
+            _music = null;
+            return;
+        }
+
+        _music!.Finished -= StopAndRestore;
+        _music.QueueFree();
         _music = null;
-        AudioVanillaBridge.RefreshRunMusic();
     }
 }
