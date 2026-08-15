@@ -66,7 +66,7 @@
   "GU_ZHEN_REN_CARD_YI_XIN_ER_YONG_GU.title": "Dual-Mind Gu",
   "GU_ZHEN_REN_CARD_YI_XIN_ER_YONG_GU.description": "Get {NianPower:diff()} layer [gold]Thought[/gold]. When {YiXinErYongPower:diff()} plays cards next time in this round, 1 hand will be played randomly for free.",
   "GU_ZHEN_REN_CARD_JIN_GANG_NIAN.title": "Vajra Thought",
-  "GU_ZHEN_REN_CARD_JIN_GANG_NIAN.description": "Deal {CalculatedDamage:diff()} damage X times.\\nFor each [gold]Thought[/gold] gained this turn, deal 1 additional damage per hit.",
+  "GU_ZHEN_REN_CARD_JIN_GANG_NIAN.description": "Deal {CalculatedDamage:diff()} damage X{HitBonus} times.\\nFor each [gold]Thought[/gold] gained this turn, deal 1 additional damage per hit.",
   "GU_ZHEN_REN_CARD_ZHUI_NIAN.title": "Chasing Thought",
   "GU_ZHEN_REN_CARD_ZHUI_NIAN.description": "Select 1 card in discard pile, play it for free and Exhaust it. Obtain [gold]Thought[/gold] equivalent to 2 times its energy consumption.",
   "GU_ZHEN_REN_CARD_ZHUI_NIAN.selectionScreenPrompt": "Choose 1 card to play and Exhaust.",

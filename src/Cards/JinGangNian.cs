@@ -22,7 +22,7 @@ public sealed class JinGangNian : GuZhenRenCardTemplate
 {
     protected override bool HasEnergyCostX => true;
 
-    public override int Rank => 6;
+    public override int Rank => IsUpgraded ? 7 : 6;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/JinGangNian.png");
@@ -34,6 +34,7 @@ public sealed class JinGangNian : GuZhenRenCardTemplate
         new PowerVar<NianPower>(0).WithPowerTooltip(),
         new CalculationBaseVar(6),
         new ExtraDamageVar(1),
+        new StringVar("HitBonus", string.Empty),
         new CalculatedDamageVar(ValueProp.Move)
             .WithMultiplier(static (card, _) =>
                 ((JinGangNian)card).CalculateNianGainedThisTurn())
@@ -71,6 +72,7 @@ public sealed class JinGangNian : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
+        ((StringVar)DynamicVars["HitBonus"]).StringValue = "+1";
     }
 
     private int CalculateNianGainedThisTurn()

@@ -66,7 +66,7 @@
     "GU_ZHEN_REN_CARD_YI_XIN_ER_YONG_GU.title":  "一心二用蛊",
     "GU_ZHEN_REN_CARD_YI_XIN_ER_YONG_GU.description":  "获得{NianPower:diff()}层[gold]念[/gold]。本回合接下来{YiXinErYongPower:diff()}次打出牌时，随机免费打出1张手牌。",
     "GU_ZHEN_REN_CARD_JIN_GANG_NIAN.title":  "金刚念",
-    "GU_ZHEN_REN_CARD_JIN_GANG_NIAN.description":  "造成{CalculatedDamage:diff()}点伤害X次。\\n本回合每获得过1层[gold]念[/gold]，额外造成1点伤害。",
+    "GU_ZHEN_REN_CARD_JIN_GANG_NIAN.description":  "造成{CalculatedDamage:diff()}点伤害X{HitBonus}次。\\n本回合每获得过1层[gold]念[/gold]，额外造成1点伤害。",
     "GU_ZHEN_REN_CARD_ZHUI_NIAN.title":  "追念",
     "GU_ZHEN_REN_CARD_ZHUI_NIAN.description":  "选择弃牌堆中的1张牌，将其免费打出并消耗。获得等同于其耗能2倍的[gold]念[/gold]。",
     "GU_ZHEN_REN_CARD_ZHUI_NIAN.selectionScreenPrompt":  "选择1张牌打出并消耗",
