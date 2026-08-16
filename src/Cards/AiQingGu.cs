@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Patches;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Combat;
@@ -32,6 +33,8 @@ public sealed class AiQingGu : GuZhenRenCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
+        GuZhenRenKeywords.AiQingGuPositiveEffect,
+        GuZhenRenKeywords.AiQingGuNegativeEffect,
         CardKeyword.Unplayable,
         CardKeyword.Exhaust
     ];

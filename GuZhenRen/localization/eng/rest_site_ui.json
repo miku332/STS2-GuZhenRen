@@ -1,5 +1,5 @@
 {
-  "GU_ZHEN_REN_ASSEMBLE_SHA_ZHAO.name": "Assemble Killer Move",
+  "GU_ZHEN_REN_ASSEMBLE_SHA_ZHAO.name": "Killer Move (No Action Cost)",
   "GU_ZHEN_REN_ASSEMBLE_SHA_ZHAO.description": "Consume the materials specified by a Gu recipe to refine a Killer Move card.",
   "GU_ZHEN_REN_ASSEMBLE_SHA_ZHAO.descriptionDisabled": "No recipe currently has all required materials."
 }
