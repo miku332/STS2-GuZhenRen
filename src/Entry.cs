@@ -96,6 +96,9 @@ public static class Entry
         var potionPatcher = RitsuLibFramework.CreatePatcher(ModId, "potion-state");
         potionPatcher.RegisterPatch<FuRenXinPotionRemovalPatch>();
         potionPatcher.PatchAll();
+        var liQiPatcher = RitsuLibFramework.CreatePatcher(ModId, "li-qi");
+        liQiPatcher.RegisterPatch<XuYingHandSizePatch>();
+        liQiPatcher.PatchAll();
         var haoJiePatcher = RitsuLibFramework.CreatePatcher(ModId, "hao-jie");
         haoJiePatcher.RegisterPatch<GuiGuaYiIntentPatch>();
         haoJiePatcher.PatchAll();
