@@ -183,7 +183,7 @@
     "GU_ZHEN_REN_CARD_WO_LI_XU_YING.title":  "我力虚影",
     "GU_ZHEN_REN_CARD_WO_LI_XU_YING.description":  "{Chance:diff()}%[gold]概率[/gold]触发：\n随机复制牌组中1张非消耗攻击牌，免费打出并消耗。",
     "GU_ZHEN_REN_CARD_LI_QI_GU.title":  "力气蛊",
-    "GU_ZHEN_REN_CARD_LI_QI_GU.description":  "回合开始时，触发手牌中所有[gold]虚影[/gold]牌{LiQiPower:diff()}次。",
+    "GU_ZHEN_REN_CARD_LI_QI_GU.description":  "回合开始时，触发手牌中所有[gold]虚影[/gold]牌{LiQiPower:diff()}次。\n[gold]虚影[/gold]牌不再计入手牌上限。",
     "GU_ZHEN_REN_CARD_QUAN_LI_YI_FU_GU.title":  "全力以赴蛊",
     "GU_ZHEN_REN_CARD_QUAN_LI_YI_FU_GU.description":  "你的[gold]虚影[/gold]牌的触发[gold]概率[/gold]提升至100%。",
     "GU_ZHEN_REN_CARD_QUN_LI_GU.title":  "群力蛊",

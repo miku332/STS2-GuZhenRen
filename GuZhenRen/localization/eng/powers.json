@@ -68,7 +68,7 @@
   "GU_ZHEN_REN_POWER_WO_LI_POWER.title": "My Strength",
   "GU_ZHEN_REN_POWER_WO_LI_POWER.description": "Next, {Amount} and Attack card are played twice.",
   "GU_ZHEN_REN_POWER_LI_QI_POWER.title": "Effort",
-  "GU_ZHEN_REN_POWER_LI_QI_POWER.description": "At the beginning of the round, trigger all Phantom cards in hand {Amount} times.",
+  "GU_ZHEN_REN_POWER_LI_QI_POWER.description": "At the start of your turn, trigger all Phantom cards in your hand {Amount} time(s). Phantom cards no longer count toward your hand limit.",
   "GU_ZHEN_REN_POWER_QUAN_LI_YI_FU_POWER.title": "Power Quan Li Yi Fu Power",
   "GU_ZHEN_REN_POWER_QUAN_LI_YI_FU_POWER.description": "Your Phantom card will definitely trigger.",
   "GU_ZHEN_REN_POWER_JI_TU_POWER.title": "Piled Earth",

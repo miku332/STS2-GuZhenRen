@@ -68,7 +68,7 @@
     "GU_ZHEN_REN_POWER_WO_LI_POWER.title":  "我力",
     "GU_ZHEN_REN_POWER_WO_LI_POWER.description":  "接下来{Amount}张攻击牌打出2次。",
     "GU_ZHEN_REN_POWER_LI_QI_POWER.title":  "力气",
-    "GU_ZHEN_REN_POWER_LI_QI_POWER.description":  "回合开始时，触发手牌中所有虚影牌{Amount}次。",
+    "GU_ZHEN_REN_POWER_LI_QI_POWER.description":  "回合开始时，触发手牌中所有虚影牌{Amount}次。虚影牌不再计入手牌上限。",
     "GU_ZHEN_REN_POWER_QUAN_LI_YI_FU_POWER.title":  "全力以赴",
     "GU_ZHEN_REN_POWER_QUAN_LI_YI_FU_POWER.description":  "你的虚影牌必定触发。",
     "GU_ZHEN_REN_POWER_JI_TU_POWER.title":  "积土",

@@ -3,14 +3,16 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Combat.HandSize;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.Cards;
+using GuZhenRen.Patches;
 
 namespace GuZhenRen.Powers;
 
 [RegisterPower]
-public sealed class LiQiPower : ModPowerTemplate
+public sealed class LiQiPower : ModPowerTemplate, IMaxHandSizeModifier
 {
     public override PowerType Type => PowerType.Buff;
 
@@ -19,6 +21,22 @@ public sealed class LiQiPower : ModPowerTemplate
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://GuZhenRen/images/powers/LiQiPower.png",
         BigIconPath: "res://GuZhenRen/images/powers/LiQiPower_p.png");
+
+    public int ModifyMaxHandSizeLate(Player player, int currentMaxHandSize)
+    {
+        if (!Owner.IsAlive || player.Creature != Owner)
+        {
+            return currentMaxHandSize;
+        }
+
+        var shadowsInHand = PileType.Hand.GetPile(player)
+            .Cards
+            .Count(static card => card is AbstractXuYingCard);
+
+        return currentMaxHandSize
+            + shadowsInHand
+            + XuYingHandSizePatch.GetPendingAllowance(player);
+    }
 
     public override async Task AfterPlayerTurnStart(
         PlayerChoiceContext choiceContext,

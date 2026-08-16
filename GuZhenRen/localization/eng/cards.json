@@ -183,7 +183,7 @@
   "GU_ZHEN_REN_CARD_WO_LI_XU_YING.title": "My Strength Phantom",
   "GU_ZHEN_REN_CARD_WO_LI_XU_YING.description": "{Chance:diff()}%[gold]Chance[/gold] triggers:\nRandomly copy 1 non-consumable Attack card from deck, play it and Exhaust it for free.",
   "GU_ZHEN_REN_CARD_LI_QI_GU.title": "Effort Gu",
-  "GU_ZHEN_REN_CARD_LI_QI_GU.description": "At the beginning of the round, trigger all [gold]Phantom[/gold] cards in hand {LiQiPower:diff()} times.",
+  "GU_ZHEN_REN_CARD_LI_QI_GU.description": "At the start of your turn, trigger all [gold]Phantom[/gold] cards in your hand {LiQiPower:diff()} time(s).\n[gold]Phantom[/gold] cards no longer count toward your hand limit.",
   "GU_ZHEN_REN_CARD_QUAN_LI_YI_FU_GU.title": "All-Out Effort Gu",
   "GU_ZHEN_REN_CARD_QUAN_LI_YI_FU_GU.description": "The trigger of your [gold]Phantom[/gold] card [gold]Chance[/gold] is increased to 100%.",
   "GU_ZHEN_REN_CARD_QUN_LI_GU.title": "Group Strength Gu",
