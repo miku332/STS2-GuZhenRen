@@ -65,6 +65,8 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
 
     public virtual int Rank => 1;
 
+    protected virtual bool ShowXianGuHoverTip => true;
+
     public override int MaxUpgradeLevel => _upgrades ? base.MaxUpgradeLevel : 0;
 
     protected virtual IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
@@ -89,6 +91,7 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
             }
 
             if (Rank >= 6
+                && ShowXianGuHoverTip
                 && this is not AbstractShaZhaoCard
                 && this is not AbstractBenMingGuCard)
             {

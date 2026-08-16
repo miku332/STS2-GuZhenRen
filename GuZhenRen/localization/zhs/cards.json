@@ -330,7 +330,7 @@
     "GU_ZHEN_REN_CARD_OPTION_YI_DONG_BAI_GU_ZHAN_CHE.title": "移动",
     "GU_ZHEN_REN_CARD_OPTION_YI_DONG_BAI_GU_ZHAN_CHE.description": "获得{Block:diff()}点格挡。\\n所有敌人每有1层虚弱，就对你造成1点伤害1次。",
     "GU_ZHEN_REN_CARD_AI_QING_GU.title": "爱情蛊",
-    "GU_ZHEN_REN_CARD_AI_QING_GU.description": "当你抽到这张牌时，执行随机[gold]正面效果[/gold]与随机[gold]负面效果[/gold]，然后消耗。",
+    "GU_ZHEN_REN_CARD_AI_QING_GU.description": "[gold]不能被打出[/gold]。\n当你抽到这张牌时，执行随机[gold]正面效果[/gold]与随机[gold]负面效果[/gold]，然后[gold]消耗[/gold]。",
     "GU_ZHEN_REN_CARD_GU_QIANG_GU.title": "骨枪蛊",
     "GU_ZHEN_REN_CARD_GU_QIANG_GU.description": "造成{Damage:diff()}点伤害。\\n进入商店时，从牌组中移除此牌并获得{Gold:diff()}金币。",
     "GU_ZHEN_REN_CARD_LUO_XUAN_GU_QIANG_GU.title": "螺旋骨枪蛊",
