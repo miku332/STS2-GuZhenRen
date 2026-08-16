@@ -1,5 +1,60 @@
 # 更新日志 / Changelog
 
+## 0.4.8-beta.1
+
+### 中文
+
+#### 新增
+- 爱情蛊新增“正面效果”与“负面效果”关键词，可查看各项随机结果及触发概率。
+- 火堆杀招选择页面新增返回按钮，可直接返回火堆。
+
+#### 优化
+- 火堆选项“合炼杀招”调整为“杀招（不消耗行动）”，明确合炼不会消耗火堆行动。
+- 优化金刚念、多重剑影蛊、时针、挽澜、拔山、鼎力等卡牌的升级数值显示。
+- 青牛劳力蛊、驰马骏力蛊、黑蟒缠力蛊、白象元力蛊、石龟负力蛊、飞熊之力蛊和我力现在会明确显示生成升级版虚影。
+- 防伪蛊描述调整为塔1样式，明确复制范围、复制牌状态及仙蛊唯一规则。
+- 只有一个可合炼蛊方时，也会先选择杀招，再进入材料选择页面。
+- 存在多个可合炼杀招时，可直接点击另一张杀招切换选择，无需先取消当前选择。
+
+#### 修复
+- 修复金刚念升级效果未在卡面正确显示的问题。
+- 修复仙蛊残骸仍有剩余次数时，无法在同一火堆继续锻造的问题。
+- 修复送友风蛊方无法正确识别偷道蛊虫的问题。
+- 修复见面曾相识蛊方无法正确识别偷道蛊虫的问题。
+- 修复冷血在怪物回合开始时击杀敌人，可能导致活体盾与高塔炮手等特定战斗无法继续的问题。
+
+#### 兼容性
+- 适用于《杀戮尖塔2》测试版 `v0.111.0`。
+- 需要 RitsuLib `0.5.12`。
+- 正式版 `v0.107.1` 请使用 `v0.4.8`。
+
+### English
+
+#### Added
+- Added Positive Effect and Negative Effect keywords to Love Gu, showing every possible random outcome and its probability.
+- Added a back button to the Killer Move selection screen, allowing players to return directly to the rest site.
+
+#### Improvements
+- Renamed the rest-site option to “Killer Move (No Action Cost)” to clarify that assembly does not consume the rest-site action.
+- Improved upgrade value display for Vajra Thought, Multiple Sword Shadow Gu, Clock Hand, Turning the Tide, Pulling Mountain, Tripod Strength, and other affected cards.
+- Cards that create Phantoms now clearly indicate when the generated Phantom is upgraded.
+- Updated Anti-counterfeit Gu’s description to match the Slay the Spire 1 version and clarify its copy pool, copy state, and Immortal Gu uniqueness interaction.
+- When only one Killer Move recipe is available, players now select the Killer Move before choosing its materials.
+- When multiple Killer Moves are available, clicking another card now switches the selection directly without requiring the current selection to be canceled first.
+
+#### Fixes
+- Fixed Vajra Thought’s upgrade effect not being displayed correctly.
+- Fixed Immortal Gu Remains becoming unresponsive when additional forging uses were still available at the same rest site.
+- Fixed the Farewell Wind recipe not recognizing Theft Path Gu correctly.
+- Fixed the Familiar Face recipe not recognizing Theft Path Gu correctly.
+- Fixed Cold Blood killing an enemy at the start of the enemy turn potentially locking encounters involving Living Shield, Turret Operator, and similar enemy combinations.
+
+#### Compatibility
+- Supports the public beta `v0.111.0` build of Slay the Spire 2.
+- Requires RitsuLib `0.5.12`.
+- For the stable `v0.107.1` build, use `v0.4.8`.
+
+
 ## 0.4.3
 
 ### 中文
