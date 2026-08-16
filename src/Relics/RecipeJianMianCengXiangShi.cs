@@ -25,7 +25,7 @@ public sealed class RecipeJianMianCengXiangShi : AbstractRecipeRelic
                         GuZhenRenTags.BianHuaDao)
                     || GuZhenRenTagRules.HasEffectiveTag(
                         card,
-                        GuZhenRenTags.LuDao))
+                        GuZhenRenTags.TouDao))
         )
     ];
 
