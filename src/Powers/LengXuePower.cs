@@ -24,8 +24,7 @@ public sealed class LengXuePower : ModPowerTemplate
         IconPath: "res://GuZhenRen/images/powers/LengXuePower.png",
         BigIconPath: "res://GuZhenRen/images/powers/LengXuePower_p.png");
 
-    public override async Task BeforeSideTurnStart(
-        PlayerChoiceContext choiceContext,
+    public override async Task AfterSideTurnStart(
         CombatSide side,
         IReadOnlyList<Creature> participants,
         ICombatState combatState)
@@ -39,7 +38,7 @@ public sealed class LengXuePower : ModPowerTemplate
 
         var damage = Math.Max(1m, Math.Floor(Owner.MaxHp / 10m));
         await CreatureCmd.Damage(
-            choiceContext,
+            new ThrowingPlayerChoiceContext(),
             Owner,
             damage,
             ValueProp.Unblockable | ValueProp.Unpowered,
@@ -47,6 +46,13 @@ public sealed class LengXuePower : ModPowerTemplate
             null,
             null);
 
-        await PowerCmd.Decrement(this);
+        if (Owner.IsAlive)
+        {
+            await PowerCmd.Decrement(this);
+        }
+        else
+        {
+            await Cmd.CustomScaledWait(0.1f, 0.25f);
+        }
     }
 }
