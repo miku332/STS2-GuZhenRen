@@ -2,6 +2,7 @@ using System.Reflection;
 using Godot;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
@@ -78,5 +79,66 @@ public sealed class ShaZhaoRecipeSelectionBackPatch : IPatchMethod
                 }
             }));
         backButton.Enable();
+    }
+}
+
+public sealed class ShaZhaoRecipeSelectionReplacePatch : IPatchMethod
+{
+    private static readonly FieldInfo? PrefsField =
+        typeof(NSimpleCardSelectScreen).GetField(
+            "_prefs",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+    private static readonly FieldInfo? SelectedCardsField =
+        typeof(NSimpleCardSelectScreen).GetField(
+            "_selectedCards",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+    private static readonly FieldInfo? GridField =
+        typeof(NCardGridSelectionScreen).GetField(
+            "_grid",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+    public static string PatchId => "sha-zhao-recipe-selection-replace";
+
+    public static string Description =>
+        "Allow one-click replacement on the Sha Zhao recipe selection screen";
+
+    public static bool IsCritical => false;
+
+    public static ModPatchTarget[] GetTargets() =>
+    [
+        new ModPatchTarget(
+            typeof(NSimpleCardSelectScreen),
+            "OnCardClicked",
+            [typeof(CardModel)])
+    ];
+
+    public static void Prefix(
+        NSimpleCardSelectScreen __instance,
+        CardModel card)
+    {
+        if (PrefsField?.GetValue(__instance) is not CardSelectorPrefs prefs
+            || prefs.Prompt.LocTable != "card_selection"
+            || prefs.Prompt.LocEntryKey
+                != "GU_ZHEN_REN_ASSEMBLE_CHOOSE_RECIPE"
+            || prefs.MaxSelect != 1
+            || SelectedCardsField?.GetValue(__instance)
+                is not HashSet<CardModel> selectedCards
+            || selectedCards.Count == 0
+            || selectedCards.Contains(card))
+        {
+            return;
+        }
+
+        if (GridField?.GetValue(__instance) is NCardGrid grid)
+        {
+            foreach (var selectedCard in selectedCards)
+            {
+                grid.UnhighlightCard(selectedCard);
+            }
+        }
+
+        selectedCards.Clear();
     }
 }
