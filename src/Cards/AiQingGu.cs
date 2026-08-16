@@ -26,6 +26,10 @@ public sealed class AiQingGu : GuZhenRenCardTemplate
 
     public override int Rank => 9;
 
+    protected override bool ShowXianGuHoverTip => false;
+
+    protected override bool IsPlayable => false;
+
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.ZhiDao];
 
     public override CardAssetProfile AssetProfile => new(
@@ -34,9 +38,7 @@ public sealed class AiQingGu : GuZhenRenCardTemplate
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
         GuZhenRenKeywords.AiQingGuPositiveEffect,
-        GuZhenRenKeywords.AiQingGuNegativeEffect,
-        CardKeyword.Unplayable,
-        CardKeyword.Exhaust
+        GuZhenRenKeywords.AiQingGuNegativeEffect
     ];
 
     public override bool CanBeGeneratedInCombat => false;
