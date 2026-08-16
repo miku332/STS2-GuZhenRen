@@ -57,6 +57,13 @@ public sealed class XianGuCanHaiSmithRestSitePatch : IPatchMethod
             __result);
     }
 
+    public static bool ShouldKeepOptionsAfterSmith(
+        Player player,
+        XianGuCanHai relic) =>
+        relic.Counter > 0
+        && Cache.TryGetValue(player, out var cache)
+        && cache.WasSmith;
+
     private static async Task<bool> RestoreOptionsAfterSmith(
         RestSiteSynchronizer synchronizer,
         Player player,

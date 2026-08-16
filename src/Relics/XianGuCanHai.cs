@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Patches;
 
 namespace GuZhenRen.Relics;
 
@@ -65,4 +67,9 @@ public sealed class XianGuCanHai : ModRelicTemplate
 
         return Task.CompletedTask;
     }
+
+    public override bool ShouldDisableRemainingRestSiteOptions(Player player) =>
+        !XianGuCanHaiSmithRestSitePatch.ShouldKeepOptionsAfterSmith(
+            player,
+            this);
 }
