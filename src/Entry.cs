@@ -112,6 +112,11 @@ public static class Entry
         var eventAssetPatcher = RitsuLibFramework.CreatePatcher(ModId, "event-assets");
         eventAssetPatcher.RegisterPatch<EventPortraitPreloadPatch>();
         eventAssetPatcher.PatchAll();
+        var shaZhaoUiPatcher = RitsuLibFramework.CreatePatcher(
+            ModId,
+            "sha-zhao-ui");
+        shaZhaoUiPatcher.RegisterPatch<ShaZhaoRecipeSelectionBackPatch>();
+        shaZhaoUiPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(
