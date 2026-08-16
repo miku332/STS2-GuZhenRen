@@ -118,11 +118,6 @@ internal static class ShaZhaoRecipeSystem
         Player player,
         IReadOnlyList<AbstractRecipeRelic> recipes)
     {
-        if (recipes.Count == 1)
-        {
-            return recipes[0];
-        }
-
         var rewards = recipes.Select(recipe => recipe.RewardCard).ToList();
         var selected = (await CardSelectCmd.FromSimpleGrid(
             new BlockingPlayerChoiceContext(),
