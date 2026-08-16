@@ -47,14 +47,12 @@ public sealed class JuChiJinWu : GuZhenRenCardTemplate
         }
 
         var hits = (int)DynamicVars["Hits"].BaseValue;
-        for (var i = 0; i < hits; i++)
-        {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this, cardPlay)
-                .Targeting(cardPlay.Target)
-                .WithHitFx("vfx/vfx_attack_slash", null, null)
-                .Execute(choiceContext);
-        }
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this, cardPlay)
+            .Targeting(cardPlay.Target)
+            .WithHitCount(hits)
+            .WithHitFx("vfx/vfx_attack_slash", null, null)
+            .Execute(choiceContext);
 
         if (hits > 0)
         {
