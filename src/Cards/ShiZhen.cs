@@ -16,7 +16,7 @@ namespace GuZhenRen.Cards;
 [RegisterCard(typeof(GuZhenRenCardPool))]
 public sealed class ShiZhen : GuZhenRenCardTemplate
 {
-    public override int Rank => 6;
+    public override int Rank => IsUpgraded ? 7 : 6;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/ShiZhen.png");

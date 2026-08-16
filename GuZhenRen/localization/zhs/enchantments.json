@@ -3,6 +3,6 @@
     "GU_ZHEN_REN_ENCHANTMENT_XUE_KUANG_ENCHANTMENT.description": "这张牌受[gold]血狂[/gold]影响。被自动打出时，失去2点生命。",
     "GU_ZHEN_REN_ENCHANTMENT_XUE_KUANG_ENCHANTMENT.extraCardText": "[gold]血狂[/gold]",
     "GU_ZHEN_REN_ENCHANTMENT_HUA_SHI_ENCHANTMENT.title": "化石",
-    "GU_ZHEN_REN_ENCHANTMENT_HUA_SHI_ENCHANTMENT.description": "打出时，获得{Amount}点格挡。蛊真人牌的流派变为土道。",
+    "GU_ZHEN_REN_ENCHANTMENT_HUA_SHI_ENCHANTMENT.description": "打出时，获得等同于层数的格挡。该牌的流派变为土道。",
     "GU_ZHEN_REN_ENCHANTMENT_HUA_SHI_ENCHANTMENT.extraCardText": "[gold]化石 {Amount}[/gold]"
 }
