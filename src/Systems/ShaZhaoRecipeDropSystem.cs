@@ -84,7 +84,6 @@ internal static class ShaZhaoRecipeDropSystem
         ModelDb.Relic<RecipeAngryBird>(),
         ModelDb.Relic<RecipeAnQiSha>(),
         ModelDb.Relic<RecipeAnTuZhongShanBao>(),
-        ModelDb.Relic<RecipeBaiGuZhanChe>(),
         ModelDb.Relic<RecipeGuangYinFeiRen>(),
         ModelDb.Relic<RecipeJianHenSuoMing>(),
         ModelDb.Relic<RecipeJianLangSanDie>(),
