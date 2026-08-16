@@ -3,6 +3,8 @@
     "GU_ZHEN_REN_KEYWORD_GAI_LV.description": "可以通过[gold]运道[/gold]相关的手段影响。",
     "GU_ZHEN_REN_KEYWORD_XU_YING.title": "虚影",
     "GU_ZHEN_REN_KEYWORD_XU_YING.description": "虚影牌[gold]不能被打出[/gold]，[gold]保留[/gold]。虚影牌的效果在打出[gold]攻击牌[/gold]后概率触发，触发后不进入弃牌堆。",
+    "GU_ZHEN_REN_KEYWORD_HUA_SHI.title": "化石",
+    "GU_ZHEN_REN_KEYWORD_HUA_SHI.description": "打出时，获得等同于层数的格挡。该牌的流派变为土道。",
     "GU_ZHEN_REN_KEYWORD_HEADER_SEPARATOR": "。",
     "GU_ZHEN_REN_KEYWORD_HEADER_TERMINATOR": "。",
     "GU_ZHEN_REN_KEYWORD_PIN_JIE.title": "品阶",

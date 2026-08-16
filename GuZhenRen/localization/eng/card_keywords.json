@@ -3,6 +3,8 @@
   "GU_ZHEN_REN_KEYWORD_GAI_LV.description": "Can be influenced by [gold]Luck Path[/gold] effects.",
   "GU_ZHEN_REN_KEYWORD_XU_YING.title": "Phantom",
   "GU_ZHEN_REN_KEYWORD_XU_YING.description": "Phantom cards are [gold]Unplayable[/gold] and [gold]Retained[/gold]. Their effects have a chance to trigger after you play an [gold]Attack[/gold], and they do not enter the discard pile when triggered.",
+  "GU_ZHEN_REN_KEYWORD_HUA_SHI.title": "Fossil",
+  "GU_ZHEN_REN_KEYWORD_HUA_SHI.description": "When played, gain Block equal to its stacks. This card's Path becomes Earth Path.",
   "GU_ZHEN_REN_KEYWORD_HEADER_SEPARATOR": ". ",
   "GU_ZHEN_REN_KEYWORD_HEADER_TERMINATOR": ".",
   "GU_ZHEN_REN_KEYWORD_PIN_JIE.title": "Rank",

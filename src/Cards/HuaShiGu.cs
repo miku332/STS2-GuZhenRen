@@ -1,5 +1,6 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Enchantments;
+using GuZhenRen.Keywords;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -21,6 +22,9 @@ public sealed class HuaShiGu : GuZhenRenCardTemplate
         PortraitPath: "res://GuZhenRen/images/cards/HuaShiGu.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.TuDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.HuaShi];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
