@@ -116,6 +116,7 @@ public static class Entry
             ModId,
             "sha-zhao-ui");
         shaZhaoUiPatcher.RegisterPatch<ShaZhaoRecipeSelectionBackPatch>();
+        shaZhaoUiPatcher.RegisterPatch<ShaZhaoRecipeSelectionReplacePatch>();
         shaZhaoUiPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
