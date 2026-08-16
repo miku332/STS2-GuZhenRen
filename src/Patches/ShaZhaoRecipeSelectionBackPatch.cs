@@ -1,6 +1,7 @@
 using System.Reflection;
 using Godot;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
@@ -17,6 +18,11 @@ public sealed class ShaZhaoRecipeSelectionBackPatch : IPatchMethod
     private static readonly FieldInfo? PrefsField =
         typeof(NSimpleCardSelectScreen).GetField(
             "_prefs",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+    private static readonly FieldInfo? SelectedCardsField =
+        typeof(NSimpleCardSelectScreen).GetField(
+            "_selectedCards",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
     public static string PatchId => "sha-zhao-recipe-selection-back";
@@ -61,6 +67,12 @@ public sealed class ShaZhaoRecipeSelectionBackPatch : IPatchMethod
             {
                 if (GodotObject.IsInstanceValid(__instance))
                 {
+                    if (SelectedCardsField?.GetValue(__instance)
+                        is HashSet<CardModel> selectedCards)
+                    {
+                        selectedCards.Clear();
+                    }
+
                     __instance.Call(
                         NSimpleCardSelectScreen.MethodName.CompleteSelection);
                 }
