@@ -25,7 +25,7 @@ public sealed class RecipeSongYouFeng : AbstractRecipeRelic
                         GuZhenRenTags.FengDao)
                     || GuZhenRenTagRules.HasEffectiveTag(
                         card,
-                        GuZhenRenTags.TouDao))
+                        GuZhenRenTags.LuDao))
         )
     ];
 
