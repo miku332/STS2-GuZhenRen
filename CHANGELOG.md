@@ -1,5 +1,41 @@
 # 更新日志 / Changelog
 
+## 0.4.9-beta.1
+
+### 中文
+
+#### 新增
+- 新增基于 RitsuLib 的更新检测，并区分正式版与测试版更新渠道。
+- 创意工坊安装的模组将跳转至创意工坊页面，手动安装的模组将跳转至手动下载页面。
+
+#### 修复
+- 修复超巨化药水仅强化锯齿金蜈第一段伤害的问题，现在会强化全部攻击段数。
+- 修复有力气蛊期间虚影牌占用手牌上限的问题，恢复塔1行为。
+- 修复满手牌时生成的虚影牌会进入弃牌堆的问题，现在可正常加入手牌。
+- 更新有力气蛊及对应能力的中英文描述。
+
+#### 兼容性
+- 适用于《杀戮尖塔2》测试版 `v0.111.0`。
+- 需要 RitsuLib `0.5.12`。
+- 正式版 `v0.107.1` 请使用 `v0.4.9`。
+
+### English
+
+#### Added
+- Added RitsuLib-based update checks with separate stable and beta update channels.
+- Workshop installations open the Workshop page, while manual installations open the manual download page.
+
+#### Fixes
+- Fixed Gigantification only enhancing the first hit of Sawtooth Golden Centipede; it now enhances every hit.
+- Fixed Phantom cards counting toward the hand limit while Effort Gu is active, restoring the Slay the Spire 1 behavior.
+- Fixed Phantoms generated with a full hand being sent to the discard pile; they can now enter the hand normally.
+- Updated the Chinese and English descriptions for Effort Gu and its related Power.
+
+#### Compatibility
+- Supports the public beta `v0.111.0` build of Slay the Spire 2.
+- Requires RitsuLib `0.5.12`.
+- For the stable `v0.107.1` build, use `v0.4.9`.
+
 ## 0.4.8-beta.1
 
 ### 中文
