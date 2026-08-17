@@ -15,6 +15,8 @@ namespace GuZhenRen.Powers;
 [RegisterPower]
 public sealed class JiTuPower : ModPowerTemplate
 {
+    private const int SturdyClampRetainedBlock = 10;
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -47,7 +49,7 @@ public sealed class JiTuPower : ModPowerTemplate
             return;
         }
 
-        var sturdyClampRetain = HasSturdyClamp ? 10 : 0;
+        var sturdyClampRetain = HasSturdyClamp ? SturdyClampRetainedBlock : 0;
         var retainAmount = Math.Max(Amount, sturdyClampRetain);
 
         if (Owner.Block <= retainAmount)
