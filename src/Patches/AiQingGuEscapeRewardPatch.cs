@@ -1,5 +1,8 @@
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Screens;
+using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Patching.Models;
@@ -49,15 +52,22 @@ public sealed class AiQingGuEscapeRewardPatch : IPatchMethod
             return;
         }
 
+        await MegaCrit.Sts2.Core.Commands.Cmd.Wait(1f);
         var runState = room.CombatState.RunState;
-        if (runState.Map.SecondBossMapPoint is not null
-            && runState.CurrentMapCoord == runState.Map.BossMapPoint.coord)
+        if (LocalContext.GetMe(runState) is not { } player)
         {
+            Entry.Logger.Warn(
+                "Love Gu escape could not resolve the local player.");
             await combatUi.ProceedWithoutRewards();
             return;
         }
 
-        await MegaCrit.Sts2.Core.Commands.Cmd.Wait(1f);
-        RunManager.Instance.ActChangeSynchronizer.SetLocalPlayerReady();
+        var rewardsSet = new RewardsSet(player).EmptyForRoom(room);
+
+        await RunManager.Instance.RewardsSetSynchronizer
+            .BeginRewardsSet(rewardsSet);
+        NRewardsScreen.ShowScreen(rewardsSet, true, runState);
+        Entry.Logger.Info(
+            "Love Gu escape opened an empty boss proceed screen.");
     }
 }
