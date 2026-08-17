@@ -47,9 +47,7 @@ public sealed class JiTuPower : ModPowerTemplate
             return;
         }
 
-        var sturdyClampRetain = HasSturdyClamp
-            ? Math.Max(0, Owner.Block - 15)
-            : 0;
+        var sturdyClampRetain = HasSturdyClamp ? 10 : 0;
         var retainAmount = Math.Max(Amount, sturdyClampRetain);
 
         if (Owner.Block <= retainAmount)
