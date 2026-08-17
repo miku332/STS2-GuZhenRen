@@ -68,6 +68,7 @@ public static class Entry
         benMingGuPatcher.RegisterPatch<BenMingGuSelectionHeaderPatch>();
         benMingGuPatcher.RegisterPatch<BenMingGuPersistentDowngradePatch>();
         benMingGuPatcher.RegisterPatch<ReflectionsBenMingGuPatch>();
+        benMingGuPatcher.RegisterPatch<WongoBenMingGuPatch>();
         benMingGuPatcher.RegisterPatch<XianGuCanHaiSmithRestSitePatch>();
         benMingGuPatcher.RegisterPatch<CunGuangYinSmithPatch>();
         benMingGuPatcher.RegisterPatch<CunGuangYinSmithCountPatch>();

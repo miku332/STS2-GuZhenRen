@@ -14,6 +14,23 @@ namespace GuZhenRen.Patches;
 
 internal static class BenMingGuRankProtection
 {
+    public static bool CanBePermanentlyDowngraded(CardModel card)
+    {
+        if (!card.IsUpgraded)
+        {
+            return false;
+        }
+
+        if (card is not AbstractBenMingGuCard benMingGu)
+        {
+            return true;
+        }
+
+        var minimumRank = card.Owner
+            .GetRelic<AbstractKongQiaoRelic>()?.Rank ?? 1;
+        return benMingGu.Rank > minimumRank;
+    }
+
     public static void EnsureMinimumRank(Player player)
     {
         var minimumRank = player.GetRelic<AbstractKongQiaoRelic>()?.Rank ?? 1;
@@ -42,6 +59,26 @@ internal static class BenMingGuRankProtection
             benMingGu.UpgradeInternal();
             benMingGu.FinalizeUpgradeInternal();
         }
+    }
+}
+
+internal static class PermanentDowngradeEventPatchSupport
+{
+    private static readonly MethodInfo? SetEventFinishedMethod =
+        typeof(EventModel).GetMethod(
+            "SetEventFinished",
+            BindingFlags.Instance | BindingFlags.NonPublic,
+            null,
+            [typeof(LocString)],
+            null);
+
+    public static bool IsAvailable => SetEventFinishedMethod is not null;
+
+    public static void Finish(EventModel eventModel, string descriptionKey)
+    {
+        SetEventFinishedMethod!.Invoke(
+            eventModel,
+            [new LocString(eventModel.LocTable, descriptionKey)]);
     }
 }
 
@@ -98,18 +135,10 @@ public sealed class BenMingGuPersistentDowngradePatch : IPatchMethod
 
 public sealed class ReflectionsBenMingGuPatch : IPatchMethod
 {
-    private static readonly MethodInfo? SetEventFinishedMethod =
-        typeof(EventModel).GetMethod(
-            "SetEventFinished",
-            BindingFlags.Instance | BindingFlags.NonPublic,
-            null,
-            [typeof(LocString)],
-            null);
-
-    public static string PatchId => "reflections-exclude-ben-ming-gu";
+    public static string PatchId => "reflections-ben-ming-gu-rank-floor";
 
     public static string Description =>
-        "Excludes BenMingGu from the permanent downgrades in Reflections.";
+        "Applies the aperture rank floor to BenMingGu downgrades in Reflections.";
 
     public static bool IsCritical => false;
 
@@ -123,7 +152,8 @@ public sealed class ReflectionsBenMingGuPatch : IPatchMethod
 
     public static bool Prefix(Reflections __instance, ref Task __result)
     {
-        if (__instance.Owner is null || SetEventFinishedMethod is null)
+        if (__instance.Owner is null
+            || !PermanentDowngradeEventPatchSupport.IsAvailable)
         {
             return true;
         }
@@ -136,8 +166,7 @@ public sealed class ReflectionsBenMingGuPatch : IPatchMethod
     {
         var owner = reflections.Owner!;
         var upgradedCards = owner.Deck.Cards
-            .Where(static card =>
-                card.IsUpgraded && card is not AbstractBenMingGuCard)
+            .Where(BenMingGuRankProtection.CanBePermanentlyDowngraded)
             .ToList();
 
         for (var i = 0; i < 2 && upgradedCards.Count > 0; i++)
@@ -162,10 +191,56 @@ public sealed class ReflectionsBenMingGuPatch : IPatchMethod
         }
 
         await Cmd.CustomScaledWait(0.6f, 1.2f);
-        SetEventFinishedMethod!.Invoke(
+        PermanentDowngradeEventPatchSupport.Finish(
             reflections,
-            [new LocString(
-                reflections.LocTable,
-                "REFLECTIONS.pages.TOUCH_A_MIRROR.description")]);
+            "REFLECTIONS.pages.TOUCH_A_MIRROR.description");
+    }
+}
+
+public sealed class WongoBenMingGuPatch : IPatchMethod
+{
+    public static string PatchId => "wongo-ben-ming-gu-rank-floor";
+
+    public static string Description =>
+        "Applies the aperture rank floor to BenMingGu downgrades when leaving Wongo's.";
+
+    public static bool IsCritical => false;
+
+    public static ModPatchTarget[] GetTargets() =>
+    [
+        new ModPatchTarget(
+            typeof(WelcomeToWongos),
+            "Leave",
+            Type.EmptyTypes)
+    ];
+
+    public static bool Prefix(WelcomeToWongos __instance, ref Task __result)
+    {
+        if (__instance.Owner is null
+            || !PermanentDowngradeEventPatchSupport.IsAvailable)
+        {
+            return true;
+        }
+
+        __result = Leave(__instance);
+        return false;
+    }
+
+    private static async Task Leave(WelcomeToWongos wongo)
+    {
+        var card = wongo.Rng.NextItem(
+            wongo.Owner!.Deck.Cards.Where(
+                BenMingGuRankProtection.CanBePermanentlyDowngraded));
+
+        if (card is not null)
+        {
+            CardCmd.Downgrade(card);
+            CardCmd.Preview(card);
+            await Cmd.CustomScaledWait(0.5f, 1.2f);
+        }
+
+        PermanentDowngradeEventPatchSupport.Finish(
+            wongo,
+            "WELCOME_TO_WONGOS.pages.LEAVE.description");
     }
 }
