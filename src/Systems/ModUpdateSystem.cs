@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Text.Json;
 using STS2RitsuLib;
 using STS2RitsuLib.Updates;
 
@@ -22,7 +21,6 @@ internal static class ModUpdateSystem
     {
         try
         {
-            var currentVersion = ReadCurrentVersion(assembly);
             var releasePageUri = RitsuLibFramework.IsAssemblyLoadedFromSteamWorkshopItem(
                 assembly,
                 WorkshopItemId)
@@ -33,7 +31,7 @@ internal static class ModUpdateSystem
             {
                 ModId = Entry.ModId,
                 DisplayName = "Gu Zhen Ren Beta / 蛊真人 Beta",
-                CurrentVersion = currentVersion,
+                CurrentVersion = Entry.Version,
                 ManifestUri = BetaManifestUri,
                 ReleasePageUri = releasePageUri,
                 InstallSourceAssembly = assembly,
@@ -41,7 +39,7 @@ internal static class ModUpdateSystem
             });
 
             Entry.Logger.Info(
-                $"Registered update check for version {currentVersion} using {BetaManifestUri}.");
+                $"Registered update check for version {Entry.Version} using {BetaManifestUri}.");
             return registration;
         }
         catch (Exception ex)
@@ -49,30 +47,5 @@ internal static class ModUpdateSystem
             Entry.Logger.Warn($"Unable to register the update check: {ex.Message}");
             return null;
         }
-    }
-
-    private static string ReadCurrentVersion(Assembly assembly)
-    {
-        var assemblyDirectory = Path.GetDirectoryName(assembly.Location);
-        if (string.IsNullOrWhiteSpace(assemblyDirectory))
-        {
-            throw new InvalidOperationException("The mod assembly location is unavailable.");
-        }
-
-        var manifestPath = Path.Combine(assemblyDirectory, $"{Entry.ModId}.json");
-        using var manifest = JsonDocument.Parse(File.ReadAllText(manifestPath));
-
-        if (!manifest.RootElement.TryGetProperty("version", out var versionElement))
-        {
-            throw new InvalidDataException($"{Entry.ModId}.json does not contain a version.");
-        }
-
-        var version = versionElement.GetString();
-        if (string.IsNullOrWhiteSpace(version))
-        {
-            throw new InvalidDataException($"{Entry.ModId}.json contains an empty version.");
-        }
-
-        return version.Trim();
     }
 }
