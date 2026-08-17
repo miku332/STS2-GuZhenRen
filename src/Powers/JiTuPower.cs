@@ -47,10 +47,10 @@ public sealed class JiTuPower : ModPowerTemplate
             return;
         }
 
-        var calipersRetain = HasCalipers
+        var sturdyClampRetain = HasSturdyClamp
             ? Math.Max(0, Owner.Block - 15)
             : 0;
-        var retainAmount = Math.Max(Amount, calipersRetain);
+        var retainAmount = Math.Max(Amount, sturdyClampRetain);
 
         if (Owner.Block <= retainAmount)
         {
@@ -61,6 +61,6 @@ public sealed class JiTuPower : ModPowerTemplate
         await CreatureCmd.LoseBlock(Owner, Owner.Block - retainAmount);
     }
 
-    private bool HasCalipers =>
-        Owner.Player?.Relics.Any(relic => relic.Id.Entry == "CALIPERS") == true;
+    private bool HasSturdyClamp =>
+        Owner.Player?.Relics.Any(relic => relic.Id.Entry == "STURDY_CLAMP") == true;
 }
