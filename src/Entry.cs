@@ -21,7 +21,7 @@ namespace GuZhenRen;
 public static class Entry
 {
     public const string ModId = "GuZhenRen";
-    public const string Version = "0.4.10";
+    public const string Version = "0.4.11";
 
     public static readonly Logger Logger = RitsuLibFramework.CreateLogger(ModId);
 
