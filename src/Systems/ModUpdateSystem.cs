@@ -34,6 +34,7 @@ internal static class ModUpdateSystem
                 CurrentVersion = Entry.Version,
                 ManifestUri = StableManifestUri,
                 ReleasePageUri = releasePageUri,
+                ToastDurationSeconds = 10.0,
                 InstallSourceAssembly = assembly,
                 SteamWorkshopItemId = WorkshopItemId,
             });
