@@ -25,6 +25,7 @@ public static class Entry
     public static readonly Logger Logger = RitsuLibFramework.CreateLogger(ModId);
 
     private static readonly List<IDisposable> _lifecycleSubscriptions = [];
+    private static IDisposable? _updateCheckRegistration;
 
     public static void Init()
     {
@@ -32,6 +33,7 @@ public static class Entry
 
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        _updateCheckRegistration ??= ModUpdateSystem.Register(assembly);
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<XiaoGuangGu, TaiChuGuangGu>(ModId);
         var tunHuoPatcher = RitsuLibFramework.CreatePatcher(ModId, "tun-huo");
         tunHuoPatcher.RegisterPatch<TunHuoPatch>();
