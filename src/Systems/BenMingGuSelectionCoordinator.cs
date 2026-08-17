@@ -28,6 +28,7 @@ internal static class BenMingGuSelectionCoordinator
         var player = eventRoom.LocalMutableEvent.Owner;
         if (player is null
             || player.Character is not FangYuanCharacter
+            || player.RunState.TotalFloor > 0
             || player.Deck.Cards.OfType<AbstractBenMingGuCard>().Any())
         {
             return;
