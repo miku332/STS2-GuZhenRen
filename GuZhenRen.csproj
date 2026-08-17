@@ -52,8 +52,9 @@
     <Message Text="Copying Gu Zhen Ren mod to Slay the Spire 2..." Importance="high" />
     <MakeDir Directories="$(ModDeployDir)" />
     <Delete Files="$(ModDeployDir)\$(TargetName).pdb" />
+    <Delete Files="$(ModDeployDir)\mod_manifest.json" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModDeployDir)" />
-    <Copy SourceFiles="$(ProjectDir)mod_manifest.json"
+    <Copy SourceFiles="$(ProjectDir)$(ModId).json"
           DestinationFolder="$(ModDeployDir)" />
   </Target>
 

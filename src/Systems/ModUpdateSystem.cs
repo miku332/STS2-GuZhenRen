@@ -59,18 +59,18 @@ internal static class ModUpdateSystem
             throw new InvalidOperationException("The mod assembly location is unavailable.");
         }
 
-        var manifestPath = Path.Combine(assemblyDirectory, "mod_manifest.json");
+        var manifestPath = Path.Combine(assemblyDirectory, $"{Entry.ModId}.json");
         using var manifest = JsonDocument.Parse(File.ReadAllText(manifestPath));
 
         if (!manifest.RootElement.TryGetProperty("version", out var versionElement))
         {
-            throw new InvalidDataException("mod_manifest.json does not contain a version.");
+            throw new InvalidDataException($"{Entry.ModId}.json does not contain a version.");
         }
 
         var version = versionElement.GetString();
         if (string.IsNullOrWhiteSpace(version))
         {
-            throw new InvalidDataException("mod_manifest.json contains an empty version.");
+            throw new InvalidDataException($"{Entry.ModId}.json contains an empty version.");
         }
 
         return version.Trim();
