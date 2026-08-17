@@ -1,5 +1,47 @@
 # 更新日志 / Changelog
 
+## 0.4.11-beta.1
+
+### 中文
+
+#### 新增
+- 新增本命蛊永久降级下限保护。镜中倒影、欢迎来到旺购百货等永久降级效果，无法将本命蛊降低至当前空窍转数以下。
+
+#### 优化
+- 卡牌概率现在会显示鸿运齐天蛊等效果影响后的实际概率。
+- 统一蛊方遗物的显示格式，并参考塔1精简蛊方描述。
+- 调整送友风蛊方材料，使其与塔1一致。
+- 优化十转空窍描述，不再错误提及本命蛊转数。
+
+#### 修复
+- 修复十转后仍会继续遭遇灾劫的问题。
+- 修复积土与坚固钳子的格挡保留冲突，现在会保留两者中的较高数值。
+
+#### 兼容性
+- 适用于《杀戮尖塔2》测试版 `v0.111.0`。
+- 需要 RitsuLib `0.5.12`。
+- 正式版 `v0.107.1` 请使用 `v0.4.11`。
+
+### English
+
+#### Added
+- Added a permanent downgrade floor for Ben Ming Gu. Permanent downgrade effects such as Reflections and Welcome to Wongo's can no longer reduce it below the current aperture rank.
+
+#### Improvements
+- Card probabilities now display their effective values after modifiers such as Heaven-Defying Luck Gu.
+- Unified Killer Move recipe relic formatting and simplified recipe descriptions based on the Slay the Spire 1 version.
+- Updated the Farewell Friend Wind recipe ingredients to match the original mod.
+- Clarified the Rank 10 aperture description so it no longer incorrectly refers to the Ben Ming Gu rank.
+
+#### Fixes
+- Fixed tribulations continuing after reaching Rank 10.
+- Fixed the interaction between Accumulated Earth and Sturdy Clamp; the higher Block retention value is now preserved.
+
+#### Compatibility
+- Supports the public beta `v0.111.0` build of Slay the Spire 2.
+- Requires RitsuLib `0.5.12`.
+- For the stable `v0.107.1` build, use `v0.4.11`.
+
 ## 0.4.10-beta.1
 
 ### 中文
