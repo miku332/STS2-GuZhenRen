@@ -66,6 +66,8 @@ public static class Entry
         benMingGuPatcher.RegisterPatch<XianGuUpgradeUniquenessPatch>();
         benMingGuPatcher.RegisterPatch<BenMingGuRemovalPenaltyPatch>();
         benMingGuPatcher.RegisterPatch<BenMingGuSelectionHeaderPatch>();
+        benMingGuPatcher.RegisterPatch<BenMingGuPersistentDowngradePatch>();
+        benMingGuPatcher.RegisterPatch<ReflectionsBenMingGuPatch>();
         benMingGuPatcher.RegisterPatch<XianGuCanHaiSmithRestSitePatch>();
         benMingGuPatcher.RegisterPatch<CunGuangYinSmithPatch>();
         benMingGuPatcher.RegisterPatch<CunGuangYinSmithCountPatch>();
@@ -276,6 +278,7 @@ public static class Entry
                 {
                     foreach (var player in evt.RunState.Players)
                     {
+                        BenMingGuRankProtection.EnsureMinimumRank(player);
                         TaskHelper.RunSafely(
                             BenMingGuUniquenessPatch.EnforceDeckUniqueness(player));
                     }
