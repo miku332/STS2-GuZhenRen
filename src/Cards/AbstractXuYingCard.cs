@@ -34,7 +34,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
     {
         get
         {
-            yield return new DynamicVar("Chance", ChancePercent);
+            yield return new ProbabilityVar("Chance", ChancePercent);
 
             foreach (var dynamicVar in AdditionalVars)
             {
@@ -62,10 +62,9 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             return;
         }
 
-        var chance = Owner.Creature.GetPower<QuanLiYiFuPower>() is not null
-            ? 100m
-            : DynamicVars["Chance"].BaseValue;
-        if (!ProbabilitySystem.Roll(this, chance))
+        if (!ProbabilitySystem.Roll(
+                this,
+                DynamicVars["Chance"].BaseValue))
         {
             return;
         }
