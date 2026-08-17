@@ -1,5 +1,21 @@
 # 更新日志 / Changelog
 
+## 0.4.10
+
+### 中文
+
+#### 修复
+- 修复本命蛊被合炼或移除后，在后续篇章重复出现本命蛊选择页面的问题。
+- 修复最终 Boss 战触发爱情蛊逃跑后，没有“前往”按钮或直接跳转的问题。
+- 爱情蛊逃离 Boss 战后现在会显示无奖励页面，点击“前往”后继续正常流程。
+
+### English
+
+#### Fixes
+- Fixed the Ben Ming Gu selection screen reappearing in later acts after the Ben Ming Gu was synthesized or removed.
+- Fixed Love Gu escape during the final boss fight skipping the Proceed button or transitioning immediately.
+- Escaping a boss fight with Love Gu now displays an empty reward screen with a Proceed button before continuing normally.
+
 ## 0.4.9
 
 ### 中文
