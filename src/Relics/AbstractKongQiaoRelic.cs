@@ -151,6 +151,12 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
                 CardPilePosition.Bottom);
         }
 
+        if (Rank >= 10)
+        {
+            ResetTerminalTribulationState();
+            return;
+        }
+
         if (Rank >= 5
             && _state == KongQiaoState.TribulationPending
             && !IsTribulationDisabled())
@@ -168,14 +174,22 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
 
     public override async Task AfterObtained()
     {
-        if (Rank >= 6)
+        if (Rank < 6)
         {
-            await EnsureMaxHpBonusApplied();
-            if (_state == KongQiaoState.XpGathering)
-            {
-                _state = KongQiaoState.Countdown;
-                _battlesToNextTribulation = BattlesPerTribulation;
-            }
+            return;
+        }
+
+        await EnsureMaxHpBonusApplied();
+        if (Rank >= 10)
+        {
+            ResetTerminalTribulationState();
+            return;
+        }
+
+        if (_state == KongQiaoState.XpGathering)
+        {
+            _state = KongQiaoState.Countdown;
+            _battlesToNextTribulation = BattlesPerTribulation;
         }
     }
 
@@ -212,6 +226,12 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
 
     public override async Task AfterCombatVictory(CombatRoom room)
     {
+        if (Rank >= 10)
+        {
+            ResetTerminalTribulationState();
+            return;
+        }
+
         if (_state == KongQiaoState.TribulationPending)
         {
             if (Rank < 6)
@@ -282,10 +302,10 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
         }
 
         nextKongQiao.Xp = overflowXp;
-        nextKongQiao.TribulationState = nextKongQiao.Rank >= 6
+        nextKongQiao.TribulationState = nextKongQiao.Rank is >= 6 and < 10
             ? (int)KongQiaoState.Countdown
             : (int)KongQiaoState.XpGathering;
-        nextKongQiao.BattlesToNextTribulation = nextKongQiao.Rank >= 6
+        nextKongQiao.BattlesToNextTribulation = nextKongQiao.Rank is >= 6 and < 10
             ? BattlesPerTribulation
             : 0;
         nextKongQiao.MaxHpBonusApplied = MaxHpBonusApplied > 0
@@ -298,6 +318,12 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
 
     protected virtual bool IsTribulationDisabled() =>
         Owner.GetRelic<ShenBuZhi>() is not null;
+
+    private void ResetTerminalTribulationState()
+    {
+        _state = KongQiaoState.XpGathering;
+        _battlesToNextTribulation = 0;
+    }
 
     protected Task UpgradeBenMingGuToRank(int targetRank)
     {
