@@ -29,6 +29,7 @@
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.title": "修为",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_description": "空窍与本命蛊的当前转数。",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_10_title": "十转",
+  "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_10_description": "空窍的当前转数。本命蛊最高为九转。",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.mortal": "战斗胜利后，普通/精英/首领战斗分别积累[blue]1[/blue]/[blue]3[/blue]/[blue]5[/blue]点修为。\n当前修为：[blue]{Current}[/blue]/[blue]{Needed}[/blue]。",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_five": "战斗胜利后积累修为。\n当前修为：[blue]{Current}[/blue]/[blue]{Needed}[/blue]；积满后，下场战斗将渡[red]{Tribulation}[/red]。",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_five_pending": "修为已满。下场战斗将面临[red]{Tribulation}[/red]，成功后升炼为六转仙窍。",

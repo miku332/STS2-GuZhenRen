@@ -29,6 +29,7 @@
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.title": "Cultivation",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_description": "The current rank of your Aperture and Vital Gu.",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_10_title": "Rank 10",
+  "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_10_description": "The current rank of your Aperture. Vital Gu can only reach Rank 9.",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.mortal": "After combat, gain [blue]1[/blue]/[blue]3[/blue]/[blue]5[/blue] cultivation from normal/Elite/Boss combats.\nCurrent cultivation: [blue]{Current}[/blue]/[blue]{Needed}[/blue].",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_five": "Gain cultivation after combat.\nCurrent cultivation: [blue]{Current}[/blue]/[blue]{Needed}[/blue]. When full, the next combat will face an [red]{Tribulation}[/red].",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_five_pending": "Cultivation is full. The next combat will face an [red]{Tribulation}[/red]. Succeed to refine a Rank 6 Immortal Aperture.",
