@@ -28,7 +28,7 @@ public sealed class ShiBaiGu : GuZhenRenCardTemplate, IProbabilityCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("HpLoss", 4),
-        new DynamicVar("Chance", 1)
+        new ProbabilityVar("Chance", 1)
     ];
 
     protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
