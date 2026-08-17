@@ -59,20 +59,38 @@ internal static class ModUpdateSystem
             throw new InvalidOperationException("The mod assembly location is unavailable.");
         }
 
-        var manifestPath = Path.Combine(assemblyDirectory, "mod_manifest.json");
-        using var manifest = JsonDocument.Parse(File.ReadAllText(manifestPath));
-
-        if (!manifest.RootElement.TryGetProperty("version", out var versionElement))
+        var manifestPaths = new[]
         {
-            throw new InvalidDataException("mod_manifest.json does not contain a version.");
+            Path.Combine(assemblyDirectory, "mod_manifest.json"),
+            Path.Combine(assemblyDirectory, $"{Entry.ModId}.json"),
+        };
+
+        foreach (var manifestPath in manifestPaths.Distinct(StringComparer.OrdinalIgnoreCase))
+        {
+            if (!File.Exists(manifestPath))
+            {
+                continue;
+            }
+
+            using var manifest = JsonDocument.Parse(File.ReadAllText(manifestPath));
+            if (!manifest.RootElement.TryGetProperty("version", out var versionElement))
+            {
+                throw new InvalidDataException(
+                    $"{Path.GetFileName(manifestPath)} does not contain a version.");
+            }
+
+            var version = versionElement.GetString();
+            if (string.IsNullOrWhiteSpace(version))
+            {
+                throw new InvalidDataException(
+                    $"{Path.GetFileName(manifestPath)} contains an empty version.");
+            }
+
+            return version.Trim();
         }
 
-        var version = versionElement.GetString();
-        if (string.IsNullOrWhiteSpace(version))
-        {
-            throw new InvalidDataException("mod_manifest.json contains an empty version.");
-        }
-
-        return version.Trim();
+        throw new FileNotFoundException(
+            $"No supported mod manifest was found in '{assemblyDirectory}'. " +
+            $"Expected mod_manifest.json or {Entry.ModId}.json.");
     }
 }
