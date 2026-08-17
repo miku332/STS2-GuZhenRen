@@ -104,7 +104,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
                 null);
             yield return new HoverTip(
                 currentAperture.GetRankTitle(),
-                GetProgressLoc("rank_description"),
+                currentAperture.GetRankDescription(),
                 null);
         }
     }
@@ -478,6 +478,11 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
             "card_keywords",
             $"GU_ZHEN_REN_KEYWORD_PIN_JIE_{Rank}.title")
         : GetProgressLoc("rank_10_title");
+
+    private LocString GetRankDescription() => GetProgressLoc(
+        Rank >= 10
+            ? "rank_10_description"
+            : "rank_description");
 
     private static string GetTribulationName(TribulationType type) =>
         GetProgressLoc($"tribulation_{type.ToString().ToLowerInvariant()}")
