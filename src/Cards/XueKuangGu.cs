@@ -86,6 +86,7 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
         if (card is null
             || !_bloodcrazedCards.Contains(card)
             || card.Pile?.Type != PileType.Hand
+            || card.Keywords.Contains(CardKeyword.Unplayable)
             || !_queuedAutoPlayCards.Add(card))
         {
             return;
@@ -119,16 +120,19 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
 
     private static void MarkBloodcrazedCard(CardModel? card)
     {
-        if (card is null || card.Pile?.Type != PileType.Hand)
+        if (card is null
+            || card.Pile?.Type != PileType.Hand
+            || card.Keywords.Contains(CardKeyword.Unplayable))
         {
             return;
         }
 
-        _bloodcrazedCards.Add(card);
         if (card.Enchantment is null)
         {
             CardCmd.Enchant<XueKuangEnchantment>(card, 1);
         }
+
+        _bloodcrazedCards.Add(card);
     }
 
     private static void ClearBloodcrazeEnchantments()
@@ -149,7 +153,8 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
         if (card is null
             || !_bloodcrazedCards.Contains(card)
             || !_autoPlayingCards.Add(card)
-            || card.Pile?.Type != PileType.Hand)
+            || card.Pile?.Type != PileType.Hand
+            || card.Keywords.Contains(CardKeyword.Unplayable))
         {
             return;
         }
