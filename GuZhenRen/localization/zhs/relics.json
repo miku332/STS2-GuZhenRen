@@ -237,4 +237,7 @@
   ,"GU_ZHEN_REN_RELIC_XIAN_TAI_GU.rank_7_effect": "最大生命值增加[blue]7[/blue]。\n每场战斗开始时，将1张[gold]红枣仙元[/gold]加入手牌。"
   ,"GU_ZHEN_REN_RELIC_XIAN_TAI_GU.rank_8_effect": "最大生命值增加[blue]8[/blue]。\n每场战斗开始时，将1张[gold]白荔仙元[/gold]加入手牌。"
   ,"GU_ZHEN_REN_RELIC_XIAN_TAI_GU.rank_9_effect": "最大生命值增加[blue]9[/blue]。\n每场战斗开始时，将1张[gold]黄杏仙元[/gold]加入手牌。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XUE_RAN_ZHENG_PAO.title": "杀招-血染征袍"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XUE_RAN_ZHENG_PAO.description": "需要蛊虫：[gold]血幕天华蛊+[/gold]、任意[gold]血道蛊虫[/gold]。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_XUE_RAN_ZHENG_PAO.flavor": "血染征袍透甲红。"
 }

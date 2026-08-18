@@ -364,5 +364,7 @@
   "GU_ZHEN_REN_CARD_OPTION_HUI_FU_ZHU_MO_BANG.title": "Recovery",
   "GU_ZHEN_REN_CARD_OPTION_HUI_FU_ZHU_MO_BANG.description": "Limit once per battle.\\ndraws up to {Drain:diff()} points HP from each enemy that is [gold]Bloodline Mark[/gold].",
   "GU_ZHEN_REN_CARD_LIAN_TIAN_MO_ZUN.title": "Heaven Refining Demon Venerable",
-  "GU_ZHEN_REN_CARD_LIAN_TIAN_MO_ZUN.description": "The first time each turn you Exhaust a non-Status card with a Path, choose 1 of 3 Gu cards that share a Path with it and add it to your hand.\\nIt costs 0 this turn and gains [gold]Exhaust[/gold] and [gold]Ethereal[/gold]."
+  "GU_ZHEN_REN_CARD_LIAN_TIAN_MO_ZUN.description": "The first time each turn you Exhaust a non-Status card with a Path, choose 1 of 3 Gu cards that share a Path with it and add it to your hand.\\nIt costs 0 this turn and gains [gold]Exhaust[/gold] and [gold]Ethereal[/gold].",
+  "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.title": "Blood-Stained Battle Robe",
+  "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.description": "Lose {HpLoss:diff()} HP.\\nGain Block equal to your missing HP.\\n(Gain {Block:diff()} Block)"
 }

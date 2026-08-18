@@ -236,5 +236,8 @@
   "GU_ZHEN_REN_RELIC_XIAN_TAI_GU.rank_6_effect": "Gain [blue]6[/blue] Max HP.\nAt the start of combat, add 1 [gold]Green Grape Immortal Essence[/gold] to your hand.",
   "GU_ZHEN_REN_RELIC_XIAN_TAI_GU.rank_7_effect": "Gain [blue]7[/blue] Max HP.\nAt the start of combat, add 1 [gold]Red Date Immortal Essence[/gold] to your hand.",
   "GU_ZHEN_REN_RELIC_XIAN_TAI_GU.rank_8_effect": "Gain [blue]8[/blue] Max HP.\nAt the start of combat, add 1 [gold]White Litchi Immortal Essence[/gold] to your hand.",
-  "GU_ZHEN_REN_RELIC_XIAN_TAI_GU.rank_9_effect": "Gain [blue]9[/blue] Max HP.\nAt the start of combat, add 1 [gold]Yellow Apricot Immortal Essence[/gold] to your hand."
+  "GU_ZHEN_REN_RELIC_XIAN_TAI_GU.rank_9_effect": "Gain [blue]9[/blue] Max HP.\nAt the start of combat, add 1 [gold]Yellow Apricot Immortal Essence[/gold] to your hand.",
+  "GU_ZHEN_REN_RELIC_RECIPE_XUE_RAN_ZHENG_PAO.title": "Killer Move - Blood-Stained Battle Robe",
+  "GU_ZHEN_REN_RELIC_RECIPE_XUE_RAN_ZHENG_PAO.description": "Requires: [gold]Blood Curtain Sky Flower Gu+[/gold], any [gold]Blood Path Gu worm[/gold].",
+  "GU_ZHEN_REN_RELIC_RECIPE_XUE_RAN_ZHENG_PAO.flavor": "The battle robe is stained blood-red, soaking through the armor."
 }

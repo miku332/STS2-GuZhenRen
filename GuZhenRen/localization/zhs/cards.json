@@ -364,5 +364,7 @@
     "GU_ZHEN_REN_CARD_OPTION_HUI_FU_ZHU_MO_BANG.title": "恢复",
     "GU_ZHEN_REN_CARD_OPTION_HUI_FU_ZHU_MO_BANG.description": "每场战斗限一次。\\n从每个被[gold]血缘标记[/gold]的敌人汲取最多{Drain:diff()}点生命。",
     "GU_ZHEN_REN_CARD_LIAN_TIAN_MO_ZUN.title": "炼天魔尊",
-    "GU_ZHEN_REN_CARD_LIAN_TIAN_MO_ZUN.description": "每回合第一次消耗一张有流派的非状态牌时，从3张与其拥有相同流派的蛊虫牌中选择1张加入手牌。\\n该牌本回合耗能为0，并获得[gold]消耗[/gold]和[gold]虚无[/gold]。"
+    "GU_ZHEN_REN_CARD_LIAN_TIAN_MO_ZUN.description": "每回合第一次消耗一张有流派的非状态牌时，从3张与其拥有相同流派的蛊虫牌中选择1张加入手牌。\\n该牌本回合耗能为0，并获得[gold]消耗[/gold]和[gold]虚无[/gold]。",
+    "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.title": "血染征袍",
+    "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.description": "失去{HpLoss:diff()}点生命。\\n获得等同于你已损失生命值的格挡。\\n（获得{Block:diff()}点格挡）"
 }
