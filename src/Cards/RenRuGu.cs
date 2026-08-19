@@ -74,6 +74,13 @@ public sealed class RenRuGu : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        if (IsUpgraded)
+        {
+            AddKeyword(CardKeyword.Retain);
+        }
+        else
+        {
+            RemoveKeyword(CardKeyword.Retain);
+        }
     }
 }

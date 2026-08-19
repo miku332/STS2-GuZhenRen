@@ -49,6 +49,13 @@ public sealed class PaiNanGu : GuZhenRenCardTemplate
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        if (IsUpgraded)
+        {
+            AddKeyword(CardKeyword.Innate);
+        }
+        else
+        {
+            RemoveKeyword(CardKeyword.Innate);
+        }
     }
 }
