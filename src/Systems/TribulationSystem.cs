@@ -59,7 +59,7 @@ public static class TribulationSystem
             "DI_ZAI_SHUI_MU_TIAN_HUA_GU",
             "水幕天华蛊",
             TribulationType.Earthly,
-            power => ApplyToRandomEnemy<ShuiMuTianHuaGuPower>(power, 25),
+            ApplyShuiMuTianHuaGu,
             NoEffect),
         new(
             "DI_ZAI_LANG_JING",
@@ -330,10 +330,10 @@ public static class TribulationSystem
 
         var amount = targets.Count switch
         {
-            1 => 24,
-            2 => 16,
-            3 => 12,
-            _ => 10
+            1 => 20,
+            2 => 14,
+            3 => 10,
+            _ => 8
         };
 
         power.FlashEffect();
@@ -346,6 +346,35 @@ public static class TribulationSystem
                 power.Owner,
                 null);
         }
+    }
+
+    private static async Task ApplyShuiMuTianHuaGu(
+        PlayerTribulationPower power)
+    {
+        if (power.Owner.Player is not { } player
+            || power.Owner.CombatState is not { } combatState)
+        {
+            return;
+        }
+
+        var candidates = combatState.Enemies
+            .Where(enemy => enemy.IsAlive
+                && enemy.GetPower<MinionPower>() is null)
+            .ToList();
+        if (candidates.Count == 0)
+        {
+            return;
+        }
+
+        var target = player.RunState.Rng.CombatTargets.NextItem(candidates)!;
+        var amount = target.GetPower<BarricadePower>() is null ? 25 : 20;
+        power.FlashEffect();
+        await PowerCmd.Apply<ShuiMuTianHuaGuPower>(
+            new ThrowingPlayerChoiceContext(),
+            target,
+            amount,
+            power.Owner,
+            null);
     }
 
     private static async Task ApplyGuiGuaYi(PlayerTribulationPower power)

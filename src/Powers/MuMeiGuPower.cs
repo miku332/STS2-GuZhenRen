@@ -51,7 +51,7 @@ public sealed class MuMeiGuPower : ModPowerTemplate
         }
 
         var missingHp = Math.Max(0m, Owner.MaxHp - Owner.CurrentHp);
-        var healing = Math.Ceiling(missingHp * 0.95m);
+        var healing = Math.Ceiling(missingHp * 0.90m);
         if (healing <= 0)
         {
             return;
