@@ -56,9 +56,6 @@ public sealed class NianPower : ModPowerTemplate
 
         if (Amount > 0 && Owner.Player is not null)
         {
-            await RanNianFeiShi.TriggerFromExhaustPile(
-                new ThrowingPlayerChoiceContext(),
-                Owner.Player);
             await ResolveThresholds(
                 new ThrowingPlayerChoiceContext(),
                 applier ?? Owner,
