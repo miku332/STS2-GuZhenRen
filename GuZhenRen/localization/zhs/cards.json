@@ -372,5 +372,7 @@
     "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.title": "血染征袍",
     "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.description": "失去{HpLoss:diff()}点生命。\\n获得等同于你已损失生命值的格挡。\\n（获得{Block:diff()}点格挡）",
     "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.title": "燃念飞石",
-    "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.description": "造成{Damage:diff()}点伤害。\\n给予目标{FenShaoPower:diff()}层[gold]焚烧[/gold]。\\n获得[gold]念[/gold]时，若这张牌在你的消耗堆中，对随机敌人触发此牌效果。"
+    "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.description": "造成{Damage:diff()}点伤害。\\n给予目标{FenShaoPower:diff()}层[gold]焚烧[/gold]。\\n获得[gold]念[/gold]时，若这张牌在你的消耗堆中，对随机敌人触发此牌效果。",
+    "GU_ZHEN_REN_CARD_WEI_LAI_SHEN.title": "未来身",
+    "GU_ZHEN_REN_CARD_WEI_LAI_SHEN.description": "持续{Battles:diff()}场战斗。\\n升级所有牌。\\n每场战斗限一次：右键任意未使用的蛊方遗物，将对应杀招加入手牌。"
 }
