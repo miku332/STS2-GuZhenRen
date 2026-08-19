@@ -25,7 +25,7 @@ public sealed class ZhiHuiGu : AbstractBenMingGuCard
     {
         get
         {
-            if (Rank >= 9)
+            if (Rank >= 8)
             {
                 yield return CardKeyword.Innate;
             }
@@ -60,7 +60,7 @@ public sealed class ZhiHuiGu : AbstractBenMingGuCard
         DynamicVars["ZhiHuiPower"].UpgradeValueBy(
             GetNianAmount(Rank) - DynamicVars["ZhiHuiPower"].BaseValue);
 
-        if (Rank >= 9)
+        if (Rank >= 8)
         {
             AddKeyword(CardKeyword.Innate);
         }
@@ -70,6 +70,5 @@ public sealed class ZhiHuiGu : AbstractBenMingGuCard
         }
     }
 
-    private static int GetNianAmount(int rank) =>
-        Math.Min(rank + 1, 9);
+    private static int GetNianAmount(int rank) => rank + 1;
 }

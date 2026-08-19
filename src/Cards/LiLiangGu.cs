@@ -24,7 +24,7 @@ public sealed class LiLiangGu : AbstractBenMingGuCard
         get
         {
             yield return CardKeyword.Exhaust;
-            if (Rank >= 6)
+            if (Rank >= 8)
             {
                 yield return CardKeyword.Innate;
             }
@@ -78,9 +78,13 @@ public sealed class LiLiangGu : AbstractBenMingGuCard
             "LiLiangGuStrengthDownPower",
             GetTemporaryStrength(Rank));
 
-        if (Rank >= 6)
+        if (Rank >= 8)
         {
             AddKeyword(CardKeyword.Innate);
+        }
+        else
+        {
+            RemoveKeyword(CardKeyword.Innate);
         }
     }
 
