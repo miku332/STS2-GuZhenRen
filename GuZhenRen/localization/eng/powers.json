@@ -186,6 +186,7 @@
   "GU_ZHEN_REN_POWER_TIE_BI_POWER.description": "At the beginning of the enemy's turn, gain {Amount} points and Block.",
   "GU_ZHEN_REN_POWER_SI_QI_JIANG_ZHI_POWER.title": "Death Approaches",
   "GU_ZHEN_REN_POWER_SI_QI_JIANG_ZHI_POWER.description": "After the {Amount} turn, you die.",
+  "GU_ZHEN_REN_POWER_SI_QI_JIANG_ZHI_POWER.vantom_description": "At the end of the turn, gain [blue]10[/blue] [gold]Strength[/gold].",
   "GU_ZHEN_REN_POWER_MU_MEI_GU_POWER.title": "Wood Charm Gu",
   "GU_ZHEN_REN_POWER_MU_MEI_GU_POWER.description": "Max HP halves. At the end of the enemy's turn, 90% of the lost HP value will be restored.",
   "GU_ZHEN_REN_POWER_HONG_LEI_GU_POWER.title": "Thunderclap Gu",
