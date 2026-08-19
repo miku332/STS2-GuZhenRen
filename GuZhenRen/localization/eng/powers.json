@@ -232,5 +232,7 @@
   "GU_ZHEN_REN_POWER_DOU_ZHUAN_POWER.title": "Battle Shift",
   "GU_ZHEN_REN_POWER_DOU_ZHUAN_POWER.description": "At the beginning of the enemy's turn, if the current HP is lower than the lost HP, restore HP to the lost HP.",
   "GU_ZHEN_REN_POWER_LIAN_TIAN_MO_ZUN_POWER.title": "Heaven Refining Demon Venerable",
-  "GU_ZHEN_REN_POWER_LIAN_TIAN_MO_ZUN_POWER.description": "The first time each turn you Exhaust a non-Status card with a Path, choose 1 of 3 ordinary Gu cards sharing a Path. It costs 0 this turn and gains Exhaust and Ethereal."
+  "GU_ZHEN_REN_POWER_LIAN_TIAN_MO_ZUN_POWER.description": "The first time each turn you Exhaust a non-Status card with a Path, choose 1 of 3 ordinary Gu cards sharing a Path. It costs 0 this turn and gains Exhaust and Ethereal.",
+  "GU_ZHEN_REN_POWER_YUN_TOU_ZHUAN_XIANG_POWER.title": "Dizzy",
+  "GU_ZHEN_REN_POWER_YUN_TOU_ZHUAN_XIANG_POWER.description": "At the end of the enemy turn, has a {Amount}% chance to be Stunned next turn. This chance decreases by 20% each turn."
 }

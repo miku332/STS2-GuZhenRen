@@ -374,5 +374,11 @@
   "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.title": "Burning Thought Stone",
   "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.description": "Deal {Damage:diff()} damage.\\nApply {FenShaoPower:diff()} [gold]Burning[/gold].\\nWhenever you gain [gold]Thought[/gold], if this card is in your Exhaust pile, trigger its effect on a random enemy.",
   "GU_ZHEN_REN_CARD_WEI_LAI_SHEN.title": "Future Body",
-  "GU_ZHEN_REN_CARD_WEI_LAI_SHEN.description": "Sustain for {Battles:diff()} combats.\\nUpgrade ALL cards.\\nOnce per combat: Right-click any unused recipe relic to add its Killer Move to your hand."
+  "GU_ZHEN_REN_CARD_WEI_LAI_SHEN.description": "Sustain for {Battles:diff()} combats.\\nUpgrade ALL cards.\\nOnce per combat: Right-click any unused recipe relic to add its Killer Move to your hand.",
+  "GU_ZHEN_REN_CARD_CHI_XIN.title": "Eat Heart",
+  "GU_ZHEN_REN_CARD_CHI_XIN.description": "Kill an enemy whose current HP is lower than your Max HP.\\nWhen it is slain, gain {MaxHpGain:diff()} Max HP.",
+  "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.title": "Chaotic Direction Fog",
+  "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "Stun ALL enemies.\\nApply {Chance:diff()} [gold]Dizzy[/gold] to ALL enemies.\\nExhaust.",
+  "GU_ZHEN_REN_CARD_NIE_PAN_HUO.title": "Nirvana Fire",
+  "GU_ZHEN_REN_CARD_NIE_PAN_HUO.description": "Lose all HP and heal to {HealPercent:diff()}% of your Max HP.\\nApply [gold]Burning[/gold] to ALL enemies equal to the HP lost.\\nExhaust."
 }
