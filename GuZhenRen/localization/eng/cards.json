@@ -380,5 +380,5 @@
   "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.title": "Chaotic Direction Fog",
   "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "Stun ALL enemies.\\nApply {Chance:diff()} [gold]Dizzy[/gold] to ALL enemies.\\nExhaust.",
   "GU_ZHEN_REN_CARD_NIE_PAN_HUO.title": "Nirvana Fire",
-  "GU_ZHEN_REN_CARD_NIE_PAN_HUO.description": "Lose all HP and heal to {HealPercent:diff()}% of your Max HP.\\nApply [gold]Burning[/gold] to ALL enemies equal to the HP lost.\\nExhaust."
+  "GU_ZHEN_REN_CARD_NIE_PAN_HUO.description": "Lose all HP and heal to {HealPercent:diff()}% of your Max HP.\\nApply [gold]Burning[/gold] to ALL enemies equal to the HP lost."
 }
