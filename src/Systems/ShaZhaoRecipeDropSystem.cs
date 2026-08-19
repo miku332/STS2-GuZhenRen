@@ -99,6 +99,7 @@ internal static class ShaZhaoRecipeDropSystem
         ModelDb.Relic<RecipeWuJinXuanGuangQi>(),
         ModelDb.Relic<RecipeWuZhiQuanXinJian>(),
         ModelDb.Relic<RecipeXingXiuQiPan>(),
+        ModelDb.Relic<RecipeYinGuoShenShu>(),
         ModelDb.Relic<RecipeXueJianLeng>(),
         ModelDb.Relic<RecipeXuePiaoLiu>(),
         ModelDb.Relic<RecipeYangMangBeiHuoYi>(),
