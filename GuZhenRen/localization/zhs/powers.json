@@ -187,7 +187,7 @@
     "GU_ZHEN_REN_POWER_SI_QI_JIANG_ZHI_POWER.title": "死期将至",
     "GU_ZHEN_REN_POWER_SI_QI_JIANG_ZHI_POWER.description": "{Amount}回合后，你死亡。",
     "GU_ZHEN_REN_POWER_MU_MEI_GU_POWER.title": "木魅蛊",
-    "GU_ZHEN_REN_POWER_MU_MEI_GU_POWER.description": "最大生命值减半。敌方回合结束时，回复已损失生命值的95%。",
+    "GU_ZHEN_REN_POWER_MU_MEI_GU_POWER.description": "最大生命值减半。敌方回合结束时，回复已损失生命值的90%。",
     "GU_ZHEN_REN_POWER_HONG_LEI_GU_POWER.title": "轰雷蛊",
     "GU_ZHEN_REN_POWER_HONG_LEI_GU_POWER.description": "{Amount}回合后，对你造成25点伤害，然后重新计数。",
     "GU_ZHEN_REN_POWER_XIAO_JIA_ZI_QI_POWER.title": "小家子气",
