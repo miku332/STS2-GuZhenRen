@@ -186,6 +186,7 @@
     "GU_ZHEN_REN_POWER_TIE_BI_POWER.description": "敌方回合开始时，获得{Amount}点格挡。",
     "GU_ZHEN_REN_POWER_SI_QI_JIANG_ZHI_POWER.title": "死期将至",
     "GU_ZHEN_REN_POWER_SI_QI_JIANG_ZHI_POWER.description": "{Amount}回合后，你死亡。",
+    "GU_ZHEN_REN_POWER_SI_QI_JIANG_ZHI_POWER.vantom_description": "回合结束时，获得[blue]10[/blue]点[gold]力量[/gold]。",
     "GU_ZHEN_REN_POWER_MU_MEI_GU_POWER.title": "木魅蛊",
     "GU_ZHEN_REN_POWER_MU_MEI_GU_POWER.description": "最大生命值减半。敌方回合结束时，回复已损失生命值的90%。",
     "GU_ZHEN_REN_POWER_HONG_LEI_GU_POWER.title": "轰雷蛊",
