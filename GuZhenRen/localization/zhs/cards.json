@@ -366,5 +366,7 @@
     "GU_ZHEN_REN_CARD_LIAN_TIAN_MO_ZUN.title": "炼天魔尊",
     "GU_ZHEN_REN_CARD_LIAN_TIAN_MO_ZUN.description": "每回合第一次消耗一张有流派的非状态牌时，从3张与其拥有相同流派的蛊虫牌中选择1张加入手牌。\\n该牌本回合耗能为0，并获得[gold]消耗[/gold]和[gold]虚无[/gold]。",
     "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.title": "血染征袍",
-    "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.description": "失去{HpLoss:diff()}点生命。\\n获得等同于你已损失生命值的格挡。\\n（获得{Block:diff()}点格挡）"
+    "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.description": "失去{HpLoss:diff()}点生命。\\n获得等同于你已损失生命值的格挡。\\n（获得{Block:diff()}点格挡）",
+    "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.title": "燃念飞石",
+    "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.description": "造成{Damage:diff()}点伤害。\\n给予目标{FenShaoPower:diff()}层[gold]焚烧[/gold]。\\n获得[gold]念[/gold]时，若这张牌在你的消耗堆中，对随机敌人触发此牌效果。"
 }

@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using GuZhenRen.Cards;
 using GuZhenRen.Relics;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -55,6 +56,9 @@ public sealed class NianPower : ModPowerTemplate
 
         if (Amount > 0 && Owner.Player is not null)
         {
+            await RanNianFeiShi.TriggerFromExhaustPile(
+                new ThrowingPlayerChoiceContext(),
+                Owner.Player);
             await ResolveThresholds(
                 new ThrowingPlayerChoiceContext(),
                 applier ?? Owner,
@@ -96,6 +100,9 @@ public sealed class NianPower : ModPowerTemplate
             && Owner.Player is not null
             && Owner.GetPower<NianPower>() == this)
         {
+            await RanNianFeiShi.TriggerFromExhaustPile(
+                choiceContext,
+                Owner.Player);
             await XingLuoQiBuPower.TriggerBeforeNianGain(Owner, amount);
             await ResolveThresholds(
                 choiceContext,
