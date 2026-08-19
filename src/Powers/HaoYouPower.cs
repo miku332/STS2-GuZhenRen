@@ -13,7 +13,7 @@ namespace GuZhenRen.Powers;
 [RegisterPower]
 public sealed class HaoYouPower : ModPowerTemplate
 {
-    public override PowerType Type => PowerType.Buff;
+    public override PowerType Type => PowerType.Debuff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
