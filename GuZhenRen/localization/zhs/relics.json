@@ -252,4 +252,13 @@
   ,"GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.title": "杀招-未来身"
   ,"GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.description": "需要蛊虫：[gold]时针+[/gold]、任意[gold]宙道仙蛊[/gold]。"
   ,"GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.flavor": "此招依凭光阴长河，能将蛊仙未来某刻的状态投射到现在。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_CHI_XIN.title": "杀招-吃心"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_CHI_XIN.description": "需要蛊虫：[gold]吃力+[/gold]、任意[gold]律道蛊虫[/gold]。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_CHI_XIN.flavor": "食道杀招，吞心夺命，以敌心化为己身资粮。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_LUAN_FANG_HUN_XIANG_WU.title": "杀招-乱方混向雾"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_LUAN_FANG_HUN_XIANG_WU.description": "需要蛊虫：[gold]摄心蛊+[/gold]、任意[gold]智道仙蛊[/gold]。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_LUAN_FANG_HUN_XIANG_WU.flavor": "智道仙级杀招，能使人方位颠乱，感觉错失。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_NIE_PAN_HUO.title": "杀招-涅槃火"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_NIE_PAN_HUO.description": "需要蛊虫：[gold]御火+[/gold]、任意[gold]炎道[/gold]或[gold]宙道仙蛊[/gold]。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_NIE_PAN_HUO.flavor": "以炎道阐述生死间的奥秘。"
 }

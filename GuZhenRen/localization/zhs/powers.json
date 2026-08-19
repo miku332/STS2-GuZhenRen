@@ -232,5 +232,7 @@
     "GU_ZHEN_REN_POWER_DOU_ZHUAN_POWER.title": "斗转",
     "GU_ZHEN_REN_POWER_DOU_ZHUAN_POWER.description": "敌方回合开始时，若当前生命低于已损失生命，回复生命至已损失生命。",
     "GU_ZHEN_REN_POWER_LIAN_TIAN_MO_ZUN_POWER.title": "炼天魔尊",
-    "GU_ZHEN_REN_POWER_LIAN_TIAN_MO_ZUN_POWER.description": "每回合第一次消耗一张有流派的非状态牌时，从3张共享流派的普通蛊虫中选择1张。该牌本回合耗能为0，并获得消耗和虚无。"
+    "GU_ZHEN_REN_POWER_LIAN_TIAN_MO_ZUN_POWER.description": "每回合第一次消耗一张有流派的非状态牌时，从3张共享流派的普通蛊虫中选择1张。该牌本回合耗能为0，并获得消耗和虚无。",
+    "GU_ZHEN_REN_POWER_YUN_TOU_ZHUAN_XIANG_POWER.title": "晕头转向",
+    "GU_ZHEN_REN_POWER_YUN_TOU_ZHUAN_XIANG_POWER.description": "敌方回合结束时，有{Amount}%概率下回合无法行动。此概率每回合降低20%。"
 }

@@ -251,5 +251,14 @@
   "GU_ZHEN_REN_RELIC_WEI_LAI_SHEN_RELIC.flavor": "Planting red lotuses in the River of Time, going back in time with my tears run dry.",
   "GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.title": "Killer Move - Future Body",
   "GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.description": "Requires: [gold]Time Hand+[/gold], any [gold]Time Path Immortal Gu[/gold].",
-  "GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.flavor": "Relying on the River of Time, this move can project a Gu Immortal's future state into the present."
+  "GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.flavor": "Relying on the River of Time, this move can project a Gu Immortal's future state into the present.",
+  "GU_ZHEN_REN_RELIC_RECIPE_CHI_XIN.title": "Killer Move - Eat Heart",
+  "GU_ZHEN_REN_RELIC_RECIPE_CHI_XIN.description": "Requires: [gold]Eat Strength+[/gold], any [gold]Rule Path Gu worm[/gold].",
+  "GU_ZHEN_REN_RELIC_RECIPE_CHI_XIN.flavor": "A Food Path killer move that devours the heart and turns it into nourishment.",
+  "GU_ZHEN_REN_RELIC_RECIPE_LUAN_FANG_HUN_XIANG_WU.title": "Killer Move - Chaotic Direction Fog",
+  "GU_ZHEN_REN_RELIC_RECIPE_LUAN_FANG_HUN_XIANG_WU.description": "Requires: [gold]Heart-Capturing Gu+[/gold], any [gold]Wisdom Path Immortal Gu[/gold].",
+  "GU_ZHEN_REN_RELIC_RECIPE_LUAN_FANG_HUN_XIANG_WU.flavor": "A Wisdom Path immortal killer move that scrambles direction and sensation.",
+  "GU_ZHEN_REN_RELIC_RECIPE_NIE_PAN_HUO.title": "Killer Move - Nirvana Fire",
+  "GU_ZHEN_REN_RELIC_RECIPE_NIE_PAN_HUO.description": "Requires: [gold]Fire Control+[/gold], any [gold]Fire Path[/gold] or [gold]Time Path Immortal Gu[/gold].",
+  "GU_ZHEN_REN_RELIC_RECIPE_NIE_PAN_HUO.flavor": "Expounding the mysteries between life and death through the Fire Path."
 }

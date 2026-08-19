@@ -374,5 +374,11 @@
     "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.title": "燃念飞石",
     "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.description": "造成{Damage:diff()}点伤害。\\n给予目标{FenShaoPower:diff()}层[gold]焚烧[/gold]。\\n获得[gold]念[/gold]时，若这张牌在你的消耗堆中，对随机敌人触发此牌效果。",
     "GU_ZHEN_REN_CARD_WEI_LAI_SHEN.title": "未来身",
-    "GU_ZHEN_REN_CARD_WEI_LAI_SHEN.description": "持续{Battles:diff()}场战斗。\\n升级所有牌。\\n每场战斗限一次：右键任意未使用的蛊方遗物，将对应杀招加入手牌。"
+    "GU_ZHEN_REN_CARD_WEI_LAI_SHEN.description": "持续{Battles:diff()}场战斗。\\n升级所有牌。\\n每场战斗限一次：右键任意未使用的蛊方遗物，将对应杀招加入手牌。",
+    "GU_ZHEN_REN_CARD_CHI_XIN.title": "吃心",
+    "GU_ZHEN_REN_CARD_CHI_XIN.description": "杀死一名当前生命低于你最大生命的敌人。\\n斩杀时，提升{MaxHpGain:diff()}点最大生命。",
+    "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.title": "乱方混向雾",
+    "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "给予所有敌人[gold]眩晕[/gold]。\\n给予所有敌人{Chance:diff()}层[gold]晕头转向[/gold]。\\n消耗。",
+    "GU_ZHEN_REN_CARD_NIE_PAN_HUO.title": "涅槃火",
+    "GU_ZHEN_REN_CARD_NIE_PAN_HUO.description": "失去所有生命并回复至最大生命值的{HealPercent:diff()}%。\\n给予所有敌人等同于你失去生命值的[gold]焚烧[/gold]。\\n消耗。"
 }
