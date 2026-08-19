@@ -21,7 +21,8 @@ public sealed class SiQiJiangZhiPower : ModPowerTemplate
 
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType =>
+        _isVantom ? PowerStackType.Single : PowerStackType.Counter;
 
     public override bool AllowNegative => true;
 
