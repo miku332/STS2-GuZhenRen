@@ -246,4 +246,10 @@
   ,"GU_ZHEN_REN_RELIC_RECIPE_RAN_NIAN_FEI_SHI.title": "杀招-燃念飞石"
   ,"GU_ZHEN_REN_RELIC_RECIPE_RAN_NIAN_FEI_SHI.description": "需要蛊虫：[gold]金刚念+[/gold]、任意[gold]智道[/gold]或[gold]炎道仙蛊[/gold]。"
   ,"GU_ZHEN_REN_RELIC_RECIPE_RAN_NIAN_FEI_SHI.flavor": "由念头所化的火焰巨石，念火无一丝热浪，却能掀起滔天赤焰。"
+  ,"GU_ZHEN_REN_RELIC_WEI_LAI_SHEN_RELIC.title": "未来身"
+  ,"GU_ZHEN_REN_RELIC_WEI_LAI_SHEN_RELIC.description": "剩余[blue]{Battles}[/blue]场战斗。\\n战斗开始时，升级所有牌。\\n每场战斗限一次：右键任意未使用的蛊方遗物，将对应杀招加入手牌。\\n效果耗尽或右键此遗物时，转为卡牌并返回你的牌组。"
+  ,"GU_ZHEN_REN_RELIC_WEI_LAI_SHEN_RELIC.flavor": "“光阴长河种红莲，韶光重回泪已干。”"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.title": "杀招-未来身"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.description": "需要蛊虫：[gold]时针+[/gold]、任意[gold]宙道仙蛊[/gold]。"
+  ,"GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.flavor": "此招依凭光阴长河，能将蛊仙未来某刻的状态投射到现在。"
 }

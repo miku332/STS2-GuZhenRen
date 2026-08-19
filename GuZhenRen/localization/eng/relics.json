@@ -245,5 +245,11 @@
   "GU_ZHEN_REN_RELIC_RECIPE_XUE_RAN_ZHENG_PAO.flavor": "The battle robe is stained blood-red, soaking through the armor.",
   "GU_ZHEN_REN_RELIC_RECIPE_RAN_NIAN_FEI_SHI.title": "Killer Move - Burning Thought Stone",
   "GU_ZHEN_REN_RELIC_RECIPE_RAN_NIAN_FEI_SHI.description": "Requires: [gold]Vajra Thought+[/gold], any [gold]Wisdom Path[/gold] or [gold]Fire Path Immortal Gu[/gold].",
-  "GU_ZHEN_REN_RELIC_RECIPE_RAN_NIAN_FEI_SHI.flavor": "Giant boulders of flame formed from thoughts; the thought-fire lacks any trace of heat, yet it can raise monstrous red infernos."
+  "GU_ZHEN_REN_RELIC_RECIPE_RAN_NIAN_FEI_SHI.flavor": "Giant boulders of flame formed from thoughts; the thought-fire lacks any trace of heat, yet it can raise monstrous red infernos.",
+  "GU_ZHEN_REN_RELIC_WEI_LAI_SHEN_RELIC.title": "Future Body",
+  "GU_ZHEN_REN_RELIC_WEI_LAI_SHEN_RELIC.description": "[blue]{Battles}[/blue] combats remaining.\\nAt the start of combat, Upgrade ALL cards.\\nOnce per combat: Right-click any unused recipe relic to add its Killer Move to your hand.\\nTransforms back into a card and returns to your deck when depleted or right-clicked.",
+  "GU_ZHEN_REN_RELIC_WEI_LAI_SHEN_RELIC.flavor": "Planting red lotuses in the River of Time, going back in time with my tears run dry.",
+  "GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.title": "Killer Move - Future Body",
+  "GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.description": "Requires: [gold]Time Hand+[/gold], any [gold]Time Path Immortal Gu[/gold].",
+  "GU_ZHEN_REN_RELIC_RECIPE_WEI_LAI_SHEN.flavor": "Relying on the River of Time, this move can project a Gu Immortal's future state into the present."
 }
