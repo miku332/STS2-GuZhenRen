@@ -118,6 +118,9 @@ public static class Entry
         var tezcataraRelicPatcher = RitsuLibFramework.CreatePatcher(ModId, "tezcatara-relic-pool");
         tezcataraRelicPatcher.RegisterPatch<TezcataraRelicPoolPatch>();
         tezcataraRelicPatcher.PatchAll();
+        var yiLuanPatcher = RitsuLibFramework.CreatePatcher(ModId, "yi-luan");
+        yiLuanPatcher.RegisterPatch<YiLuanManualPlayPatch>();
+        yiLuanPatcher.PatchAll();
         var eventAssetPatcher = RitsuLibFramework.CreatePatcher(ModId, "event-assets");
         eventAssetPatcher.RegisterPatch<EventPortraitPreloadPatch>();
         eventAssetPatcher.PatchAll();
