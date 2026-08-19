@@ -308,6 +308,8 @@
     "GU_ZHEN_REN_CARD_YUN_SUAN.selectionScreenPrompt": "选择{Cards}张手牌消耗",
     "GU_ZHEN_REN_CARD_E_YUN.title": "厄运",
     "GU_ZHEN_REN_CARD_E_YUN.description": "抽到此牌时，本场战斗所有[gold]概率[/gold]牌的概率降低10%。\\n在{CombatsRemaining:diff()}场战斗后从牌组中移除。",
+    "GU_ZHEN_REN_CARD_YI_LUAN.title": "易乱",
+    "GU_ZHEN_REN_CARD_YI_LUAN.description": "不能被打出。\\n在手牌中时，打出[gold]杀招[/gold]有{FailureChance:diff()}%[gold]概率[/gold]失败并失去{HpLoss:diff()}点生命。\\n虚无。",
     "GU_ZHEN_REN_CARD_CHI_LI.title": "吃力",
     "GU_ZHEN_REN_CARD_CHI_LI.description": "造成{Damage:diff()}点伤害。\\n每斩杀2名非爪牙敌人，永久获得1点[gold]力量[/gold]。",
     "GU_ZHEN_REN_CARD_HUA_SHI_GU.title": "化石蛊",
