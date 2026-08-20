@@ -38,6 +38,7 @@ public sealed class LongGong : ModMonsterTemplate
     private bool _summonedYouLong;
     private bool _threeQiPreparation;
     private bool _phaseTransitionPending;
+    private bool _phaseTransitionDialoguePlayed;
     private bool _secondPhase;
     private bool _skipLongYuThisTurn;
 
@@ -488,7 +489,12 @@ public sealed class LongGong : ModMonsterTemplate
         await CreatureCmd.Heal(Creature, 1, playAnim: false);
         _skipLongYuThisTurn = true;
         SetMoveById("SAN_QI_GUI_LAI");
-        await PlayPhaseTransitionDialogue();
+
+        if (!_phaseTransitionDialoguePlayed)
+        {
+            _phaseTransitionDialoguePlayed = true;
+            _ = TaskHelper.RunSafely(PlayPhaseTransitionDialogue());
+        }
     }
 
     public override async Task AfterDeath(

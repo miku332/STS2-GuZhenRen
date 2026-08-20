@@ -1,5 +1,35 @@
 # 更新日志 / Changelog
 
+## 0.5.1
+
+### 中文
+
+#### 修复
+
+- 恢复悔蛊的原版效果：从消耗堆选择另一张悔蛊时，现在会生成一张遗憾。
+- 修复龙公阶段转换对话阻塞战斗流程，以及转换条件重复判定时可能重复播放的问题。
+- 修正“上房揭瓦”“骨道道痕”和“意乱”的简体中文名称。
+
+#### 兼容性
+
+- 支持《杀戮尖塔2》正式版 `v0.107.1`。
+- 需要 RitsuLib `0.5.12`。
+- 测试版 `v0.111.0` 请使用 `v0.5.1-beta.1`。
+
+### English
+
+#### Fixes
+
+- Restored the original Regret Gu behavior: selecting another Regret Gu from the exhaust pile now generates a Regret.
+- Fixed Duke Long's phase-transition dialogue blocking combat flow or replaying when the transition condition was evaluated more than once.
+- Corrected the Simplified Chinese names of Break the Roof, Bone Path Dao Mark, and Distracted Mind.
+
+#### Compatibility
+
+- Supports the stable `v0.107.1` build of Slay the Spire 2.
+- Requires RitsuLib `0.5.12`.
+- For public beta `v0.111.0`, use `v0.5.1-beta.1`.
+
 ## 0.5.0
 
 ### 中文
