@@ -1,5 +1,11 @@
 # 更新日志 / Changelog
 
+## 0.5.1-beta.1
+
+本测试版包含 `v0.5.1` 的全部修复，并适配《杀戮尖塔2》测试版 `v0.111.0`：恢复悔蛊选择另一张悔蛊时生成遗憾的原版效果；修复龙公阶段转换对话阻塞或重复播放的问题；修正“上房揭瓦”“骨道道痕”和“意乱”的简体中文名称。
+
+This beta release contains all `v0.5.1` fixes and targets the public beta `v0.111.0` of Slay the Spire 2: restored Regret Gu generating a Regret when another Regret Gu is selected; fixed Duke Long's phase-transition dialogue blocking or replaying; and corrected the Simplified Chinese names of Break the Roof, Bone Path Dao Mark, and Distracted Mind.
+
 ## 0.5.0-beta.1
 
 本测试版包含 `v0.5.0` 的全部内容，并适配《杀戮尖塔2》测试版 `v0.111.0`。完整中英文更新内容与正式版 `v0.5.0` 相同。
