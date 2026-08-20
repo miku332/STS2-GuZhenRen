@@ -8,5 +8,10 @@
   "GU_ZHEN_REN_CHARACTER_FANG_YUAN_CHARACTER.pronounObject": "他",
   "GU_ZHEN_REN_CHARACTER_FANG_YUAN_CHARACTER.pronounPossessive": "他的",
   "GU_ZHEN_REN_CHARACTER_FANG_YUAN_CHARACTER.pronounSubject": "他",
-  "GU_ZHEN_REN_CHARACTER_FANG_YUAN_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁这个角色。"
+  "GU_ZHEN_REN_CHARACTER_FANG_YUAN_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁这个角色。",
+  "GU_ZHEN_REN_LONG_GONG_ACT4.kicker": "终幕挑战",
+  "GU_ZHEN_REN_LONG_GONG_ACT4.title": "第四幕：天庭",
+  "GU_ZHEN_REN_LONG_GONG_ACT4.description": "第三幕胜利后进入天庭，挑战龙公。",
+  "GU_ZHEN_REN_LONG_GONG_ACT4.enabled": "已开启",
+  "GU_ZHEN_REN_LONG_GONG_ACT4.disabled": "已关闭"
 }

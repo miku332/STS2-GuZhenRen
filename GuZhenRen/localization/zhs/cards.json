@@ -309,7 +309,7 @@
     "GU_ZHEN_REN_CARD_E_YUN.title": "厄运",
     "GU_ZHEN_REN_CARD_E_YUN.description": "抽到此牌时，本场战斗所有[gold]概率[/gold]牌的概率降低10%。\\n在{CombatsRemaining:diff()}场战斗后从牌组中移除。",
     "GU_ZHEN_REN_CARD_YI_LUAN.title": "易乱",
-    "GU_ZHEN_REN_CARD_YI_LUAN.description": "不能被打出。\\n在手牌中时，打出[gold]杀招[/gold]有{FailureChance:diff()}%[gold]概率[/gold]失败并失去{HpLoss:diff()}点生命。\\n虚无。",
+    "GU_ZHEN_REN_CARD_YI_LUAN.description": "在手牌中时，打出[gold]杀招[/gold]有{FailureChance:diff()}%[gold]概率[/gold]失败并失去{HpLoss:diff()}点生命。",
     "GU_ZHEN_REN_CARD_CHI_LI.title": "吃力",
     "GU_ZHEN_REN_CARD_CHI_LI.description": "造成{Damage:diff()}点伤害。\\n每斩杀2名非爪牙敌人，永久获得1点[gold]力量[/gold]。",
     "GU_ZHEN_REN_CARD_HUA_SHI_GU.title": "化石蛊",
@@ -372,7 +372,7 @@
     "GU_ZHEN_REN_CARD_LIAN_TIAN_MO_ZUN.title": "炼天魔尊",
     "GU_ZHEN_REN_CARD_LIAN_TIAN_MO_ZUN.description": "每回合第一次消耗一张有流派的非状态牌时，从3张与其拥有相同流派的蛊虫牌中选择1张加入手牌。\\n该牌本回合耗能为0，并获得[gold]消耗[/gold]和[gold]虚无[/gold]。",
     "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.title": "血染征袍",
-    "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.description": "失去{HpLoss:diff()}点生命。\\n获得等同于你已损失生命值的格挡。\\n（获得{Block:diff()}点格挡）",
+    "GU_ZHEN_REN_CARD_XUE_RAN_ZHENG_PAO.description": "失去{HpLoss:diff()}点生命。\\n获得等同于你已损失生命值的格挡。",
     "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.title": "燃念飞石",
     "GU_ZHEN_REN_CARD_RAN_NIAN_FEI_SHI.description": "造成{Damage:diff()}点伤害。\\n给予目标{FenShaoPower:diff()}层[gold]焚烧[/gold]。\\n获得[gold]念[/gold]时，若这张牌在你的消耗堆中，对随机敌人触发此牌效果。",
     "GU_ZHEN_REN_CARD_WEI_LAI_SHEN.title": "未来身",
@@ -380,7 +380,7 @@
     "GU_ZHEN_REN_CARD_CHI_XIN.title": "吃心",
     "GU_ZHEN_REN_CARD_CHI_XIN.description": "杀死一名当前生命低于你最大生命的敌人。\\n斩杀时，提升{MaxHpGain:diff()}点最大生命。",
     "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.title": "乱方混向雾",
-    "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "给予所有敌人[gold]眩晕[/gold]。\\n给予所有敌人{Chance:diff()}层[gold]晕头转向[/gold]。\\n消耗。",
+    "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "给予所有敌人[gold]眩晕[/gold]。\\n给予所有敌人{Chance:diff()}层[gold]晕头转向[/gold]。",
     "GU_ZHEN_REN_CARD_NIE_PAN_HUO.title": "涅槃火",
     "GU_ZHEN_REN_CARD_NIE_PAN_HUO.description": "失去所有生命并回复至最大生命值的{HealPercent:diff()}%。\\n给予所有敌人等同于你失去生命值的[gold]焚烧[/gold]。"
 }

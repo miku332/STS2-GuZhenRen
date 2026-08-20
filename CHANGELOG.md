@@ -1,5 +1,101 @@
 # 更新日志 / Changelog
 
+## 0.5.0
+
+### 中文
+
+#### 调整
+
+- 力量蛊：六转获得固有 -> 八转获得固有。
+- 智慧蛊：九转获得固有 -> 八转获得固有。
+- 地灾·魂爆蛊：1/2/3/4+名敌人时，24/16/12/10层 -> 20/14/10/8层。
+- 地灾·水幕天华蛊：对拥有壁垒的敌人，25层 -> 20层。
+- 天劫·死期将至：墨影幻灵获得后，改为回合结束时获得10点力量。
+- 天劫·木魅蛊：生命回复比例95% -> 90%。
+- “好友”现在视为负面状态。
+
+#### 新增7张杀招
+
+- 未来身：宙道，3费，持续3场战斗，升级所有牌；每场战斗限一次，可通过未使用的杀招蛊方加入对应杀招。
+- 燃念飞石：智道，0费，造成4点伤害并给予4层焚烧；获得念时可从消耗堆触发。
+- 涅槃火：炎道，2费，失去所有生命并回复至最大生命值的25%，给予等同于所失生命值的焚烧，消耗。
+- 血染征袍：血道，0费，失去1点生命，获得等同于已损失生命值的格挡。
+- 吃心：食道，2费，斩杀当前生命低于玩家最大生命值的敌人，斩杀时提升2点最大生命值。
+- 乱方混向雾：智道，2费，击晕所有敌人；敌人无法行动的初始概率为50%，每回合降低20%，消耗。
+- 因果神树：木道，3费，抵消未被格挡的伤害或负面状态并存入果，加入来因去果。
+
+#### 其他新增
+
+- 新增来因去果：木道，2费，将所有果随机转移给敌人。
+- 新增意乱：不可打出、虚无；在手牌中时，打出杀招有50%概率失败并失去6点生命。
+- 新增未来身衍生遗物：持续3场战斗，战斗开始时升级所有牌，并可通过杀招蛊方获得对应杀招。
+- 新增7张杀招对应的蛊方遗物，独立显示在遗物栏第二行。
+- 新增因果神树的果机制：储存未被格挡的伤害和负面状态，2回合后生效，并可转移给敌人。
+
+#### 第四幕：天庭
+
+- 新增方源专属第四幕“天庭”，路线为：火堆 -> 商店 -> 最终战。
+- 选人界面新增第四幕开关，默认开启，仅在方源单人模式显示。
+- 开关支持自由拖动、保存位置，并在分辨率变化后保持在屏幕范围内。
+
+#### 最终BOSS：龙公
+
+- 新增龙公最终战，初始敌人为气墙与龙公。
+- 气墙：250生命值；气护会将龙公受到的伤害与负面状态转移至自身；回复意图回复30点生命。
+- 龙公：800生命值；龙驭上宾40层，回合结束时失去40点最大生命并获得4点力量；九龙纹护身9层，每层降低10%伤害，受伤后减少1层。
+- 第一阶段：乱龙拳造成4x3段伤害并每段加入意乱；气呼山造成32点伤害；龙爪击造成8点伤害并给予2层脆弱；第三回合召唤气劲。
+- 气墙存活时召唤自转游龙气墙；气墙被击败时召唤紫金龙形气劲。
+- 人气溃散、地气溃散、天气溃散分别造成少抽1张牌、失去1点能量、失去6点生命。
+- 三种气溃散合并为仙窍崩溃，持续5回合；期间每回合少抽2张牌、失去2点能量和10点生命，结束后本命蛊毁灭。
+- 第一阶段生命归零时触发三气归来：生命上限重置为800，回复全部生命，清除负面状态，龙驭上宾提升至200层，九龙纹护身恢复至9层，进入第二阶段。
+- 第二阶段依次使用气盖山河、回旋龙牙、撼世龙锤、一气大手爆，数值分别为10点伤害并施加10层易伤/虚弱/脆弱、1x2点伤害并恢复4层护身、5点伤害、40点伤害。
+- 第二阶段持续4回合，结束后龙公生命上限归零并死亡。
+- 自转游龙气墙：500最大生命值，继承气墙剩余生命值+100；游龙3层，每打出1张牌回复3点生命；罡气100层，本回合最多失去100点生命；回复40点生命，强化回复20点生命并获得1层游龙。
+- 紫金龙形气劲：125生命值；潜龙气爆造成6x2段伤害；龙气获得2点力量并给予龙公4层九龙纹护身。
+
+#### 修复
+
+- 修复血狂蛊左右两侧存在不能被打出的牌时，可能导致卡牌悬浮在空中且无法继续操作的问题。
+
+### English
+
+#### Changes
+
+- Strength Gu: Innate rank 6 -> rank 8.
+- Wisdom Gu: Innate rank 9 -> rank 8.
+- Soul Explosion Gu: 24/16/12/10 stacks -> 20/14/10/8 stacks for 1/2/3/4+ enemies.
+- Water Curtain Heaven Gu: 25 -> 20 stacks against enemies with Barrier.
+- Death Approaches: when applied to Vantom, it now grants 10 Strength at the end of the turn.
+- Wood Charm Gu: healing ratio 95% -> 90%.
+- Friend is now treated as a debuff.
+
+#### Added 7 Killer Moves
+
+- Future Body, Burning Thought Flying Stone, Nirvana Fire, Blood-Stained Battle Robe, Eat Heart, Chaotic Directional Fog, and Causal Divine Tree.
+- Added Cause and Effect, Distracted Mind, the Future Body relic, all related recipes, and the Causal Divine Tree Fruit system.
+- Killer Move recipe relics now use a dedicated second relic row.
+
+#### Act 4: Heavenly Court
+
+- Added Fang Yuan’s exclusive Act 4 with the route Rest Site -> Shop -> Final Battle.
+- Added a default-enabled Act 4 toggle for Fang Yuan in single-player character selection.
+- The toggle can be dragged, remembers its position, and remains within the screen after resolution changes.
+
+#### New Final Boss: Long Gong
+
+- Added the Long Gong final encounter with Qi Wall and Long Gong.
+- Qi Wall has 250 HP, redirects Long Gong’s damage and debuffs through Qi Protection, and heals for 30 HP.
+- Long Gong has 800 HP, Dragon Guest 40, and Nine Dragon Pattern Protection 9. Dragon Guest removes 40 Max HP and grants 4 Strength at turn end; each protection stack reduces damage by 10% and is removed when damaged.
+- Phase One includes Wild Dragon Fist (4x3 damage and one Distracted Mind per hit), Qi Roars at the Mountain (32 damage), Dragon Claw Strike (8 damage and 2 Frail), and Summon.
+- Human, Earth, and Heaven Qi Dissipation reduce draw by 1, remove 1 Energy, and remove 6 HP at turn start. Together they become Aperture Collapse for 5 turns, causing -2 draw, -2 Energy, and -10 HP; the Ben Ming Gu is destroyed when it expires.
+- At zero HP, Three Qi Return restores 800 HP, clears debuffs, raises Dragon Guest to 200, restores protection to 9, and starts Phase Two.
+- Phase Two lasts 4 turns and uses attacks with values 10, 1x2, 5, and 40; Long Gong dies when the phase ends.
+- Added Rotating Wandering Dragon Qi Wall with 500 Max HP, Wandering Dragon 3, and Gang Qi 100, plus Purple-Gold Dragon Qi with 125 HP and a 6x2 attack.
+
+#### Fix
+
+- Fixed Bloodcraze Gu becoming stuck when unplayable cards were present on either side of it.
+
 ## 0.4.11
 
 ### 中文
