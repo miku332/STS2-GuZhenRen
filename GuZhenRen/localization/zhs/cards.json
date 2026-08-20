@@ -196,7 +196,7 @@
     "GU_ZHEN_REN_CARD_HENG_CHONG_ZHI_ZHUANG_GU.description":  "造成{Damage:diff()}点伤害{Hits:diff()}次。\n每有一段伤害被完全格挡，受到{SelfDamage:diff()}点伤害。",
     "GU_ZHEN_REN_CARD_WAN_WO.title":  "万我",
     "GU_ZHEN_REN_CARD_WAN_WO.description":  "将X张升级后的[gold]我力虚影[/gold]加入手牌，并立即触发这些牌。",
-    "GU_ZHEN_REN_CARD_SHANG_FANG_JIE_WA.title":  "上方揭瓦",
+    "GU_ZHEN_REN_CARD_SHANG_FANG_JIE_WA.title":  "上房揭瓦",
     "GU_ZHEN_REN_CARD_SHANG_FANG_JIE_WA.description":  "移除目标所有格挡和防御类能力。\n造成{CalculatedDamage:diff()}点伤害。\n[gold]力量[/gold]在此牌上发挥{StrengthMultiplier:diff()}倍效果。",
     "GU_ZHEN_REN_CARD_TU_QIANG_GU.title":  "土墙蛊",
     "GU_ZHEN_REN_CARD_TU_QIANG_GU.description":  "获得{Block:diff()}点格挡。\n获得{JiTuPower:diff()}层[gold]积土[/gold]。",
