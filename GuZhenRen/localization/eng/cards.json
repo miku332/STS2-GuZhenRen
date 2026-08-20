@@ -309,7 +309,7 @@
   "GU_ZHEN_REN_CARD_E_YUN.title": "Misfortune",
   "GU_ZHEN_REN_CARD_E_YUN.description": "When this card is drawn, the Chance of all [gold]Chance[/gold] cards in this battle will be reduced by 10%.\\nwas removed from deck after {CombatsRemaining:diff()} battles.",
   "GU_ZHEN_REN_CARD_YI_LUAN.title": "Distraction",
-  "GU_ZHEN_REN_CARD_YI_LUAN.description": "Unplayable.\\nWhile in hand, playing a [gold]Killer Move[/gold] has a {FailureChance:diff()}% [gold]Chance[/gold] to fail and lose {HpLoss:diff()} HP.\\nEthereal.",
+  "GU_ZHEN_REN_CARD_YI_LUAN.description": "While in hand, playing a [gold]Killer Move[/gold] has a {FailureChance:diff()}% [gold]Chance[/gold] to fail and lose {HpLoss:diff()} HP.",
   "GU_ZHEN_REN_CARD_CHI_LI.title": "Eat Strength",
   "GU_ZHEN_REN_CARD_CHI_LI.description": "Deal {Damage:diff()} damage.\\nFor every 2 non-Minion enemies slain, permanently gain 1 [gold]Strength[/gold].",
   "GU_ZHEN_REN_CARD_HUA_SHI_GU.title": "Fossil Gu",
@@ -380,7 +380,7 @@
   "GU_ZHEN_REN_CARD_CHI_XIN.title": "Eat Heart",
   "GU_ZHEN_REN_CARD_CHI_XIN.description": "Kill an enemy whose current HP is lower than your Max HP.\\nWhen it is slain, gain {MaxHpGain:diff()} Max HP.",
   "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.title": "Chaotic Direction Fog",
-  "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "Stun ALL enemies.\\nApply {Chance:diff()} [gold]Dizzy[/gold] to ALL enemies.\\nExhaust.",
+  "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "Stun ALL enemies.\\nApply {Chance:diff()} [gold]Dizzy[/gold] to ALL enemies.",
   "GU_ZHEN_REN_CARD_NIE_PAN_HUO.title": "Nirvana Fire",
   "GU_ZHEN_REN_CARD_NIE_PAN_HUO.description": "Lose all HP and heal to {HealPercent:diff()}% of your Max HP.\\nApply [gold]Burning[/gold] to ALL enemies equal to the HP lost."
 }

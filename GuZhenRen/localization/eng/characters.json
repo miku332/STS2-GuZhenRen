@@ -8,5 +8,10 @@
   "GU_ZHEN_REN_CHARACTER_FANG_YUAN_CHARACTER.pronounObject": "him",
   "GU_ZHEN_REN_CHARACTER_FANG_YUAN_CHARACTER.pronounPossessive": "his",
   "GU_ZHEN_REN_CHARACTER_FANG_YUAN_CHARACTER.pronounSubject": "he",
-  "GU_ZHEN_REN_CHARACTER_FANG_YUAN_CHARACTER.unlockText": "Play a run with [pink]{Prerequisite}[/pink] to unlock this character."
+  "GU_ZHEN_REN_CHARACTER_FANG_YUAN_CHARACTER.unlockText": "Play a run with [pink]{Prerequisite}[/pink] to unlock this character.",
+  "GU_ZHEN_REN_LONG_GONG_ACT4.kicker": "FINAL ACT CHALLENGE",
+  "GU_ZHEN_REN_LONG_GONG_ACT4.title": "Act IV: Heavenly Court",
+  "GU_ZHEN_REN_LONG_GONG_ACT4.description": "Enter Heavenly Court after Act III and challenge Long Gong.",
+  "GU_ZHEN_REN_LONG_GONG_ACT4.enabled": "Enabled",
+  "GU_ZHEN_REN_LONG_GONG_ACT4.disabled": "Disabled"
 }

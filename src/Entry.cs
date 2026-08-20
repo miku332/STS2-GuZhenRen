@@ -1,4 +1,5 @@
 using System.Reflection;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -21,7 +22,7 @@ namespace GuZhenRen;
 public static class Entry
 {
     public const string ModId = "GuZhenRen";
-    public const string Version = "0.4.11-beta.1";
+    public const string Version = "0.5.0-beta.1";
 
     public static readonly Logger Logger = RitsuLibFramework.CreateLogger(ModId);
 
@@ -34,6 +35,7 @@ public static class Entry
 
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        new Harmony(ModId + ".act4").PatchAll(assembly);
         _updateCheckRegistration ??= ModUpdateSystem.Register(assembly);
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<XiaoGuangGu, TaiChuGuangGu>(ModId);
         var tunHuoPatcher = RitsuLibFramework.CreatePatcher(ModId, "tun-huo");
@@ -99,6 +101,12 @@ public static class Entry
             "monster-compatibility");
         monsterCompatibilityPatcher.RegisterPatch<CeremonialBeastStunPatch>();
         monsterCompatibilityPatcher.PatchAll();
+        var qiHuPatcher = RitsuLibFramework.CreatePatcher(ModId, "qi-hu");
+        qiHuPatcher.RegisterPatch<QiHuDamagePatch>();
+        qiHuPatcher.RegisterPatch<QiHuPowerApplyPatch>();
+        qiHuPatcher.RegisterPatch<QiHuPowerModifyPatch>();
+        qiHuPatcher.RegisterPatch<QiHuKillPatch>();
+        qiHuPatcher.PatchAll();
         var potionPatcher = RitsuLibFramework.CreatePatcher(ModId, "potion-state");
         potionPatcher.RegisterPatch<FuRenXinPotionRemovalPatch>();
         potionPatcher.PatchAll();

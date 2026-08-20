@@ -34,9 +34,9 @@ public sealed class YiLuan : GuZhenRenCardTemplate, IProbabilityCard
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        GuZhenRenKeywords.GaiLv,
         CardKeyword.Unplayable,
-        CardKeyword.Ethereal
+        CardKeyword.Ethereal,
+        GuZhenRenKeywords.GaiLv
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -46,6 +46,10 @@ public sealed class YiLuan : GuZhenRenCardTemplate, IProbabilityCard
     ];
 
     public override bool CanBeGeneratedByModifiers => false;
+
+    public override bool CanBeGeneratedInCombat => false;
+
+    protected override bool IsPlayable => false;
 
     public YiLuan()
         : base(-2, CardType.Status, CardRarity.Token, TargetType.None, false)

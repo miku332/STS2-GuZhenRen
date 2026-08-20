@@ -1,5 +1,11 @@
 # 更新日志 / Changelog
 
+## 0.5.0-beta.1
+
+本测试版包含 `v0.5.0` 的全部内容，并适配《杀戮尖塔2》测试版 `v0.111.0`。完整中英文更新内容与正式版 `v0.5.0` 相同。
+
+This beta release contains all `v0.5.0` content and targets the public beta `v0.111.0` of Slay the Spire 2. The full Chinese and English changelog is the same as the stable `v0.5.0` release.
+
 ## 0.4.11-beta.1
 
 ### 中文

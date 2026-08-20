@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Models.Capabilities;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -24,7 +26,6 @@ public sealed class LuanFangHunXiangWu : AbstractShaZhaoCard, IProbabilityCard
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        CardKeyword.Exhaust,
         GuZhenRenKeywords.GaiLv
     ];
 
@@ -67,7 +68,6 @@ public sealed class LuanFangHunXiangWu : AbstractShaZhaoCard, IProbabilityCard
             }
         }
     }
-
     public void IncreaseBaseChance(decimal percentagePoints)
     {
         var chance = DynamicVars["Chance"];
@@ -76,4 +76,13 @@ public sealed class LuanFangHunXiangWu : AbstractShaZhaoCard, IProbabilityCard
             0m,
             100m);
     }
+}
+
+[RegisterModelCapability]
+[RegisterDefaultModelCapability(typeof(LuanFangHunXiangWu))]
+public sealed class LuanFangHunXiangWuPlayResultCapability
+    : CardCapability, ICardPlayResultContributor
+{
+    public PileType? GetResultPileTypeForCardPlay(CardModel card) =>
+        PileType.Exhaust;
 }

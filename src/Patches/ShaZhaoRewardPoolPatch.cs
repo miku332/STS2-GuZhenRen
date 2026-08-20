@@ -28,10 +28,14 @@ public sealed class ShaZhaoRewardPoolPatch : IPatchMethod
     public static void Postfix(Player player, ref IEnumerable<CardModel> __result)
     {
         __result = __result.Where(
-            card => card is not AbstractShaZhaoCard
-                && card is not ChengGongGu
+            card => !IsExcludedFromOrdinaryPools(card)
                 && !IsOwnedUniqueImmortalGu(player, card));
     }
+
+    internal static bool IsExcludedFromOrdinaryPools(CardModel card) =>
+        card is AbstractShaZhaoCard
+            or ChengGongGu
+            or YiLuan;
 
     internal static bool IsOwnedUniqueImmortalGu(Player player, CardModel card) =>
         BenMingGuUniquenessPatch.IsUniqueImmortalGu(card)
@@ -71,8 +75,7 @@ public sealed class ShaZhaoMerchantPoolPatch : IPatchMethod
     public static void Prefix(Player player, ref IEnumerable<CardModel> options)
     {
         options = options.Where(
-            card => card is not AbstractShaZhaoCard
-                && card is not ChengGongGu
+            card => !ShaZhaoRewardPoolPatch.IsExcludedFromOrdinaryPools(card)
                 && !ShaZhaoRewardPoolPatch.IsOwnedUniqueImmortalGu(player, card));
     }
 }
@@ -157,6 +160,7 @@ public sealed class XianGuCardRewardResultPatch : IPatchMethod
                 .GetPossibleCards(player)
                 .Where(card => card.Rarity == rarity
                     && !rewardIds.Contains(card.Id))
+                .Where(card => !ShaZhaoRewardPoolPatch.IsExcludedFromOrdinaryPools(card))
                 .Where(card => IsValidUpgradedReplacement(player, card))
                 .ToList();
             if (candidates.Count == 0)
