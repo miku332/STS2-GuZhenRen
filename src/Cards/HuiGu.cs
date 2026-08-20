@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -66,6 +67,22 @@ public sealed class HuiGu : GuZhenRenCardTemplate
         foreach (var card in selected)
         {
             card.SetToFreeThisTurn();
+        }
+
+        if (CombatState is not null)
+        {
+            var regrets = selected
+                .Where(card => card is HuiGu)
+                .Select(_ => CombatState.CreateCard(ModelDb.Card<Regret>(), Owner))
+                .ToList();
+            foreach (var regret in regrets)
+            {
+                await CardPileCmd.AddGeneratedCardToCombat(
+                    regret,
+                    PileType.Hand,
+                    Owner,
+                    CardPilePosition.Bottom);
+            }
         }
 
         await CardPileCmd.Add(
