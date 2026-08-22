@@ -1,5 +1,11 @@
 # 更新日志 / Changelog
 
+## 0.5.2-beta.1
+
+本测试版包含 `v0.5.2` 的全部修复，并适配《杀戮尖塔2》测试版 `v0.111.0`：修复爱情蛊抽到时可能不触发的问题；修复鸿运齐天蛊、运算蛊、转运等概率修正会错误提高“意乱”失败概率的问题，现在这些概率修正仅对“意乱”反向生效。
+
+This beta release contains all `v0.5.2` fixes and targets the public beta `v0.111.0` of Slay the Spire 2: fixed Love Gu sometimes failing to trigger when drawn; fixed probability modifiers such as Heaven-Defying Luck Gu, Calculation Gu, and Luck Conversion incorrectly increasing Distracted Mind's failure chance, so these modifiers now apply in reverse only for Distracted Mind.
+
 ## 0.5.1-beta.1
 
 本测试版包含 `v0.5.1` 的全部修复，并适配《杀戮尖塔2》测试版 `v0.111.0`：恢复悔蛊选择另一张悔蛊时生成遗憾的原版效果；修复龙公阶段转换对话阻塞或重复播放的问题；修正“上房揭瓦”“骨道道痕”和“意乱”的简体中文名称。

@@ -46,14 +46,18 @@ public static class ProbabilitySystem
         }
 
         var chance = baseChance;
+        var modifierSign = card is IProbabilityCard probabilityCard
+            && probabilityCard.InvertProbabilityModifiers
+            ? -1m
+            : 1m;
         if (card.Owner.GetRelic<HongYunQiTianGu>() is not null)
         {
-            chance += HongYunQiTianBonus;
+            chance += modifierSign * HongYunQiTianBonus;
         }
 
         if (card.Owner.Creature.GetPower<YunDaoDaoHenPower>() is { } yunDao)
         {
-            chance += yunDao.ProbabilityBonus;
+            chance += modifierSign * yunDao.ProbabilityBonus;
         }
 
         return Math.Clamp(chance, 0m, 100m);

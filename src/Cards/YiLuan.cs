@@ -25,6 +25,8 @@ public sealed class YiLuan : GuZhenRenCardTemplate, IProbabilityCard
     private const decimal InitialFailureChance = 50m;
     private const int HpLoss = 6;
 
+    public bool InvertProbabilityModifiers => true;
+
     public override int Rank => 0;
 
     public override CardAssetProfile AssetProfile => new(
@@ -141,8 +143,9 @@ public sealed class YiLuan : GuZhenRenCardTemplate, IProbabilityCard
     public void IncreaseBaseChance(decimal percentagePoints)
     {
         var chance = DynamicVars["FailureChance"];
+        var modifierSign = InvertProbabilityModifiers ? -1m : 1m;
         chance.BaseValue = Math.Clamp(
-            chance.BaseValue + percentagePoints,
+            chance.BaseValue + modifierSign * percentagePoints,
             0m,
             100m);
     }

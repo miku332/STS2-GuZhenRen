@@ -76,7 +76,18 @@ public sealed class AiQingGu : GuZhenRenCardTemplate
     {
         try
         {
-            if (Owner.Creature.IsDead || Pile?.Type != PileType.Hand)
+            for (var i = 0; i < 20
+                 && !Owner.Creature.IsDead
+                 && CombatState is not null
+                 && Pile?.Type != PileType.Hand;
+                 i++)
+            {
+                await Cmd.Wait(0.05f, ignoreCombatEnd: true);
+            }
+
+            if (Owner.Creature.IsDead
+                || CombatState is null
+                || Pile?.Type != PileType.Hand)
             {
                 return;
             }
