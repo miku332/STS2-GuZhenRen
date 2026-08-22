@@ -1,5 +1,33 @@
 # 更新日志 / Changelog
 
+## 0.5.2
+
+### 中文
+
+#### 修复
+
+- 修复爱情蛊抽到时，可能因为进手牌时序问题导致效果不触发的问题。
+- 修复鸿运齐天蛊、运算蛊、转运等概率修正会错误提高“意乱”失败概率的问题；现在这些概率修正仅对“意乱”反向生效。
+
+#### 兼容性
+
+- 支持《杀戮尖塔2》正式版 `v0.107.1`。
+- 需要 RitsuLib `0.5.12`。
+- 测试版 `v0.111.0` 请使用 `v0.5.2-beta.1`。
+
+### English
+
+#### Fixes
+
+- Fixed Love Gu sometimes failing to trigger when drawn due to hand-entry timing.
+- Fixed probability modifiers such as Heaven-Defying Luck Gu, Calculation Gu, and Luck Conversion incorrectly increasing Distracted Mind's failure chance; these modifiers now apply in reverse only for Distracted Mind.
+
+#### Compatibility
+
+- Supports the stable `v0.107.1` build of Slay the Spire 2.
+- Requires RitsuLib `0.5.12`.
+- For public beta `v0.111.0`, use `v0.5.2-beta.1`.
+
 ## 0.5.1
 
 ### 中文
