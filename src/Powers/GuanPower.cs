@@ -70,7 +70,9 @@ public sealed class GuanPower : ModPowerTemplate
         SetAmount(_threshold);
         Flash();
         var player = Applier?.Player
-            ?? Owner.CombatState?.Players.FirstOrDefault();
+            ?? (Owner.CombatState?.Players.Count == 1
+                ? Owner.CombatState.Players[0]
+                : null);
         if (player is not null && player.Creature.IsAlive)
         {
             Entry.Logger.Info(

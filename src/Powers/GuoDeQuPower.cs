@@ -69,5 +69,7 @@ public sealed class GuoDeQuPower : ModPowerTemplate
     private Creature? GetAffectedPlayer() =>
         Applier?.Player is not null
             ? Applier
-            : Owner.CombatState?.Players.FirstOrDefault()?.Creature;
+            : Owner.CombatState?.Players.Count == 1
+                ? Owner.CombatState.Players[0].Creature
+                : null;
 }

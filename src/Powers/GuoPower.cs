@@ -24,7 +24,15 @@ public sealed class GuoPower : ModPowerTemplate
         public int StoredPowerAmount { get; set; }
     }
 
-    public static bool IsApplying { get; private set; }
+    private static readonly AsyncLocal<int> ApplyingDepth = new();
+
+    public static bool IsApplying => ApplyingDepth.Value > 0;
+
+    private static IDisposable EnterApplyingScope()
+    {
+        ApplyingDepth.Value++;
+        return new ApplyingScope();
+    }
 
     public override PowerType Type => PowerType.Buff;
 
@@ -139,8 +147,7 @@ public sealed class GuoPower : ModPowerTemplate
 
         var state = GetInternalData<FruitState>();
         Flash();
-        IsApplying = true;
-        try
+        using (EnterApplyingScope())
         {
             if (state.IsDamage)
             {
@@ -196,11 +203,23 @@ public sealed class GuoPower : ModPowerTemplate
                 }
             }
         }
-        finally
-        {
-            IsApplying = false;
-        }
 
         await PowerCmd.Remove(this);
+    }
+
+    private sealed class ApplyingScope : IDisposable
+    {
+        private bool _disposed;
+
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _disposed = true;
+            ApplyingDepth.Value = Math.Max(0, ApplyingDepth.Value - 1);
+        }
     }
 }

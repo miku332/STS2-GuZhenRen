@@ -1,13 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
-using STS2RitsuLib;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -17,8 +14,6 @@ namespace GuZhenRen.Powers;
 public sealed class ZhuiMingHuoPower : ModPowerTemplate
 {
     private const int BurnPerStack = 5;
-
-    private static bool s_isSpreading;
 
     public override PowerType Type => PowerType.Debuff;
 
@@ -47,26 +42,11 @@ public sealed class ZhuiMingHuoPower : ModPowerTemplate
             null);
     }
 
-    public static async void AfterAttackEnded(AttackEndedEvent evt)
+    public override async Task AfterAttack(
+        PlayerChoiceContext choiceContext,
+        AttackCommand command)
     {
-        try
-        {
-            await SpreadAfterEnemyAttack(evt);
-        }
-        catch (Exception ex)
-        {
-            Entry.Logger.Error($"[ZhuiMingHuo] Failed to spread after attack: {ex}");
-        }
-    }
-
-    private static async Task SpreadAfterEnemyAttack(AttackEndedEvent evt)
-    {
-        if (s_isSpreading)
-        {
-            return;
-        }
-
-        var attacker = evt.Attack.Attacker;
+        var attacker = command.Attacker;
         if (attacker is null
             || !attacker.IsAlive
             || attacker.Player is not null
@@ -75,27 +55,26 @@ public sealed class ZhuiMingHuoPower : ModPowerTemplate
             return;
         }
 
-        var combatState = evt.CombatState;
-        if (combatState.HittableEnemies.All(enemy =>
-                !enemy.IsAlive || enemy.GetPower<ZhuiMingHuoPower>() is null))
+        var combatState = Owner.CombatState;
+        if (combatState is null)
         {
             return;
         }
 
-        s_isSpreading = true;
-        try
+        var coordinator = combatState.HittableEnemies
+            .Where(static enemy => enemy.IsAlive)
+            .Select(static enemy => enemy.GetPower<ZhuiMingHuoPower>())
+            .FirstOrDefault(static power => power is not null);
+        if (coordinator != this)
         {
-            var choiceContext = evt.ChoiceContext ?? new ThrowingPlayerChoiceContext();
-            await PowerCmd.Apply<ZhuiMingHuoPower>(
-                choiceContext,
-                attacker,
-                1,
-                attacker,
-                null);
+            return;
         }
-        finally
-        {
-            s_isSpreading = false;
-        }
+
+        await PowerCmd.Apply<ZhuiMingHuoPower>(
+            choiceContext,
+            attacker,
+            1,
+            attacker,
+            null);
     }
 }

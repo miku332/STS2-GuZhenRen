@@ -1,9 +1,11 @@
+using GuZhenRen.Multiplayer;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Patching.Models;
 
 namespace GuZhenRen.Patches;
@@ -45,10 +47,24 @@ public sealed class XianGuUpgradeUniquenessPatch : IPatchMethod
     {
         foreach (var owner in __state.Owners)
         {
-            TaskHelper.RunSafely(
-                BenMingGuUniquenessPatch.EnforceDeckUniqueness(owner));
+            if (!LocalContext.IsMe(owner))
+            {
+                continue;
+            }
+
+            NetGuZhenRenActions.RequestWithRetry(
+                NetGuZhenRenActions.RequestUniquenessCleanup,
+                () => LocalContext.IsMe(owner),
+                () => Entry.Logger.Warn(
+                    "Xian Gu uniqueness cleanup action was not queued."),
+                "Xian Gu uniqueness cleanup",
+                requiresCombat: false);
         }
     }
+
+    internal static Task ExecuteManagedCleanupAsync(
+        RitsuLibManagedNetActionContext<UniquenessCleanupPayload> context) =>
+        BenMingGuUniquenessPatch.EnforceDeckUniqueness(context.Player);
 
     public sealed record UpgradeState(
         IReadOnlyList<Player> Owners);

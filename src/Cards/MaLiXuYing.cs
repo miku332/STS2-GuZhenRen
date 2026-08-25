@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
@@ -37,12 +38,21 @@ public sealed class MaLiXuYing : AbstractXuYingCard
             return;
         }
 
-        var selectedCards = await CardSelectCmd.FromHand(
-            choiceContext,
-            Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1),
-            static _ => true,
-            this);
+        IEnumerable<CardModel> selectedCards;
+        choiceContext.PushModel(triggerCardPlay.Card);
+        try
+        {
+            selectedCards = await CardSelectCmd.FromHandForDiscard(
+                choiceContext,
+                Owner,
+                new CardSelectorPrefs(SelectionScreenPrompt, 1),
+                static _ => true,
+                this);
+        }
+        finally
+        {
+            choiceContext.PopModel(triggerCardPlay.Card);
+        }
 
         await CardCmd.Discard(choiceContext, selectedCards);
     }

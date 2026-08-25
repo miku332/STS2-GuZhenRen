@@ -1,5 +1,6 @@
 using GuZhenRen.Cards;
 using Godot;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
 
 namespace GuZhenRen.Systems;
@@ -15,6 +16,11 @@ internal static class ApertureVoiceSystem
 
     public static void PlayForRank(Player player, int rank)
     {
+        if (!LocalContext.IsMe(player))
+        {
+            return;
+        }
+
         var path = rank switch
         {
             9 => player.Deck.Cards.OfType<ShaGu>().Any()

@@ -47,7 +47,7 @@ public sealed class XueHeMang : GuZhenRenCardTemplate
         Creature? dealer,
         CardModel? cardSource)
     {
-        if (target == Owner.Creature && result.TotalDamage > 0)
+        if (target == Owner.Creature && result.UnblockedDamage > 0)
         {
             DynamicVars.Damage.BaseValue += DynamicVars["ExtraDamage"].BaseValue;
         }

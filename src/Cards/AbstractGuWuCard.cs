@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
@@ -28,28 +29,22 @@ public abstract class AbstractGuWuCard : AbstractShaZhaoCard
     {
     }
 
-    public static async Task ReturnAllToHand(Player player)
+    public override async Task AfterSideTurnStart(
+        CombatSide side,
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState)
     {
-        foreach (var pileType in new[]
-                 {
-                     PileType.Draw,
-                     PileType.Discard,
-                     PileType.Exhaust
-                 })
+        if (side != CombatSide.Player
+            || !participants.Contains(Owner.Creature)
+            || Pile?.Type is not (PileType.Draw or PileType.Discard or PileType.Exhaust))
         {
-            var cards = pileType
-                .GetPile(player)
-                .Cards
-                .OfType<AbstractGuWuCard>()
-                .ToList();
-            foreach (var card in cards)
-            {
-                await CardPileCmd.Add(
-                    card,
-                    PileType.Hand,
-                    CardPilePosition.Bottom);
-            }
+            return;
         }
+
+        await CardPileCmd.Add(
+            this,
+            PileType.Hand,
+            CardPilePosition.Bottom);
     }
 
     protected override void OnUpgrade()

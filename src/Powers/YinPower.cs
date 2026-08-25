@@ -38,8 +38,8 @@ public sealed class YinPower : ModPowerTemplate
 
     protected override object InitInternalData() => new YinState();
 
-    public override decimal ModifyDamageMultiplicative(
-        Creature? target,
+    public override decimal ModifyHpLostBeforeOsty(
+        Creature target,
         decimal amount,
         ValueProp props,
         Creature? dealer,
@@ -50,7 +50,7 @@ public sealed class YinPower : ModPowerTemplate
             || GuoPower.IsApplying
             || !props.HasFlag(ValueProp.Move))
         {
-            return 1m;
+            return amount;
         }
 
         GetInternalData<YinState>().PendingDamage = amount;
@@ -79,9 +79,8 @@ public sealed class YinPower : ModPowerTemplate
         var damage = state.PendingDamage.Value;
         state.PendingDamage = null;
         Entry.Logger.Info(
-            $"[Yin] Resolved attack captured={damage}, blocked={result.BlockedDamage}, "
-            + $"unblocked={result.UnblockedDamage}, fullyBlocked={result.WasFullyBlocked}.");
-        if (damage <= 0 || result.WasFullyBlocked)
+            $"[Yin] Prevented unblocked damage={damage}, blocked={result.BlockedDamage}.");
+        if (damage <= 0)
         {
             return;
         }

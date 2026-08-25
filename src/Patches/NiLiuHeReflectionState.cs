@@ -1,8 +1,6 @@
-using GuZhenRen.Relics;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
 
 namespace GuZhenRen.Patches;
 
@@ -10,33 +8,13 @@ internal static class NiLiuHeReflectionState
 {
     private static readonly Dictionary<Creature, Creature> _reflectedDealers = [];
 
-    public static bool TryRedirectAttack(
-        Creature target,
-        ValueProp props,
-        Creature? dealer,
-        out Creature redirectedTarget)
+    public static void BeginAttack(Creature target)
     {
-        redirectedTarget = target;
-
-        if (!target.IsPlayer
-            || dealer is null
-            || !dealer.IsMonster
-            || !props.IsPoweredAttack())
-        {
-            return false;
-        }
-
-        var relic = target.Player?.GetRelic<NiLiuHe>();
-        if (relic is null || !relic.TryConsumeWater())
-        {
-            _reflectedDealers.Remove(target);
-            return false;
-        }
-
-        _reflectedDealers[target] = dealer;
-        redirectedTarget = dealer;
-        return true;
+        _reflectedDealers.Remove(target);
     }
+
+    public static void MarkAttackReflected(Creature target, Creature dealer) =>
+        _reflectedDealers[target] = dealer;
 
     public static bool TryRedirectPower(
         PowerModel power,

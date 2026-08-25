@@ -36,7 +36,10 @@ public sealed class MingJiaPower : ModPowerTemplate
 
         Flash();
         var choiceContext = new ThrowingPlayerChoiceContext();
-        var player = Applier?.Player ?? combatState.Players.FirstOrDefault();
+        var player = Applier?.Player
+            ?? (combatState.Players.Count == 1
+                ? combatState.Players[0]
+                : null);
         if (player is null)
         {
             return;

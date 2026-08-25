@@ -1,12 +1,15 @@
 using Godot;
 using GuZhenRen.Acts;
 using GuZhenRen.Characters;
+using GuZhenRen.Multiplayer;
 using GuZhenRen.Systems;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Multiplayer;
 using MegaCrit.Sts2.Core.Multiplayer.Game;
+using MegaCrit.Sts2.Core.Multiplayer.Game.Lobby;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
 
 namespace GuZhenRen.Patches;
@@ -15,6 +18,7 @@ namespace GuZhenRen.Patches;
 internal static partial class LongGongAct4CharacterSelectPatch
 {
     private const string PanelName = "GuZhenRenLongGongAct4Option";
+    private const string LobbyBindingName = "LobbyBinding";
     private const string IconPath =
         "res://GuZhenRen/images/map/long_gong_boss.png";
 
@@ -28,9 +32,47 @@ internal static partial class LongGongAct4CharacterSelectPatch
         }
 
         var option = CreateOption();
+        option.Root.AddChild(new Act4LobbyBinding
+        {
+            Name = LobbyBindingName,
+            Option = option
+        });
         __instance.AddChild(option.Root);
-        option.Refresh(LongGongAct4Selection.Enabled);
+        option.Refresh(LongGongAct4Selection.Enabled, readOnly: false);
         option.Root.Visible = false;
+    }
+
+    [HarmonyPatch(
+        typeof(NCharacterSelectScreen),
+        nameof(NCharacterSelectScreen.InitializeSingleplayer))]
+    [HarmonyPostfix]
+    private static void PostfixInitializeSingleplayer(
+        NCharacterSelectScreen __instance) =>
+        ConfigureForLobby(__instance);
+
+    [HarmonyPatch(
+        typeof(NCharacterSelectScreen),
+        nameof(NCharacterSelectScreen.InitializeMultiplayerAsHost))]
+    [HarmonyPostfix]
+    private static void PostfixInitializeMultiplayerAsHost(
+        NCharacterSelectScreen __instance) =>
+        ConfigureForLobby(__instance);
+
+    [HarmonyPatch(
+        typeof(NCharacterSelectScreen),
+        nameof(NCharacterSelectScreen.InitializeMultiplayerAsClient))]
+    [HarmonyPostfix]
+    private static void PostfixInitializeMultiplayerAsClient(
+        NCharacterSelectScreen __instance) =>
+        ConfigureForLobby(__instance);
+
+    [HarmonyPatch(
+        typeof(NCharacterSelectScreen),
+        nameof(NCharacterSelectScreen.OnSubmenuClosed))]
+    [HarmonyPrefix]
+    private static void PrefixOnSubmenuClosed(NCharacterSelectScreen __instance)
+    {
+        GetLobbyBinding(__instance)?.Unbind();
     }
 
     [HarmonyPatch(
@@ -41,15 +83,23 @@ internal static partial class LongGongAct4CharacterSelectPatch
         NCharacterSelectScreen __instance,
         CharacterModel characterModel)
     {
-        var root = __instance.GetNodeOrNull<Control>(PanelName);
-        if (root is null)
-        {
-            return;
-        }
-
-        root.Visible = characterModel is FangYuanCharacter
-            && __instance.Lobby.NetService.Type == NetGameType.Singleplayer;
+        RefreshVisibility(__instance);
     }
+
+    [HarmonyPatch(
+        typeof(NCharacterSelectScreen),
+        nameof(NCharacterSelectScreen.PlayerChanged))]
+    [HarmonyPostfix]
+    private static void PostfixPlayerChanged(NCharacterSelectScreen __instance) =>
+        RefreshVisibility(__instance);
+
+    [HarmonyPatch(
+        typeof(NCharacterSelectScreen),
+        nameof(NCharacterSelectScreen.RemotePlayerDisconnected))]
+    [HarmonyPostfix]
+    private static void PostfixRemotePlayerDisconnected(
+        NCharacterSelectScreen __instance) =>
+        RefreshVisibility(__instance);
 
     [HarmonyPatch(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.BeginRun))]
     [HarmonyPrefix]
@@ -57,23 +107,85 @@ internal static partial class LongGongAct4CharacterSelectPatch
         NCharacterSelectScreen __instance,
         List<ActModel> acts)
     {
-        if (__instance.Lobby.NetService.Type != NetGameType.Singleplayer
-            || __instance.Lobby.LocalPlayer.character is not FangYuanCharacter)
+        var netType = __instance.Lobby.NetService.Type;
+        var isSingleplayer = netType == NetGameType.Singleplayer;
+        var hasFangYuan = isSingleplayer
+            ? __instance.Lobby.LocalPlayer.character is FangYuanCharacter
+            : __instance.Lobby.Players.Any(
+                static player => player.character is FangYuanCharacter);
+        if (!hasFangYuan)
         {
             return;
         }
 
         acts.RemoveAll(static act => act is GuZhenRenFinalAct);
-        if (LongGongAct4Selection.Enabled)
+        var enabled = LongGongAct4Selection.GetEffectiveEnabled(
+            netType == NetGameType.Client);
+        if (enabled)
         {
             acts.Add(ModelDb.Act<GuZhenRenFinalAct>());
-            Entry.Logger.Info("Enabled Long Gong final act for this run.");
+            Entry.Logger.Info(
+                isSingleplayer
+                    ? "Enabled Long Gong final act for this run."
+                    : "Enabled Long Gong final act for this multiplayer run.");
         }
         else
         {
             Entry.Logger.Info("Disabled Long Gong final act for this run.");
         }
     }
+
+    [HarmonyPatch(typeof(StartRunLobby), "BeginRunForAllPlayers")]
+    [HarmonyPrefix]
+    private static void PrefixHostBeginRun(StartRunLobby __instance)
+    {
+        if (__instance.NetService.Type != NetGameType.Host)
+        {
+            return;
+        }
+
+        __instance.NetService.SendMessage(
+            new LongGongAct4OptionStateMessage
+            {
+                Enabled = LongGongAct4Selection.Enabled
+            });
+    }
+
+    private static void RefreshVisibility(NCharacterSelectScreen screen)
+    {
+        var root = screen.GetNodeOrNull<Control>(PanelName);
+        if (root is null)
+        {
+            return;
+        }
+
+        root.Visible = screen.Lobby.NetService.Type == NetGameType.Singleplayer
+            ? screen.Lobby.LocalPlayer.character is FangYuanCharacter
+            : screen.Lobby.Players.Any(
+                static player => player.character is FangYuanCharacter);
+    }
+
+    private static void ConfigureForLobby(NCharacterSelectScreen screen)
+    {
+        var binding = GetLobbyBinding(screen);
+        if (binding is null)
+        {
+            return;
+        }
+
+        var isClient = screen.Lobby.NetService.Type == NetGameType.Client;
+        binding.Bind(screen.Lobby.NetService);
+        binding.Option.SetReadOnly(isClient);
+        binding.Option.Refresh(
+            LongGongAct4Selection.GetEffectiveEnabled(isClient),
+            isClient);
+        RefreshVisibility(screen);
+    }
+
+    private static Act4LobbyBinding? GetLobbyBinding(
+        NCharacterSelectScreen screen) =>
+        screen.GetNodeOrNull<Act4LobbyBinding>(
+            $"{PanelName}/{LobbyBindingName}");
 
     private static Act4Option CreateOption()
     {
@@ -140,23 +252,43 @@ internal static partial class LongGongAct4CharacterSelectPatch
             16,
             new Color(0.82f, 0.66f, 0.30f));
         textColumn.AddChild(kicker);
+        option.Kicker = kicker;
 
         var title = CreateLabel(
             Loc("GU_ZHEN_REN_LONG_GONG_ACT4.title"),
             26,
             new Color(1f, 0.88f, 0.52f));
         textColumn.AddChild(title);
+        option.Title = title;
 
         var description = CreateLabel(
             Loc("GU_ZHEN_REN_LONG_GONG_ACT4.description"),
-            17,
+            16,
             new Color(0.84f, 0.84f, 0.88f));
-        description.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        description.AutowrapMode = string.Equals(
+            title.Text,
+            "Act IV: Heavenly Court",
+            StringComparison.Ordinal)
+                ? TextServer.AutowrapMode.WordSmart
+                : TextServer.AutowrapMode.Off;
         textColumn.AddChild(description);
+        option.Description = description;
+
+        var switchColumn = new VBoxContainer
+        {
+            CustomMinimumSize = new Vector2(126f, 0f),
+            SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
+            SizeFlagsVertical = Control.SizeFlags.ExpandFill,
+            Alignment = BoxContainer.AlignmentMode.Center,
+            MouseFilter = Control.MouseFilterEnum.Ignore
+        };
+        switchColumn.AddThemeConstantOverride("separation", 7);
 
         var toggle = new Button
         {
-            CustomMinimumSize = new Vector2(92f, 0f),
+            CustomMinimumSize = new Vector2(92f, 36f),
+            SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
+            SizeFlagsVertical = Control.SizeFlags.ShrinkCenter,
             ToggleMode = true,
             ButtonPressed = LongGongAct4Selection.Enabled,
             FocusMode = Control.FocusModeEnum.All,
@@ -169,25 +301,15 @@ internal static partial class LongGongAct4CharacterSelectPatch
         toggle.AddThemeStyleboxOverride("pressed", emptyStyle);
         toggle.AddThemeStyleboxOverride("hover_pressed", emptyStyle);
         toggle.AddThemeStyleboxOverride("focus", emptyStyle);
-        row.AddChild(toggle);
-
-        var stateColumn = new VBoxContainer
-        {
-            AnchorRight = 1f,
-            AnchorBottom = 1f,
-            Alignment = BoxContainer.AlignmentMode.Center,
-            MouseFilter = Control.MouseFilterEnum.Ignore
-        };
-        stateColumn.AddThemeConstantOverride("separation", 7);
-        toggle.AddChild(stateColumn);
+        switchColumn.AddChild(toggle);
 
         var track = new Panel
         {
             CustomMinimumSize = new Vector2(70f, 36f),
-            SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
+            Position = new Vector2(11f, 0f),
             MouseFilter = Control.MouseFilterEnum.Ignore
         };
-        stateColumn.AddChild(track);
+        toggle.AddChild(track);
 
         var knob = new Panel
         {
@@ -195,12 +317,14 @@ internal static partial class LongGongAct4CharacterSelectPatch
             Size = new Vector2(26f, 26f),
             MouseFilter = Control.MouseFilterEnum.Ignore
         };
-        knob.AddThemeStyleboxOverride("panel", CreateKnobStyle());
+        knob.AddThemeStyleboxOverride("panel", CreateKnobStyle(false, false));
         track.AddChild(knob);
 
-        var stateLabel = CreateLabel(string.Empty, 16, Colors.White);
+        var stateLabel = CreateLabel(string.Empty, 14, Colors.White);
+        stateLabel.CustomMinimumSize = new Vector2(126f, 22f);
         stateLabel.HorizontalAlignment = HorizontalAlignment.Center;
-        stateColumn.AddChild(stateLabel);
+        switchColumn.AddChild(stateLabel);
+        row.AddChild(switchColumn);
 
         option.Track = track;
         option.Knob = knob;
@@ -210,7 +334,7 @@ internal static partial class LongGongAct4CharacterSelectPatch
         toggle.Toggled += enabled =>
         {
             LongGongAct4Selection.Enabled = enabled;
-            option.Refresh(enabled);
+            option.Refresh(enabled, readOnly: false);
         };
         return option;
     }
@@ -232,16 +356,40 @@ internal static partial class LongGongAct4CharacterSelectPatch
     private static string Loc(string key) =>
         new LocString("characters", key).GetFormattedText();
 
-    private static StyleBoxFlat CreatePanelStyle(bool enabled, bool hover)
+    private static string ReadOnlyStateText()
+    {
+        const string key = "GU_ZHEN_REN_LONG_GONG_ACT4.host_configured";
+        var text = Loc(key);
+        if (!string.Equals(text, key, StringComparison.Ordinal))
+        {
+            return text;
+        }
+
+        // The client can render this panel before RitsuLib has registered the
+        // newly added localization entry. Keep the read-only state readable.
+        var title = Loc("GU_ZHEN_REN_LONG_GONG_ACT4.title");
+        return string.Equals(title, "Act IV: Heavenly Court", StringComparison.Ordinal)
+            ? "Uses host configuration"
+            : "以主机配置为准";
+    }
+
+    private static StyleBoxFlat CreatePanelStyle(
+        bool enabled,
+        bool hover,
+        bool readOnly)
     {
         var style = new StyleBoxFlat
         {
-            BgColor = enabled
-                ? new Color(0.09f, 0.075f, 0.055f, hover ? 0.98f : 0.94f)
-                : new Color(0.045f, 0.045f, 0.055f, hover ? 0.98f : 0.94f),
-            BorderColor = enabled
-                ? new Color(0.86f, 0.65f, 0.25f, 0.95f)
-                : new Color(0.34f, 0.34f, 0.40f, 0.9f),
+            BgColor = readOnly
+                ? new Color(0.10f, 0.10f, 0.12f, 0.94f)
+                : enabled
+                    ? new Color(0.09f, 0.075f, 0.055f, hover ? 0.98f : 0.94f)
+                    : new Color(0.045f, 0.045f, 0.055f, hover ? 0.98f : 0.94f),
+            BorderColor = readOnly
+                ? new Color(0.38f, 0.39f, 0.44f, 0.85f)
+                : enabled
+                    ? new Color(0.86f, 0.65f, 0.25f, 0.95f)
+                    : new Color(0.34f, 0.34f, 0.40f, 0.9f),
             BorderWidthLeft = 2,
             BorderWidthTop = 2,
             BorderWidthRight = 2,
@@ -256,14 +404,22 @@ internal static partial class LongGongAct4CharacterSelectPatch
         return style;
     }
 
-    private static StyleBoxFlat CreateTrackStyle(bool enabled) => new()
+    private static StyleBoxFlat CreateTrackStyle(bool enabled, bool readOnly) => new()
     {
-        BgColor = enabled
-            ? new Color(0.55f, 0.38f, 0.10f)
-            : new Color(0.20f, 0.20f, 0.24f),
-        BorderColor = enabled
-            ? new Color(1f, 0.78f, 0.30f)
-            : new Color(0.42f, 0.42f, 0.48f),
+        BgColor = readOnly
+            ? enabled
+                ? new Color(0.55f, 0.38f, 0.10f)
+                : new Color(0.27f, 0.28f, 0.32f)
+            : enabled
+                ? new Color(0.55f, 0.38f, 0.10f)
+                : new Color(0.20f, 0.20f, 0.24f),
+        BorderColor = readOnly
+            ? enabled
+                ? new Color(1f, 0.78f, 0.30f)
+                : new Color(0.50f, 0.51f, 0.56f)
+            : enabled
+                ? new Color(1f, 0.78f, 0.30f)
+                : new Color(0.42f, 0.42f, 0.48f),
         BorderWidthLeft = 2,
         BorderWidthTop = 2,
         BorderWidthRight = 2,
@@ -274,9 +430,13 @@ internal static partial class LongGongAct4CharacterSelectPatch
         CornerRadiusBottomRight = 18
     };
 
-    private static StyleBoxFlat CreateKnobStyle() => new()
+    private static StyleBoxFlat CreateKnobStyle(bool enabled, bool readOnly) => new()
     {
-        BgColor = new Color(1f, 0.92f, 0.68f),
+        BgColor = readOnly
+            ? enabled
+                ? new Color(1f, 0.92f, 0.68f)
+                : new Color(0.68f, 0.69f, 0.74f)
+            : new Color(1f, 0.92f, 0.68f),
         CornerRadiusTopLeft = 13,
         CornerRadiusTopRight = 13,
         CornerRadiusBottomLeft = 13,
@@ -293,22 +453,146 @@ internal static partial class LongGongAct4CharacterSelectPatch
         public Panel Track { get; set; } = null!;
         public Panel Knob { get; set; } = null!;
         public Label StateLabel { get; set; } = null!;
+        public Label Kicker { get; set; } = null!;
+        public Label Title { get; set; } = null!;
+        public Label Description { get; set; } = null!;
 
-        public void Refresh(bool enabled)
+        public void SetReadOnly(bool readOnly)
+        {
+            Toggle.Disabled = readOnly;
+            Toggle.FocusMode = readOnly
+                ? Control.FocusModeEnum.None
+                : Control.FocusModeEnum.All;
+            Toggle.MouseDefaultCursorShape = readOnly
+                ? Control.CursorShape.Arrow
+                : Control.CursorShape.PointingHand;
+        }
+
+        public void Refresh(bool enabled, bool readOnly)
         {
             Toggle.SetPressedNoSignal(enabled);
             Background.AddThemeStyleboxOverride(
-                "panel", CreatePanelStyle(enabled, hover: false));
-            Track.AddThemeStyleboxOverride("panel", CreateTrackStyle(enabled));
+                "panel", CreatePanelStyle(enabled, hover: false, readOnly));
+            Track.AddThemeStyleboxOverride(
+                "panel", CreateTrackStyle(enabled, readOnly));
+            Knob.AddThemeStyleboxOverride(
+                "panel", CreateKnobStyle(enabled, readOnly));
             Knob.Position = new Vector2(enabled ? 39f : 5f, 5f);
-            StateLabel.Text = Loc(enabled
-                ? "GU_ZHEN_REN_LONG_GONG_ACT4.enabled"
-                : "GU_ZHEN_REN_LONG_GONG_ACT4.disabled");
+            StateLabel.Text = readOnly
+                ? ReadOnlyStateText()
+                : Loc(enabled
+                    ? "GU_ZHEN_REN_LONG_GONG_ACT4.enabled"
+                    : "GU_ZHEN_REN_LONG_GONG_ACT4.disabled");
             StateLabel.AddThemeColorOverride(
                 "font_color",
-                enabled
-                    ? new Color(1f, 0.82f, 0.38f)
-                    : new Color(0.68f, 0.68f, 0.72f));
+                readOnly
+                    ? enabled
+                        ? new Color(1f, 0.82f, 0.38f)
+                        : new Color(0.66f, 0.67f, 0.72f)
+                    : enabled
+                        ? new Color(1f, 0.82f, 0.38f)
+                        : new Color(0.68f, 0.68f, 0.72f));
+            Kicker.AddThemeColorOverride(
+                "font_color",
+                readOnly
+                    ? new Color(0.55f, 0.56f, 0.60f)
+                    : new Color(0.82f, 0.66f, 0.30f));
+            Title.AddThemeColorOverride(
+                "font_color",
+                readOnly
+                    ? new Color(0.70f, 0.71f, 0.75f)
+                    : new Color(1f, 0.88f, 0.52f));
+            Description.AddThemeColorOverride(
+                "font_color",
+                readOnly
+                    ? new Color(0.62f, 0.63f, 0.68f)
+                    : new Color(0.84f, 0.84f, 0.88f));
+        }
+    }
+
+    private sealed partial class Act4LobbyBinding : Node
+    {
+        private INetGameService? _netService;
+
+        public Act4Option Option { get; init; } = null!;
+
+        public void Bind(INetGameService netService)
+        {
+            Unbind();
+            _netService = netService;
+
+            switch (_netService.Type)
+            {
+                case NetGameType.Host:
+                    _netService.RegisterMessageHandler<LongGongAct4OptionRequestMessage>(
+                        HandleRequest);
+                    Option.Toggle.Toggled += BroadcastState;
+                    break;
+                case NetGameType.Client:
+                    LongGongAct4Selection.ClearNetworkEnabled();
+                    _netService.RegisterMessageHandler<LongGongAct4OptionStateMessage>(
+                        HandleState);
+                    _netService.SendMessage(new LongGongAct4OptionRequestMessage());
+                    break;
+            }
+        }
+
+        public void Unbind()
+        {
+            if (_netService is null)
+            {
+                return;
+            }
+
+            switch (_netService.Type)
+            {
+                case NetGameType.Host:
+                    _netService.UnregisterMessageHandler<LongGongAct4OptionRequestMessage>(
+                        HandleRequest);
+                    Option.Toggle.Toggled -= BroadcastState;
+                    break;
+                case NetGameType.Client:
+                    _netService.UnregisterMessageHandler<LongGongAct4OptionStateMessage>(
+                        HandleState);
+                    LongGongAct4Selection.ClearNetworkEnabled();
+                    break;
+            }
+
+            _netService = null;
+        }
+
+        public override void _ExitTree() => Unbind();
+
+        private void HandleRequest(
+            LongGongAct4OptionRequestMessage message,
+            ulong senderId)
+        {
+            _netService?.SendMessage(
+                new LongGongAct4OptionStateMessage
+                {
+                    Enabled = LongGongAct4Selection.Enabled
+                },
+                senderId);
+        }
+
+        private void HandleState(
+            LongGongAct4OptionStateMessage message,
+            ulong senderId)
+        {
+            if (_netService is NetClientGameService client
+                && senderId != client.HostNetId)
+            {
+                return;
+            }
+
+            LongGongAct4Selection.SetNetworkEnabled(message.Enabled);
+            Option.Refresh(message.Enabled, readOnly: true);
+        }
+
+        private void BroadcastState(bool enabled)
+        {
+            _netService?.SendMessage(
+                new LongGongAct4OptionStateMessage { Enabled = enabled });
         }
     }
 

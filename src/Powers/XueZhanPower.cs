@@ -59,7 +59,7 @@ public sealed class XueZhanPower : ModPowerTemplate
         if (target != Owner
             || Owner.Player is null
             || !_isPlayerTurn
-            || result.TotalDamage <= 0
+            || result.UnblockedDamage <= 0
             || Amount <= 0)
         {
             return;

@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GuZhenRen.CardPools;
+using GuZhenRen.Multiplayer;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -10,6 +12,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interactions.RightClick;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace GuZhenRen.Relics;
@@ -66,16 +69,46 @@ public sealed class TouSheng : ModRelicTemplate, IModRightClickableRelic
 
     public async Task OnRightClick(ModRightClickExecutionContext context)
     {
-        if (!CanHandleRightClickLocal(new ModRightClickContext(
-                context.Player,
-                context.Model,
-                context.Trigger)))
+        if (!LocalContext.IsMe(context.Player))
+        {
+            return;
+        }
+
+        var payload = new TouShengUsePayload(context.Player.NetId);
+        NetGuZhenRenActions.RequestWithRetry(
+            () => NetGuZhenRenActions.RequestTouShengUse(payload),
+            () => context.Player.GetRelic<TouSheng>() is { Counter: > 0 },
+            () => Entry.Logger.Warn("Steal Life action was not queued."),
+            "Steal Life");
+        await Task.CompletedTask;
+    }
+
+    internal static async Task ExecuteManagedUseAsync(
+        RitsuLibManagedNetActionContext<TouShengUsePayload> context)
+    {
+        if (context.Message.OwnerNetId != context.Player.NetId)
+        {
+            return;
+        }
+
+        var relic = context.Player.GetRelic<TouSheng>();
+        if (relic is null)
+        {
+            return;
+        }
+
+        await relic.ExecuteUseAsync();
+    }
+
+    private async Task ExecuteUseAsync()
+    {
+        if (Counter <= 0 || !Owner.Creature.IsAlive)
         {
             return;
         }
 
         var combatState = Owner.Creature.CombatState;
-        if (combatState is null)
+        if (combatState is null || combatState.CurrentSide != CombatSide.Player)
         {
             return;
         }

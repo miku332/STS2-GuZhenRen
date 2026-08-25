@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -16,6 +17,18 @@ namespace GuZhenRen.Cards;
 public sealed class ZhuMoBang : AbstractGuWuCard
 {
     private static readonly HashSet<ulong> HuiFuUsedByPlayer = [];
+    private bool _huiFuUsed;
+
+    [SavedProperty]
+    private bool HuiFuUsed
+    {
+        get => _huiFuUsed;
+        set
+        {
+            AssertMutable();
+            _huiFuUsed = value;
+        }
+    }
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/ZhuMoBang.png");
@@ -40,7 +53,8 @@ public sealed class ZhuMoBang : AbstractGuWuCard
             CombatState.CreateCard<OptionFangHuZhuMoBang>(Owner),
             CombatState.CreateCard<OptionGongFaZhuMoBang>(Owner)
         };
-        if (!HuiFuUsedByPlayer.Contains(Owner.NetId))
+        if (!HuiFuUsed
+            && !HuiFuUsedByPlayer.Contains(Owner.NetId))
         {
             choices.Add(CombatState.CreateCard<OptionHuiFuZhuMoBang>(Owner));
         }
@@ -77,8 +91,10 @@ public sealed class ZhuMoBang : AbstractGuWuCard
                 break;
 
             case OptionHuiFuZhuMoBang:
-                if (HuiFuUsedByPlayer.Add(Owner.NetId))
+                if (!HuiFuUsed
+                    && HuiFuUsedByPlayer.Add(Owner.NetId))
                 {
+                    HuiFuUsed = true;
                     await UseHuiFu(choiceContext);
                 }
                 break;

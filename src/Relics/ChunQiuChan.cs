@@ -33,7 +33,7 @@ public sealed class ChunQiuChan : ModRelicTemplate, IModRightClickableRelic
             "chun-qiu-chan",
             static () => new ChunQiuChanRunData());
 
-    private static bool _capturingSnapshot;
+    private static readonly AsyncLocal<bool> CapturingSnapshot = new();
     private static readonly Type? RunSavedDataRegistryType =
         typeof(RunSavedDataStore).Assembly.GetType("STS2RitsuLib.RunData.RunSavedDataRegistry");
 
@@ -78,6 +78,7 @@ public sealed class ChunQiuChan : ModRelicTemplate, IModRightClickableRelic
         if (context.Player != Owner
             || !Owner.Creature.IsAlive
             || !IsMutable
+            || !RunManager.Instance.IsSingleplayerOrFakeMultiplayer
             || CombatManager.Instance.IsInProgress)
         {
             return false;
@@ -258,19 +259,20 @@ public sealed class ChunQiuChan : ModRelicTemplate, IModRightClickableRelic
 
     private void CaptureSnapshot()
     {
-        if (_capturingSnapshot
+        if (CapturingSnapshot.Value
             || !IsMutable
             || Owner is null
+            || !RunManager.Instance.IsSingleplayerOrFakeMultiplayer
             || !RunManager.Instance.IsInProgress)
         {
             return;
         }
 
-        _capturingSnapshot = true;
+        CapturingSnapshot.Value = true;
         var runState = CurrentRunState;
         if (runState is null)
         {
-            _capturingSnapshot = false;
+            CapturingSnapshot.Value = false;
             return;
         }
 
@@ -303,7 +305,7 @@ public sealed class ChunQiuChan : ModRelicTemplate, IModRightClickableRelic
         }
         finally
         {
-            _capturingSnapshot = false;
+            CapturingSnapshot.Value = false;
             RefreshPresentation();
         }
     }

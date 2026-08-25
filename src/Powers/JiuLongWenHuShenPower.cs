@@ -14,7 +14,15 @@ namespace GuZhenRen.Powers;
 [RegisterPower]
 public sealed class JiuLongWenHuShenPower : ModPowerTemplate
 {
-    private const int MaxStacks = 9;
+    private const int DamageReductionStacks = 9;
+    private const int ExtraStacksPerAdditionalPlayer = 3;
+
+    internal static int GetMaxStacks(Creature owner)
+    {
+        var playerCount = owner.CombatState?.Players.Count ?? 1;
+        return DamageReductionStacks
+            + Math.Max(0, playerCount - 1) * ExtraStacksPerAdditionalPlayer;
+    }
 
     public override PowerType Type => PowerType.Buff;
 
@@ -27,7 +35,9 @@ public sealed class JiuLongWenHuShenPower : ModPowerTemplate
             var description = new LocString(
                 "powers",
                 "GU_ZHEN_REN_POWER_JIU_LONG_WEN_HU_SHEN_POWER.description");
-            description.Add("Reduction", Math.Clamp(Amount, 0, MaxStacks) * 10);
+            description.Add(
+                "Reduction",
+                Math.Clamp(Amount, 0, DamageReductionStacks) * 10);
             return description;
         }
     }
@@ -42,9 +52,10 @@ public sealed class JiuLongWenHuShenPower : ModPowerTemplate
         Creature? applier,
         CardModel? cardSource)
     {
-        if (Amount > MaxStacks)
+        var maxStacks = GetMaxStacks(Owner);
+        if (Amount > maxStacks)
         {
-            SetAmount(MaxStacks);
+            SetAmount(maxStacks);
         }
 
         return Task.CompletedTask;
@@ -57,9 +68,10 @@ public sealed class JiuLongWenHuShenPower : ModPowerTemplate
         Creature? applier,
         CardModel? cardSource)
     {
-        if (power == this && Amount > MaxStacks)
+        var maxStacks = GetMaxStacks(Owner);
+        if (power == this && Amount > maxStacks)
         {
-            SetAmount(MaxStacks);
+            SetAmount(maxStacks);
         }
 
         return Task.CompletedTask;
@@ -79,7 +91,8 @@ public sealed class JiuLongWenHuShenPower : ModPowerTemplate
             return 1m;
         }
 
-        return 1m - Math.Clamp(Amount, 0, MaxStacks) / 10m;
+        return 1m
+            - Math.Clamp(Amount, 0, DamageReductionStacks) / 10m;
     }
 
     public override decimal ModifyHpLostBeforeOstyLate(

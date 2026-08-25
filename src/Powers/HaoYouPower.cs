@@ -42,7 +42,7 @@ public sealed class HaoYouPower : ModPowerTemplate
         CardModel? cardSource)
     {
         if (Amount <= 0
-            || result.TotalDamage <= 0
+            || result.UnblockedDamage <= 0
             || !props.IsPoweredAttack()
             || dealer is null
             || (target != Owner && dealer != Owner)

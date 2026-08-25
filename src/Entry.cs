@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
 using GuZhenRen.Cards;
+using GuZhenRen.Multiplayer;
 using GuZhenRen.Potions;
 using STS2RitsuLib.Patching.Core;
 using GuZhenRen.Patches;
@@ -35,6 +36,7 @@ public static class Entry
 
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        NetGuZhenRenActions.Register();
         new Harmony(ModId + ".act4").PatchAll(assembly);
         _updateCheckRegistration ??= ModUpdateSystem.Register(assembly);
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<XiaoGuangGu, TaiChuGuangGu>(ModId);
@@ -79,7 +81,6 @@ public static class Entry
         aiQingGuPatcher.RegisterPatch<AiQingGuEscapeRewardPatch>();
         aiQingGuPatcher.PatchAll();
         var niLiuHePatcher = RitsuLibFramework.CreatePatcher(ModId, "ni-liu-he");
-        niLiuHePatcher.RegisterPatch<NiLiuHeDamagePatch>();
         niLiuHePatcher.RegisterPatch<NiLiuHePowerApplyPatch>();
         niLiuHePatcher.RegisterPatch<NiLiuHePowerLookupPatch>();
         niLiuHePatcher.RegisterPatch<NiLiuHePowerModifyPatch>();
@@ -109,6 +110,7 @@ public static class Entry
         qiHuPatcher.PatchAll();
         var potionPatcher = RitsuLibFramework.CreatePatcher(ModId, "potion-state");
         potionPatcher.RegisterPatch<FuRenXinPotionRemovalPatch>();
+        potionPatcher.RegisterPatch<FuRenXinPotionUsePatch>();
         potionPatcher.PatchAll();
         var liQiPatcher = RitsuLibFramework.CreatePatcher(ModId, "li-qi");
         liQiPatcher.RegisterPatch<XuYingHandSizePatch>();
@@ -220,9 +222,13 @@ public static class Entry
                     AnTuZhongShanBao.ResetCombatState();
                     XingXiuQiPan.ResetCombatState();
                     ZhuMoBang.ResetCombatState();
+                    PaiNanPower.ResetCombatState();
                     TouDaoDaoHenPower.ResetCombatState();
+                    foreach (var player in evt.RunState.Players)
+                    {
+                        player.GetRelic<NiLiuHe>()?.ResetCombatState();
+                    }
                     ShaZhaoRecipeDropSystem.TryAddCombatReward(evt);
-                    TaskHelper.RunSafely(HandleEyunCombatEnded(evt));
                 },
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>(
@@ -233,12 +239,14 @@ public static class Entry
                     AnTuZhongShanBao.ResetCombatState();
                     XingXiuQiPan.ResetCombatState();
                     ZhuMoBang.ResetCombatState();
+                    PaiNanPower.ResetCombatState();
                     TouDaoDaoHenPower.ResetCombatState();
 
                     if (evt.CombatState is not null)
                     {
                         foreach (var player in evt.CombatState.Players)
                         {
+                            player.GetRelic<NiLiuHe>()?.ResetCombatState();
                             foreach (var card in PileType.Draw.GetPile(player).Cards.ToList())
                             {
                                 if (card is DiMai diMai)
@@ -257,22 +265,13 @@ public static class Entry
                     {
                         NiLiuHeReflectionState.Clear();
                         RenRuGu.RecordPlayerTurnStart(evt.CombatState);
-                        foreach (var player in evt.CombatState.Players)
-                        {
-                            TaskHelper.RunSafely(
-                                AbstractGuWuCard.ReturnAllToHand(player));
-                        }
                     }
                 },
-                replayCurrentState: false));
-            _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<AttackEndedEvent>(
-                static evt => ZhuiMingHuoPower.AfterAttackEnded(evt),
                 replayCurrentState: false));
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CreatureDiedEvent>(
                 static evt =>
                 {
                     ShaGu.AfterCreatureDied(evt);
-                    TaskHelper.RunSafely(ChiXiang.AfterCreatureDied(evt));
                     FuRenXin.AfterCreatureDied(evt);
                 },
                 replayCurrentState: false));
@@ -288,36 +287,13 @@ public static class Entry
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<RoomEnteredEvent>(
                 static evt =>
                 {
-                    foreach (var player in evt.RunState.Players)
-                    {
-                        BenMingGuRankProtection.EnsureMinimumRank(player);
-                        TaskHelper.RunSafely(
-                            BenMingGuUniquenessPatch.EnforceDeckUniqueness(player));
-                    }
-
                     TaskHelper.RunSafely(
                         BenMingGuSelectionCoordinator.TrySelect(evt.Room));
 
-                    if (evt.Room is MerchantRoom)
-                    {
-                        TaskHelper.RunSafely(
-                            GuQiangGuShopExchange.ExchangeAll(evt.RunState));
-                    }
                 },
                 replayCurrentState: false));
         }
 
         Logger.Info("Gu Zhen Ren mod initialized.");
-    }
-
-    private static async Task HandleEyunCombatEnded(CombatEndedEvent evt)
-    {
-        foreach (var player in evt.RunState.Players)
-        {
-            foreach (var card in player.Deck.Cards.OfType<EYun>().ToList())
-            {
-                await card.OnCombatEnded();
-            }
-        }
     }
 }

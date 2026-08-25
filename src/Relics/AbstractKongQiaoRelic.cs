@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
@@ -9,6 +10,7 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using GuZhenRen.Powers;
+using GuZhenRen.Patches;
 using GuZhenRen.Systems;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.Cards;
@@ -193,6 +195,12 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
         }
     }
 
+    public override async Task AfterRoomEntered(AbstractRoom room)
+    {
+        BenMingGuRankProtection.EnsureMinimumRank(Owner);
+        await BenMingGuUniquenessPatch.EnforceDeckUniqueness(Owner);
+    }
+
     public override Task AfterCardPlayed(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay)
@@ -335,7 +343,9 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
             {
                 CardCmd.Upgrade(
                     benMingGu,
-                    CardPreviewStyle.HorizontalLayout);
+                    LocalContext.IsMe(Owner)
+                        ? CardPreviewStyle.HorizontalLayout
+                        : CardPreviewStyle.None);
             }
 
             Entry.Logger.Info(

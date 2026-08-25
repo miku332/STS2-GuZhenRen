@@ -13,7 +13,7 @@ namespace GuZhenRen.Cards;
 
 public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCard
 {
-    private static int _nestedXuYingEffectDepth;
+    private static readonly AsyncLocal<int> NestedXuYingEffectDepth = new();
 
     protected abstract int ChancePercent { get; }
 
@@ -53,8 +53,9 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         CardPlay cardPlay)
     {
         if (Pile?.Type != PileType.Hand
-            || _nestedXuYingEffectDepth > 0
+            || NestedXuYingEffectDepth.Value > 0
             || cardPlay.Card == this
+            || cardPlay.Card.Owner != Owner
             || cardPlay.Card.Type != CardType.Attack
             || cardPlay.Card.Tags.Contains(GuZhenRenTags.XuYing)
             || (RequiresLiveTarget && (cardPlay.Target is null || !cardPlay.Target.IsAlive)))
@@ -123,14 +124,14 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         PlayerChoiceContext choiceContext,
         CardPlay triggerCardPlay)
     {
-        _nestedXuYingEffectDepth++;
+        NestedXuYingEffectDepth.Value++;
         try
         {
             await TriggerXuYingEffect(choiceContext, triggerCardPlay);
         }
         finally
         {
-            _nestedXuYingEffectDepth--;
+            NestedXuYingEffectDepth.Value--;
         }
     }
 }

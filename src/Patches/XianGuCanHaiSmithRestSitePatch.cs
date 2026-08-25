@@ -14,6 +14,8 @@ public sealed class XianGuCanHaiSmithRestSitePatch : IPatchMethod
     {
         public bool WasSmith { get; set; }
 
+        public bool HadAvailableUseBeforeChoice { get; set; }
+
         public List<RestSiteOption>? OptionsBeforeChoice { get; set; }
     }
 
@@ -43,6 +45,8 @@ public sealed class XianGuCanHaiSmithRestSitePatch : IPatchMethod
         cache.WasSmith = optionIndex >= 0
             && optionIndex < options.Count
             && options[optionIndex] is SmithRestSiteOption;
+        cache.HadAvailableUseBeforeChoice = cache.WasSmith
+            && player.GetRelic<XianGuCanHai>()?.Counter > 0;
         cache.OptionsBeforeChoice = cache.WasSmith ? options.ToList() : null;
     }
 
@@ -77,6 +81,7 @@ public sealed class XianGuCanHaiSmithRestSitePatch : IPatchMethod
 
         if (!Cache.TryGetValue(player, out var cache)
             || !cache.WasSmith
+            || !cache.HadAvailableUseBeforeChoice
             || cache.OptionsBeforeChoice is null)
         {
             return true;

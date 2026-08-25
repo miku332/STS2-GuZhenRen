@@ -68,7 +68,9 @@ public sealed class YunTouZhuanXiangPower : ModPowerTemplate
 
         Flash();
         var player = Applier?.Player
-            ?? Owner.CombatState?.Players.FirstOrDefault();
+            ?? (Owner.CombatState?.Players.Count == 1
+                ? Owner.CombatState.Players[0]
+                : null);
         if (player is not null
             && player.RunState.Rng.CombatTargets.NextFloat(100f) < (float)Amount)
         {

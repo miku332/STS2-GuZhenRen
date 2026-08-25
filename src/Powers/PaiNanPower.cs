@@ -1,15 +1,21 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Audio.Debug;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Scaffolding.Content;
+using GuZhenRen.Multiplayer;
 
 namespace GuZhenRen.Powers;
 
@@ -18,6 +24,8 @@ public sealed class PaiNanPower : ModPowerTemplate
 {
     private static readonly HashSet<CardModel> _queuedCards =
         new(ReferenceEqualityComparer.Instance);
+
+    public static void ResetCombatState() => _queuedCards.Clear();
 
     public override PowerType Type => PowerType.Buff;
 
@@ -29,6 +37,11 @@ public sealed class PaiNanPower : ModPowerTemplate
 
     public static void TryHandleCardDrawn(CardModel card)
     {
+        if (card.Owner.NetId != RunManager.Instance.NetService.NetId)
+        {
+            return;
+        }
+
         var owner = card.Owner;
         var power = owner.Creature.GetPower<PaiNanPower>();
         if (power is null || power.Amount <= 0)
@@ -41,48 +54,130 @@ public sealed class PaiNanPower : ModPowerTemplate
             return;
         }
 
-        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(
-            new PaiNanDrawAction(owner, card));
+        var handCount = PileType.Hand.GetPile(owner).Cards.Count;
+        if (card.Pile?.Type == PileType.Hand)
+        {
+            handCount--;
+        }
+
+        var drawAmount = Math.Min(
+            (int)power.Amount,
+            Math.Max(0, CardPile.MaxCardsInHand - handCount));
+        var cardsToDraw = PileType.Draw.GetPile(owner)
+            .Cards
+            .Take(drawAmount)
+            .ToList();
+
+        var triggerCard = NetCombatCard.FromModel(card);
+        var payload = new PaiNanDrawPayload(
+            owner.NetId,
+            triggerCard.CombatCardIndex,
+            drawAmount,
+            cardsToDraw
+                .Select(drawCard => NetCombatCard.FromModel(drawCard).CombatCardIndex)
+                .ToArray());
+        NetGuZhenRenActions.RequestWithRetry(
+            () => NetGuZhenRenActions.RequestPaiNan(payload),
+            () => !owner.Creature.IsDead
+                && card.Pile?.Type == PileType.Hand,
+            () => _queuedCards.Remove(card),
+            "PaiNan");
     }
 
     private static bool IsStatusForPaiNan(CardModel card) =>
         card.Type == CardType.Status || card is Burn;
 
-    private sealed class PaiNanDrawAction : GameAction
+    internal static async Task ExecuteManagedDrawAsync(
+        RitsuLibManagedNetActionContext<PaiNanDrawPayload> context)
     {
-        private readonly Player _owner;
-        private readonly CardModel _card;
-
-        public PaiNanDrawAction(Player owner, CardModel card)
+        var target = context.Player.RunState.Players
+            .FirstOrDefault(player => player.NetId == context.Message.TargetNetId);
+        if (target is null)
         {
-            _owner = owner;
-            _card = card;
+            return;
         }
 
-        public override ulong OwnerId => _owner.NetId;
+        var card = NetCombatCard.ForTesting(context.Message.TriggerCardIndex).ToCardModelOrNull();
+        if (card is null)
+        {
+            return;
+        }
 
-        public override GameActionType ActionType => GameActionType.Combat;
+        var cardsToDraw = context.Message.CardIndices
+            .Select(NetCombatCard.ForTesting)
+            .Select(netCard => netCard.ToCardModelOrNull())
+            .Where(drawCard => drawCard is not null)
+            .Cast<CardModel>()
+            .ToList();
 
-        public override bool RecordableToReplay => false;
+        await new PaiNanDrawExecutor(
+            target,
+            card,
+            context.Message.DrawAmount,
+            cardsToDraw).ExecuteAsync(context.PlayerChoiceContext);
+    }
 
-        protected override async Task ExecuteAction()
+    private sealed class PaiNanDrawExecutor
+    {
+        private readonly Player _target;
+        private readonly CardModel _card;
+        private readonly int _drawAmount;
+        private readonly IReadOnlyList<CardModel> _cardsToDraw;
+
+        public PaiNanDrawExecutor(
+            Player target,
+            CardModel card,
+            int drawAmount,
+            IReadOnlyList<CardModel> cardsToDraw)
+        {
+            _target = target;
+            _card = card;
+            _drawAmount = drawAmount;
+            _cardsToDraw = cardsToDraw;
+        }
+
+        public async Task ExecuteAsync(PlayerChoiceContext choiceContext)
         {
             try
             {
-                var power = _owner.Creature.GetPower<PaiNanPower>();
-                if (power is null
-                    || power.Amount <= 0
-                    || !IsStatusForPaiNan(_card)
-                    || _card.Pile?.Type != PileType.Hand)
+                if (!IsStatusForPaiNan(_card))
                 {
                     return;
                 }
 
-                power.Flash();
-                var drawAmount = (int)power.Amount;
-                var choiceContext = new GameActionPlayerChoiceContext(this);
-                await CardCmd.Exhaust(choiceContext, _card);
-                await CardPileCmd.Draw(choiceContext, drawAmount, _owner);
+                _target.Creature.GetPower<PaiNanPower>()?.Flash();
+                if (_card.Pile?.Type == PileType.Hand)
+                {
+                    await CardCmd.Exhaust(choiceContext, _card);
+                }
+
+                if (_target.Creature.CombatState is not { } combatState
+                    || CombatManager.Instance.IsOverOrEnding)
+                {
+                    return;
+                }
+
+                if (!Hook.ShouldDraw(combatState, _target, fromHandDraw: false, out var modifier))
+                {
+                    await Hook.AfterPreventingDraw(combatState, modifier!);
+                    return;
+                }
+
+                var drawnCount = await DrawSpecificCards(choiceContext, _cardsToDraw);
+                while (drawnCount < _drawAmount)
+                {
+                    await CardPileCmd.ShuffleIfNecessary(choiceContext, _target);
+                    var remainingCards = PileType.Draw.GetPile(_target)
+                        .Cards
+                        .Take(_drawAmount - drawnCount)
+                        .ToList();
+                    if (remainingCards.Count == 0)
+                    {
+                        break;
+                    }
+
+                    drawnCount += await DrawSpecificCards(choiceContext, remainingCards);
+                }
             }
             finally
             {
@@ -90,10 +185,38 @@ public sealed class PaiNanPower : ModPowerTemplate
             }
         }
 
-        public override INetAction ToNetAction()
+        private async Task<int> DrawSpecificCards(
+            PlayerChoiceContext choiceContext,
+            IEnumerable<CardModel> cards)
         {
-            throw new NotSupportedException(
-                "GuZhenRen PaiNan draw actions are single-player only for now.");
+            var drawnCount = 0;
+            foreach (var card in cards.ToList())
+            {
+                if (card.Pile?.Type != PileType.Draw
+                    || PileType.Hand.GetPile(_target).Cards.Count >= CardPile.MaxCardsInHand)
+                {
+                    continue;
+                }
+
+                await CardPileCmd.Add(card, PileType.Hand);
+                var combatState = _target.Creature.CombatState;
+                if (combatState is null)
+                {
+                    return drawnCount;
+                }
+
+                CombatManager.Instance.History.CardDrawn(combatState, card, fromHandDraw: false);
+                await Hook.AfterCardDrawn(
+                    combatState,
+                    choiceContext,
+                    card,
+                    fromHandDraw: false);
+                card.InvokeDrawn();
+                NDebugAudioManager.Instance?.Play("card_deal.mp3", 0.25f, PitchVariance.Small);
+                drawnCount++;
+            }
+
+            return drawnCount;
         }
     }
 }

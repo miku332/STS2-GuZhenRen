@@ -137,7 +137,7 @@ public sealed class DuShiChang : ModEventTemplate
     {
         await PlayerCmd.LoseGold(cost, Owner!, GoldLossType.Spent);
 
-        if (Owner!.PlayerRng.Rewards.NextFloat(100f) >= _chance)
+        if (Rng.NextFloat(100f) >= _chance)
         {
             SetEventState(
                 L10NLookup($"{Id.Entry}.pages.FAILURE.description"),
@@ -145,7 +145,7 @@ public sealed class DuShiChang : ModEventTemplate
             return;
         }
 
-        var canonical = Owner.PlayerRng.Rewards.NextItem(candidates);
+        var canonical = Rng.NextItem(candidates);
         if (canonical is null)
         {
             SetEventState(

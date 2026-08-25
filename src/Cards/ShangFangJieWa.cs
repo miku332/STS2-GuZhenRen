@@ -10,6 +10,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
@@ -80,6 +81,7 @@ public sealed class ShangFangJieWa : AbstractShaZhaoCard
         await RemovePowerIfPresent<CurlUpPower>(target);
         await RemovePowerIfPresent<GuardedPower>(target);
         await RemovePowerIfPresent<HardenedShellPower>(target);
+        await RemovePowerIfPresent<JiuLongWenHuShenPower>(target);
     }
 
     private static async Task RemovePowerIfPresent<T>(Creature target)

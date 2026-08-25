@@ -36,7 +36,7 @@ public sealed class TaiGuRongYaoZhiGuangPower : ModPowerTemplate
             || !GuZhenRenTagRules.HasEffectiveTag(
                 cardSource,
                 GuZhenRenTags.GuangDao)
-            || result.TotalDamage <= 0)
+            || result.UnblockedDamage <= 0)
         {
             return;
         }
@@ -46,7 +46,7 @@ public sealed class TaiGuRongYaoZhiGuangPower : ModPowerTemplate
             await CreatureCmd.Damage(
                 choiceContext,
                 Owner,
-                result.TotalDamage,
+                result.UnblockedDamage,
                 ValueProp.Unpowered,
                 dealer,
                 null);

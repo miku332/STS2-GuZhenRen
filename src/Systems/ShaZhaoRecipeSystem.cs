@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
 
 namespace GuZhenRen.Systems;
@@ -65,22 +64,20 @@ internal static class ShaZhaoRecipeSystem
             return false;
         }
 
-        AbstractBenMingGuCard.IsSynthesizing = true;
-        try
+        using (AbstractBenMingGuCard.EnterSynthesisScope())
         {
             foreach (var ingredient in selectedIngredients)
             {
                 await CardPileCmd.RemoveFromDeck(ingredient, showPreview: false);
             }
         }
-        finally
-        {
-            AbstractBenMingGuCard.IsSynthesizing = false;
-        }
 
         var reward = player.RunState.CreateCard(recipe.RewardCard, player);
         reward.FloorAddedToDeck = player.RunState.TotalFloor;
-        SaveManager.Instance.MarkCardAsSeen(reward);
+        if (LocalContext.IsMe(player))
+        {
+            SaveManager.Instance.MarkCardAsSeen(reward);
+        }
         if (!player.DiscoveredCards.Contains(reward.Id))
         {
             player.DiscoveredCards.Add(reward.Id);
@@ -103,13 +100,6 @@ internal static class ShaZhaoRecipeSystem
         recipe.IsCrafted = true;
         recipe.Flash();
         CardCmd.PreviewCardPileAdd([result], 2f);
-
-        if (LocalContext.IsMe(player)
-            && !RunManager.Instance.IsSingleplayerOrFakeMultiplayer)
-        {
-            RunManager.Instance.RewardSynchronizer.SyncLocalObtainedCard(
-                reward);
-        }
 
         return true;
     }
