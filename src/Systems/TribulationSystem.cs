@@ -29,6 +29,9 @@ public sealed record TribulationDefinition(
 
 public static class TribulationSystem
 {
+    private const int EncodedDefinitionBase = 100;
+    private const int LegacyEncodedDefinitionFlag = 1 << 30;
+
     private static readonly IReadOnlyList<TribulationDefinition> Definitions =
     [
         new(
@@ -149,7 +152,7 @@ public static class TribulationSystem
             "HAO_JIE_YING_SHENG_CHONG",
             "应声虫",
             TribulationType.Grand,
-            power => ApplyToRandomEnemy<YingShengChongPower>(power, 1),
+            ApplyYingShengChong,
             NoEffect),
         new(
             "HAO_JIE_GUI_GUA_YI",
@@ -261,7 +264,48 @@ public static class TribulationSystem
         };
     }
 
-    public static int GetTypeIndex(TribulationType type) => (int)type;
+    public static int EncodeDefinition(TribulationDefinition definition)
+    {
+        for (var index = 0; index < Definitions.Count; index++)
+        {
+            if (Definitions[index] == definition)
+            {
+                return EncodedDefinitionBase + index;
+            }
+        }
+
+        throw new InvalidOperationException(
+            $"Tribulation '{definition.Id}' is not registered.");
+    }
+
+    public static bool TryDecodeDefinition(
+        decimal encodedAmount,
+        out TribulationDefinition definition)
+    {
+        definition = null!;
+        if (encodedAmount < int.MinValue || encodedAmount > int.MaxValue)
+        {
+            return false;
+        }
+
+        var encoded = decimal.ToInt32(encodedAmount);
+        var index = encoded - EncodedDefinitionBase;
+        if (index >= 0 && index < Definitions.Count)
+        {
+            definition = Definitions[index];
+            return true;
+        }
+
+        if ((encoded & LegacyEncodedDefinitionFlag) == 0)
+        {
+            return false;
+        }
+
+        var code = encoded & ~LegacyEncodedDefinitionFlag;
+        definition = Definitions.FirstOrDefault(candidate =>
+            GetStableDefinitionCode(candidate.Id) == code)!;
+        return definition is not null;
+    }
 
     public static TribulationDefinition Select(
         TribulationType type,
@@ -277,6 +321,20 @@ public static class TribulationSystem
         }
 
         return player.RunState.Rng.CombatCardSelection.NextItem(candidates)!;
+    }
+
+    private static int GetStableDefinitionCode(string id)
+    {
+        const uint offsetBasis = 2166136261;
+        const uint prime = 16777619;
+        var hash = offsetBasis;
+        foreach (var character in id)
+        {
+            hash ^= character;
+            hash *= prime;
+        }
+
+        return (int)(hash & 0x3FFFFFFF);
     }
 
     private static Task NoEffect(PlayerTribulationPower power) =>
@@ -308,6 +366,36 @@ public static class TribulationSystem
             new ThrowingPlayerChoiceContext(),
             target,
             amount,
+            power.Owner,
+            null);
+    }
+
+    private static async Task ApplyYingShengChong(PlayerTribulationPower power)
+    {
+        if (power.Owner.Player is not { } player
+            || power.Owner.CombatState is not { } combatState)
+        {
+            return;
+        }
+
+        var candidates = combatState.Enemies
+            .Where(enemy => enemy.IsAlive
+                && enemy.GetPower<MinionPower>() is null)
+            .ToList();
+        if (candidates.Count == 0)
+        {
+            return;
+        }
+
+        var target = player.RunState.Rng.CombatTargets.NextItem(candidates)!;
+        var yingShengChong =
+            (YingShengChongPower)ModelDb.Power<YingShengChongPower>().ToMutable();
+        power.FlashEffect();
+        await PowerCmd.Apply(
+            new ThrowingPlayerChoiceContext(),
+            yingShengChong,
+            target,
+            1,
             power.Owner,
             null);
     }

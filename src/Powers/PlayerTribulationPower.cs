@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using GuZhenRen.Relics;
 
 namespace GuZhenRen.Powers;
 
@@ -29,9 +30,7 @@ public sealed class PlayerTribulationPower : ModPowerTemplate
         Creature? applier,
         CardModel? cardSource)
     {
-        var typeIndex = Math.Clamp((int)Amount - 1, 0, 5);
-        var type = (TribulationType)typeIndex;
-        _definition = TribulationSystem.Select(type, Owner.Player!);
+        _definition = ResolveDefinition();
 
         Entry.Logger.Info(
             $"[Tribulation] Started {_definition.Type}: {_definition.Name}.");
@@ -42,8 +41,44 @@ public sealed class PlayerTribulationPower : ModPowerTemplate
         PlayerChoiceContext choiceContext,
         Player player)
     {
-        return player == Owner.Player && _definition is not null
-            ? _definition.OnPlayerTurnStart(this)
+        return player == Owner.Player
+            ? ResolveDefinition().OnPlayerTurnStart(this)
             : Task.CompletedTask;
+    }
+
+    private TribulationDefinition ResolveDefinition()
+    {
+        if (_definition is not null)
+        {
+            return _definition;
+        }
+
+        if (TribulationSystem.TryDecodeDefinition(Amount, out var definition))
+        {
+            return _definition = definition;
+        }
+
+        TribulationType type;
+        if (Amount is >= 1 and <= 6)
+        {
+            // Compatibility for saves that only stored the tribulation type.
+            type = (TribulationType)((int)Amount - 1);
+        }
+        else if (Owner.Player?.GetRelic<AbstractKongQiaoRelic>() is { } aperture)
+        {
+            type = TribulationSystem.GetNextType(aperture.Rank, aperture.Xp);
+            Entry.Logger.Warn(
+                $"[Tribulation] Invalid encoded amount {Amount}; " +
+                $"falling back to {type} for rank {aperture.Rank}, progress {aperture.Xp}.");
+        }
+        else
+        {
+            type = TribulationType.Earthly;
+            Entry.Logger.Warn(
+                $"[Tribulation] Invalid encoded amount {Amount} without an aperture; " +
+                "falling back to Earthly.");
+        }
+
+        return _definition = TribulationSystem.Select(type, Owner.Player!);
     }
 }
