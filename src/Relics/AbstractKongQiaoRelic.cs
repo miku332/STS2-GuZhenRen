@@ -162,11 +162,11 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
             && !IsTribulationDisabled())
         {
             var type = TribulationSystem.GetNextType(Rank, _xp);
-            var typeIndex = TribulationSystem.GetTypeIndex(type);
+            var definition = TribulationSystem.Select(type, Owner);
             await PowerCmd.Apply<PlayerTribulationPower>(
                 new ThrowingPlayerChoiceContext(),
                 Owner.Creature,
-                typeIndex + 1,
+                TribulationSystem.EncodeDefinition(definition),
                 Owner.Creature,
                 null);
         }
