@@ -15,6 +15,7 @@ internal static class LongGongAct4Selection
 
     private static bool _loaded;
     private static bool _enabled = true;
+    private static bool _networkEnabled = true;
     private static Vector2 _panelPositionRatio = DefaultPanelPositionRatio;
 
     public static bool Enabled
@@ -44,6 +45,19 @@ internal static class LongGongAct4Selection
             EnsureLoaded();
             return _panelPositionRatio;
         }
+    }
+
+    public static bool GetEffectiveEnabled(bool isClient) =>
+        isClient ? _networkEnabled : Enabled;
+
+    public static void SetNetworkEnabled(bool enabled)
+    {
+        _networkEnabled = enabled;
+    }
+
+    public static void ClearNetworkEnabled()
+    {
+        _networkEnabled = true;
     }
 
     public static void SavePanelPosition(Vector2 ratio)

@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Scaffolding.Godot;
@@ -15,6 +16,17 @@ namespace GuZhenRen.Monsters;
 public sealed class YouLongQiQiang : ModMonsterTemplate
 {
     private int _movesPerformed;
+
+    [SavedProperty]
+    private int MovesPerformed
+    {
+        get => _movesPerformed;
+        set
+        {
+            AssertMutable();
+            _movesPerformed = Math.Max(0, value);
+        }
+    }
 
     public override int MinInitialHp => 500;
 

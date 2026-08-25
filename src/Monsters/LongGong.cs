@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -42,6 +43,94 @@ public sealed class LongGong : ModMonsterTemplate
     private bool _secondPhase;
     private bool _skipLongYuThisTurn;
 
+    [SavedProperty]
+    private bool IntroPlayed
+    {
+        get => _introPlayed;
+        set
+        {
+            AssertMutable();
+            _introPlayed = value;
+        }
+    }
+
+    [SavedProperty]
+    private bool HasSummoned
+    {
+        get => _hasSummoned;
+        set
+        {
+            AssertMutable();
+            _hasSummoned = value;
+        }
+    }
+
+    [SavedProperty]
+    private bool SummonedYouLong
+    {
+        get => _summonedYouLong;
+        set
+        {
+            AssertMutable();
+            _summonedYouLong = value;
+        }
+    }
+
+    [SavedProperty]
+    private bool ThreeQiPreparation
+    {
+        get => _threeQiPreparation;
+        set
+        {
+            AssertMutable();
+            _threeQiPreparation = value;
+        }
+    }
+
+    [SavedProperty]
+    private bool PhaseTransitionPending
+    {
+        get => _phaseTransitionPending;
+        set
+        {
+            AssertMutable();
+            _phaseTransitionPending = value;
+        }
+    }
+
+    [SavedProperty]
+    private bool PhaseTransitionDialoguePlayed
+    {
+        get => _phaseTransitionDialoguePlayed;
+        set
+        {
+            AssertMutable();
+            _phaseTransitionDialoguePlayed = value;
+        }
+    }
+
+    [SavedProperty]
+    private bool SecondPhase
+    {
+        get => _secondPhase;
+        set
+        {
+            AssertMutable();
+            _secondPhase = value;
+        }
+    }
+
+    [SavedProperty]
+    private bool SkipLongYuThisTurn
+    {
+        get => _skipLongYuThisTurn;
+        set
+        {
+            AssertMutable();
+            _skipLongYuThisTurn = value;
+        }
+    }
+
     public bool IsInSecondPhase => _secondPhase;
 
     public override int MinInitialHp => 800;
@@ -68,7 +157,11 @@ public sealed class LongGong : ModMonsterTemplate
         await PowerCmd.Apply<LongYuShangBinPower>(
             context, Creature, 40, Creature, null);
         await PowerCmd.Apply<JiuLongWenHuShenPower>(
-            context, Creature, 9, Creature, null);
+            context,
+            Creature,
+            JiuLongWenHuShenPower.GetMaxStacks(Creature),
+            Creature,
+            null);
 
         _ = TaskHelper.RunSafely(PlayIntroAfterCombatStarts());
     }
@@ -342,8 +435,22 @@ public sealed class LongGong : ModMonsterTemplate
         _threeQiPreparation = false;
         _skipLongYuThisTurn = true;
 
-        await CreatureCmd.SetMaxHp(Creature, 800);
-        await CreatureCmd.Heal(Creature, 800);
+        var debuffs = Creature.Powers
+            .Where(power => power.TypeForCurrentAmount == PowerType.Debuff)
+            .ToList();
+        foreach (var debuff in debuffs)
+        {
+            await PowerCmd.Remove(debuff);
+        }
+
+        var secondPhaseMaxHp =
+            MegaCrit.Sts2.Core.Entities.Creatures.Creature.ScaleHpForMultiplayer(
+                800,
+                CombatState.Encounter,
+                CombatState.Players.Count,
+                CombatState.RunState.CurrentActIndex);
+        await CreatureCmd.SetMaxHp(Creature, secondPhaseMaxHp);
+        await CreatureCmd.Heal(Creature, secondPhaseMaxHp);
         _phaseTransitionPending = false;
 
         var context = new ThrowingPlayerChoiceContext();
@@ -360,15 +467,20 @@ public sealed class LongGong : ModMonsterTemplate
         }
 
         var protection = Creature.GetPower<JiuLongWenHuShenPower>();
+        var protectionStacks = JiuLongWenHuShenPower.GetMaxStacks(Creature);
         if (protection is null)
         {
             await PowerCmd.Apply<JiuLongWenHuShenPower>(
-                context, Creature, 9, Creature, null);
+                context, Creature, protectionStacks, Creature, null);
         }
-        else if (protection.Amount != 9)
+        else if (protection.Amount != protectionStacks)
         {
             await PowerCmd.ModifyAmount(
-                context, protection, 9 - protection.Amount, Creature, null);
+                context,
+                protection,
+                protectionStacks - protection.Amount,
+                Creature,
+                null);
         }
 
         if (Creature.GetPower<SanQiGuiLaiPower>() is null)

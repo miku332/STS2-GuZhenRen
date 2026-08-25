@@ -1,7 +1,9 @@
 using GuZhenRen.RestSite;
+using GuZhenRen.Multiplayer;
 using GuZhenRen.Systems;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -10,6 +12,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interactions.RightClick;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace GuZhenRen.Relics;
@@ -69,10 +72,47 @@ public abstract class AbstractRecipeRelic
 
     public async Task OnRightClick(ModRightClickExecutionContext context)
     {
-        if (!CanHandleRightClickLocal(new ModRightClickContext(
-                context.Player,
-                context.Model,
-                context.Trigger)))
+        if (!LocalContext.IsMe(context.Player))
+        {
+            return;
+        }
+
+        var payload = new WeiLaiShenRecipeBorrowPayload(
+            context.Player.NetId,
+            Id.ToString());
+        NetGuZhenRenActions.RequestWithRetry(
+            () => NetGuZhenRenActions.RequestWeiLaiShenRecipeBorrow(payload),
+            () => context.Player.GetRelic<WeiLaiShenRelic>() is not null,
+            () => Entry.Logger.Warn("Future Self recipe borrow action was not queued."),
+            "Future Self recipe borrow");
+        await Task.CompletedTask;
+    }
+
+    internal static async Task ExecuteManagedBorrowAsync(
+        RitsuLibManagedNetActionContext<WeiLaiShenRecipeBorrowPayload> context)
+    {
+        if (context.Message.OwnerNetId != context.Player.NetId)
+        {
+            return;
+        }
+
+        var recipeId = ModelId.Deserialize(context.Message.RecipeRelicModelId);
+        var recipe = context.Player.Relics
+            .OfType<AbstractRecipeRelic>()
+            .FirstOrDefault(candidate => candidate.Id == recipeId);
+        if (recipe is null)
+        {
+            return;
+        }
+
+        await recipe.ExecuteBorrowAsync();
+    }
+
+    private async Task ExecuteBorrowAsync()
+    {
+        if (IsCrafted
+            || !CanBeBorrowedByWeiLaiShen
+            || !CombatManager.Instance.IsInProgress)
         {
             return;
         }

@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Patching.Models;
 
 namespace GuZhenRen.Patches;
@@ -29,6 +30,11 @@ public sealed class TezcataraRelicPoolPatch : IPatchMethod
         Tezcatara __instance,
         ref List<EventOption> __result)
     {
+        if (!RunManager.Instance.IsSingleplayerOrFakeMultiplayer)
+        {
+            return;
+        }
+
         var relic = ModelDb.Relic<DingXianYou>().ToMutable();
         var owner = __instance.Owner;
         if (owner is not null)

@@ -2,6 +2,7 @@ using GuZhenRen.CardPools;
 using GuZhenRen.Cards;
 using GuZhenRen.Relics;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Events;
@@ -55,7 +56,7 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
 
     protected override Task BeforeEventStarted(bool isPreFinished)
     {
-        _hallOneHasLuoXuan = Owner!.RunState.Rng.UpFront.NextFloat(100f) < 50f;
+        _hallOneHasLuoXuan = Rng.NextFloat(100f) < 50f;
         return Task.CompletedTask;
     }
 
@@ -318,10 +319,10 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
 
         if (cardCandidates.Count > 0
             && (relicCandidates.Count == 0
-                || Owner!.PlayerRng.Rewards.NextFloat(100f) < 50f))
+                || Rng.NextFloat(100f) < 50f))
         {
             await AddCardToDeck(
-                Owner!.PlayerRng.Rewards.NextItem(cardCandidates)!);
+                Rng.NextItem(cardCandidates)!);
             return;
         }
 
@@ -329,7 +330,7 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
         {
             _totalLootCount++;
             await RelicCmd.Obtain(
-                Owner!.PlayerRng.Rewards.NextItem(relicCandidates)!.ToMutable(),
+                Rng.NextItem(relicCandidates)!.ToMutable(),
                 Owner);
             return;
         }
@@ -342,7 +343,10 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
         _totalLootCount++;
         var card = Owner!.RunState.CreateCard(canonical, Owner);
         card.FloorAddedToDeck = Owner.RunState.TotalFloor;
-        SaveManager.Instance.MarkCardAsSeen(card);
+        if (LocalContext.IsMe(Owner))
+        {
+            SaveManager.Instance.MarkCardAsSeen(card);
+        }
         if (!Owner.DiscoveredCards.Contains(card.Id))
         {
             Owner.DiscoveredCards.Add(card.Id);
@@ -361,7 +365,10 @@ public sealed class BaiGuChuanCheng : ModEventTemplate
         }
 
         result.cardAdded.Pile?.InvokeCardAddFinished();
-        CardCmd.PreviewCardPileAdd([result], 1.5f);
+        if (LocalContext.IsMe(Owner))
+        {
+            CardCmd.PreviewCardPileAdd([result], 1.5f);
+        }
     }
 
     private void AddEncounterChance(int amount)

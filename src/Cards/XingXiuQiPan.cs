@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,6 +16,18 @@ namespace GuZhenRen.Cards;
 public sealed class XingXiuQiPan : AbstractGuWuCard
 {
     private static readonly HashSet<ulong> TengNuoUsedByPlayer = [];
+    private bool _tengNuoUsed;
+
+    [SavedProperty]
+    private bool TengNuoUsed
+    {
+        get => _tengNuoUsed;
+        set
+        {
+            AssertMutable();
+            _tengNuoUsed = value;
+        }
+    }
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/XingXiuQiPan.png");
@@ -39,7 +52,8 @@ public sealed class XingXiuQiPan : AbstractGuWuCard
             CombatState.CreateCard<OptionZhenChaXingXiuQiPan>(Owner),
             CombatState.CreateCard<OptionTuiSuanXingXiuQiPan>(Owner)
         };
-        if (!TengNuoUsedByPlayer.Contains(Owner.NetId))
+        if (!TengNuoUsed
+            && !TengNuoUsedByPlayer.Contains(Owner.NetId))
         {
             choices.Add(CombatState.CreateCard<OptionTengNuoXingXiuQiPan>(Owner));
         }
@@ -83,8 +97,10 @@ public sealed class XingXiuQiPan : AbstractGuWuCard
                 break;
 
             case OptionTengNuoXingXiuQiPan:
-                if (TengNuoUsedByPlayer.Add(Owner.NetId))
+                if (!TengNuoUsed
+                    && TengNuoUsedByPlayer.Add(Owner.NetId))
                 {
+                    TengNuoUsed = true;
                     await PowerCmd.Apply<TengNuoExtraTurnPower>(
                         choiceContext,
                         Owner.Creature,

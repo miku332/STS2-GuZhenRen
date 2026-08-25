@@ -55,7 +55,7 @@
   "GU_ZHEN_REN_RELIC_LI_DAO_DAO_HEN.description": "At the beginning of each battle, obtain Strength equal to the number of layers of Relic.",
   "GU_ZHEN_REN_RELIC_LI_DAO_DAO_HEN.flavor": "The traces of Strength Path engraved on the Gu Master's body will turn into real Strength after accumulation.",
   "GU_ZHEN_REN_RELIC_NI_LIU_HE.title": "Reverse Flow River",
-  "GU_ZHEN_REN_RELIC_NI_LIU_HE.description": "Reverse the next {Water} attack damage you receive to the attacker. Every time you advance one level, replenish 1 layer of Reverse Flow River water. Reverse Flow River water stores at most {MaxWater} layers.",
+  "GU_ZHEN_REN_RELIC_NI_LIU_HE.description": "Reflect the next {Water} instances of unblocked attack damage you would take back to the attacker. Gain 1 Reverse Flow River water whenever you advance one floor, up to {MaxWater}.",
   "GU_ZHEN_REN_RELIC_NI_LIU_HE.flavor": "Rule Path, the secret realm of heaven and earth, can counter all attacks.",
   "GU_ZHEN_REN_RELIC_JIAN_MIAN_CENG_XIANG_SHI_RELIC.title": "Familiar Face",
   "GU_ZHEN_REN_RELIC_JIAN_MIAN_CENG_XIANG_SHI_RELIC.description": "When the next {Battles} battle starts, give all enemies{FriendStacks} layer Friend. When the effect is exhausted or this Relic is right-clicked, it will be converted into a card and returned to your deck.",

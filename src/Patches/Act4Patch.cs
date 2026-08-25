@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Map;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Encounters;
+using MegaCrit.Sts2.Core.Models.Singleton;
 using MegaCrit.Sts2.Core.Multiplayer.Game;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Screens.Map;
@@ -190,6 +191,70 @@ public static class Act4Patch
         rooms.Boss = ModelDb.Encounter<LongGongEncounter>();
         rooms.eliteEncounters.Clear();
         rooms.eliteEncounters.Add(ModelDb.Encounter<ByrdonisElite>());
+    }
+
+    [HarmonyPatch(
+        typeof(MultiplayerScalingModel),
+        nameof(MultiplayerScalingModel.GetMultiplayerScaling))]
+    [HarmonyPrefix]
+    public static bool PrefixGetMultiplayerScaling(
+        EncounterModel? encounter,
+        int actIndex,
+        ref decimal __result)
+    {
+        if (actIndex != 3
+            || GetRunState(RunManager.Instance)?.Act is not GuZhenRenFinalAct)
+        {
+            return true;
+        }
+
+        __result = encounter?.RoomType == RoomType.Boss ? 1.3m : 1.2m;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(ActModel), "get_MapTopBgPath")]
+    [HarmonyPrefix]
+    public static bool PrefixMapTopBgPath(
+        ActModel __instance,
+        ref string __result)
+    {
+        if (__instance is not GuZhenRenFinalAct)
+        {
+            return true;
+        }
+
+        __result = MapTopBgPath;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(ActModel), "get_MapMidBgPath")]
+    [HarmonyPrefix]
+    public static bool PrefixMapMidBgPath(
+        ActModel __instance,
+        ref string __result)
+    {
+        if (__instance is not GuZhenRenFinalAct)
+        {
+            return true;
+        }
+
+        __result = MapMidBgPath;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(ActModel), "get_MapBotBgPath")]
+    [HarmonyPrefix]
+    public static bool PrefixMapBotBgPath(
+        ActModel __instance,
+        ref string __result)
+    {
+        if (__instance is not GuZhenRenFinalAct)
+        {
+            return true;
+        }
+
+        __result = MapBotBgPath;
+        return false;
     }
 
     [HarmonyPatch(typeof(ActModel), "get_MapTopBg")]

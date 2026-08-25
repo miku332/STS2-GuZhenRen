@@ -1,5 +1,6 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Tags;
+using GuZhenRen.Multiplayer;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Multiplayer;
@@ -9,6 +10,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace GuZhenRen.Cards;
@@ -44,6 +46,11 @@ public sealed class DiMai : GuZhenRenCardTemplate
 
     public void OnCardDrawn()
     {
+        if (Owner.NetId != RunManager.Instance.NetService.NetId)
+        {
+            return;
+        }
+
         var discardCount = PileType.Discard.GetPile(Owner).Cards.Count;
         var handCount = IsUpgraded
             ? PileType.Hand.GetPile(Owner).Cards.Count
@@ -52,8 +59,12 @@ public sealed class DiMai : GuZhenRenCardTemplate
 
         if (block > 0)
         {
-            RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(
-                new DiMaiBlockAction(Owner, block));
+            var payload = new DiMaiBlockPayload(Owner.NetId, block);
+            NetGuZhenRenActions.RequestWithRetry(
+                () => NetGuZhenRenActions.RequestDiMai(payload),
+                () => !Owner.Creature.IsDead && Pile?.Type == PileType.Hand,
+                static () => { },
+                "DiMai");
         }
     }
 
@@ -66,41 +77,22 @@ public sealed class DiMai : GuZhenRenCardTemplate
     {
     }
 
-    private sealed class DiMaiBlockAction : GameAction
+    internal static async Task ExecuteManagedBlockAsync(
+        RitsuLibManagedNetActionContext<DiMaiBlockPayload> context)
     {
-        private readonly Player _owner;
-        private readonly int _block;
-
-        public DiMaiBlockAction(Player owner, int block)
+        var owner = context.Player.RunState.Players
+            .FirstOrDefault(player => player.NetId == context.Message.TargetNetId);
+        if (owner is null
+            || owner.Creature.IsDead
+            || context.Message.Block <= 0)
         {
-            _owner = owner;
-            _block = block;
+            return;
         }
 
-        public override ulong OwnerId => _owner.NetId;
-
-        public override GameActionType ActionType => GameActionType.Combat;
-
-        public override bool RecordableToReplay => false;
-
-        protected override async Task ExecuteAction()
-        {
-            if (_owner.Creature.IsDead || _block <= 0)
-            {
-                return;
-            }
-
-            await CreatureCmd.GainBlock(
-                _owner.Creature,
-                _block,
-                MegaCrit.Sts2.Core.ValueProps.ValueProp.Move,
-                null);
-        }
-
-        public override INetAction ToNetAction()
-        {
-            throw new NotSupportedException(
-                "GuZhenRen DiMai is single-player only for now.");
-        }
+        await CreatureCmd.GainBlock(
+            owner.Creature,
+            context.Message.Block,
+            MegaCrit.Sts2.Core.ValueProps.ValueProp.Move,
+            null);
     }
 }

@@ -10,9 +10,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.Cards;
 using GuZhenRen.Tags;
+using GuZhenRen.Multiplayer;
+using GuZhenRen.Systems;
 
 namespace GuZhenRen.Powers;
 
@@ -40,7 +43,7 @@ public sealed class YiXinErYongPower : ModPowerTemplate
         return Task.CompletedTask;
     }
 
-    public override async Task AfterCardPlayed(
+    public override Task AfterCardPlayed(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay)
     {
@@ -49,25 +52,53 @@ public sealed class YiXinErYongPower : ModPowerTemplate
             || cardPlay.IsAutoPlay
             || Amount <= 0)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         if (ReferenceEquals(cardPlay.Card, _sourceCard))
         {
             _sourceCard = null;
-            return;
+            return Task.CompletedTask;
         }
 
-        Flash();
-        SetAmount(Amount - 1, false);
-
-        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(
-            new YiXinErYongAutoPlayAction(Owner.Player));
-
-        if (Amount <= 0)
+        var owner = Owner.Player;
+        var candidates = PileType.Hand.GetPile(owner).Cards
+            .Where(IsCandidateCard)
+            .ToList();
+        if (candidates.Count == 0)
         {
-            await PowerCmd.Remove(this);
+            return Task.CompletedTask;
         }
+
+        var card = owner.RunState.Rng.CombatCardSelection.NextItem(candidates);
+        if (card is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var target = GetAutoPlayTarget(card, owner);
+        if (card.TargetType == TargetType.AnyEnemy && target is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (MultiplayerActionAuthority.IsAuthority)
+        {
+            var payload = new YiXinErYongAutoPlayPayload(
+                owner.NetId,
+                NetCombatCard.FromModel(card).CombatCardIndex,
+                target?.CombatId,
+                card.EnergyCost.CostsX
+                    ? card.Owner.PlayerCombatState?.Energy ?? 0
+                    : 0);
+            NetGuZhenRenActions.RequestWithRetry(
+                () => NetGuZhenRenActions.RequestYiXinErYong(payload),
+                () => !owner.Creature.IsDead
+                    && card.Pile?.Type == PileType.Hand,
+                static () => { },
+                "YiXinErYong");
+        }
+        return Task.CompletedTask;
     }
 
     public override async Task AfterSideTurnEnd(
@@ -81,24 +112,13 @@ public sealed class YiXinErYongPower : ModPowerTemplate
         }
     }
 
-    private static async Task TryAutoPlayRandomCard(
+    private static async Task TryAutoPlayCard(
         PlayerChoiceContext choiceContext,
-        Player owner)
+        Player owner,
+        CardModel card,
+        Creature? target,
+        int capturedXValue)
     {
-        var candidates = PileType.Hand.GetPile(owner).Cards
-            .Where(IsCandidateCard)
-            .ToList();
-        if (candidates.Count == 0)
-        {
-            return;
-        }
-
-        var card = owner.RunState.Rng.CombatCardSelection.NextItem(candidates);
-        if (card is null)
-        {
-            return;
-        }
-
         if (!AutoPlayingCards.Add(card))
         {
             return;
@@ -106,15 +126,9 @@ public sealed class YiXinErYongPower : ModPowerTemplate
 
         try
         {
-            var target = GetAutoPlayTarget(card);
-            if (card.TargetType == TargetType.AnyEnemy && target is null)
-            {
-                return;
-            }
-
             if (card.EnergyCost.CostsX)
             {
-                card.EnergyCost.CapturedXValue = card.Owner.PlayerCombatState?.Energy ?? 0;
+                card.EnergyCost.CapturedXValue = capturedXValue;
             }
 
             card.SetToFreeThisTurn();
@@ -145,7 +159,7 @@ public sealed class YiXinErYongPower : ModPowerTemplate
             && !card.Keywords.Contains(CardKeyword.Unplayable);
     }
 
-    private static Creature? GetAutoPlayTarget(CardModel card)
+    private static Creature? GetAutoPlayTarget(CardModel card, Player owner)
     {
         if (card.TargetType != TargetType.AnyEnemy)
         {
@@ -156,41 +170,51 @@ public sealed class YiXinErYongPower : ModPowerTemplate
             .Where(enemy => enemy.IsAlive)
             .ToList();
         return aliveEnemies is { Count: > 0 }
-            ? card.Owner.RunState.Rng.CombatTargets.NextItem(aliveEnemies)
+            ? owner.RunState.Rng.CombatTargets.NextItem(aliveEnemies)
             : null;
     }
 
-    private sealed class YiXinErYongAutoPlayAction : GameAction
+    internal static async Task ExecuteManagedAutoPlayAsync(
+        RitsuLibManagedNetActionContext<YiXinErYongAutoPlayPayload> context)
     {
-        private readonly Player _owner;
-
-        public YiXinErYongAutoPlayAction(Player owner)
+        var owner = context.Player.RunState.Players
+            .FirstOrDefault(player => player.NetId == context.Message.OwnerNetId);
+        if (owner is null || CombatManager.Instance.IsOverOrEnding)
         {
-            _owner = owner;
+            return;
         }
 
-        public override ulong OwnerId => _owner.NetId;
-
-        public override GameActionType ActionType => GameActionType.Combat;
-
-        public override bool RecordableToReplay => false;
-
-        protected override async Task ExecuteAction()
+        var power = owner.Creature.GetPower<YiXinErYongPower>();
+        if (power is null || power.Amount <= 0)
         {
-            if (CombatManager.Instance.IsOverOrEnding)
-            {
-                return;
-            }
-
-            await TryAutoPlayRandomCard(
-                new GameActionPlayerChoiceContext(this),
-                _owner);
+            return;
         }
 
-        public override INetAction ToNetAction()
+        power.Flash();
+        power.SetAmount(power.Amount - 1, false);
+        if (power.Amount <= 0)
         {
-            throw new NotSupportedException(
-                "GuZhenRen YiXinErYong autoplay actions are single-player only for now.");
+            await PowerCmd.Remove(power);
         }
+
+        var card = NetCombatCard.ForTesting(context.Message.CardIndex).ToCardModelOrNull();
+        if (card is null)
+        {
+            return;
+        }
+
+        var target = card.CombatState?.HittableEnemies
+            .FirstOrDefault(enemy => enemy.CombatId == context.Message.TargetCombatId);
+        if (card.TargetType == TargetType.AnyEnemy && target is null)
+        {
+            return;
+        }
+
+        await TryAutoPlayCard(
+            context.PlayerChoiceContext,
+            owner,
+            card,
+            target,
+            context.Message.CapturedXValue);
     }
 }

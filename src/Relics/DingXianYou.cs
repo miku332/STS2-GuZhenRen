@@ -1,5 +1,6 @@
 using GuZhenRen.CardPools;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,5 +16,6 @@ public sealed class DingXianYou : ModRelicTemplate
         IconOutlinePath: "res://GuZhenRen/images/relics/outline/DingXianYou.png",
         BigIconPath: "res://GuZhenRen/images/relics/DingXianYou.png");
 
-    public override bool ShouldAllowFreeTravel() => true;
+    public override bool ShouldAllowFreeTravel() =>
+        RunManager.Instance.IsSingleplayerOrFakeMultiplayer;
 }

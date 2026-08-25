@@ -8,11 +8,11 @@ namespace GuZhenRen.Patches;
 
 internal static class QiHuState
 {
-    private static int _bypassDepth;
+    private static readonly AsyncLocal<int> BypassDepth = new();
 
     public static IDisposable EnterBypassScope()
     {
-        _bypassDepth++;
+        BypassDepth.Value++;
         return new BypassScope();
     }
 
@@ -37,7 +37,7 @@ internal static class QiHuState
         out Creature protector)
     {
         protector = target;
-        if (_bypassDepth > 0
+        if (BypassDepth.Value > 0
             || target.Monster is not LongGong
             || target.CombatState is not { } combatState)
         {
@@ -70,7 +70,7 @@ internal static class QiHuState
             }
 
             _disposed = true;
-            _bypassDepth = Math.Max(0, _bypassDepth - 1);
+            BypassDepth.Value = Math.Max(0, BypassDepth.Value - 1);
         }
     }
 }

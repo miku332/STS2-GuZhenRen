@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GuZhenRen.CardPools;
+using GuZhenRen.Multiplayer;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -10,10 +11,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.RunData;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace GuZhenRen.Potions;
@@ -75,6 +78,41 @@ public sealed class FuRenXin : ModPotionTemplate
         RefreshDisplay(potion);
     }
 
+    internal static bool PrepareManualUse(FuRenXin potion)
+    {
+        if (!potion.IsMutable || potion.Owner is null)
+        {
+            return true;
+        }
+
+        var owner = potion.Owner;
+        if (owner.NetId != RunManager.Instance.NetService.NetId)
+        {
+            return true;
+        }
+
+        var slot = owner.GetPotionSlotIndex(potion);
+        if (slot < 0)
+        {
+            return true;
+        }
+
+        var payload = new FuRenXinGrowthPayload(
+        [
+            new FuRenXinSlotPayload(
+                owner.NetId,
+                slot,
+                InitialPoison + GetBonus(owner, slot))
+        ]);
+        var requested = NetGuZhenRenActions.RequestFuRenXinGrowth(payload);
+        if (!requested)
+        {
+            Entry.Logger.Warn("FuRenXin use was deferred because its value could not be synchronized.");
+        }
+
+        return requested;
+    }
+
     public static void AfterCreatureDied(CreatureDiedEvent evt)
     {
         if (evt.WasRemovalPrevented
@@ -86,20 +124,64 @@ public sealed class FuRenXin : ModPotionTemplate
             return;
         }
 
-        foreach (var player in evt.CombatState.Players)
+        var localPlayer = evt.CombatState.Players.FirstOrDefault(player =>
+            player.NetId == RunManager.Instance.NetService.NetId
+            && player.Creature.IsAlive);
+        if (localPlayer is null)
         {
-            if (!player.Creature.IsAlive)
+            return;
+        }
+
+        var potions = localPlayer.PotionSlots
+            .OfType<FuRenXin>()
+            .Select(potion =>
+            {
+                var slot = localPlayer.GetPotionSlotIndex(potion);
+                return new FuRenXinSlotPayload(
+                    localPlayer.NetId,
+                    slot,
+                    InitialPoison + GetBonus(localPlayer, slot) + PoisonGrowthPerKill);
+            })
+            .Where(static potion => potion.Slot >= 0)
+            .ToArray();
+        if (potions.Length == 0)
+        {
+            return;
+        }
+
+        var payload = new FuRenXinGrowthPayload(potions);
+        var runState = localPlayer.RunState;
+        NetGuZhenRenActions.RequestWithRetry(
+            () => NetGuZhenRenActions.RequestFuRenXinGrowth(payload),
+            () => RunManager.Instance.IsInProgress
+                && potions.Any(potion => HasPotion(runState, potion)),
+            static () => { },
+            "FuRenXin",
+            requiresCombat: false);
+    }
+
+    internal static Task ExecuteManagedGrowthAsync(
+        RitsuLibManagedNetActionContext<FuRenXinGrowthPayload> context)
+    {
+        foreach (var entry in context.Message.Potions)
+        {
+            if (entry.OwnerNetId != context.Player.NetId)
             {
                 continue;
             }
 
-            foreach (var potion in player.PotionSlots.OfType<FuRenXin>().ToList())
+            var potion = context.Player.PotionSlots.ElementAtOrDefault(entry.Slot)
+                as FuRenXin;
+            if (potion is null || entry.Poison < InitialPoison)
             {
-                var slot = player.GetPotionSlotIndex(potion);
-                AddBonus(player, slot, PoisonGrowthPerKill);
-                RefreshDisplay(potion);
+                continue;
             }
+
+            SetBonus(context.Player, entry.Slot, entry.Poison - InitialPoison);
+            potion.DynamicVars["PoisonPower"].BaseValue = entry.Poison;
         }
+
+        return Task.CompletedTask;
     }
 
     internal static void ClearSlotBeforeRemoval(Player player, PotionModel potion)
@@ -125,14 +207,14 @@ public sealed class FuRenXin : ModPotionTemplate
         return InitialPoison + GetBonus(Owner, Owner.GetPotionSlotIndex(this));
     }
 
-    private static void AddBonus(Player player, int slot, int amount)
+    private static void SetBonus(Player player, int slot, int amount)
     {
         if (slot < 0)
         {
             return;
         }
 
-        SavedData.Modify(player, data => data.SetBonus(slot, data.GetBonus(slot) + amount));
+        SavedData.Modify(player, data => data.SetBonus(slot, amount));
     }
 
     private static void ClearSlot(Player player, int slot)
@@ -147,13 +229,22 @@ public sealed class FuRenXin : ModPotionTemplate
 
     private static void RefreshDisplay(FuRenXin potion)
     {
-        if (!potion.IsMutable || potion.Owner is null)
+        if (potion.Owner is null)
         {
             return;
         }
 
         var slot = potion.Owner.GetPotionSlotIndex(potion);
         potion.DynamicVars["PoisonPower"].BaseValue = InitialPoison + GetBonus(potion.Owner, slot);
+    }
+
+    private static bool HasPotion(
+        IRunState runState,
+        FuRenXinSlotPayload entry)
+    {
+        var player = runState.Players
+            .FirstOrDefault(candidate => candidate.NetId == entry.OwnerNetId);
+        return player?.PotionSlots.ElementAtOrDefault(entry.Slot) is FuRenXin;
     }
 
     public sealed class FuRenXinRunData

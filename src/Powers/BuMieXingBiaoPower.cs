@@ -33,7 +33,10 @@ public sealed class BuMieXingBiaoPower : ModPowerTemplate
             return;
         }
 
-        var player = combatState.Players.FirstOrDefault();
+        var player = Applier?.Player
+            ?? (combatState.Players.Count == 1
+                ? combatState.Players[0]
+                : null);
         if (player is null || !player.Creature.IsAlive)
         {
             return;

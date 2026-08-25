@@ -35,13 +35,15 @@ public sealed class SongYouFadingPower : ModPowerTemplate
             : 1m;
     }
 
-    public override async Task BeforeSideTurnStart(
+    public override async Task BeforeSideTurnEnd(
         PlayerChoiceContext choiceContext,
         CombatSide side,
-        IReadOnlyList<Creature> participants,
-        ICombatState combatState)
+        IEnumerable<Creature> participants)
     {
-        if (Amount <= 0 || !Owner.IsAlive || !participants.Contains(Owner))
+        if (side != CombatSide.Enemy
+            || Amount <= 0
+            || !Owner.IsAlive
+            || !participants.Contains(Owner))
         {
             return;
         }

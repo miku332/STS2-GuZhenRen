@@ -38,7 +38,7 @@ public sealed class JianFengPower : ModPowerTemplate
             || cardSource is null
             || !RuiYiPower.TreatsAsJianDao(cardSource)
             || !props.IsPoweredAttack()
-            || result.TotalDamage <= 0)
+            || result.UnblockedDamage <= 0)
         {
             return;
         }

@@ -32,7 +32,7 @@ public sealed class ZhiXuePower : ModPowerTemplate
         Creature? dealer,
         CardModel? cardSource)
     {
-        if (target != Owner || result.TotalDamage <= 0 || Amount <= 0)
+        if (target != Owner || result.UnblockedDamage <= 0 || Amount <= 0)
         {
             return;
         }

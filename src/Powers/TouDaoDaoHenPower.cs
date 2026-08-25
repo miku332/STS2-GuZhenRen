@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -16,17 +17,21 @@ public sealed class TouDaoDaoHenPower : AbstractDaoHenPower
     private const int MaxGoldPerCombat = 30;
     private const string RemainingKey = "Remaining";
 
-    private static int _totalGoldStolenThisCombat;
+    private static readonly ConcurrentDictionary<ulong, int>
+        TotalGoldStolenThisCombat = [];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar(RemainingKey, MaxGoldPerCombat)
     ];
 
-    public static void ResetCombatState() => _totalGoldStolenThisCombat = 0;
+    public static void ResetCombatState() => TotalGoldStolenThisCombat.Clear();
 
-    private static int RemainingGold =>
-        Math.Max(0, MaxGoldPerCombat - _totalGoldStolenThisCombat);
+    private int RemainingGold =>
+        Math.Max(
+            0,
+            MaxGoldPerCombat
+            - TotalGoldStolenThisCombat.GetValueOrDefault(Owner.Player!.NetId));
 
     public override LocString Description
     {
@@ -50,7 +55,7 @@ public sealed class TouDaoDaoHenPower : AbstractDaoHenPower
             || !target.IsEnemy
             || Amount <= 0
             || !props.IsPoweredAttack()
-            || result.TotalDamage <= 0
+            || result.UnblockedDamage <= 0
             || RemainingGold <= 0
             || Owner.Player is null)
         {
@@ -58,7 +63,10 @@ public sealed class TouDaoDaoHenPower : AbstractDaoHenPower
         }
 
         var goldToSteal = Math.Min(Amount, RemainingGold);
-        _totalGoldStolenThisCombat += goldToSteal;
+        TotalGoldStolenThisCombat.AddOrUpdate(
+            Owner.Player!.NetId,
+            goldToSteal,
+            (_, current) => current + goldToSteal);
 
         Flash();
         await PlayerCmd.GainGold(goldToSteal, Owner.Player);

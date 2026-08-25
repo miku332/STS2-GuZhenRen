@@ -1,10 +1,7 @@
-using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Nodes.Combat;
-using MegaCrit.Sts2.Core.Nodes.Screens;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
-using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Patching.Models;
 
 namespace GuZhenRen.Patches;
@@ -16,7 +13,7 @@ public sealed class AiQingGuEscapeRewardPatch : IPatchMethod
     public static string PatchId => "ai_qing_gu_escape_reward";
 
     public static string Description =>
-        "爱情蛊逃离战斗时跳过战斗奖励";
+        "爱情蛊逃离战斗时跳过奖励并进入地图";
 
     public static bool IsCritical => false;
 
@@ -52,22 +49,17 @@ public sealed class AiQingGuEscapeRewardPatch : IPatchMethod
             return;
         }
 
+        // Let the native victory flow finish before registering the terminal
+        // rewards screen. This keeps the Boss room transition available.
         await MegaCrit.Sts2.Core.Commands.Cmd.Wait(1f);
-        var runState = room.CombatState.RunState;
-        if (LocalContext.GetMe(runState) is not { } player)
+
+        foreach (var player in room.CombatState.Players)
         {
-            Entry.Logger.Warn(
-                "Love Gu escape could not resolve the local player.");
-            await combatUi.ProceedWithoutRewards();
-            return;
+            var rewardsSet = new RewardsSet(player).EmptyForRoom(room);
+            _ = TaskHelper.RunSafely(rewardsSet.Offer());
         }
 
-        var rewardsSet = new RewardsSet(player).EmptyForRoom(room);
-
-        await RunManager.Instance.RewardsSetSynchronizer
-            .BeginRewardsSet(rewardsSet);
-        NRewardsScreen.ShowScreen(rewardsSet, true, runState);
         Entry.Logger.Info(
-            "Love Gu escape opened an empty boss proceed screen.");
+            "Love Gu escape opened synchronized empty Boss proceed screens.");
     }
 }

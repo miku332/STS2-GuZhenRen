@@ -14,11 +14,11 @@ namespace GuZhenRen.Powers;
 [RegisterPower]
 public sealed class FenShaoPower : ModPowerTemplate
 {
-    private static bool s_isSpreading;
-    private static bool s_isResolvingBurningDamage;
+    private static readonly AsyncLocal<bool> IsSpreading = new();
+    private static readonly AsyncLocal<bool> IsResolvingBurningDamageState = new();
 
     public static bool IsResolvingBurningDamage =>
-        s_isResolvingBurningDamage;
+        IsResolvingBurningDamageState.Value;
 
     private sealed class BurnState
     {
@@ -120,7 +120,7 @@ public sealed class FenShaoPower : ModPowerTemplate
 
         Flash();
         Entry.Logger.Info($"[FenShao] Burning damage: amount={Amount}, source={cardSource?.Id.ToString() ?? "<none>"}");
-        s_isResolvingBurningDamage = true;
+        IsResolvingBurningDamageState.Value = true;
         try
         {
             await CreatureCmd.Damage(
@@ -134,7 +134,7 @@ public sealed class FenShaoPower : ModPowerTemplate
         }
         finally
         {
-            s_isResolvingBurningDamage = false;
+            IsResolvingBurningDamageState.Value = false;
         }
     }
 
@@ -144,7 +144,7 @@ public sealed class FenShaoPower : ModPowerTemplate
         Creature? applier,
         CardModel? cardSource)
     {
-        if (amountApplied <= 0 || s_isSpreading)
+        if (amountApplied <= 0 || IsSpreading.Value)
         {
             return;
         }
@@ -155,14 +155,14 @@ public sealed class FenShaoPower : ModPowerTemplate
             return;
         }
 
-        s_isSpreading = true;
+        IsSpreading.Value = true;
         try
         {
             await spreadPower.Spread(choiceContext, amountApplied, applier, cardSource);
         }
         finally
         {
-            s_isSpreading = false;
+            IsSpreading.Value = false;
         }
     }
 

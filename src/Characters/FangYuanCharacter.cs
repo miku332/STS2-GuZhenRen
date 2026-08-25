@@ -33,7 +33,7 @@ public sealed class FangYuanCharacter :
                 VisualsPath: "res://GuZhenRen/scenes/fang_yuan_character.tscn",
                 EnergyCounterPath: "res://GuZhenRen/scenes/fang_yuan_energy_counter.tscn",
                 MerchantAnimPath: "res://GuZhenRen/images/characters/FangYuan/Idle.png",
-                RestSiteAnimPath: "res://GuZhenRen/images/characters/FangYuan/Idle.png"),
+                RestSiteAnimPath: "res://GuZhenRen/scenes/fang_yuan_rest_site.tscn"),
             Ui: new(
                 IconTexturePath: "res://GuZhenRen/images/characters/FangYuan/Button.png",
                 IconPath: "res://GuZhenRen/scenes/fang_yuan_icon.tscn",

@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -36,6 +37,18 @@ public sealed class LuoXuanGuQiangGu : GuZhenRenCardTemplate
     public LuoXuanGuQiangGu()
         : base(1, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy, true)
     {
+    }
+
+    public override async Task AfterRoomEntered(AbstractRoom room)
+    {
+        if (room is not MerchantRoom || Pile?.Type != PileType.Deck)
+        {
+            return;
+        }
+
+        var gold = ShopExchangeGold;
+        await CardPileCmd.RemoveFromDeck(this, showPreview: false);
+        await PlayerCmd.GainGold(gold, Owner);
     }
 
     protected override async Task OnPlay(

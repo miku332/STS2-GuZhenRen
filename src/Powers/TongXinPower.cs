@@ -10,7 +10,10 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Scaffolding.Content;
+using GuZhenRen.Multiplayer;
+using GuZhenRen.Systems;
 
 namespace GuZhenRen.Powers;
 
@@ -29,7 +32,7 @@ public sealed class TongXinPower : ModPowerTemplate
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay)
     {
-        var affectedPlayer = GetAffectedPlayer();
+        var affectedPlayer = GetAffectedPlayer(cardPlay.Card.Owner.Creature);
         if (!Owner.IsAlive
             || affectedPlayer is null
             || cardPlay.IsAutoPlay
@@ -44,103 +47,108 @@ public sealed class TongXinPower : ModPowerTemplate
         }
 
         Flash();
-        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(
-            new TongXinAutoPlayAction(player));
+        var candidates = PileType.Hand.GetPile(player).Cards
+            .Where(IsCandidate)
+            .ToList();
+        var card = candidates.Count == 0
+            ? null
+            : player.RunState.Rng.CombatCardSelection.NextItem(candidates);
+        if (card is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var target = GetTarget(card, player);
+        if (card.TargetType == TargetType.AnyEnemy && target is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (MultiplayerActionAuthority.IsAuthority)
+        {
+            var payload = new TongXinAutoPlayPayload(
+                player.NetId,
+                NetCombatCard.FromModel(card).CombatCardIndex,
+                target?.CombatId);
+            NetGuZhenRenActions.RequestWithRetry(
+                () => NetGuZhenRenActions.RequestTongXin(payload),
+                () => !player.Creature.IsDead
+                    && card.Pile?.Type == PileType.Hand,
+                static () => { },
+                "TongXin");
+        }
         return Task.CompletedTask;
     }
 
-    private Creature? GetAffectedPlayer() =>
+    private Creature? GetAffectedPlayer(Creature triggeringPlayer) =>
         Applier?.Player is not null
             ? Applier
-            : Owner.CombatState?.Players.FirstOrDefault()?.Creature;
+            : Owner.CombatState?.Players.Count == 1
+                ? Owner.CombatState.Players[0].Creature
+                : triggeringPlayer.Player is not null
+                    ? triggeringPlayer
+                    : null;
 
-    private sealed class TongXinAutoPlayAction : GameAction
+    internal static async Task ExecuteManagedAutoPlayAsync(
+        RitsuLibManagedNetActionContext<TongXinAutoPlayPayload> context)
     {
-        private readonly Player _player;
-
-        public TongXinAutoPlayAction(Player player)
+        var player = context.Player.RunState.Players
+            .FirstOrDefault(candidate => candidate.NetId == context.Message.OwnerNetId);
+        var card = NetCombatCard.ForTesting(context.Message.CardIndex).ToCardModelOrNull();
+        if (player is null || card is null)
         {
-            _player = player;
+            return;
         }
 
-        public override ulong OwnerId => _player.NetId;
-
-        public override GameActionType ActionType => GameActionType.Combat;
-
-        public override bool RecordableToReplay => false;
-
-        protected override async Task ExecuteAction()
+        if (CombatManager.Instance.IsOverOrEnding
+            || player.Creature.IsDead
+            || !IsCandidate(card))
         {
-            if (_player.Creature.IsDead
-                || CombatManager.Instance.IsOverOrEnding)
-            {
-                return;
-            }
-
-            var candidates = PileType.Hand.GetPile(_player).Cards
-                .Where(IsCandidate)
-                .ToList();
-            if (candidates.Count == 0)
-            {
-                return;
-            }
-
-            var card = _player.RunState.Rng.CombatCardSelection.NextItem(candidates);
-            if (card is null)
-            {
-                return;
-            }
-
-            var target = GetTarget(card);
-            if (card.TargetType == TargetType.AnyEnemy && target is null)
-            {
-                return;
-            }
-
-            try
-            {
-                // AutoPlay is free by default. Spend the normal cost first so
-                // this follows the original TongXin power's cost behavior.
-                await card.SpendResources();
-                await CardCmd.AutoPlay(
-                    new GameActionPlayerChoiceContext(this),
-                    card,
-                    target,
-                    AutoPlayType.Default,
-                    skipXCapture: true,
-                    skipCardPileVisuals: false);
-            }
-            catch (Exception ex)
-            {
-                Entry.Logger.Info($"Failed to auto-play TongXin card '{card.Id}': {ex}");
-            }
+            return;
         }
 
-        private static bool IsCandidate(CardModel card) =>
-            card.Pile?.Type == PileType.Hand
-            && !card.Keywords.Contains(CardKeyword.Unplayable)
-            && card.EnergyCost.Canonical != -2
-            && card.CanPlay();
-
-        private Creature? GetTarget(CardModel card)
+        var target = card.CombatState?.HittableEnemies
+            .FirstOrDefault(enemy => enemy.CombatId == context.Message.TargetCombatId);
+        if (card.TargetType == TargetType.AnyEnemy && target is null)
         {
-            if (card.TargetType != TargetType.AnyEnemy)
-            {
-                return null;
-            }
-
-            var enemies = card.CombatState?.HittableEnemies
-                .Where(enemy => enemy.IsAlive)
-                .ToList();
-            return enemies is { Count: > 0 }
-                ? _player.RunState.Rng.CombatTargets.NextItem(enemies)
-                : null;
+            return;
         }
 
-        public override INetAction ToNetAction()
+        try
         {
-            throw new NotSupportedException(
-                "GuZhenRen TongXin autoplay actions are single-player only for now.");
+            await card.SpendResources();
+            await CardCmd.AutoPlay(
+                context.PlayerChoiceContext,
+                card,
+                target,
+                AutoPlayType.Default,
+                skipXCapture: true,
+                skipCardPileVisuals: false);
         }
+        catch (Exception ex)
+        {
+            Entry.Logger.Info($"Failed to auto-play TongXin card '{card.Id}': {ex}");
+        }
+    }
+
+    private static bool IsCandidate(CardModel card) =>
+        card.Pile?.Type == PileType.Hand
+        && !card.Keywords.Contains(CardKeyword.Unplayable)
+        && card.EnergyCost.Canonical != -2
+        && card.CanPlay();
+
+    private static Creature? GetTarget(CardModel card, Player player)
+    {
+        if (card.TargetType != TargetType.AnyEnemy)
+        {
+            return null;
+        }
+
+        var enemies = card.CombatState?.HittableEnemies
+            .Where(enemy => enemy.IsAlive)
+            .ToList();
+        return enemies is { Count: > 0 }
+            ? player.RunState.Rng.CombatTargets.NextItem(enemies)
+            : null;
     }
 }

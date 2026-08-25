@@ -14,7 +14,15 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
 {
     private static readonly AsyncLocal<int> CombatBypassDepth = new();
 
-    internal static bool IsRemovingDuplicate { get; private set; }
+    private static readonly AsyncLocal<int> RemovingDuplicateDepth = new();
+
+    internal static bool IsRemovingDuplicate => RemovingDuplicateDepth.Value > 0;
+
+    private static IDisposable EnterRemovingDuplicateScope()
+    {
+        RemovingDuplicateDepth.Value++;
+        return new RemovingDuplicateScope();
+    }
 
     internal static IDisposable EnterCombatBypassScope()
     {
@@ -253,14 +261,9 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
             && IsUniqueImmortalGu(card);
 
         Entry.Logger.Info($"Destroyed duplicate unique Gu card: {card.Id.Entry}");
-        IsRemovingDuplicate = true;
-        try
+        using (EnterRemovingDuplicateScope())
         {
             await CardPileCmd.RemoveFromDeck(card, showPreview: false);
-        }
-        finally
-        {
-            IsRemovingDuplicate = false;
         }
 
         if (!grantsXianGuCanHai || owner is null)
@@ -295,6 +298,24 @@ public sealed class BenMingGuUniquenessPatch : IPatchMethod
             CombatBypassDepth.Value = Math.Max(
                 0,
                 CombatBypassDepth.Value - 1);
+        }
+    }
+
+    private sealed class RemovingDuplicateScope : IDisposable
+    {
+        private bool _disposed;
+
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _disposed = true;
+            RemovingDuplicateDepth.Value = Math.Max(
+                0,
+                RemovingDuplicateDepth.Value - 1);
         }
     }
 }

@@ -1,8 +1,10 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Cards;
+using GuZhenRen.Multiplayer;
 using GuZhenRen.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -11,6 +13,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interactions.RightClick;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace GuZhenRen.Relics;
@@ -103,8 +106,40 @@ public sealed class JianMianCengXiangShiRelic
 
     public async Task OnRightClick(ModRightClickExecutionContext context)
     {
-        await ReturnToCard(
-            addCombatCopy: CombatManager.Instance.IsInProgress);
+        if (!LocalContext.IsMe(context.Player))
+        {
+            return;
+        }
+
+        var payload = new JianMianCengXiangShiReturnPayload(
+            context.Player.NetId,
+            CombatManager.Instance.IsInProgress);
+        NetGuZhenRenActions.RequestWithRetry(
+            () => NetGuZhenRenActions.RequestJianMianCengXiangShiReturn(payload),
+            () => context.Player.GetRelic<JianMianCengXiangShiRelic>() is not null,
+            () => Entry.Logger.Warn("Familiar Face return action was not queued."),
+            "Familiar Face return",
+            requiresCombat: payload.AddCombatCopy);
+        await Task.CompletedTask;
+    }
+
+    internal static async Task ExecuteManagedReturnAsync(
+        RitsuLibManagedNetActionContext<JianMianCengXiangShiReturnPayload> context)
+    {
+        if (context.Message.OwnerNetId != context.Player.NetId)
+        {
+            return;
+        }
+
+        var relic = context.Player.GetRelic<JianMianCengXiangShiRelic>();
+        if (relic is null)
+        {
+            return;
+        }
+
+        await relic.ReturnToCard(
+            context.Message.AddCombatCopy
+            && CombatManager.Instance.IsInProgress);
     }
 
     public void ResetDuration()

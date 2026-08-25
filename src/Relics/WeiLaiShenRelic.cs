@@ -1,7 +1,9 @@
 using GuZhenRen.CardPools;
 using GuZhenRen.Cards;
+using GuZhenRen.Multiplayer;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -11,6 +13,7 @@ using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interactions.RightClick;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace GuZhenRen.Relics;
@@ -99,8 +102,40 @@ public sealed class WeiLaiShenRelic
 
     public async Task OnRightClick(ModRightClickExecutionContext context)
     {
-        await ReturnToCard(
-            addCombatCopy: CombatManager.Instance.IsInProgress);
+        if (!LocalContext.IsMe(context.Player))
+        {
+            return;
+        }
+
+        var payload = new WeiLaiShenReturnPayload(
+            context.Player.NetId,
+            CombatManager.Instance.IsInProgress);
+        NetGuZhenRenActions.RequestWithRetry(
+            () => NetGuZhenRenActions.RequestWeiLaiShenReturn(payload),
+            () => context.Player.GetRelic<WeiLaiShenRelic>() is not null,
+            () => Entry.Logger.Warn("Future Self return action was not queued."),
+            "Future Self return",
+            requiresCombat: payload.AddCombatCopy);
+        await Task.CompletedTask;
+    }
+
+    internal static async Task ExecuteManagedReturnAsync(
+        RitsuLibManagedNetActionContext<WeiLaiShenReturnPayload> context)
+    {
+        if (context.Message.OwnerNetId != context.Player.NetId)
+        {
+            return;
+        }
+
+        var relic = context.Player.GetRelic<WeiLaiShenRelic>();
+        if (relic is null)
+        {
+            return;
+        }
+
+        await relic.ReturnToCard(
+            context.Message.AddCombatCopy
+            && CombatManager.Instance.IsInProgress);
     }
 
     public void ResetDuration()

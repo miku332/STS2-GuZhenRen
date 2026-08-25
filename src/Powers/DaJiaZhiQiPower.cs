@@ -83,8 +83,9 @@ public sealed class DaJiaZhiQiPower : ModPowerTemplate
 
         var target = Applier?.Player is not null && Applier.IsAlive
             ? Applier
-            : Owner.CombatState?.Players.FirstOrDefault(player =>
-                player.Creature.IsAlive)?.Creature;
+            : Owner.CombatState?.Players.Count == 1
+                ? Owner.CombatState.Players[0].Creature
+                : null;
         if (Amount > 0 && target is not null)
         {
             Flash();
@@ -105,5 +106,7 @@ public sealed class DaJiaZhiQiPower : ModPowerTemplate
     private Creature? GetAffectedPlayer() =>
         Applier?.Player is not null
             ? Applier
-            : Owner.CombatState?.Players.FirstOrDefault()?.Creature;
+            : Owner.CombatState?.Players.Count == 1
+                ? Owner.CombatState.Players[0].Creature
+                : null;
 }

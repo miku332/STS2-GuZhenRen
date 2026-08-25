@@ -1,4 +1,5 @@
 using GuZhenRen.Characters;
+using GuZhenRen.Multiplayer;
 using GuZhenRen.Relics;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -7,6 +8,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib;
+using STS2RitsuLib.Networking.ManagedActions;
 
 namespace GuZhenRen.Systems;
 
@@ -23,7 +25,35 @@ internal static class ShaZhaoRecipeDropSystem
             return;
         }
 
-        foreach (var player in evt.RunState.Players)
+        if (!MultiplayerActionAuthority.IsAuthority)
+        {
+            return;
+        }
+
+        NetGuZhenRenActions.RequestWithRetry(
+            NetGuZhenRenActions.RequestShaZhaoRecipeRewards,
+            () => evt.RunState.CurrentRoom == room,
+            () => Entry.Logger.Warn(
+                "Sha Zhao recipe reward action was not queued."),
+            "Sha Zhao recipe rewards",
+            requiresCombat: false);
+    }
+
+    internal static Task ExecuteManagedRewardsAsync(
+        RitsuLibManagedNetActionContext<ShaZhaoRecipeRewardsPayload> context)
+    {
+        if (context.Player.RunState.CurrentRoom is CombatRoom room
+            && room.Encounter.ShouldGiveRewards)
+        {
+            AddCombatRewards(room);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private static void AddCombatRewards(CombatRoom room)
+    {
+        foreach (var player in room.CombatState.Players)
         {
             if (player.Character is not FangYuanCharacter
                 || HasRecipeReward(room, player))

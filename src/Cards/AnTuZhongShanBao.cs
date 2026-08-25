@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -16,6 +17,18 @@ namespace GuZhenRen.Cards;
 public sealed class AnTuZhongShanBao : AbstractGuWuCard
 {
     private static readonly HashSet<ulong> BuDongRuShanUsedByPlayer = [];
+    private bool _buDongRuShanUsed;
+
+    [SavedProperty]
+    private bool BuDongRuShanUsed
+    {
+        get => _buDongRuShanUsed;
+        set
+        {
+            AssertMutable();
+            _buDongRuShanUsed = value;
+        }
+    }
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/AnTuZhongShanBao.png");
@@ -40,7 +53,8 @@ public sealed class AnTuZhongShanBao : AbstractGuWuCard
             CreateOption<OptionRuTuWeiAnAnTuZhongShanBao>(),
             CreateOption<OptionJuanTuChongLaiAnTuZhongShanBao>()
         };
-        if (!BuDongRuShanUsedByPlayer.Contains(Owner.NetId))
+        if (!BuDongRuShanUsed
+            && !BuDongRuShanUsedByPlayer.Contains(Owner.NetId))
         {
             choices.Add(CreateOption<OptionBuDongRuShanAnTuZhongShanBao>());
         }
@@ -157,10 +171,13 @@ public sealed class AnTuZhongShanBao : AbstractGuWuCard
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay)
     {
-        if (!BuDongRuShanUsedByPlayer.Add(Owner.NetId))
+        if (BuDongRuShanUsed
+            || !BuDongRuShanUsedByPlayer.Add(Owner.NetId))
         {
             return;
         }
+
+        BuDongRuShanUsed = true;
 
         await CreatureCmd.GainBlock(
             Owner.Creature,

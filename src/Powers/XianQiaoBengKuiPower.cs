@@ -75,8 +75,7 @@ public sealed class XianQiaoBengKuiPower : ModPowerTemplate
 
     private static async Task DestroyBenMingGuAndAperture(Player player)
     {
-        AbstractBenMingGuCard.IsSynthesizing = true;
-        try
+        using (AbstractBenMingGuCard.EnterSynthesisScope())
         {
             var deckCards = player.Deck.Cards
                 .OfType<AbstractBenMingGuCard>()
@@ -95,10 +94,6 @@ public sealed class XianQiaoBengKuiPower : ModPowerTemplate
             {
                 await CardPileCmd.RemoveFromCombat(combatCards);
             }
-        }
-        finally
-        {
-            AbstractBenMingGuCard.IsSynthesizing = false;
         }
 
         foreach (var aperture in player.Relics

@@ -9,10 +9,13 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Networking.ManagedActions;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
 using GuZhenRen.Enchantments;
 using GuZhenRen.Tags;
+using GuZhenRen.Multiplayer;
+using GuZhenRen.Systems;
 
 namespace GuZhenRen.Cards;
 
@@ -92,8 +95,29 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
             return;
         }
 
-        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(
-            new BloodcrazeAutoPlayAction(card.Owner, [card]));
+        var target = GetAutoPlayTarget(card);
+        if (card.TargetType == TargetType.AnyEnemy && target is null)
+        {
+            _queuedAutoPlayCards.Remove(card);
+            return;
+        }
+
+        if (MultiplayerActionAuthority.IsAuthority)
+        {
+            var payload = new BloodcrazeAutoPlayPayload(
+                card.Owner.NetId,
+                [new BloodcrazeCardPlayPayload(
+                    NetCombatCard.FromModel(card).CombatCardIndex,
+                    target?.CombatId,
+                    card.EnergyCost.CostsX
+                        ? card.Owner.PlayerCombatState?.Energy ?? 0
+                        : 0)]);
+            NetGuZhenRenActions.RequestWithRetry(
+                () => NetGuZhenRenActions.RequestBloodcraze(payload),
+                () => card.Pile?.Type == PileType.Hand,
+                () => _queuedAutoPlayCards.Remove(card),
+                "Bloodcraze");
+        }
     }
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)
@@ -127,6 +151,12 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
             return;
         }
 
+        var enchantment = ModelDb.Enchantment<XueKuangEnchantment>();
+        if (!enchantment.CanEnchant(card))
+        {
+            return;
+        }
+
         if (card.Enchantment is null)
         {
             CardCmd.Enchant<XueKuangEnchantment>(card, 1);
@@ -148,7 +178,9 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
 
     private static async Task TryAutoPlayBloodcrazedCardAsync(
         PlayerChoiceContext choiceContext,
-        CardModel? card)
+        CardModel? card,
+        Creature? target,
+        int capturedXValue)
     {
         if (card is null
             || !_bloodcrazedCards.Contains(card)
@@ -161,15 +193,9 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
 
         try
         {
-            var target = GetAutoPlayTarget(card);
-            if (card.TargetType == TargetType.AnyEnemy && target is null)
-            {
-                return;
-            }
-
             if (card.EnergyCost.CostsX)
             {
-                card.EnergyCost.CapturedXValue = card.Owner.PlayerCombatState?.Energy ?? 0;
+                card.EnergyCost.CapturedXValue = capturedXValue;
             }
 
             await CreatureCmd.Damage(
@@ -225,53 +251,51 @@ public sealed class XueKuangGu : GuZhenRenCardTemplate
         return card.Owner.RunState.Rng.CombatTargets.NextItem(aliveEnemies);
     }
 
-    private sealed class BloodcrazeAutoPlayAction : GameAction
+    internal static async Task ExecuteManagedAutoPlayAsync(
+        RitsuLibManagedNetActionContext<BloodcrazeAutoPlayPayload> context)
     {
-        private readonly Player _owner;
-        private readonly IReadOnlyList<CardModel> _cardsToPlay;
-
-        public BloodcrazeAutoPlayAction(
-            Player owner,
-            IReadOnlyList<CardModel> cardsToPlay)
+        var owner = context.Player.RunState.Players
+            .FirstOrDefault(player => player.NetId == context.Message.OwnerNetId);
+        if (owner is null)
         {
-            _owner = owner;
-            _cardsToPlay = cardsToPlay;
+            return;
         }
 
-        public override ulong OwnerId => _owner.NetId;
-
-        public override GameActionType ActionType => GameActionType.Combat;
-
-        public override bool RecordableToReplay => false;
-
-        protected override async Task ExecuteAction()
+        var choiceContext = context.PlayerChoiceContext;
+        foreach (var cardPayload in context.Message.Cards)
         {
-            var choiceContext = new GameActionPlayerChoiceContext(this);
-            foreach (var card in _cardsToPlay)
+            if (CombatManager.Instance.IsOverOrEnding)
             {
-                if (CombatManager.Instance.IsOverOrEnding || !HasLivingEnemies(card))
-                {
-                    break;
-                }
-
-                await TryAutoPlayBloodcrazedCardAsync(choiceContext, card);
+                break;
             }
 
-            foreach (var card in _cardsToPlay)
+            var card = NetCombatCard.ForTesting(cardPayload.CardIndex).ToCardModelOrNull();
+            if (card is null)
+            {
+                continue;
+            }
+
+            var target = card.CombatState?.HittableEnemies
+                .FirstOrDefault(enemy => enemy.CombatId == cardPayload.TargetCombatId);
+            if (card.TargetType == TargetType.AnyEnemy && target is null)
+            {
+                continue;
+            }
+
+            await TryAutoPlayBloodcrazedCardAsync(
+                choiceContext,
+                card,
+                target,
+                cardPayload.CapturedXValue);
+        }
+
+        foreach (var cardPayload in context.Message.Cards)
+        {
+            var card = NetCombatCard.ForTesting(cardPayload.CardIndex).ToCardModelOrNull();
+            if (card is not null)
             {
                 _queuedAutoPlayCards.Remove(card);
             }
-        }
-
-        public override INetAction ToNetAction()
-        {
-            throw new NotSupportedException(
-                "GuZhenRen bloodcraze autoplay actions are single-player only for now.");
-        }
-
-        private static bool HasLivingEnemies(CardModel card)
-        {
-            return card.CombatState?.HittableEnemies.Any(enemy => enemy.IsAlive) == true;
         }
     }
 }

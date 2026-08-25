@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -53,24 +54,18 @@ public sealed class EYun : GuZhenRenCardTemplate
         ProbabilitySystem.DecreaseCombatProbabilities(Owner, 10);
     }
 
-    public async Task OnCombatEnded()
+    public override async Task AfterCombatVictory(CombatRoom room)
     {
-        var deckVersion = DeckVersion as EYun;
-        if (deckVersion is null && Pile?.Type == PileType.Deck)
-        {
-            deckVersion = this;
-        }
-
-        if (deckVersion is null)
+        if (Pile?.Type != PileType.Deck)
         {
             return;
         }
 
-        var remaining = Math.Max(0, deckVersion.CombatsRemaining - 1);
-        deckVersion.SetCombatsRemaining(remaining);
-        if (remaining == 0 && deckVersion.Pile?.Type == PileType.Deck)
+        var remaining = Math.Max(0, CombatsRemaining - 1);
+        SetCombatsRemaining(remaining);
+        if (remaining == 0)
         {
-            await CardPileCmd.RemoveFromDeck(deckVersion, showPreview: false);
+            await CardPileCmd.RemoveFromDeck(this, showPreview: false);
         }
     }
 
