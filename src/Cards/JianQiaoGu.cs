@@ -1,11 +1,13 @@
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Models.Capabilities;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
 using GuZhenRen.Tags;
@@ -26,7 +28,7 @@ public sealed class JianQiaoGu : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(6, ValueProp.Move)
+        new BlockVar(7, ValueProp.Move)
     ];
 
     public JianQiaoGu()
@@ -50,7 +52,9 @@ public sealed class JianQiaoGu : GuZhenRenCardTemplate
             choiceContext,
             Owner,
             selectorPrefs,
-            static card => card.Type == CardType.Attack,
+            static card => card.Type == CardType.Attack
+                && !card.Tags.Contains(GuZhenRenTags.XuYing)
+                && !card.TryGetCapability<JianQiaoGuModifierCapability>(out _),
             this);
         var selected = selectedCards.FirstOrDefault();
 
@@ -59,11 +63,11 @@ public sealed class JianQiaoGu : GuZhenRenCardTemplate
             return;
         }
 
-        selected.EnergyCost.SetUntilPlayed(0, false);
+        selected.GetOrCreateCapability<JianQiaoGuModifierCapability>();
         await CardPileCmd.Add(
             selected,
             PileType.Draw,
-            CardPilePosition.Top,
+            CardPilePosition.Bottom,
             null,
             false);
     }
@@ -72,4 +76,33 @@ public sealed class JianQiaoGu : GuZhenRenCardTemplate
     {
         DynamicVars.Block.UpgradeValueBy(3);
     }
+}
+
+[RegisterModelCapability]
+public sealed class JianQiaoGuModifierCapability : OneShotCardPlayCapability,
+    ICardEnergyCostContributor
+{
+    protected override Task OnOwnerCardPlayedOnce(
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay) =>
+        Task.CompletedTask;
+
+    public int ModifyEnergyCost(
+        CardModel card,
+        int originalCost,
+        CostModifiers modifiers) =>
+        modifiers.HasFlag(CostModifiers.Local) ? 0 : originalCost;
+
+    public override decimal ModifyDamageMultiplicative(
+        Creature? target,
+        decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource,
+        CardPlay? cardPlay) =>
+        dealer == Owner?.Owner.Creature
+            && cardSource == Owner
+            && props.IsPoweredAttack()
+            ? 2m
+            : 1m;
 }

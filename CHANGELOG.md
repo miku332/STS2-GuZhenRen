@@ -1,5 +1,11 @@
 # 更新日志 / Changelog
 
+## 0.6.1-beta.1
+
+本测试版包含 `v0.6.1` 的全部修复与优化，并适配《杀戮尖塔2》测试版 `v0.111.0`：重做剑鞘蛊效果，修复龙鳞蛊道痕计算、上房揭瓦防御效果移除、排难蛊抽牌与洗牌崩溃、无效能力牌悬浮、成功蛊重复获取，以及相关文本问题。
+
+This beta release contains all `v0.6.1` fixes and improvements and targets the public beta `v0.111.0` of Slay the Spire 2: updated Sword Sheath Gu, fixed Dragon Scale Gu Dao Mark calculation, expanded Overhead Strike’s defensive-effect removal, fixed Stratagem Gu draw and shuffle crashes, fixed stuck invalid Power cards, prevented Success Gu from being repeatedly retrieved, and corrected related localization.
+
 ## 0.5.2-beta.1
 
 本测试版包含 `v0.5.2` 的全部修复，并适配《杀戮尖塔2》测试版 `v0.111.0`：修复爱情蛊抽到时可能不触发的问题；修复鸿运齐天蛊、运算蛊、转运等概率修正会错误提高“意乱”失败概率的问题，现在这些概率修正仅对“意乱”反向生效。

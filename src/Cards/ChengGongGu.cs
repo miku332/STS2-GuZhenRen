@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Models.Capabilities;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -91,4 +92,15 @@ public sealed class ChengGongGu : GuZhenRenCardTemplate
     protected override void OnUpgrade()
     {
     }
+}
+
+[RegisterModelCapability]
+[RegisterDefaultModelCapability(typeof(ChengGongGu))]
+public sealed class ChengGongGuPlayResultCapability
+    : CardCapability, ICardPlayResultContributor
+{
+    // Success Gu is a one-time generated reward. It must not remain in the
+    // exhaust pile, where Double Regret Gu could retrieve it indefinitely.
+    public PileType? GetResultPileTypeForCardPlay(CardModel card) =>
+        PileType.None;
 }

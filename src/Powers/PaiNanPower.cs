@@ -49,7 +49,9 @@ public sealed class PaiNanPower : ModPowerTemplate
             return;
         }
 
-        if (!IsStatusForPaiNan(card) || !_queuedCards.Add(card))
+        if (card.Pile?.Type != PileType.Hand
+            || !IsStatusForPaiNan(card)
+            || !_queuedCards.Add(card))
         {
             return;
         }
@@ -61,7 +63,7 @@ public sealed class PaiNanPower : ModPowerTemplate
         }
 
         var drawAmount = Math.Min(
-            (int)power.Amount,
+            Math.Max(0, (int)power.Amount),
             Math.Max(0, CardPile.MaxCardsInHand - handCount));
         var cardsToDraw = PileType.Draw.GetPile(owner)
             .Cards
@@ -163,20 +165,44 @@ public sealed class PaiNanPower : ModPowerTemplate
                     return;
                 }
 
-                var drawnCount = await DrawSpecificCards(choiceContext, _cardsToDraw);
-                while (drawnCount < _drawAmount)
+                var drawAmount = Math.Min(
+                    Math.Max(0, _drawAmount),
+                    Math.Max(
+                        0,
+                        CardPile.MaxCardsInHand
+                        - PileType.Hand.GetPile(_target).Cards.Count));
+                if (drawAmount <= 0)
+                {
+                    return;
+                }
+
+                var drawnCount = await DrawSpecificCards(
+                    choiceContext,
+                    _cardsToDraw,
+                    drawAmount);
+                while (drawnCount < drawAmount)
                 {
                     await CardPileCmd.ShuffleIfNecessary(choiceContext, _target);
                     var remainingCards = PileType.Draw.GetPile(_target)
                         .Cards
-                        .Take(_drawAmount - drawnCount)
+                        .Where(card => card.Pile?.Type == PileType.Draw)
+                        .Take(drawAmount - drawnCount)
                         .ToList();
                     if (remainingCards.Count == 0)
                     {
                         break;
                     }
 
-                    drawnCount += await DrawSpecificCards(choiceContext, remainingCards);
+                    var progress = await DrawSpecificCards(
+                        choiceContext,
+                        remainingCards,
+                        drawAmount - drawnCount);
+                    if (progress <= 0)
+                    {
+                        break;
+                    }
+
+                    drawnCount += progress;
                 }
             }
             finally
@@ -187,11 +213,17 @@ public sealed class PaiNanPower : ModPowerTemplate
 
         private async Task<int> DrawSpecificCards(
             PlayerChoiceContext choiceContext,
-            IEnumerable<CardModel> cards)
+            IEnumerable<CardModel> cards,
+            int maxCount)
         {
             var drawnCount = 0;
             foreach (var card in cards.ToList())
             {
+                if (drawnCount >= maxCount)
+                {
+                    break;
+                }
+
                 if (card.Pile?.Type != PileType.Draw
                     || PileType.Hand.GetPile(_target).Cards.Count >= CardPile.MaxCardsInHand)
                 {
@@ -212,6 +244,7 @@ public sealed class PaiNanPower : ModPowerTemplate
                     card,
                     fromHandDraw: false);
                 card.InvokeDrawn();
+                TryHandleCardDrawn(card);
                 NDebugAudioManager.Instance?.Play("card_deal.mp3", 0.25f, PitchVariance.Small);
                 drawnCount++;
             }

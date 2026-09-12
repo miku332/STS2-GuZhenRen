@@ -38,7 +38,9 @@ public sealed class LongLinGu : GuZhenRenCardTemplate
         new CalculationExtraVar(1),
         new CalculatedVar("CalculatedTimes")
             .WithMultiplier(static (CardModel card, Creature? _) =>
-                card.Owner?.Creature.GetPowerAmount<JianFengPower>() ?? 0)
+                card.Owner?.Creature.Powers
+                    .OfType<AbstractDaoHenPower>()
+                    .Sum(power => Math.Max(0, (int)power.Amount)) ?? 0)
     ];
 
     public LongLinGu()
