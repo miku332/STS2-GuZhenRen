@@ -1,5 +1,53 @@
 # 更新日志 / Changelog
 
+## 0.6.1
+
+### 中文
+
+#### 优化
+
+- “剑鞘蛊”格挡由6点调整为7点，并统一为一代效果：从手牌选择攻击牌置于抽牌堆底，下次打出时免费且基础伤害翻倍。
+- “龙鳞蛊”现在计算所有流派的道痕，不再只计算剑锋。
+- “上房揭瓦”现在可以移除人工制品、覆甲、再生、滑溜、不可撼动、荆棘和难以杀灭等防御性效果。
+- 优化“排难蛊”的抽牌流程，正确处理状态牌、洗牌和手牌上限。
+
+#### 修复
+
+- 修复获得念达到转化条件时，抽牌触发洗牌且拥有“计策”可能导致游戏崩溃的问题。
+- 修复多个“排难蛊”叠加时，抽牌超过手牌上限或触发洗牌导致崩溃的问题。
+- 修复排难蛊自定义抽牌后无法继续正确处理状态牌的问题。
+- 修复灾劫使无效能力牌无法结算时，能力牌悬浮在空中的问题。
+- 修复“成功蛊”进入消耗堆后可被“双悔蛊”重复取回的问题。
+- 修复“盗天真传”的中文名称，并修正“剑鞘蛊”和“龙鳞蛊”的中英文描述。
+
+#### 兼容性
+
+- 支持《杀戮尖塔2》正式版 `v0.107.1`。
+- 需要 RitsuLib `0.5.12`。
+
+### English
+
+#### Improvements
+
+- Increased Sword Sheath Gu’s Block from 6 to 7 and aligned it with the Slay the Spire 1 behavior: select an Attack card from the hand, place it on the bottom of the draw pile, then make its next play free and double its base damage.
+- Dragon Scale Gu now counts Dao Marks from all Paths instead of only Sword Edge.
+- Overhead Strike can now remove defensive effects such as Artifact, Plating, Regen, Slippery, Unmovable, Thorns, and Hard to Kill.
+- Improved Stratagem Gu’s draw flow to handle Status cards, shuffles, and hand-size limits correctly.
+
+#### Fixes
+
+- Fixed a crash when gaining enough Nian to convert while a shuffle activated Stratagem.
+- Fixed crashes caused by multiple Stratagem Gu effects drawing beyond the hand limit or triggering a shuffle.
+- Fixed Status cards not being processed correctly after Stratagem Gu performs a custom draw.
+- Fixed invalid Power cards becoming stuck in the air when a tribulation prevents them from resolving.
+- Fixed Success Gu entering the Exhaust pile and being repeatedly retrieved by Double Regret Gu.
+- Corrected the Chinese title of Thieving Heaven’s True Inheritance and updated Sword Sheath Gu and Dragon Scale Gu localization.
+
+#### Compatibility
+
+- Supports the stable `v0.107.1` build of Slay the Spire 2.
+- Requires RitsuLib `0.5.12`.
+
 ## 0.5.2
 
 ### 中文

@@ -34,6 +34,10 @@ public sealed class ChengGongGu : GuZhenRenCardTemplate
     {
     }
 
+    // Success Gu is a one-time generated reward. It must not remain in the
+    // exhaust pile, where Double Regret Gu could retrieve it indefinitely.
+    protected override PileType GetResultPileTypeForCardPlay() => PileType.None;
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay)

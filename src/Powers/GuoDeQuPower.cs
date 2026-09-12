@@ -3,7 +3,9 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -58,6 +60,14 @@ public sealed class GuoDeQuPower : ModPowerTemplate
         if (ReferenceEquals(_nullifiedCard, card))
         {
             _nullifiedCard = null;
+
+            // A zero play count skips the native power-card VFX, so clean up
+            // the play-area node before the native pile removal runs.
+            if (card.Type == CardType.Power)
+            {
+                NCard.FindOnTable(card)?.QueueFreeSafely();
+            }
+
             Flash();
             Entry.Logger.Info(
                 $"[Tribulation:GuoDeQu] Nullified {card.Id.Entry}.");

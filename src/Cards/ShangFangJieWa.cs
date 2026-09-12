@@ -82,6 +82,13 @@ public sealed class ShangFangJieWa : AbstractShaZhaoCard
         await RemovePowerIfPresent<GuardedPower>(target);
         await RemovePowerIfPresent<HardenedShellPower>(target);
         await RemovePowerIfPresent<JiuLongWenHuShenPower>(target);
+        await RemovePowerIfPresent<ArtifactPower>(target);
+        await RemovePowerIfPresent<PlatingPower>(target);
+        await RemovePowerIfPresent<RegenPower>(target);
+        await RemovePowerIfPresent<SlipperyPower>(target);
+        await RemovePowerIfPresent<UnmovablePower>(target);
+        await RemovePowerIfPresent<ThornsPower>(target);
+        await RemovePowerIfPresent<HardToKillPower>(target);
     }
 
     private static async Task RemovePowerIfPresent<T>(Creature target)

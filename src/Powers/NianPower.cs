@@ -31,37 +31,9 @@ public sealed class NianPower : ModPowerTemplate
 
     protected override object InitInternalData() => new ConversionState();
 
-    public override async Task AfterApplied(
-        Creature? applier,
-        CardModel? cardSource)
-    {
-        if (await TryConvertByZhiZhang(
-                new ThrowingPlayerChoiceContext(),
-                Amount,
-                applier,
-                cardSource))
-        {
-            return;
-        }
-
-        if (await TryBlockByNianTouShouZu())
-        {
-            return;
-        }
-
-        if (Amount > 0 && Owner.Player?.GetRelic<SiXuRuDianGu>() is { } relic)
-        {
-            await relic.OnNianGained(new ThrowingPlayerChoiceContext());
-        }
-
-        if (Amount > 0 && Owner.Player is not null)
-        {
-            await ResolveThresholds(
-                new ThrowingPlayerChoiceContext(),
-                applier ?? Owner,
-                cardSource);
-        }
-    }
+    // PowerCmd invokes AfterPowerAmountChanged immediately after AfterApplied
+    // with the caller's real choice context. Keeping all reactions there is
+    // required when threshold conversion causes a shuffle-time card choice.
 
     public override async Task AfterPowerAmountChanged(
         PlayerChoiceContext choiceContext,
