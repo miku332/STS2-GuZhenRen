@@ -139,6 +139,7 @@ public static class Entry
             "sha-zhao-ui");
         shaZhaoUiPatcher.RegisterPatch<ShaZhaoRecipeSelectionBackPatch>();
         shaZhaoUiPatcher.RegisterPatch<ShaZhaoRecipeSelectionReplacePatch>();
+        shaZhaoUiPatcher.RegisterPatch<KillerMoveRelicRowPatch>();
         shaZhaoUiPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
