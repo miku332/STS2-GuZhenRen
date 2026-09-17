@@ -48,6 +48,7 @@ public sealed class WanWo : AbstractShaZhaoCard
             return;
         }
 
+        var triggers = new List<AbstractXuYingCard.XuYingTrigger>();
         for (var i = 0; i < count; i++)
         {
             var shadow = CombatState.CreateCard<WoLiXuYing>(Owner);
@@ -63,9 +64,13 @@ public sealed class WanWo : AbstractShaZhaoCard
             var target = GetRandomLivingEnemy();
             if (target is not null)
             {
-                await shadow.TriggerFromLiQiPower(choiceContext, target);
+                triggers.Add(new(
+                    shadow,
+                    AbstractXuYingCard.CreateAutoPlay(shadow, target)));
             }
         }
+
+        await AbstractXuYingCard.TriggerBatch(choiceContext, triggers);
     }
 
     private Creature? GetRandomLivingEnemy()

@@ -122,6 +122,7 @@ public sealed class LiQiPower : ModPowerTemplate, IMaxHandSizeModifier
             return;
         }
 
+        var xuYingTriggers = new List<AbstractXuYingCard.XuYingTrigger>();
         foreach (var trigger in context.Message.Triggers)
         {
             if (CombatManager.Instance.IsOverOrEnding)
@@ -146,9 +147,13 @@ public sealed class LiQiPower : ModPowerTemplate, IMaxHandSizeModifier
             }
 
             owner.Creature.GetPower<LiQiPower>()?.Flash();
-            await shadow.TriggerFromLiQiPower(
-                context.PlayerChoiceContext,
-                target);
+            xuYingTriggers.Add(new(
+                shadow,
+                AbstractXuYingCard.CreateAutoPlay(shadow, target)));
         }
+
+        await AbstractXuYingCard.TriggerBatch(
+            context.PlayerChoiceContext,
+            xuYingTriggers);
     }
 }
