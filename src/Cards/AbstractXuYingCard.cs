@@ -1,10 +1,14 @@
-using MegaCrit.Sts2.Core.Commands;
+using Godot;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
@@ -130,12 +134,37 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         NestedXuYingEffectDepth.Value++;
         try
         {
-            CardCmd.Preview(this, 0.8f, CardPreviewStyle.HorizontalLayout);
+            ShowTriggerPreview();
             await TriggerXuYingEffect(choiceContext, triggerCardPlay);
         }
         finally
         {
             NestedXuYingEffectDepth.Value--;
         }
+    }
+
+    private void ShowTriggerPreview()
+    {
+        if (CombatManager.Instance.IsEnding
+            || !LocalContext.IsMine(this)
+            || NCombatRoom.Instance?.Ui.CardPreviewContainer is not { } container
+            || NCard.Create(this) is not { } preview)
+        {
+            return;
+        }
+
+        container.AddChildSafely(preview);
+        preview.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
+        preview.Modulate = Colors.White;
+
+        var tween = preview.CreateTween();
+        tween.TweenProperty(preview, "scale", Vector2.One, 0.2f)
+            .From(Vector2.Zero)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Cubic);
+        tween.TweenInterval(0.6f);
+        tween.TweenProperty(preview, "modulate:a", 0f, 0.2f)
+            .SetEase(Tween.EaseType.In);
+        tween.TweenCallback(Callable.From(preview.QueueFreeSafely));
     }
 }
