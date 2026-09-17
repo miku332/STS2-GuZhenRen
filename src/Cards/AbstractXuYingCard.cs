@@ -1,8 +1,10 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
@@ -127,6 +129,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         NestedXuYingEffectDepth.Value++;
         try
         {
+            CardCmd.Preview(this, 0.8f, CardPreviewStyle.HorizontalLayout);
             await TriggerXuYingEffect(choiceContext, triggerCardPlay);
         }
         finally
