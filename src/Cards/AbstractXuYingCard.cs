@@ -294,7 +294,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             preview.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
             preview.MouseFilter = Control.MouseFilterEnum.Ignore;
             preview.FocusMode = Control.FocusModeEnum.None;
-            preview.ZIndex = 100;
+            preview.ZIndex = 0;
             preview.PivotOffset = NCard.defaultSize / 2f;
             preview.Modulate = new Color(1f, 1f, 1f, 0f);
             previews[i] = preview;
@@ -315,9 +315,14 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             var offset = new Vector2(
                 Random.Shared.NextSingle() * horizontalRadius * 2f - horizontalRadius,
                 Random.Shared.NextSingle() * verticalRadius * 2f - verticalRadius);
-            preview.Position = center + offset;
+            var position = center + offset;
+            position.Y = Math.Clamp(
+                position.Y,
+                viewportSize.Y * 0.32f,
+                viewportSize.Y * 0.52f);
+            preview.Position = position;
             preview.Scale = Vector2.One * 0.55f;
-            preview.Rotation = Random.Shared.NextSingle() * 0.12f - 0.06f;
+            preview.Rotation = 0f;
 
             var tween = preview.CreateTween().SetParallel();
             tween.TweenProperty(preview, "scale", Vector2.One * 0.71f, 0.2f)
@@ -332,13 +337,16 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
 
     private static Control? GetOrCreateTriggerPreviewLayer()
     {
-        if (NCombatRoom.Instance?.Ui is not Control combatUi)
+        var combatUi = NCombatRoom.Instance?.Ui;
+        if (combatUi is null)
         {
             return null;
         }
 
         if (combatUi.GetNodeOrNull<Control>(TriggerPreviewLayerName) is { } existing)
         {
+            existing.ZIndex = 0;
+            combatUi.MoveChildSafely(existing, combatUi.Hand.GetIndex());
             return existing;
         }
 
@@ -347,11 +355,12 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             Name = TriggerPreviewLayerName,
             MouseFilter = Control.MouseFilterEnum.Ignore,
             FocusMode = Control.FocusModeEnum.None,
-            ZIndex = 100
+            ZIndex = 0
         };
         layer.SetAnchorsPreset(Control.LayoutPreset.FullRect);
         combatUi.AddChildSafely(layer);
         layer.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        combatUi.MoveChildSafely(layer, combatUi.Hand.GetIndex());
         return layer;
     }
 
@@ -384,8 +393,6 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         tween.TweenProperty(preview, "scale", Vector2.One * 0.9f, 0.16f)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Cubic);
-        tween.TweenProperty(preview, "rotation", 0f, 0.16f)
-            .SetEase(Tween.EaseType.Out);
     }
 
     private static void FadePreview(NCard? preview)
