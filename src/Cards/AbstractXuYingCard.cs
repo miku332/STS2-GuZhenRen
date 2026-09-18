@@ -132,7 +132,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         CardPlay triggerCardPlay)
     {
         NestedXuYingEffectDepth.Value++;
-        var triggerCardNode = HideTriggerAttackCard(triggerCardPlay);
+        HideTriggerAttackCard(triggerCardPlay);
         var preview = ShowTriggerPreview();
         try
         {
@@ -159,17 +159,11 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
                 preview.QueueFreeSafely();
             }
 
-            if (triggerCardNode is not null
-                && GodotObject.IsInstanceValid(triggerCardNode))
-            {
-                triggerCardNode.Visible = true;
-            }
-
             NestedXuYingEffectDepth.Value--;
         }
     }
 
-    private static NCard? HideTriggerAttackCard(CardPlay triggerCardPlay)
+    private static void HideTriggerAttackCard(CardPlay triggerCardPlay)
     {
         var triggerCard = triggerCardPlay.Card;
         if (triggerCard.Type != CardType.Attack
@@ -177,11 +171,10 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             || !LocalContext.IsMine(triggerCard)
             || NCard.FindOnTable(triggerCard) is not { } triggerCardNode)
         {
-            return null;
+            return;
         }
 
         triggerCardNode.Visible = false;
-        return triggerCardNode;
     }
 
     private NCard? ShowTriggerPreview()
