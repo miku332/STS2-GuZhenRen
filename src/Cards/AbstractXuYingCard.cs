@@ -25,7 +25,6 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
     private static readonly ConditionalWeakTable<CardPlay, object> ProcessedCardPlays = new();
     private static readonly object ProcessedCardPlayMarker = new();
     private static readonly object ProcessedCardPlayLock = new();
-    private const string TriggerPreviewLayerName = "GuZhenRenXuYingPreviewLayer";
 
     internal readonly record struct XuYingTrigger(
         AbstractXuYingCard Card,
@@ -186,7 +185,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
                 var cardPlay = trigger.Card.ResolveTarget(trigger.CardPlay);
                 if (cardPlay is null)
                 {
-                    ReleasePreview(FindPreview(previews, i));
+                    FadeAndReleasePreview(FindPreview(previews, i));
                     continue;
                 }
 
@@ -218,10 +217,8 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
                 if (preview is not null)
                 {
                     await Cmd.Wait(0.18f);
-                    FadePreview(preview);
+                    FadeAndReleasePreview(preview);
                     await Cmd.Wait(0.12f);
-                    ReleasePreview(preview);
-                    previews[i] = null;
                 }
             }
         }
@@ -230,7 +227,10 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             NestedXuYingEffectDepth.Value--;
             foreach (var preview in previews)
             {
-                ReleasePreview(preview);
+                if (GodotObject.IsInstanceValid(preview))
+                {
+                    preview.QueueFreeSafely();
+                }
             }
         }
     }
@@ -276,7 +276,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
     {
         var previews = Enumerable.Repeat<NCard?>(null, triggers.Count).ToList();
         if (CombatManager.Instance.IsEnding
-            || GetOrCreateTriggerPreviewLayer() is not { } container)
+            || NCombatRoom.Instance?.Ui.CardPreviewContainer is not { } container)
         {
             return previews;
         }
@@ -306,8 +306,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             viewportSize = container.GetViewportRect().Size;
         }
 
-        var center = viewportSize / 2f + Vector2.Down * 25f
-            - NCard.defaultSize / 2f;
+        var center = viewportSize / 2f + Vector2.Down * 25f;
         var horizontalRadius = MathF.Min(400f, viewportSize.X * 0.28f);
         var verticalRadius = MathF.Min(250f, viewportSize.Y * 0.23f);
         foreach (var preview in previews.OfType<NCard>())
@@ -330,31 +329,6 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         return previews;
     }
 
-    private static Control? GetOrCreateTriggerPreviewLayer()
-    {
-        if (NCombatRoom.Instance?.Ui is not Control combatUi)
-        {
-            return null;
-        }
-
-        if (combatUi.GetNodeOrNull<Control>(TriggerPreviewLayerName) is { } existing)
-        {
-            return existing;
-        }
-
-        var layer = new Control
-        {
-            Name = TriggerPreviewLayerName,
-            MouseFilter = Control.MouseFilterEnum.Ignore,
-            FocusMode = Control.FocusModeEnum.None,
-            ZIndex = 100
-        };
-        layer.SetAnchorsPreset(Control.LayoutPreset.FullRect);
-        combatUi.AddChildSafely(layer);
-        layer.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        return layer;
-    }
-
     private static NCard? FindPreview(IReadOnlyList<NCard?> previews, int index) =>
         index >= 0 && index < previews.Count
             ? previews[index]
@@ -374,8 +348,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             viewportSize = container.GetViewportRect().Size;
         }
 
-        var center = viewportSize / 2f + Vector2.Down * 25f
-            - NCard.defaultSize / 2f;
+        var center = viewportSize / 2f + Vector2.Down * 25f;
         var tween = preview.CreateTween();
         tween.SetParallel();
         tween.TweenProperty(preview, "position", center, 0.16f)
@@ -388,7 +361,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             .SetEase(Tween.EaseType.Out);
     }
 
-    private static void FadePreview(NCard? preview)
+    private static void FadeAndReleasePreview(NCard? preview)
     {
         if (preview is null || !GodotObject.IsInstanceValid(preview))
         {
@@ -400,17 +373,6 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             .SetEase(Tween.EaseType.In);
         tween.TweenProperty(preview, "scale", Vector2.One * 0.75f, 0.12f)
             .SetEase(Tween.EaseType.In);
-    }
-
-    private static void ReleasePreview(NCard? preview)
-    {
-        if (preview is null
-            || !GodotObject.IsInstanceValid(preview)
-            || preview.IsQueuedForDeletion())
-        {
-            return;
-        }
-
-        preview.QueueFreeSafely();
+        tween.Chain().TweenCallback(Callable.From(preview.QueueFreeSafely));
     }
 }
