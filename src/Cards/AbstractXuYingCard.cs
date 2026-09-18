@@ -1,5 +1,6 @@
 using Godot;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -131,39 +132,65 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         CardPlay triggerCardPlay)
     {
         NestedXuYingEffectDepth.Value++;
+        var preview = ShowTriggerPreview();
         try
         {
-            ShowTriggerPreview();
+            if (preview is not null)
+            {
+                await Cmd.Wait(0.2f);
+            }
+
             await TriggerXuYingEffect(choiceContext, triggerCardPlay);
+
+            if (preview is not null && GodotObject.IsInstanceValid(preview))
+            {
+                await Cmd.Wait(0.2f);
+                FadeTriggerPreview(preview);
+                await Cmd.Wait(0.2f);
+            }
         }
         finally
         {
+            if (preview is not null
+                && GodotObject.IsInstanceValid(preview)
+                && !preview.IsQueuedForDeletion())
+            {
+                preview.QueueFreeSafely();
+            }
+
             NestedXuYingEffectDepth.Value--;
         }
     }
 
-    private void ShowTriggerPreview()
+    private NCard? ShowTriggerPreview()
     {
         if (CombatManager.Instance.IsEnding
             || !LocalContext.IsMine(this)
             || NCombatRoom.Instance?.Ui.CardPreviewContainer is not { } container
             || NCard.Create(this) is not { } preview)
         {
-            return;
+            return null;
         }
 
         container.AddChildSafely(preview);
         preview.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
         preview.Modulate = Colors.White;
+        preview.MouseFilter = Control.MouseFilterEnum.Ignore;
+        preview.FocusMode = Control.FocusModeEnum.None;
 
         var tween = preview.CreateTween();
         tween.TweenProperty(preview, "scale", Vector2.One, 0.2f)
             .From(Vector2.Zero)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Cubic);
-        tween.TweenInterval(0.6f);
+
+        return preview;
+    }
+
+    private static void FadeTriggerPreview(NCard preview)
+    {
+        var tween = preview.CreateTween();
         tween.TweenProperty(preview, "modulate:a", 0f, 0.2f)
             .SetEase(Tween.EaseType.In);
-        tween.TweenCallback(Callable.From(preview.QueueFreeSafely));
     }
 }
