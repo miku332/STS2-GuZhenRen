@@ -557,6 +557,13 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
                     ("Tribulation", tribulation));
             }
 
+            if (!tribulationDisabled && IsCombatActive())
+            {
+                return GetProgressText(
+                    "tribulation_active",
+                    ("Tribulation", tribulation));
+            }
+
             var rankFiveDescription = GetProgressText(
                 tribulationDisabled
                     ? "rank_five_pending_disabled"
