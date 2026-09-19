@@ -675,7 +675,9 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
             "card_keywords",
             $"GU_ZHEN_REN_KEYWORD_PIN_JIE_{rank}.title").GetFormattedText();
 
-    private bool IsCombatActive() => CombatManager.Instance.IsInProgress;
+    private bool IsCombatActive() =>
+        CombatManager.Instance.IsInProgress
+        || Owner?.Creature.GetPower<PlayerTribulationPower>() is not null;
 
     private bool ShouldShowTribulationHoverTip =>
         _state is KongQiaoState.Countdown or KongQiaoState.TribulationPending;
