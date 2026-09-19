@@ -9,6 +9,9 @@ namespace GuZhenRen.Cards;
 
 public abstract class GuZhenRenCardTemplate : ModCardTemplate
 {
+    private const string SpecialCardBannerMaterialPath =
+        "res://materials/cards/banners/card_banner_rare_mat.tres";
+
     private readonly bool _upgrades;
 
     private static readonly IHoverTip XianGuHoverTip = new HoverTip(
@@ -64,6 +67,11 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
         bool Upgraded);
 
     public virtual int Rank => 1;
+
+    public override string? CustomBannerMaterialPath =>
+        this is AbstractShaZhaoCard or AbstractBenMingGuCard
+            ? SpecialCardBannerMaterialPath
+            : base.CustomBannerMaterialPath;
 
     protected virtual bool ShowXianGuHoverTip => true;
 
