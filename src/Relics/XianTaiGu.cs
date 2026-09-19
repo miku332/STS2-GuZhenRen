@@ -40,6 +40,7 @@ public sealed class XianTaiGu : AbstractKongQiaoRelic
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DynamicVar("RemainingXp", 0),
+        new StringVar("ProgressDescription", BuildProgressDescription()),
         new StringVar(
             "RankStatus",
             GetLocalizedText("preview_status")),
@@ -111,6 +112,8 @@ public sealed class XianTaiGu : AbstractKongQiaoRelic
             .GetFormattedText();
 
         DynamicVars["RemainingXp"].BaseValue = Math.Max(0, NeededXp - Xp);
+        ((StringVar)DynamicVars["ProgressDescription"]).StringValue =
+            BuildProgressDescription();
         ((StringVar)DynamicVars["RankStatus"]).StringValue = rankStatus;
         ((StringVar)DynamicVars["RankEffectDescription"]).StringValue =
             string.IsNullOrEmpty(effect)
