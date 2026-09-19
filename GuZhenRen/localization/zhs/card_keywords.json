@@ -71,6 +71,18 @@
     "GU_ZHEN_REN_KEYWORD_XIAN_GU_WU.description": "阵道的巅峰产物，集多种功能于一体，鲜有短板。\n[gold]每回合开始时，返回手牌。[/gold]",
     "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.title": "凡蛊屋",
     "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.description": "完全由凡蛊搭建的蛊屋，本质是固化定型的杀招。\n[gold]每回合开始时，返回手牌。[/gold]",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_EARTHLY.title": "地灾",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_EARTHLY.description": "灾劫的一种，战斗将更为艰难，战斗奖励将更加丰富。",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_HEAVENLY.title": "天劫",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_HEAVENLY.description": "灾劫的一种，战斗将更为艰难，战斗奖励将更加丰富。",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_GRAND.title": "浩劫",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_GRAND.description": "灾劫的一种，战斗将更为艰难，战斗奖励将更加丰富。",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_MYRIAD.title": "万劫",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_MYRIAD.description": "灾劫的一种，战斗将更为艰难，战斗奖励将更加丰富。",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_MINOR_CHAOS.title": "混沌小难",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_MINOR_CHAOS.description": "灾劫的一种，战斗将更为艰难，战斗奖励将更加丰富。",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_MAJOR_CHAOS.title": "混沌大难",
+    "GU_ZHEN_REN_KEYWORD_TRIBULATION_MAJOR_CHAOS.description": "灾劫的一种，战斗将更为艰难，战斗奖励将更加丰富。",
     "GU_ZHEN_REN_KEYWORD_XUE_KUANG.title": "血狂",
     "GU_ZHEN_REN_KEYWORD_XUE_KUANG.description": "从手牌中自动打出，打出时失去[blue]2[/blue]点生命。"
 }

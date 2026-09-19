@@ -115,6 +115,9 @@ internal readonly record struct UniquenessCleanupPayload;
 
 internal readonly record struct ShaZhaoRecipeRewardsPayload;
 
+internal readonly record struct KongQiaoTribulationTogglePayload(
+    ulong OwnerNetId);
+
 internal readonly record struct YingShengChongTargetPayload(
     uint? PowerOwnerCombatId,
     ulong AffectedPlayerNetId,
@@ -272,6 +275,15 @@ internal static class NetGuZhenRenActions
             Execute: static context => ShaZhaoRecipeDropSystem.ExecuteManagedRewardsAsync(context),
             ActionType: GameActionType.NonCombat);
 
+    private static readonly RitsuLibManagedNetActionDescriptor<KongQiaoTribulationTogglePayload>
+        KongQiaoTribulationToggleDescriptor = new(
+            ModuleId: Entry.ModId,
+            ActionKey: "kong_qiao_tribulation_toggle_v1",
+            Serialize: static payload => JsonSerializer.SerializeToUtf8Bytes(payload),
+            Deserialize: static bytes => JsonSerializer.Deserialize<KongQiaoTribulationTogglePayload>(bytes),
+            Execute: static context => AbstractKongQiaoRelic.ExecuteManagedTribulationToggleAsync(context),
+            ActionType: GameActionType.NonCombat);
+
     private static readonly RitsuLibManagedNetActionDescriptor<YingShengChongTargetPayload>
         YingShengChongTargetDescriptor = new(
             ModuleId: Entry.ModId,
@@ -308,6 +320,7 @@ internal static class NetGuZhenRenActions
         RitsuLibManagedNetActions.Register(WeiLaiShenRecipeBorrowDescriptor);
         RitsuLibManagedNetActions.Register(UniquenessCleanupDescriptor);
         RitsuLibManagedNetActions.Register(ShaZhaoRecipeRewardsDescriptor);
+        RitsuLibManagedNetActions.Register(KongQiaoTribulationToggleDescriptor);
         RitsuLibManagedNetActions.Register(YingShengChongTargetDescriptor);
         RitsuLibManagedNetActions.Register(YingShengChongKillDescriptor);
     }
@@ -412,6 +425,13 @@ internal static class NetGuZhenRenActions
             RunManager.Instance,
             ShaZhaoRecipeRewardsDescriptor,
             default);
+
+    internal static bool RequestKongQiaoTribulationToggle(
+        KongQiaoTribulationTogglePayload payload) =>
+        RitsuLibManagedNetActions.Request(
+            RunManager.Instance,
+            KongQiaoTribulationToggleDescriptor,
+            payload);
 
     internal static bool RequestYingShengChongTarget(
         YingShengChongTargetPayload payload) =>

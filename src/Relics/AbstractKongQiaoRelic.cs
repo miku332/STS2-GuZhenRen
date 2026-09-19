@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -8,22 +9,27 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using GuZhenRen.Powers;
 using GuZhenRen.Patches;
 using GuZhenRen.Systems;
+using GuZhenRen.Multiplayer;
 using STS2RitsuLib.Scaffolding.Content;
+using STS2RitsuLib.Interactions.RightClick;
+using STS2RitsuLib.Networking.ManagedActions;
 using GuZhenRen.Cards;
 
 namespace GuZhenRen.Relics;
 
-public abstract class AbstractKongQiaoRelic : ModRelicTemplate
+public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickableRelic
 {
     private enum KongQiaoState
     {
         XpGathering,
         TribulationPending,
-        Countdown
+        Countdown,
+        ReadyToTribulate
     }
 
     private const int BattlesPerTribulation = 2;
@@ -34,6 +40,10 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
     private int _maxHpBonusApplied;
 
     public abstract int Rank { get; }
+
+    public override bool ShowCounter => true;
+
+    public override int DisplayAmount => Rank;
 
     protected abstract int NeededXp { get; }
 
@@ -104,6 +114,22 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
                 GetProgressLoc("title"),
                 currentAperture.BuildProgressDescription(),
                 null);
+
+            if (currentAperture.ShouldShowTribulationHoverTip)
+            {
+                var tribulationType = TribulationSystem.GetNextType(
+                    currentAperture.Rank,
+                    currentAperture.Xp);
+                var keywordStem = GetTribulationKeywordStem(tribulationType);
+                yield return new HoverTip(
+                    new LocString(
+                        "card_keywords",
+                        $"GU_ZHEN_REN_KEYWORD_{keywordStem}.title"),
+                    new LocString(
+                        "card_keywords",
+                        $"GU_ZHEN_REN_KEYWORD_{keywordStem}.description"));
+            }
+
             yield return new HoverTip(
                 currentAperture.GetRankTitle(),
                 currentAperture.GetRankDescription(),
@@ -130,7 +156,9 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
 
         if (Rank == 5 || Owner.Creature.CombatState is null)
         {
-            if (Rank == 5 && _xp >= NeededXp)
+            if (Rank == 5
+                && _xp >= NeededXp
+                && _state != KongQiaoState.ReadyToTribulate)
             {
                 _state = KongQiaoState.TribulationPending;
             }
@@ -271,6 +299,11 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
             return;
         }
 
+        if (_state == KongQiaoState.ReadyToTribulate)
+        {
+            return;
+        }
+
         if (Rank < 6)
         {
             Xp += GetXpReward(room.RoomType);
@@ -326,6 +359,68 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
 
     protected virtual bool IsTribulationDisabled() =>
         Owner.GetRelic<ShenBuZhi>() is not null;
+
+    public bool CanHandleRightClickLocal(ModRightClickContext context) =>
+        context.Player == Owner
+        && Owner.Creature.IsAlive
+        && IsMutable
+        && !CombatManager.Instance.IsInProgress
+        && !IsTribulationDisabled()
+        && CanToggleTribulationState();
+
+    public async Task OnRightClick(ModRightClickExecutionContext context)
+    {
+        if (!CanHandleRightClickLocal(new ModRightClickContext(
+                context.Player,
+                context.Model,
+                context.Trigger)))
+        {
+            return;
+        }
+
+        var payload = new KongQiaoTribulationTogglePayload(context.Player.NetId);
+        if (RunManager.Instance.IsSingleplayerOrFakeMultiplayer)
+        {
+            ToggleTribulationState();
+            await Task.CompletedTask;
+            return;
+        }
+
+        NetGuZhenRenActions.RequestWithRetry(
+            () => NetGuZhenRenActions.RequestKongQiaoTribulationToggle(payload),
+            () => context.Player.GetRelic<AbstractKongQiaoRelic>() is not null,
+            () => Entry.Logger.Warn("Kong Qiao tribulation toggle action was not queued."),
+            "Kong Qiao tribulation toggle",
+            requiresCombat: false);
+        await Task.CompletedTask;
+    }
+
+    internal static Task ExecuteManagedTribulationToggleAsync(
+        RitsuLibManagedNetActionContext<KongQiaoTribulationTogglePayload> context)
+    {
+        if (context.Message.OwnerNetId != context.Player.NetId
+            || context.Player.GetRelic<AbstractKongQiaoRelic>() is not { } relic
+            || !relic.CanToggleTribulationState())
+        {
+            return Task.CompletedTask;
+        }
+
+        relic.ToggleTribulationState();
+        return Task.CompletedTask;
+    }
+
+    private bool CanToggleTribulationState() =>
+        (Rank == 5 || (Rank == 8 && Xp >= 2))
+        && _state is KongQiaoState.TribulationPending or KongQiaoState.ReadyToTribulate;
+
+    private void ToggleTribulationState()
+    {
+        _state = _state == KongQiaoState.TribulationPending
+            ? KongQiaoState.ReadyToTribulate
+            : KongQiaoState.TribulationPending;
+        Flash();
+        InvokeDisplayAmountChanged();
+    }
 
     private void ResetTerminalTribulationState()
     {
@@ -413,8 +508,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
         {
             return GetProgressText(
                 "mortal",
-                ("Current", Xp),
-                ("Needed", NeededXp));
+                ("Remaining", Math.Max(0, NeededXp - Xp)));
         }
 
         var tribulation = GetTribulationName(
@@ -423,20 +517,31 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
 
         if (Rank == 5)
         {
+            if (_state == KongQiaoState.ReadyToTribulate)
+            {
+                return GetProgressText("ready_to_tribulate");
+            }
+
             if (_state != KongQiaoState.TribulationPending)
             {
                 return GetProgressText(
                     "rank_five",
-                    ("Current", Xp),
-                    ("Needed", NeededXp),
+                    ("Remaining", Math.Max(0, NeededXp - Xp)),
                     ("Tribulation", tribulation));
             }
 
-            return GetProgressText(
+            var rankFiveDescription = GetProgressText(
                 tribulationDisabled
                     ? "rank_five_pending_disabled"
                     : "rank_five_pending",
                 ("Tribulation", tribulation));
+
+            if (!tribulationDisabled && !IsCombatActive())
+            {
+                rankFiveDescription += GetProgressText("cancel_immortal");
+            }
+
+            return rankFiveDescription;
         }
 
         if (Rank >= 10)
@@ -444,30 +549,112 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
             return GetProgressText("terminal_complete");
         }
 
-        return _state switch
+        if (_state == KongQiaoState.TribulationPending)
         {
-            KongQiaoState.TribulationPending => GetProgressText(
-                tribulationDisabled
-                    ? "immortal_pending_disabled"
-                    : "immortal_pending",
-                ("Current", Xp),
-                ("Needed", NeededXp),
-                ("Tribulation", tribulation)),
-            KongQiaoState.Countdown => GetProgressText(
+            if (tribulationDisabled)
+            {
+                return GetProgressText(
+                    "immortal_pending_disabled",
+                    ("Tribulation", tribulation));
+            }
+
+            var description = IsCombatActive()
+                ? GetProgressText("tribulation_active", ("Tribulation", tribulation))
+                : GetProgressText("immortal_pending", ("Tribulation", tribulation));
+
+            if (!IsCombatActive())
+            {
+                description += BuildBreakthroughHint(tribulation);
+                if (Rank == 8 && Xp == 2)
+                {
+                    description += GetProgressText("cancel_venerable");
+                }
+            }
+
+            return description;
+        }
+
+        if (_state == KongQiaoState.Countdown)
+        {
+            return GetProgressText(
                 tribulationDisabled
                     ? "immortal_countdown_disabled"
                     : "immortal_countdown",
-                ("Current", Xp),
-                ("Needed", NeededXp),
                 ("Battles", BattlesToNextTribulation),
-                ("Tribulation", tribulation)),
-            _ => GetProgressText(
-                "immortal_preparing",
-                ("Current", Xp),
-                ("Needed", NeededXp),
-                ("Tribulation", tribulation))
-        };
+                ("Tribulation", tribulation));
+        }
+
+        if (_state == KongQiaoState.ReadyToTribulate)
+        {
+            return GetProgressText("ready_to_tribulate");
+        }
+
+        return GetProgressText("immortal_preparing", ("Tribulation", tribulation));
     }
+
+    private string BuildBreakthroughHint(string tribulation)
+    {
+        if (Rank == 6 && Xp == 1)
+        {
+            return GetProgressText(
+                "breakthrough_to_rank",
+                ("Tribulation", tribulation),
+                ("Rank", GetRankName(7)));
+        }
+
+        if (Rank == 7 && Xp == 1)
+        {
+            return GetProgressText(
+                "breakthrough_to_rank",
+                ("Tribulation", tribulation),
+                ("Rank", GetRankName(8)));
+        }
+
+        if (Rank == 8 && Xp == 1)
+        {
+            return GetProgressText("breakthrough_to_venerable", ("Tribulation", tribulation));
+        }
+
+        if (Rank == 8 && Xp == 2)
+        {
+            return GetProgressText(
+                "breakthrough_to_rank",
+                ("Tribulation", tribulation),
+                ("Rank", GetRankName(9)));
+        }
+
+        if (Rank == 9 && Xp == 17)
+        {
+            return GetProgressText(
+                "breakthrough_to_rank",
+                ("Tribulation", tribulation),
+                ("Rank", GetRankName(10)));
+        }
+
+        return string.Empty;
+    }
+
+    private string GetRankName(int rank) => rank == 10
+        ? GetProgressLoc("rank_10_title").GetFormattedText()
+        : new LocString(
+            "card_keywords",
+            $"GU_ZHEN_REN_KEYWORD_PIN_JIE_{rank}.title").GetFormattedText();
+
+    private bool IsCombatActive() => CombatManager.Instance.IsInProgress;
+
+    private bool ShouldShowTribulationHoverTip =>
+        _state is KongQiaoState.Countdown or KongQiaoState.TribulationPending;
+
+    private static string GetTribulationKeywordStem(TribulationType type) => type switch
+    {
+        TribulationType.Earthly => "TRIBULATION_EARTHLY",
+        TribulationType.Heavenly => "TRIBULATION_HEAVENLY",
+        TribulationType.Grand => "TRIBULATION_GRAND",
+        TribulationType.Myriad => "TRIBULATION_MYRIAD",
+        TribulationType.MinorChaos => "TRIBULATION_MINOR_CHAOS",
+        TribulationType.MajorChaos => "TRIBULATION_MAJOR_CHAOS",
+        _ => "TRIBULATION_EARTHLY"
+    };
 
     private AbstractKongQiaoRelic GetCurrentAperture()
     {
@@ -489,10 +676,11 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate
             $"GU_ZHEN_REN_KEYWORD_PIN_JIE_{Rank}.title")
         : GetProgressLoc("rank_10_title");
 
-    private LocString GetRankDescription() => GetProgressLoc(
-        Rank >= 10
-            ? "rank_10_description"
-            : "rank_description");
+    private LocString GetRankDescription() => Rank is >= 1 and <= 9
+        ? new LocString(
+            "card_keywords",
+            "GU_ZHEN_REN_KEYWORD_PIN_JIE.description")
+        : GetProgressLoc("rank_10_description");
 
     private static string GetTribulationName(TribulationType type) =>
         GetProgressLoc($"tribulation_{type.ToString().ToLowerInvariant()}")
