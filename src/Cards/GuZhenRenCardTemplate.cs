@@ -69,29 +69,9 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
     public virtual int Rank => 1;
 
     public override string? CustomBannerMaterialPath =>
-        UsesGoldCardTrim
+        this is AbstractShaZhaoCard
             ? SpecialCardBannerMaterialPath
             : base.CustomBannerMaterialPath;
-
-    private bool UsesGoldCardTrim =>
-        this is AbstractShaZhaoCard
-            or ChengGongGu
-            or OptionCaiFu
-            or OptionYongSheng
-            or OptionZiYou
-            or OptionJiTuChengShanAnTuZhongShanBao
-            or OptionRuTuWeiAnAnTuZhongShanBao
-            or OptionJuanTuChongLaiAnTuZhongShanBao
-            or OptionBuDongRuShanAnTuZhongShanBao
-            or OptionFangHuXingXiuQiPan
-            or OptionZhenChaXingXiuQiPan
-            or OptionTuiSuanXingXiuQiPan
-            or OptionTengNuoXingXiuQiPan
-            or OptionZhenChaZhuMoBang
-            or OptionFangHuZhuMoBang
-            or OptionGongFaZhuMoBang
-            or OptionHuiFuZhuMoBang
-        || Tags.Contains(GuZhenRenTags.XianGuWu);
 
     protected virtual bool ShowXianGuHoverTip => true;
 
