@@ -385,7 +385,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
     }
 
     protected virtual bool IsTribulationDisabled() =>
-        Owner.GetRelic<ShenBuZhi>() is not null;
+        Owner?.GetRelic<ShenBuZhi>() is not null;
 
     public bool CanHandleRightClickLocal(ModRightClickContext context) =>
         context.Player == Owner
