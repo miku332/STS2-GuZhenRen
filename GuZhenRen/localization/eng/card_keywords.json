@@ -71,6 +71,18 @@
   "GU_ZHEN_REN_KEYWORD_XIAN_GU_WU.description": "The peak product of Formation Path, integrating multiple functions with few shortcomings.\n[gold]At the start of each turn, return to your hand.[/gold]",
   "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.title": "Mortal Gu House",
   "GU_ZHEN_REN_KEYWORD_FAN_GU_WU.description": "A Gu House entirely built with mortal Gu, essentially a solidified killer move.\n[gold]At the start of each turn, return to your hand.[/gold]",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_EARTHLY.title": "Earthly Calamity",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_EARTHLY.description": "A type of tribulation. Combat will be more difficult, and combat rewards will be richer.",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_HEAVENLY.title": "Heavenly Tribulation",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_HEAVENLY.description": "A type of tribulation. Combat will be more difficult, and combat rewards will be richer.",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_GRAND.title": "Grand Tribulation",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_GRAND.description": "A type of tribulation. Combat will be more difficult, and combat rewards will be richer.",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_MYRIAD.title": "Myriad Tribulation",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_MYRIAD.description": "A type of tribulation. Combat will be more difficult, and combat rewards will be richer.",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_MINOR_CHAOS.title": "Minor Chaos Disaster",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_MINOR_CHAOS.description": "A type of tribulation. Combat will be more difficult, and combat rewards will be richer.",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_MAJOR_CHAOS.title": "Major Chaos Disaster",
+  "GU_ZHEN_REN_KEYWORD_TRIBULATION_MAJOR_CHAOS.description": "A type of tribulation. Combat will be more difficult, and combat rewards will be richer.",
   "GU_ZHEN_REN_KEYWORD_XUE_KUANG.title": "Blood Frenzy",
   "GU_ZHEN_REN_KEYWORD_XUE_KUANG.description": "Automatically played from your hand. Lose [blue]2[/blue] HP when played."
 }
