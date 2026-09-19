@@ -75,15 +75,15 @@ public sealed class YingShengChongPower : ModPowerTemplate
             return Task.CompletedTask;
         }
 
-        if (!MultiplayerActionAuthority.IsAuthority)
-        {
-            return Task.CompletedTask;
-        }
-
         var cards = PileType.Hand.GetPile(player).Cards;
         var target = cards.Count == 0
             ? null
             : player.RunState.Rng.CombatCardSelection.NextItem(cards);
+
+        if (!MultiplayerActionAuthority.IsAuthority)
+        {
+            return Task.CompletedTask;
+        }
 
         var payload = new YingShengChongTargetPayload(
             Owner.CombatId,
