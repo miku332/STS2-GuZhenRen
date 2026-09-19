@@ -22,7 +22,7 @@ public sealed class FangYuanCharacter :
 
     public override CharacterGender Gender => CharacterGender.Masculine;
 
-    public override int StartingHp => 80;
+    public override int StartingHp => 72;
 
     public override int StartingGold => 99;
 
