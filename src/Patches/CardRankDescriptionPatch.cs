@@ -127,9 +127,10 @@ public sealed class CardRankDescriptionPatch : IPatchMethod
                         shaZhaoText,
                         guWuText
                     }
-                    .Where(static text => !string.IsNullOrWhiteSpace(text))));
+                    .Where(static text => !string.IsNullOrWhiteSpace(text)))
+                .Select(static text => $"[gold]{text}[/gold]"));
 
-        __result = $"[gold]{rankAndDaoText}{terminator}[/gold]\n{__result}";
+        __result = $"{rankAndDaoText}{terminator}\n{__result}";
     }
 
     private static int ResolveDisplayedRank(
