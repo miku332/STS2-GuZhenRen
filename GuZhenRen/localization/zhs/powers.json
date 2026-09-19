@@ -210,6 +210,7 @@
     "GU_ZHEN_REN_POWER_GUO_POWER.power_description": "将在{Amount}回合后落果，施加{StoredPowerAmount}层{StoredPower}。",
     "GU_ZHEN_REN_POWER_YING_SHENG_CHONG_POWER.title": "应声虫",
     "GU_ZHEN_REN_POWER_YING_SHENG_CHONG_POWER.description": "本回合被指定的牌：{CardName}。打出同名牌时立即死亡。",
+    "GU_ZHEN_REN_POWER_YING_SHENG_CHONG_POWER.target_speak": "{CardName}！",
     "GU_ZHEN_REN_POWER_GUI_GUA_YI_POWER.title": "鬼卦衣",
     "GU_ZHEN_REN_POWER_GUI_GUA_YI_POWER.description": "意图不为攻击时，获得1层无实体；意图为攻击时移除该无实体。",
     "GU_ZHEN_REN_POWER_DA_JIA_ZHI_QI_POWER.title": "大家之气",
