@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Rooms;
@@ -53,6 +54,11 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
 
     public override RelicRarity Rarity =>
         Rank == 1 ? RelicRarity.Starter : RelicRarity.Event;
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new StringVar("ProgressDescription", BuildProgressDescription())
+    ];
 
     [SavedProperty]
     public int Xp
@@ -110,10 +116,13 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
         get
         {
             var currentAperture = GetCurrentAperture();
-            yield return new HoverTip(
-                GetProgressLoc("title"),
-                currentAperture.BuildProgressDescription(),
-                null);
+            if (currentAperture.ShouldShowCultivationHoverTip)
+            {
+                yield return new HoverTip(
+                    GetProgressLoc("title"),
+                    GetProgressLoc("gain_rule"),
+                    null);
+            }
 
             if (currentAperture.ShouldShowTribulationHoverTip)
             {
@@ -130,10 +139,13 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
                         $"GU_ZHEN_REN_KEYWORD_{keywordStem}.description"));
             }
 
-            yield return new HoverTip(
-                currentAperture.GetRankTitle(),
-                currentAperture.GetRankDescription(),
-                null);
+            if (currentAperture.Rank is > 1 and <= 5)
+            {
+                yield return new HoverTip(
+                    currentAperture.GetRankTitle(),
+                    currentAperture.GetRankDescription(),
+                    null);
+            }
         }
     }
 
@@ -151,6 +163,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
                 _battlesToNextTribulation = 0;
             }
 
+            RefreshProgressDescription();
             return;
         }
 
@@ -184,6 +197,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
         if (Rank >= 10)
         {
             ResetTerminalTribulationState();
+            RefreshProgressDescription();
             return;
         }
 
@@ -200,12 +214,15 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
                 Owner.Creature,
                 null);
         }
+
+        RefreshProgressDescription();
     }
 
     public override async Task AfterObtained()
     {
         if (Rank < 6)
         {
+            RefreshProgressDescription();
             return;
         }
 
@@ -221,12 +238,15 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
             _state = KongQiaoState.Countdown;
             _battlesToNextTribulation = BattlesPerTribulation;
         }
+
+        RefreshProgressDescription();
     }
 
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
         BenMingGuRankProtection.EnsureMinimumRank(Owner);
         await BenMingGuUniquenessPatch.EnforceDeckUniqueness(Owner);
+        RefreshProgressDescription();
     }
 
     public override Task AfterCardPlayed(
@@ -265,6 +285,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
         if (Rank >= 10)
         {
             ResetTerminalTribulationState();
+            RefreshProgressDescription();
             return;
         }
 
@@ -296,17 +317,20 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
                 _battlesToNextTribulation = BattlesPerTribulation;
             }
             LogProgress("tribulation cleared");
+            RefreshProgressDescription();
             return;
         }
 
         if (_state == KongQiaoState.ReadyToTribulate)
         {
+            RefreshProgressDescription();
             return;
         }
 
         if (Rank < 6)
         {
             Xp += GetXpReward(room.RoomType);
+            Flash();
             if (Xp >= NeededXp)
             {
                 if (Rank < 5)
@@ -318,6 +342,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
                     _state = KongQiaoState.TribulationPending;
                 }
             }
+            RefreshProgressDescription();
             return;
         }
 
@@ -331,6 +356,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
                 _state = KongQiaoState.TribulationPending;
             }
             LogProgress("countdown advanced");
+            RefreshProgressDescription();
         }
     }
 
@@ -353,6 +379,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
             ? MaxHpBonusApplied
             : Rank >= 6 ? Rank : 0;
         await RelicCmd.Replace(this, nextKongQiao);
+        nextKongQiao.RefreshProgressDescription();
         await UpgradeBenMingGuToRank(nextKongQiao.Rank);
         ApertureVoiceSystem.PlayForRank(Owner, nextKongQiao.Rank);
     }
@@ -419,6 +446,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
             ? KongQiaoState.ReadyToTribulate
             : KongQiaoState.TribulationPending;
         Flash();
+        RefreshProgressDescription();
         InvokeDisplayAmountChanged();
     }
 
@@ -489,7 +517,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
         await CreatureCmd.GainMaxHp(Owner.Creature, delta);
     }
 
-    private string BuildProgressDescription()
+    protected string BuildProgressDescription()
     {
         if (this is XianTaiGu)
         {
@@ -645,6 +673,11 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
     private bool ShouldShowTribulationHoverTip =>
         _state is KongQiaoState.Countdown or KongQiaoState.TribulationPending;
 
+    private bool ShouldShowCultivationHoverTip =>
+        this is XianTaiGu
+            ? Rank < 9
+            : Rank < 5 || Rank == 5 && _state == KongQiaoState.XpGathering;
+
     private static string GetTribulationKeywordStem(TribulationType type) => type switch
     {
         TribulationType.Earthly => "TRIBULATION_EARTHLY",
@@ -664,6 +697,24 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
         }
 
         return Owner.GetRelic<AbstractKongQiaoRelic>() ?? this;
+    }
+
+    protected void RefreshProgressDescription()
+    {
+        if (!IsMutable
+            || !DynamicVars.TryGetValue("ProgressDescription", out var dynamicVar)
+            || dynamicVar is not StringVar progressDescription)
+        {
+            return;
+        }
+
+        progressDescription.StringValue = BuildProgressDescription();
+    }
+
+    protected override void AfterCloned()
+    {
+        base.AfterCloned();
+        RefreshProgressDescription();
     }
 
     private void LogProgress(string reason) => Entry.Logger.Info(
