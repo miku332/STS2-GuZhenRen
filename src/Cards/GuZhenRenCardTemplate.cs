@@ -69,9 +69,18 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
     public virtual int Rank => 1;
 
     public override string? CustomBannerMaterialPath =>
-        this is AbstractShaZhaoCard or AbstractBenMingGuCard
+        UsesGoldCardTrim
             ? SpecialCardBannerMaterialPath
             : base.CustomBannerMaterialPath;
+
+    private bool UsesGoldCardTrim =>
+        this is AbstractShaZhaoCard
+            or AbstractBenMingGuCard
+            or QingTiXianYuan
+            or HongZaoXianYuan
+            or BaiLiXianYuan
+            or HuangXingXianYuan
+        || Tags.Contains(GuZhenRenTags.XianGuWu);
 
     protected virtual bool ShowXianGuHoverTip => true;
 
