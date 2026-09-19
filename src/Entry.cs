@@ -23,7 +23,7 @@ namespace GuZhenRen;
 public static class Entry
 {
     public const string ModId = "GuZhenRen";
-    public const string Version = "0.6.1-beta.1";
+    public const string Version = "0.7.0-beta.1";
 
     public static readonly Logger Logger = RitsuLibFramework.CreateLogger(ModId);
 
@@ -114,6 +114,7 @@ public static class Entry
         potionPatcher.PatchAll();
         var liQiPatcher = RitsuLibFramework.CreatePatcher(ModId, "li-qi");
         liQiPatcher.RegisterPatch<XuYingHandSizePatch>();
+        liQiPatcher.RegisterPatch<XuYingTriggerCardVisualPatch>();
         liQiPatcher.PatchAll();
         var haoJiePatcher = RitsuLibFramework.CreatePatcher(ModId, "hao-jie");
         haoJiePatcher.RegisterPatch<GuiGuaYiIntentPatch>();
