@@ -80,6 +80,22 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
             or HongZaoXianYuan
             or BaiLiXianYuan
             or HuangXingXianYuan
+            or ChengGongGu
+            or OptionCaiFu
+            or OptionYongSheng
+            or OptionZiYou
+            or OptionJiTuChengShanAnTuZhongShanBao
+            or OptionRuTuWeiAnAnTuZhongShanBao
+            or OptionJuanTuChongLaiAnTuZhongShanBao
+            or OptionBuDongRuShanAnTuZhongShanBao
+            or OptionFangHuXingXiuQiPan
+            or OptionZhenChaXingXiuQiPan
+            or OptionTuiSuanXingXiuQiPan
+            or OptionTengNuoXingXiuQiPan
+            or OptionZhenChaZhuMoBang
+            or OptionFangHuZhuMoBang
+            or OptionGongFaZhuMoBang
+            or OptionHuiFuZhuMoBang
         || Tags.Contains(GuZhenRenTags.XianGuWu);
 
     protected virtual bool ShowXianGuHoverTip => true;
