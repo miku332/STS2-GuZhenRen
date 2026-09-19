@@ -69,7 +69,7 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
     public virtual int Rank => 1;
 
     public override string? CustomBannerMaterialPath =>
-        this is AbstractShaZhaoCard
+        this is AbstractShaZhaoCard or ChengGongGu
             ? SpecialCardBannerMaterialPath
             : base.CustomBannerMaterialPath;
 
