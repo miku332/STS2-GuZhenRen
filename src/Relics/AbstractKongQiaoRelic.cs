@@ -604,12 +604,19 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
 
         if (_state == KongQiaoState.Countdown)
         {
-            return GetProgressText(
+            var description = GetProgressText(
                 tribulationDisabled
                     ? "immortal_countdown_disabled"
                     : "immortal_countdown",
                 ("Battles", BattlesToNextTribulation),
                 ("Tribulation", tribulation));
+
+            if (!tribulationDisabled)
+            {
+                description += BuildBreakthroughHint(tribulation);
+            }
+
+            return description;
         }
 
         if (_state == KongQiaoState.ReadyToTribulate)
