@@ -75,11 +75,6 @@ public abstract class GuZhenRenCardTemplate : ModCardTemplate
 
     private bool UsesGoldCardTrim =>
         this is AbstractShaZhaoCard
-            or AbstractBenMingGuCard
-            or QingTiXianYuan
-            or HongZaoXianYuan
-            or BaiLiXianYuan
-            or HuangXingXianYuan
             or ChengGongGu
             or OptionCaiFu
             or OptionYongSheng
