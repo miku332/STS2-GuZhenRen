@@ -1,5 +1,73 @@
 # 更新日志 / Changelog
 
+## 0.7.0
+
+### 中文
+
+#### 新增
+
+- 新增虚影牌触发预览。触发的虚影会在屏幕中悬浮显示，并按照触发顺序依次结算。
+- 新增应声虫指定卡牌时的红色高亮与提示文本。
+
+#### 优化
+
+- 优化虚影牌显示与结算流程，隐藏触发过程中重复显示的攻击牌，避免预览遮挡手牌和弃牌堆。
+- 空窍遗物现在显示当前转数、修为进度和灾劫状态，并支持战斗外右键准备或取消渡劫。
+- 恢复普通、精英和首领战斗分别获得 1、3、5 点修为的显示。
+- 优化应声虫目标选择及多人模式同步。
+- 卡牌顶部的转数与流派标记改为白色。
+- 杀招牌和成功蛊使用金色稀有度边框。
+- 方源初始生命值调整为 72 点。
+- 重新整理空窍、灾劫和应声虫相关的中英文文本，使其更接近一代效果。
+
+#### 修复
+
+- 修复虚影预览遮挡卡牌、弃牌堆或导致手牌隐形的问题。
+- 修复虚影预览无法正确淡出和移除的问题。
+- 修复四转升炼五转后无法正常进入下一关的问题。
+- 修复五转空窍渡过地灾后无法正确完成升炼的问题。
+- 修复灾劫进行中空窍遗物仍显示“下场战斗将面临灾劫”的问题。
+- 修复空窍描述没有及时刷新，以及正式版和测试版显示不一致的问题。
+- 修复应声虫多人模式下指定卡牌不同步的问题。
+
+#### 兼容性
+
+- 支持《杀戮尖塔2》正式版 `v0.107.1`。
+- 需要 RitsuLib `0.5.12`。
+
+### English
+
+#### Added
+
+- Added Phantom trigger previews. Triggered Phantom cards now appear as floating previews and resolve sequentially.
+- Added red target highlighting and prompt text for Echo Worm card selection.
+
+#### Improvements
+
+- Improved Phantom display and resolution by hiding duplicate attack cards and preventing previews from covering the hand or discard pile.
+- Aperture relics now display rank, Cultivation progress, and tribulation status, with support for preparing or cancelling tribulation outside combat.
+- Restored the displayed Cultivation rewards of 1 for normal combats, 3 for Elite combats, and 5 for Boss combats.
+- Improved Echo Worm target selection and multiplayer synchronization.
+- Card rank and Path markers are now displayed in white.
+- Killer Move cards and Success Gu now use gold rarity borders.
+- Fang Yuan's starting HP is now 72.
+- Reworked the Chinese and English text for Apertures, tribulations, and Echo Worm to better match the original version.
+
+#### Fixes
+
+- Fixed Phantom previews covering cards or the discard pile and causing cards in the hand to become invisible.
+- Fixed Phantom previews failing to fade out and disappear correctly.
+- Fixed progression becoming stuck after advancing from Rank 4 to Rank 5.
+- Fixed Rank 5 Apertures failing to complete their breakthrough after passing an Earthly Calamity.
+- Fixed Aperture relics displaying the next tribulation instead of the active tribulation during combat.
+- Fixed Aperture descriptions failing to refresh immediately and becoming inconsistent between Release and Beta versions.
+- Fixed Echo Worm card targets becoming desynchronized in multiplayer.
+
+#### Compatibility
+
+- Supports the stable `v0.107.1` build of Slay the Spire 2.
+- Requires RitsuLib `0.5.12`.
+
 ## 0.6.1
 
 ### 中文

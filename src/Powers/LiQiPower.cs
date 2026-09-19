@@ -122,6 +122,7 @@ public sealed class LiQiPower : ModPowerTemplate, IMaxHandSizeModifier
             return;
         }
 
+        var pending = new List<(AbstractXuYingCard Shadow, MegaCrit.Sts2.Core.Entities.Creatures.Creature Target)>();
         foreach (var trigger in context.Message.Triggers)
         {
             if (CombatManager.Instance.IsOverOrEnding)
@@ -145,10 +146,15 @@ public sealed class LiQiPower : ModPowerTemplate, IMaxHandSizeModifier
                 continue;
             }
 
+            pending.Add((shadow, target));
+        }
+
+        if (pending.Count > 0)
+        {
             owner.Creature.GetPower<LiQiPower>()?.Flash();
-            await shadow.TriggerFromLiQiPower(
+            await AbstractXuYingCard.TriggerBatchFromLiQiPower(
                 context.PlayerChoiceContext,
-                target);
+                pending);
         }
     }
 }

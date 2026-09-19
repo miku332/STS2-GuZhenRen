@@ -1,4 +1,5 @@
 using Godot;
+using System.Runtime.CompilerServices;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
@@ -12,6 +13,7 @@ using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.Keywords;
+using GuZhenRen.Patches;
 using GuZhenRen.Powers;
 using GuZhenRen.Systems;
 using GuZhenRen.Tags;
@@ -20,13 +22,17 @@ namespace GuZhenRen.Cards;
 
 public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCard
 {
-    private static readonly AsyncLocal<int> NestedXuYingEffectDepth = new();
+    private static readonly ConditionalWeakTable<CardPlay, ProcessedCardPlayMarker>
+        ProcessedCardPlays = new();
+    private static int _nestedXuYingEffectDepth;
 
     protected abstract int ChancePercent { get; }
 
     protected virtual IEnumerable<DynamicVar> AdditionalVars => [];
 
     protected virtual bool RequiresLiveTarget => true;
+
+    protected virtual bool HidePreviewDuringEffect => false;
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.LiDao, GuZhenRenTags.XuYing];
 
@@ -59,25 +65,43 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay)
     {
-        if (Pile?.Type != PileType.Hand
-            || NestedXuYingEffectDepth.Value > 0
-            || cardPlay.Card == this
+        if (_nestedXuYingEffectDepth > 0
             || cardPlay.Card.Owner != Owner
             || cardPlay.Card.Type != CardType.Attack
             || cardPlay.Card.Tags.Contains(GuZhenRenTags.XuYing)
-            || (RequiresLiveTarget && (cardPlay.Target is null || !cardPlay.Target.IsAlive)))
+            || cardPlay.Card == this)
         {
             return;
         }
 
-        if (!ProbabilitySystem.Roll(
-                this,
-                DynamicVars["Chance"].BaseValue))
+        if (ProcessedCardPlays.TryGetValue(cardPlay, out _))
         {
             return;
         }
 
-        await TriggerXuYingEffectWithRecursionGuard(choiceContext, cardPlay);
+        ProcessedCardPlays.Add(cardPlay, new ProcessedCardPlayMarker());
+
+        var triggeredShadows = PileType.Hand.GetPile(Owner)
+            .Cards
+            .OfType<AbstractXuYingCard>()
+            .Where(shadow => shadow.CanTriggerFrom(cardPlay))
+            .Where(shadow => ProbabilitySystem.Roll(
+                shadow,
+                shadow.DynamicVars["Chance"].BaseValue))
+            .ToList();
+        if (triggeredShadows.Count == 0)
+        {
+            return;
+        }
+
+        if (cardPlay.ResultPile != PileType.None)
+        {
+            XuYingTriggerCardVisualPatch.Mark(cardPlay.Card);
+        }
+
+        await TriggerBatch(
+            choiceContext,
+            triggeredShadows.Select(shadow => (shadow, cardPlay)));
     }
 
     public async Task TriggerFromLiQiPower(
@@ -89,25 +113,20 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             return;
         }
 
-        await TriggerXuYingEffectWithRecursionGuard(
+        await TriggerBatchFromLiQiPower(
             choiceContext,
-            new CardPlay
-            {
-                Card = this,
-                Target = target,
-                ResultPile = PileType.None,
-                Resources = new ResourceInfo
-                {
-                    EnergySpent = 0,
-                    EnergyValue = 0,
-                    StarsSpent = 0,
-                    StarValue = 0
-                },
-                IsAutoPlay = true,
-                PlayIndex = 0,
-                PlayCount = 1
-            });
+            [(this, target)]);
     }
+
+    internal static Task TriggerBatchFromLiQiPower(
+        PlayerChoiceContext choiceContext,
+        IEnumerable<(AbstractXuYingCard Shadow, Creature Target)> triggers) =>
+        TriggerBatch(
+            choiceContext,
+            triggers
+                .Where(static trigger => trigger.Shadow.Pile?.Type == PileType.Hand)
+                .Select(static trigger =>
+                    (trigger.Shadow, trigger.Shadow.CreateAutoTriggerCardPlay(trigger.Target))));
 
     protected override Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -127,62 +146,101 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             100m);
     }
 
-    private async Task TriggerXuYingEffectWithRecursionGuard(
+    private bool CanTriggerFrom(CardPlay cardPlay) =>
+        Pile?.Type == PileType.Hand
+        && (!RequiresLiveTarget
+            || (cardPlay.Target is not null && cardPlay.Target.IsAlive));
+
+    private CardPlay CreateAutoTriggerCardPlay(Creature target) =>
+        new()
+        {
+            Card = this,
+            Target = target,
+            ResultPile = PileType.None,
+            Resources = new ResourceInfo
+            {
+                EnergySpent = 0,
+                EnergyValue = 0,
+                StarsSpent = 0,
+                StarValue = 0
+            },
+            IsAutoPlay = true,
+            PlayIndex = 0,
+            PlayCount = 1
+        };
+
+    private static async Task TriggerBatch(
         PlayerChoiceContext choiceContext,
-        CardPlay triggerCardPlay)
+        IEnumerable<(AbstractXuYingCard Shadow, CardPlay CardPlay)> triggers)
     {
-        NestedXuYingEffectDepth.Value++;
-        HideTriggerAttackCard(triggerCardPlay);
-        var preview = ShowTriggerPreview();
-        try
-        {
-            if (preview is not null)
-            {
-                await Cmd.Wait(0.2f);
-            }
-
-            await TriggerXuYingEffect(choiceContext, triggerCardPlay);
-
-            if (preview is not null && GodotObject.IsInstanceValid(preview))
-            {
-                await Cmd.Wait(0.2f);
-                FadeTriggerPreview(preview);
-                await Cmd.Wait(0.2f);
-            }
-        }
-        finally
-        {
-            if (preview is not null
-                && GodotObject.IsInstanceValid(preview)
-                && !preview.IsQueuedForDeletion())
-            {
-                preview.QueueFreeSafely();
-            }
-
-            NestedXuYingEffectDepth.Value--;
-        }
-    }
-
-    private static void HideTriggerAttackCard(CardPlay triggerCardPlay)
-    {
-        var triggerCard = triggerCardPlay.Card;
-        if (triggerCard.Type != CardType.Attack
-            || triggerCard.Tags.Contains(GuZhenRenTags.XuYing)
-            || !LocalContext.IsMine(triggerCard)
-            || NCard.FindOnTable(triggerCard) is not { } triggerCardNode)
+        var pending = triggers
+            .Select(trigger => new PendingTrigger(
+                trigger.Shadow,
+                trigger.CardPlay,
+                trigger.Shadow.ShowTriggerPreview()))
+            .ToList();
+        if (pending.Count == 0)
         {
             return;
         }
 
-        triggerCardNode.Visible = false;
+        _nestedXuYingEffectDepth++;
+        try
+        {
+            if (pending.Any(static trigger => trigger.Preview is not null))
+            {
+                await Cmd.Wait(0.2f);
+            }
+
+            foreach (var trigger in pending)
+            {
+                if (trigger.Preview is { } preview
+                    && GodotObject.IsInstanceValid(preview))
+                {
+                    FocusTriggerPreview(preview);
+                    await Cmd.Wait(0.2f);
+
+                    if (trigger.Shadow.HidePreviewDuringEffect)
+                    {
+                        preview.Visible = false;
+                    }
+                }
+
+                await trigger.Shadow.TriggerXuYingEffect(
+                    choiceContext,
+                    trigger.CardPlay);
+
+                if (trigger.Preview is { } resolvedPreview
+                    && GodotObject.IsInstanceValid(resolvedPreview))
+                {
+                    if (resolvedPreview.Visible)
+                    {
+                        await Cmd.Wait(0.2f);
+                        FadeTriggerPreview(resolvedPreview);
+                        await Cmd.Wait(0.2f);
+                    }
+
+                    ReleaseTriggerPreview(trigger);
+                }
+            }
+        }
+        finally
+        {
+            foreach (var trigger in pending)
+            {
+                ReleaseTriggerPreview(trigger);
+            }
+
+            _nestedXuYingEffectDepth--;
+        }
     }
 
     private NCard? ShowTriggerPreview()
     {
         if (CombatManager.Instance.IsEnding
             || !LocalContext.IsMine(this)
-            || NCombatRoom.Instance?.Ui.CardPreviewContainer is not { } container
-            || NCard.Create(this) is not { } preview)
+            || NCombatRoom.Instance?.Ui.MessyCardPreviewContainer is not { } container
+            || NCard.Create(CreateClone()) is not { } preview)
         {
             return null;
         }
@@ -190,6 +248,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         container.AddChildSafely(preview);
         preview.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
         preview.Modulate = Colors.White;
+        preview.Rotation = 0f;
         preview.MouseFilter = Control.MouseFilterEnum.Ignore;
         preview.FocusMode = Control.FocusModeEnum.None;
 
@@ -202,10 +261,59 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         return preview;
     }
 
+    private static void FocusTriggerPreview(NCard preview)
+    {
+        if (preview.GetParent() is not Control container)
+        {
+            return;
+        }
+
+        preview.ZIndex = 1000;
+        var tween = preview.CreateTween().SetParallel();
+        tween.TweenProperty(preview, "position", container.Size * 0.5f, 0.2f)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Cubic);
+        tween.TweenProperty(preview, "scale", Vector2.One, 0.2f)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Cubic);
+    }
+
     private static void FadeTriggerPreview(NCard preview)
     {
         var tween = preview.CreateTween();
         tween.TweenProperty(preview, "modulate:a", 0f, 0.2f)
             .SetEase(Tween.EaseType.In);
     }
+
+    private static void ReleaseTriggerPreview(PendingTrigger trigger)
+    {
+        if (trigger.PreviewReleased
+            || trigger.Preview is not { } preview
+            || !GodotObject.IsInstanceValid(preview))
+        {
+            return;
+        }
+
+        trigger.PreviewReleased = true;
+        preview.Visible = true;
+        preview.ZIndex = 0;
+        preview.Modulate = Colors.White;
+        preview.QueueFreeSafely();
+    }
+
+    private sealed class PendingTrigger(
+        AbstractXuYingCard shadow,
+        CardPlay cardPlay,
+        NCard? preview)
+    {
+        public AbstractXuYingCard Shadow { get; } = shadow;
+
+        public CardPlay CardPlay { get; } = cardPlay;
+
+        public NCard? Preview { get; } = preview;
+
+        public bool PreviewReleased { get; set; }
+    }
+
+    private sealed class ProcessedCardPlayMarker;
 }

@@ -16,6 +16,8 @@ public sealed class MaLiXuYing : AbstractXuYingCard
 
     protected override bool RequiresLiveTarget => false;
 
+    protected override bool HidePreviewDuringEffect => true;
+
     public override int Rank => 2;
 
     public override CardAssetProfile AssetProfile => new(
