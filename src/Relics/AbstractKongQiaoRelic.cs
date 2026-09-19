@@ -447,7 +447,6 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
             : KongQiaoState.TribulationPending;
         Flash();
         RefreshProgressDescription();
-        InvokeDisplayAmountChanged();
     }
 
     private void ResetTerminalTribulationState()
@@ -718,6 +717,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
         }
 
         progressDescription.StringValue = BuildProgressDescription();
+        InvokeDisplayAmountChanged();
     }
 
     protected override void AfterCloned()
