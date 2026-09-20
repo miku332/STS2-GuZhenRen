@@ -226,6 +226,7 @@ public static class Entry
                     ZhuMoBang.ResetCombatState();
                     PaiNanPower.ResetCombatState();
                     TouDaoDaoHenPower.ResetCombatState();
+                    XuYingTriggerCardVisualPatch.Clear();
                     foreach (var player in evt.RunState.Players)
                     {
                         player.GetRelic<NiLiuHe>()?.ResetCombatState();
@@ -243,6 +244,7 @@ public static class Entry
                     ZhuMoBang.ResetCombatState();
                     PaiNanPower.ResetCombatState();
                     TouDaoDaoHenPower.ResetCombatState();
+                    XuYingTriggerCardVisualPatch.Clear();
 
                     if (evt.CombatState is not null)
                     {
