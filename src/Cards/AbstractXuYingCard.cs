@@ -298,6 +298,8 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         preview.Visible = true;
         preview.ZIndex = 0;
         preview.Modulate = Colors.White;
+        preview.MouseFilter = Control.MouseFilterEnum.Stop;
+        preview.FocusMode = Control.FocusModeEnum.None;
         preview.QueueFreeSafely();
     }
 

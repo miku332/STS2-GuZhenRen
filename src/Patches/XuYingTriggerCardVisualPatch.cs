@@ -1,3 +1,4 @@
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -39,20 +40,16 @@ public sealed class XuYingTriggerCardVisualPatch : IPatchMethod
         if (LocalContext.IsMine(card))
         {
             PendingCards.Add(card);
-
-            if (NCard.FindOnTable(card) is { } cardNode)
-            {
-                cardNode.GetParent()?.RemoveChildSafely(cardNode);
-                cardNode.QueueFreeSafely();
-            }
         }
     }
 
     public static void Prefix(
         CardModel card,
         CardPile newPile,
-        ref bool skipVisuals)
+        ref bool skipVisuals,
+        out PendingVisual? __state)
     {
+        __state = null;
         if (card.Pile?.Type != PileType.Play
             || newPile.Type == PileType.Play
             || !PendingCards.Remove(card))
@@ -60,6 +57,41 @@ public sealed class XuYingTriggerCardVisualPatch : IPatchMethod
             return;
         }
 
+        __state = new PendingVisual(card, NCard.FindOnTable(card));
         skipVisuals = true;
     }
+
+    public static void Postfix(
+        PendingVisual? __state,
+        ref Task<CardPileAddResult> __result)
+    {
+        if (__state is not null)
+        {
+            __result = ReleaseCardNodeAfterMove(__result, __state);
+        }
+    }
+
+    internal static void Clear() => PendingCards.Clear();
+
+    private static async Task<CardPileAddResult> ReleaseCardNodeAfterMove(
+        Task<CardPileAddResult> original,
+        PendingVisual state)
+    {
+        try
+        {
+            return await original;
+        }
+        finally
+        {
+            if (state.CardNode is { } cardNode
+                && GodotObject.IsInstanceValid(cardNode)
+                && !cardNode.IsQueuedForDeletion()
+                && ReferenceEquals(cardNode.Model, state.Card))
+            {
+                cardNode.QueueFreeSafely();
+            }
+        }
+    }
+
+    public sealed record PendingVisual(CardModel Card, NCard? CardNode);
 }
