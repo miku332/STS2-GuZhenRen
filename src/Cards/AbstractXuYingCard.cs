@@ -231,6 +231,8 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
                 ReleaseTriggerPreview(trigger);
             }
 
+            XuYingTriggerCardVisualPatch.RestoreMissingHandCards(
+                pending.Select(static trigger => trigger.Shadow));
             _nestedXuYingEffectDepth--;
         }
     }

@@ -5,8 +5,10 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using STS2RitsuLib.Patching.Models;
+using GuZhenRen.Cards;
 
 namespace GuZhenRen.Patches;
 
@@ -75,6 +77,30 @@ public sealed class XuYingTriggerCardVisualPatch : IPatchMethod
         }
 
         DetachedCardNodes.Clear();
+    }
+
+    internal static void RestoreMissingHandCards(IEnumerable<AbstractXuYingCard> shadows)
+    {
+        var hand = NPlayerHand.Instance;
+        if (hand is null)
+        {
+            return;
+        }
+
+        foreach (var shadow in shadows)
+        {
+            if (!LocalContext.IsMine(shadow)
+                || shadow.Pile?.Type != PileType.Hand
+                || hand.GetCardHolder(shadow) is not null)
+            {
+                continue;
+            }
+
+            if (NCard.Create(shadow) is { } cardNode)
+            {
+                hand.Add(cardNode);
+            }
+        }
     }
 
     private static void DetachCardNode(CardModel card)
