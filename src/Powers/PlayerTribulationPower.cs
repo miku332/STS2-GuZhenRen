@@ -16,6 +16,8 @@ public sealed class PlayerTribulationPower : ModPowerTemplate
 {
     private TribulationDefinition? _definition;
 
+    internal TribulationType CurrentType => ResolveDefinition().Type;
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.None;
