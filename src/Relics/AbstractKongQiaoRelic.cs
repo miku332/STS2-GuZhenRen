@@ -68,6 +68,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
         {
             AssertMutable();
             _xp = Math.Max(0, value);
+            RefreshProgressDescription();
         }
     }
 
@@ -81,6 +82,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
             _state = Enum.IsDefined(typeof(KongQiaoState), value)
                 ? (KongQiaoState)value
                 : KongQiaoState.XpGathering;
+            RefreshProgressDescription();
         }
     }
 
@@ -92,6 +94,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
         {
             AssertMutable();
             _battlesToNextTribulation = Math.Max(0, value);
+            RefreshProgressDescription();
         }
     }
 
@@ -244,6 +247,12 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
 
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
+        if (Rank < 5 && _xp >= NeededXp)
+        {
+            await ReplaceWithNextStage(_xp - NeededXp);
+            return;
+        }
+
         BenMingGuRankProtection.EnsureMinimumRank(Owner);
         await BenMingGuUniquenessPatch.EnforceDeckUniqueness(Owner);
         RefreshProgressDescription();
@@ -336,6 +345,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
                 if (Rank < 5)
                 {
                     await ReplaceWithNextStage(Xp - NeededXp);
+                    return;
                 }
                 else
                 {
@@ -362,26 +372,39 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
 
     private async Task ReplaceWithNextStage(int overflowXp)
     {
-        var nextStage = NextStage?.ToMutable();
-        if (nextStage is not AbstractKongQiaoRelic nextKongQiao)
+        var current = this;
+        var remainingXp = Math.Max(0, overflowXp);
+
+        while (current.NextStage is not null && current.Rank < 5)
         {
-            return;
+            if (!ReferenceEquals(current, this))
+            {
+                if (remainingXp < current.NeededXp)
+                {
+                    break;
+                }
+
+                remainingXp -= current.NeededXp;
+            }
+
+            if (current.NextStage?.ToMutable() is not AbstractKongQiaoRelic nextKongQiao)
+            {
+                break;
+            }
+
+            nextKongQiao.Xp = remainingXp;
+            nextKongQiao.TribulationState = (int)KongQiaoState.XpGathering;
+            nextKongQiao.BattlesToNextTribulation = 0;
+            nextKongQiao.MaxHpBonusApplied = current.MaxHpBonusApplied;
+
+            await RelicCmd.Replace(current, nextKongQiao);
+            nextKongQiao.RefreshProgressDescription();
+            await UpgradeBenMingGuToRank(nextKongQiao.Rank);
+            ApertureVoiceSystem.PlayForRank(Owner, nextKongQiao.Rank);
+            current = nextKongQiao;
         }
 
-        nextKongQiao.Xp = overflowXp;
-        nextKongQiao.TribulationState = nextKongQiao.Rank is >= 6 and < 10
-            ? (int)KongQiaoState.Countdown
-            : (int)KongQiaoState.XpGathering;
-        nextKongQiao.BattlesToNextTribulation = nextKongQiao.Rank is >= 6 and < 10
-            ? BattlesPerTribulation
-            : 0;
-        nextKongQiao.MaxHpBonusApplied = MaxHpBonusApplied > 0
-            ? MaxHpBonusApplied
-            : Rank >= 6 ? Rank : 0;
-        await RelicCmd.Replace(this, nextKongQiao);
-        nextKongQiao.RefreshProgressDescription();
-        await UpgradeBenMingGuToRank(nextKongQiao.Rank);
-        ApertureVoiceSystem.PlayForRank(Owner, nextKongQiao.Rank);
+        current.RefreshProgressDescription();
     }
 
     protected virtual bool IsTribulationDisabled() =>
