@@ -143,6 +143,11 @@ public static class Entry
         shaZhaoUiPatcher.RegisterPatch<ShaZhaoRecipeSelectionReplacePatch>();
         shaZhaoUiPatcher.RegisterPatch<KillerMoveRelicRowPatch>();
         shaZhaoUiPatcher.PatchAll();
+        var kongQiaoUiPatcher = RitsuLibFramework.CreatePatcher(
+            ModId,
+            "kong-qiao-ui");
+        kongQiaoUiPatcher.RegisterPatch<KongQiaoHoverTipRefreshPatch>();
+        kongQiaoUiPatcher.PatchAll();
         if (_lifecycleSubscriptions.Count == 0)
         {
             _lifecycleSubscriptions.Add(RitsuLibFramework.SubscribeLifecycle<CardDrawnEvent>(
