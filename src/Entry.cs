@@ -89,6 +89,7 @@ public static class Entry
             ModId,
             "card-display");
         cardDisplayPatcher.RegisterPatch<CardRankDescriptionPatch>();
+        cardDisplayPatcher.RegisterPatch<CardRewardVisualRepairPatch>();
         cardDisplayPatcher.PatchAll();
         var shaZhaoPoolPatcher = RitsuLibFramework.CreatePatcher(
             ModId,
