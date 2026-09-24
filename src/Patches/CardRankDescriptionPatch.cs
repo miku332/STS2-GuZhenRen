@@ -142,6 +142,14 @@ public sealed class CardRankDescriptionPatch : IPatchMethod
             return card.Rank;
         }
 
+        // Grid upgrade previews already replace Ben Ming Gu with a clone that
+        // has been upgraded once. Upgrading that multi-rank clone again here
+        // would make the displayed rank one step ahead of the actual preview.
+        if (card is AbstractBenMingGuCard)
+        {
+            return card.Rank;
+        }
+
         var preview = (GuZhenRenCardTemplate)card.MutableClone();
         preview.UpgradeInternal();
         preview.FinalizeUpgradeInternal();
