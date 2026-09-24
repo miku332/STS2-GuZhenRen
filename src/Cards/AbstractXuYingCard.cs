@@ -195,14 +195,14 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
             foreach (var trigger in pending)
             {
                 if (trigger.Preview is { } preview
-                    && GodotObject.IsInstanceValid(preview))
+                    && GodotObject.IsInstanceValid(preview.Card))
                 {
                     FocusTriggerPreview(preview);
                     await Cmd.Wait(0.2f);
 
                     if (trigger.Shadow.HidePreviewDuringEffect)
                     {
-                        preview.Visible = false;
+                        preview.Card.Visible = false;
                     }
                 }
 
@@ -211,9 +211,9 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
                     trigger.CardPlay);
 
                 if (trigger.Preview is { } resolvedPreview
-                    && GodotObject.IsInstanceValid(resolvedPreview))
+                    && GodotObject.IsInstanceValid(resolvedPreview.Card))
                 {
-                    if (resolvedPreview.Visible)
+                    if (resolvedPreview.Card.Visible)
                     {
                         await Cmd.Wait(0.2f);
                         FadeTriggerPreview(resolvedPreview);
@@ -237,7 +237,7 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         }
     }
 
-    private NCard? ShowTriggerPreview()
+    private TriggerPreview? ShowTriggerPreview()
     {
         if (CombatManager.Instance.IsEnding
             || !LocalContext.IsMine(this)
@@ -254,36 +254,40 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
         preview.MouseFilter = Control.MouseFilterEnum.Ignore;
         preview.FocusMode = Control.FocusModeEnum.None;
 
+        var result = new TriggerPreview(preview);
         var tween = preview.CreateTween();
+        result.Tweens.Add(tween);
         tween.TweenProperty(preview, "scale", Vector2.One, 0.2f)
             .From(Vector2.Zero)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Cubic);
 
-        return preview;
+        return result;
     }
 
-    private static void FocusTriggerPreview(NCard preview)
+    private static void FocusTriggerPreview(TriggerPreview preview)
     {
-        if (preview.GetParent() is not Control container)
+        if (preview.Card.GetParent() is not Control container)
         {
             return;
         }
 
-        preview.ZIndex = 1000;
-        var tween = preview.CreateTween().SetParallel();
-        tween.TweenProperty(preview, "position", container.Size * 0.5f, 0.2f)
+        preview.Card.ZIndex = 1000;
+        var tween = preview.Card.CreateTween().SetParallel();
+        preview.Tweens.Add(tween);
+        tween.TweenProperty(preview.Card, "position", container.Size * 0.5f, 0.2f)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Cubic);
-        tween.TweenProperty(preview, "scale", Vector2.One, 0.2f)
+        tween.TweenProperty(preview.Card, "scale", Vector2.One, 0.2f)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Cubic);
     }
 
-    private static void FadeTriggerPreview(NCard preview)
+    private static void FadeTriggerPreview(TriggerPreview preview)
     {
-        var tween = preview.CreateTween();
-        tween.TweenProperty(preview, "modulate:a", 0f, 0.2f)
+        var tween = preview.Card.CreateTween();
+        preview.Tweens.Add(tween);
+        tween.TweenProperty(preview.Card, "modulate:a", 0f, 0.2f)
             .SetEase(Tween.EaseType.In);
     }
 
@@ -291,30 +295,47 @@ public abstract class AbstractXuYingCard : GuZhenRenCardTemplate, IProbabilityCa
     {
         if (trigger.PreviewReleased
             || trigger.Preview is not { } preview
-            || !GodotObject.IsInstanceValid(preview))
+            || !GodotObject.IsInstanceValid(preview.Card))
         {
             return;
         }
 
         trigger.PreviewReleased = true;
-        preview.Visible = true;
-        preview.ZIndex = 0;
-        preview.Modulate = Colors.White;
-        preview.MouseFilter = Control.MouseFilterEnum.Stop;
-        preview.FocusMode = Control.FocusModeEnum.None;
-        preview.QueueFreeSafely();
+        foreach (var tween in preview.Tweens)
+        {
+            if (GodotObject.IsInstanceValid(tween))
+            {
+                tween.Kill();
+            }
+        }
+
+        preview.Tweens.Clear();
+        preview.Card.Visible = true;
+        preview.Card.ZIndex = 0;
+        preview.Card.Modulate = Colors.White;
+        preview.Card.Scale = Vector2.One;
+        preview.Card.MouseFilter = Control.MouseFilterEnum.Stop;
+        preview.Card.FocusMode = Control.FocusModeEnum.None;
+        preview.Card.QueueFreeSafely();
+    }
+
+    private sealed class TriggerPreview(NCard card)
+    {
+        public NCard Card { get; } = card;
+
+        public List<Tween> Tweens { get; } = [];
     }
 
     private sealed class PendingTrigger(
         AbstractXuYingCard shadow,
         CardPlay cardPlay,
-        NCard? preview)
+        TriggerPreview? preview)
     {
         public AbstractXuYingCard Shadow { get; } = shadow;
 
         public CardPlay CardPlay { get; } = cardPlay;
 
-        public NCard? Preview { get; } = preview;
+        public TriggerPreview? Preview { get; } = preview;
 
         public bool PreviewReleased { get; set; }
     }
