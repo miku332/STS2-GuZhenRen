@@ -113,7 +113,12 @@ internal readonly record struct WeiLaiShenRecipeBorrowPayload(
 
 internal readonly record struct UniquenessCleanupPayload;
 
-internal readonly record struct ShaZhaoRecipeRewardsPayload;
+internal readonly record struct ShaZhaoRecipeTribulationPayload(
+    ulong PlayerNetId,
+    int TribulationType);
+
+internal readonly record struct ShaZhaoRecipeRewardsPayload(
+    ShaZhaoRecipeTribulationPayload[] Tribulations);
 
 internal readonly record struct KongQiaoTribulationTogglePayload(
     ulong OwnerNetId);
@@ -269,7 +274,7 @@ internal static class NetGuZhenRenActions
     private static readonly RitsuLibManagedNetActionDescriptor<ShaZhaoRecipeRewardsPayload>
         ShaZhaoRecipeRewardsDescriptor = new(
             ModuleId: Entry.ModId,
-            ActionKey: "sha_zhao_recipe_rewards_v1",
+            ActionKey: "sha_zhao_recipe_rewards_v2",
             Serialize: static payload => JsonSerializer.SerializeToUtf8Bytes(payload),
             Deserialize: static bytes => JsonSerializer.Deserialize<ShaZhaoRecipeRewardsPayload>(bytes),
             Execute: static context => ShaZhaoRecipeDropSystem.ExecuteManagedRewardsAsync(context),
@@ -420,11 +425,12 @@ internal static class NetGuZhenRenActions
             UniquenessCleanupDescriptor,
             default);
 
-    internal static bool RequestShaZhaoRecipeRewards() =>
+    internal static bool RequestShaZhaoRecipeRewards(
+        ShaZhaoRecipeRewardsPayload payload) =>
         RitsuLibManagedNetActions.Request(
             RunManager.Instance,
             ShaZhaoRecipeRewardsDescriptor,
-            default);
+            payload);
 
     internal static bool RequestKongQiaoTribulationToggle(
         KongQiaoTribulationTogglePayload payload) =>
