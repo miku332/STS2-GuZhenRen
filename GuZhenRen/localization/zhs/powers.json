@@ -88,7 +88,7 @@
     "GU_ZHEN_REN_POWER_FEN_SHEN_POWER.title":  "焚身",
     "GU_ZHEN_REN_POWER_FEN_SHEN_POWER.description":  "回合开始时，获得{Amount}点能量，并将{Amount}张灼伤加入手牌。",
     "GU_ZHEN_REN_POWER_FEI_XING_POWER.title":  "飞行",
-    "GU_ZHEN_REN_POWER_FEI_XING_POWER.description":  "受到攻击伤害减半。受到未被格挡的攻击伤害后，失去1层飞行。",
+    "GU_ZHEN_REN_POWER_FEI_XING_POWER.description":  "受到的[gold]攻击伤害[/gold]降低[blue]50%[/blue]。受到未被格挡的[gold]攻击伤害[/gold]后，失去[blue]1[/blue]层[gold]飞行[/gold]。",
     "GU_ZHEN_REN_POWER_ZHEN_CHI_GAO_FEI_POWER.title":  "振翅高飞",
     "GU_ZHEN_REN_POWER_ZHEN_CHI_GAO_FEI_POWER.description":  "回合开始时，若你拥有[gold]飞行[/gold]，获得{Amount}点[gold]格挡[/gold]。",
     "GU_ZHEN_REN_POWER_GU_CI_POWER.title": "骨刺",
