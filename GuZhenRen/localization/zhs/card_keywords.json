@@ -16,7 +16,7 @@
     "GU_ZHEN_REN_KEYWORD_NI_LIU_HE_SHUI.title": "逆流河水",
     "GU_ZHEN_REN_KEYWORD_NI_LIU_HE_SHUI.description": "[gold]逆流河[/gold]每次逆反攻势都需要消耗1层[gold]逆流河水[/gold]。",
     "GU_ZHEN_REN_KEYWORD_GUO.title": "果",
-    "GU_ZHEN_REN_KEYWORD_GUO.description": "暂时储存伤害或负面状态，2回合后再对持有者生效。",
+    "GU_ZHEN_REN_KEYWORD_GUO.description": "暂时储存伤害或负面状态，[blue]2[/blue]回合后再对持有者生效。",
     "GU_ZHEN_REN_KEYWORD_HEADER_SEPARATOR": "。",
     "GU_ZHEN_REN_KEYWORD_HEADER_TERMINATOR": "。",
     "GU_ZHEN_REN_KEYWORD_PIN_JIE.title": "品阶",
