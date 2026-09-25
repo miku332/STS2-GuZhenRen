@@ -48,7 +48,8 @@ public static class GuZhenRenTagRules
             ? [GuZhenRenTags.TuDao]
             : card.Tags.Where(DaoTags.Contains).ToArray();
 
-        return effectiveTags.Length > 0
+        return card.IsMutable
+            && effectiveTags.Length > 0
             && card.Owner?.Creature.GetPower<RuiYiPower>() is not null
                 ? [GuZhenRenTags.JianDao]
                 : effectiveTags;
