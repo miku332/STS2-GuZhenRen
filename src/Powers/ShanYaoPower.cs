@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -14,9 +15,21 @@ namespace GuZhenRen.Powers;
 [RegisterPower]
 public sealed class ShanYaoPower : ModPowerTemplate
 {
+    private const int DamagePercentPerStack = 50;
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override LocString Description
+    {
+        get
+        {
+            var description = base.Description;
+            description.Add("DamagePercent", Amount * DamagePercentPerStack);
+            return description;
+        }
+    }
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://GuZhenRen/images/powers/ShanYaoPower.png",
@@ -68,7 +81,7 @@ public sealed class ShanYaoPower : ModPowerTemplate
             return 1m;
         }
 
-        return 1m + Amount * 0.5m;
+        return 1m + Amount * DamagePercentPerStack / 100m;
     }
 
     public override async Task AfterCardPlayed(

@@ -6,7 +6,7 @@
     "GU_ZHEN_REN_POWER_TAI_CHU_GUANG_POWER.title": "太初光",
     "GU_ZHEN_REN_POWER_TAI_CHU_GUANG_POWER.description": "本回合，闪耀不会因打出光道攻击牌而消失。",
     "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.title":  "闪耀",
-    "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.description":  "光道攻击造成的伤害提高50%。",
+    "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.description":  "下一张打出的[gold]光道[/gold]攻击牌伤害增加[blue]{DamagePercent}%[/blue]。",
     "GU_ZHEN_REN_POWER_RI_GUANG_POWER.title":  "日光",
     "GU_ZHEN_REN_POWER_RI_GUANG_POWER.description":  "接下来{Amount}次打出光道攻击牌时，不会消耗闪耀。",
     "GU_ZHEN_REN_POWER_JIAN_QI_POWER.title":  "剑气",
