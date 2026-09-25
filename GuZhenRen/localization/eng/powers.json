@@ -119,7 +119,7 @@
   "GU_ZHEN_REN_POWER_XUE_DAO_DAO_HEN_POWER.title": "Blood Path Dao Mark",
   "GU_ZHEN_REN_POWER_XUE_DAO_DAO_HEN_POWER.description": "When causing attack damage that is not Block, gain {Amount}% HP.",
   "GU_ZHEN_REN_POWER_GUANG_DAO_DAO_HEN_POWER.title": "Light Path Dao Mark",
-  "GU_ZHEN_REN_POWER_GUANG_DAO_DAO_HEN_POWER.description": "Each layer of Light Path Dao Mark increases the damage caused by Light Path cards by 25%. It does not take effect when you have Radiance.",
+  "GU_ZHEN_REN_POWER_GUANG_DAO_DAO_HEN_POWER.description": "Each [gold]Light Path Dao Mark[/gold] increases damage dealt by [gold]Light Path[/gold] cards by 25%. (Currently increased by [blue]{DamagePercent}%[/blue].)",
   "GU_ZHEN_REN_POWER_FENG_DAO_DAO_HEN_POWER.title": "Wind Path Dao Mark",
   "GU_ZHEN_REN_POWER_FENG_DAO_DAO_HEN_POWER.description": "Every time a card is drawn, {Amount} points of damage will be caused to all enemies.",
   "GU_ZHEN_REN_POWER_TU_DAO_DAO_HEN_POWER.title": "Earth Path Dao Mark",

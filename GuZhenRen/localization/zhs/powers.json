@@ -119,7 +119,7 @@
     "GU_ZHEN_REN_POWER_XUE_DAO_DAO_HEN_POWER.title": "血道道痕",
     "GU_ZHEN_REN_POWER_XUE_DAO_DAO_HEN_POWER.description": "造成未被格挡的攻击伤害时，获得{Amount}%生命汲取。",
     "GU_ZHEN_REN_POWER_GUANG_DAO_DAO_HEN_POWER.title": "光道道痕",
-    "GU_ZHEN_REN_POWER_GUANG_DAO_DAO_HEN_POWER.description": "每层光道道痕使光道牌造成的伤害提高25%。拥有闪耀时不生效。",
+    "GU_ZHEN_REN_POWER_GUANG_DAO_DAO_HEN_POWER.description": "每层[gold]光道道痕[/gold]提升25%[gold]光道[/gold]牌的伤害。（提升[blue]{DamagePercent}%[/blue][gold]光道[/gold]牌的伤害）",
     "GU_ZHEN_REN_POWER_FENG_DAO_DAO_HEN_POWER.title": "风道道痕",
     "GU_ZHEN_REN_POWER_FENG_DAO_DAO_HEN_POWER.description": "每抽1张牌，对所有敌人造成{Amount}点伤害。",
     "GU_ZHEN_REN_POWER_TU_DAO_DAO_HEN_POWER.title": "土道道痕",
