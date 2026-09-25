@@ -6,7 +6,7 @@
     "GU_ZHEN_REN_KEYWORD_HUA_SHI.title": "化石",
     "GU_ZHEN_REN_KEYWORD_HUA_SHI.description": "打出时，获得等同于层数的格挡。该牌的流派变为土道。",
     "GU_ZHEN_REN_KEYWORD_FANG_YU_LEI_ZHUANG_TAI.title": "防御类状态",
-    "GU_ZHEN_REN_KEYWORD_FANG_YU_LEI_ZHUANG_TAI.description": "包括[gold]无实体[/gold]、[gold]缓冲[/gold]、[gold]壁垒[/gold]、[gold]蜷身[/gold]、[gold]护卫[/gold]、[gold]硬化外壳[/gold]、[gold]水幕天华蛊[/gold]、[gold]铁壁[/gold]、[gold]鬼卦衣[/gold]、[gold]九龙纹护身[/gold]、[gold]人工制品[/gold]、[gold]覆甲[/gold]、[gold]再生[/gold]、[gold]滑溜[/gold]、[gold]不动[/gold]、[gold]荆棘[/gold]和[gold]难以杀灭[/gold]。",
+    "GU_ZHEN_REN_KEYWORD_FANG_YU_LEI_ZHUANG_TAI.description": "包括[gold]无实体[/gold]、[gold]缓冲[/gold]、[gold]壁垒[/gold]、[gold]蜷身[/gold]、[gold]护卫[/gold]、[gold]硬化外壳[/gold]、[gold]九龙纹护身[/gold]、[gold]人工制品[/gold]、[gold]覆甲[/gold]、[gold]再生[/gold]、[gold]滑溜[/gold]、[gold]不动[/gold]、[gold]荆棘[/gold]和[gold]难以杀灭[/gold]。",
     "GU_ZHEN_REN_KEYWORD_AI_QING_GU_POSITIVE_EFFECT.title": "正面效果",
     "GU_ZHEN_REN_KEYWORD_AI_QING_GU_POSITIVE_EFFECT.description": "60%：将随机[gold]杀招[/gold]加入手牌。\n15%：获得随机遗物。\n15%：回复[blue]15[/blue]点生命。\n10%：逃离本场战斗。",
     "GU_ZHEN_REN_KEYWORD_AI_QING_GU_NEGATIVE_EFFECT.title": "负面效果",
