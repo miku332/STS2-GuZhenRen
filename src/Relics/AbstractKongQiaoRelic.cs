@@ -585,13 +585,13 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
             TribulationSystem.GetNextType(Rank, Xp));
         var tribulationDisabled = IsMutable && IsTribulationDisabled();
 
+        if (tribulationDisabled)
+        {
+            return string.Empty;
+        }
+
         if (Rank == 5)
         {
-            if (tribulationDisabled)
-            {
-                return string.Empty;
-            }
-
             if (_state == KongQiaoState.ReadyToTribulate)
             {
                 return GetProgressText("ready_to_tribulate");
