@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Cards.DynamicVars;
@@ -10,7 +11,18 @@ internal static class PowerVarTooltipExtensions
     public static PowerVar<T> WithPowerTooltip<T>(this PowerVar<T> powerVar)
         where T : PowerModel
     {
-        powerVar.WithTooltip(static _ => HoverTipFactory.FromPower<T>());
+        powerVar.WithTooltip(static _ => CreatePowerTooltip<T>());
         return powerVar;
+    }
+
+    private static IHoverTip CreatePowerTooltip<T>()
+        where T : PowerModel
+    {
+        var power = ModelDb.Power<T>();
+        var description = power.Description;
+        description.Add("Amount", "X");
+        description.Add("singleStarIcon", "[img]res://images/packed/sprite_fonts/star_icon.png[/img]");
+        description.Add("energyPrefix", EnergyIconHelper.GetPrefix(power));
+        return new HoverTip(power, description.GetFormattedText(), isSmart: false);
     }
 }
