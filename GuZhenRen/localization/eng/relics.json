@@ -26,7 +26,7 @@
   "GU_ZHEN_REN_RELIC_XIAN_QIAO9.title": "Rank 9 Immortal Aperture",
   "GU_ZHEN_REN_RELIC_XIAN_QIAO9.description": "Upon pickup, gain [blue]9[/blue] Max HP.\nAt the start of each combat, put a [gold]Yellow Apricot Immortal Essence[/gold] into your hand.\n{ProgressDescription}",
   "GU_ZHEN_REN_RELIC_XIAN_QIAO9.flavor": "\"Everyone please remember that I, Gu Yue Fang Yuan, am the Great Love Immortal!\"",
-  "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.title": "[gold]Cultivation[/gold]",
+  "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.title": "Cultivation",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.gain_rule": "At the end of combat, gain [blue]1[/blue]/[blue]3[/blue]/[blue]5[/blue] [gold]Cultivation[/gold] from normal/Elite/Boss combats.",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_description": "The current rank of your Aperture and Vital Gu.",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_10_title": "Rank 10",
