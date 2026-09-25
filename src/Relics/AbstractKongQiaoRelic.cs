@@ -377,7 +377,8 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
         var current = this;
         var remainingXp = Math.Max(0, overflowXp);
 
-        while (current.NextStage is not null && current.Rank < 5)
+        while (current.NextStage is not null
+               && (ReferenceEquals(current, this) || current.Rank < 5))
         {
             if (!ReferenceEquals(current, this))
             {
