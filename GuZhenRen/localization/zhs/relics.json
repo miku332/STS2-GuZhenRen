@@ -26,7 +26,7 @@
   "GU_ZHEN_REN_RELIC_XIAN_QIAO9.title": "九转仙窍",
   "GU_ZHEN_REN_RELIC_XIAN_QIAO9.description": "获得时，最大生命值增加[blue]9[/blue]。\n在每场战斗开始时，将一张[gold]黄杏仙元[/gold]放入你的手牌。\n{ProgressDescription}",
   "GU_ZHEN_REN_RELIC_XIAN_QIAO9.flavor": "“世人谨记，我古月方源乃是大爱仙尊！”",
-  "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.title": "[gold]修为[/gold]",
+  "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.title": "修为",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.gain_rule": "战斗结束时，积累[blue]1[/blue]/[blue]3[/blue]/[blue]5[/blue]（普通/精英/首领）点[gold]修为[/gold]。",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_description": "空窍与本命蛊的当前转数。",
   "GU_ZHEN_REN_RELIC_KONG_QIAO_PROGRESS.rank_10_title": "十转",
