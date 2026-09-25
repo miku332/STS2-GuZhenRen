@@ -215,7 +215,7 @@
   "GU_ZHEN_REN_RELIC_RECIPE_AN_TU_ZHONG_SHAN_BAO.description": "Requires: 3 of any [gold]Earth Path Gu worm[/gold].",
   "GU_ZHEN_REN_RELIC_RECIPE_AN_TU_ZHONG_SHAN_BAO.flavor": "Rank 8Earth PathImmortal Gu house, Defense has the best capabilities of Rank 8.",
   "GU_ZHEN_REN_RELIC_SHEN_BU_ZHI.title": "Divine Concealment",
-  "GU_ZHEN_REN_RELIC_SHEN_BU_ZHI.description": "Shield the detection of Will.",
+  "GU_ZHEN_REN_RELIC_SHEN_BU_ZHI.description": "You will no longer encounter any tribulations.",
   "GU_ZHEN_REN_RELIC_SHEN_BU_ZHI.flavor": "Rank 9Theft PathKiller Move can shield the detection of Will.",
   "GU_ZHEN_REN_RELIC_CHUN_QIU_CHAN.title": "Spring Autumn Cicada",
   "GU_ZHEN_REN_RELIC_CHUN_QIU_CHAN.description": "Right-click outside of combat to go back to an earlier time point. The backtracking failure rate is {FailChance}%, increasing by 10% after each use. Sleep the {Cooldown} layer after backtracking. {Snapshots} time nodes are currently saved.",
