@@ -205,7 +205,7 @@
     "GU_ZHEN_REN_CARD_LIAO_YUAN_HUO.title":  "燎原火",
     "GU_ZHEN_REN_CARD_LIAO_YUAN_HUO.description":  "重复{Times:diff()}次：给予所有敌人{FenShaoPower:diff()}层[gold]焚烧[/gold]。\n将1张灼伤加入手牌。",
     "GU_ZHEN_REN_CARD_YAN_TONG_GU.title":  "炎瞳蛊",
-    "GU_ZHEN_REN_CARD_YAN_TONG_GU.description":  "获得{YanTongPower:diff()}层[gold]炎瞳[/gold]。",
+    "GU_ZHEN_REN_CARD_YAN_TONG_GU.description":  "本回合你每打出1张指向敌人的牌，给予其{YanTongPower:diff()}层[gold]焚烧[/gold]。\n触发4次后，每次触发将1张[gold]灼伤[/gold]加入手牌。",
     "GU_ZHEN_REN_CARD_YU_HUO.title":  "御火",
     "GU_ZHEN_REN_CARD_YU_HUO.description":  "本回合每消耗过1张牌，给予所有敌人{FenShaoPower:diff()}层[gold]焚烧[/gold]。",
     "GU_ZHEN_REN_CARD_FEN_SHEN_GU.title":  "焚身蛊",

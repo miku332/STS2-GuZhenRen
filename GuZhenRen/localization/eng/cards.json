@@ -205,7 +205,7 @@
   "GU_ZHEN_REN_CARD_LIAO_YUAN_HUO.title": "Prairie Fire",
   "GU_ZHEN_REN_CARD_LIAO_YUAN_HUO.description": "Repeat {Times:diff()} times: give all enemies{FenShaoPower:diff()} layer [gold]Burning[/gold].\nAdd 1 burn to hand.",
   "GU_ZHEN_REN_CARD_YAN_TONG_GU.title": "Flame Eye Gu",
-  "GU_ZHEN_REN_CARD_YAN_TONG_GU.description": "Obtain {YanTongPower:diff()} layer [gold] Yantong [/gold].",
+  "GU_ZHEN_REN_CARD_YAN_TONG_GU.description": "Whenever you play a card targeting an enemy this turn, apply {YanTongPower:diff()} [gold]Burning[/gold] to it.\nAfter triggering 4 times, each trigger adds 1 [gold]Burn[/gold] to your hand.",
   "GU_ZHEN_REN_CARD_YU_HUO.title": "Command Fire",
   "GU_ZHEN_REN_CARD_YU_HUO.description": "For each card Exhausted this turn, apply {FenShaoPower:diff()} [gold]Burning[/gold] to ALL enemies.",
   "GU_ZHEN_REN_CARD_FEN_SHEN_GU.title": "Self-Immolation Gu",
