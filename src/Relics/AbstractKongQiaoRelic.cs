@@ -176,6 +176,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
         {
             if (Rank == 5
                 && _xp >= NeededXp
+                && !IsTribulationDisabled()
                 && _state != KongQiaoState.ReadyToTribulate)
             {
                 _state = KongQiaoState.TribulationPending;
@@ -302,6 +303,12 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
 
         if (_state == KongQiaoState.TribulationPending)
         {
+            if (IsTribulationDisabled())
+            {
+                RefreshProgressDescription();
+                return;
+            }
+
             if (Rank < 6)
             {
                 await ReplaceWithNextStage(0);
@@ -351,16 +358,18 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
                 }
                 else
                 {
-                    _state = KongQiaoState.TribulationPending;
+                    Xp = NeededXp;
+                    if (!IsTribulationDisabled())
+                    {
+                        _state = KongQiaoState.TribulationPending;
+                    }
                 }
             }
             RefreshProgressDescription();
             return;
         }
 
-        // Shen Bu Zhi suppresses the tribulation effect, but it must not
-        // freeze the combat countdown that advances aperture progression.
-        if (_state == KongQiaoState.Countdown)
+        if (_state == KongQiaoState.Countdown && !IsTribulationDisabled())
         {
             _battlesToNextTribulation--;
             if (_battlesToNextTribulation <= 0)
