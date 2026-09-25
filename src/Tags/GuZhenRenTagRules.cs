@@ -1,5 +1,6 @@
 using GuZhenRen.Cards;
 using GuZhenRen.Enchantments;
+using GuZhenRen.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 
@@ -32,11 +33,9 @@ public static class GuZhenRenTagRules
 
     public static bool HasEffectiveTag(CardModel card, CardTag tag)
     {
-        if (card is GuZhenRenCardTemplate
-            && card.Enchantment is HuaShiEnchantment
-            && DaoTags.Contains(tag))
+        if (DaoTags.Contains(tag))
         {
-            return tag == GuZhenRenTags.TuDao;
+            return GetEffectiveDaoTags(card).Contains(tag);
         }
 
         return card.Tags.Contains(tag);
@@ -44,12 +43,14 @@ public static class GuZhenRenTagRules
 
     public static IEnumerable<CardTag> GetEffectiveDaoTags(CardModel card)
     {
-        if (card is GuZhenRenCardTemplate
-            && card.Enchantment is HuaShiEnchantment)
-        {
-            return [GuZhenRenTags.TuDao];
-        }
+        var effectiveTags = card is GuZhenRenCardTemplate
+            && card.Enchantment is HuaShiEnchantment
+            ? [GuZhenRenTags.TuDao]
+            : card.Tags.Where(DaoTags.Contains).ToArray();
 
-        return card.Tags.Where(DaoTags.Contains);
+        return effectiveTags.Length > 0
+            && card.Owner?.Creature.GetPower<RuiYiPower>() is not null
+                ? [GuZhenRenTags.JianDao]
+                : effectiveTags;
     }
 }
