@@ -88,7 +88,7 @@
   "GU_ZHEN_REN_POWER_FEN_SHEN_POWER.title": "Power Fen Shen Power",
   "GU_ZHEN_REN_POWER_FEN_SHEN_POWER.description": "At the beginning of the round, gain {Amount} points of energy and add {Amount} burns to hand.",
   "GU_ZHEN_REN_POWER_FEI_XING_POWER.title": "Flight",
-  "GU_ZHEN_REN_POWER_FEI_XING_POWER.description": "Damage taken from attacks is halved. After being damaged by an attack that is not Block, lose 1 layer of Flight.",
+  "GU_ZHEN_REN_POWER_FEI_XING_POWER.description": "Take [blue]50%[/blue] less [gold]Attack damage[/gold]. After taking unblocked [gold]Attack damage[/gold], lose [blue]1[/blue] stack of [gold]Flight[/gold].",
   "GU_ZHEN_REN_POWER_ZHEN_CHI_GAO_FEI_POWER.title": "Soaring Wings",
   "GU_ZHEN_REN_POWER_ZHEN_CHI_GAO_FEI_POWER.description": "At the start of your turn, if you have [gold]Flight[/gold], gain {Amount} [gold]Block[/gold].",
   "GU_ZHEN_REN_POWER_GU_CI_POWER.title": "Bone Spikes",
