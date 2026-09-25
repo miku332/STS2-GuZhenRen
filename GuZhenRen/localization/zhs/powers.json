@@ -15,6 +15,7 @@
     "GU_ZHEN_REN_POWER_JIAN_HEN_POWER.description":  "每层使剑道攻击额外造成1点伤害。敌方回合结束时移除。",
     "GU_ZHEN_REN_POWER_JIAN_DUN_POWER.title":  "剑遁",
     "GU_ZHEN_REN_POWER_JIAN_DUN_POWER.description":  "本回合每打出一张剑道牌，获得{Amount}点格挡。",
+    "GU_ZHEN_REN_POWER_CONSTRICT_PREVIEW.description":  "回合结束时，受到[blue]X[/blue]点伤害。",
     "GU_ZHEN_REN_POWER_NIAN_POWER.title":  "念",
     "GU_ZHEN_REN_POWER_NIAN_POWER.description":  "每累积3层念，转化为1层意并抽1张牌。（当前{Amount}/3）",
     "GU_ZHEN_REN_POWER_YI_POWER.title":  "意",

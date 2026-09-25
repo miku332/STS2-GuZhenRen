@@ -15,6 +15,7 @@
   "GU_ZHEN_REN_POWER_JIAN_HEN_POWER.description": "Each layer causes Sword Path's attack to cause an additional 1 point of damage. Removed at the end of the enemy's turn.",
   "GU_ZHEN_REN_POWER_JIAN_DUN_POWER.title": "Sword Escape",
   "GU_ZHEN_REN_POWER_JIAN_DUN_POWER.description": "Each time a Sword Path card is played this round, you will get {Amount} points Block.",
+  "GU_ZHEN_REN_POWER_CONSTRICT_PREVIEW.description": "At the end of the turn, take [blue]X[/blue] damage.",
   "GU_ZHEN_REN_POWER_NIAN_POWER.title": "Thought",
   "GU_ZHEN_REN_POWER_NIAN_POWER.description": "For every 3 layers of Thought accumulated, it is converted into 1 layer of Will and 1 card is drawn. (current {Amount}/3)",
   "GU_ZHEN_REN_POWER_YI_POWER.title": "Will",
