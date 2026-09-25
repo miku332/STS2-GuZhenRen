@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
@@ -18,6 +19,9 @@ public sealed class YinGuoShenShu : AbstractShaZhaoCard
         PortraitPath: "res://GuZhenRen/images/cards/YinGuoShenShu.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.MuDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.Guo];
 
     protected override IEnumerable<GeneratedCardPreview> GeneratedCardPreviews =>
         [PreviewCard<LaiYinQuGuo>()];
