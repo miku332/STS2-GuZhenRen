@@ -89,6 +89,7 @@ public sealed class ShangFangJieWa : AbstractShaZhaoCard
         await RemovePowerIfPresent<TieBiPower>(target);
         await RemovePowerIfPresent<GuiGuaYiPower>(target);
         await RemovePowerIfPresent<JiuLongWenHuShenPower>(target);
+        await RemovePowerIfPresent<GangQiPower>(target);
         await RemovePowerIfPresent<ArtifactPower>(target);
         await RemovePowerIfPresent<PlatingPower>(target);
         await RemovePowerIfPresent<RegenPower>(target);
