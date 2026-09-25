@@ -51,7 +51,7 @@
     "GU_ZHEN_REN_CARD_ZI_YI_GU.title":  "恣意蛊",
     "GU_ZHEN_REN_CARD_ZI_YI_GU.description":  "获得{YiPower:diff()}层[gold]意[/gold]。给予所有敌人1点[gold]力量[/gold]与{VulnerablePower:diff()}层[gold]易伤[/gold]。",
     "GU_ZHEN_REN_CARD_ZHUAN_YI_GU.title":  "转意蛊",
-    "GU_ZHEN_REN_CARD_ZHUAN_YI_GU.description":  "不同状态间互相转化时，获得{ZhuanYiPower:diff()}点[gold]格挡[/gold]。",
+    "GU_ZHEN_REN_CARD_ZHUAN_YI_GU.description":  "不同状态间互相转化时，获得{ZhuanYiPower:diff()}点格挡。",
     "GU_ZHEN_REN_CARD_ZHI_HUI_GU.title":  "智慧蛊",
     "GU_ZHEN_REN_CARD_ZHI_HUI_GU.description":  "回合开始时，获得{ZhiHuiPower:diff()}层[gold]念[/gold]。",
     "GU_ZHEN_REN_CARD_HUI_GU.title":  "悔蛊",

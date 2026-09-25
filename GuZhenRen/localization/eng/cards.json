@@ -51,7 +51,7 @@
   "GU_ZHEN_REN_CARD_ZI_YI_GU.title": "Unrestrained Will Gu",
   "GU_ZHEN_REN_CARD_ZI_YI_GU.description": "Gain {YiPower:diff()} [gold]Will[/gold].Apply all enemies1 [gold]Strength[/gold]and{VulnerablePower:diff()} stack(s) of [gold]Vulnerable[/gold].",
   "GU_ZHEN_REN_CARD_ZHUAN_YI_GU.title": "Shift Will Gu",
-  "GU_ZHEN_REN_CARD_ZHUAN_YI_GU.description": "Whenever different statuses convert into each other, gain {ZhuanYiPower:diff()} [gold]Block[/gold].",
+  "GU_ZHEN_REN_CARD_ZHUAN_YI_GU.description": "Whenever different statuses convert into each other, gain {ZhuanYiPower:diff()} Block.",
   "GU_ZHEN_REN_CARD_ZHI_HUI_GU.title": "Wisdom Gu",
   "GU_ZHEN_REN_CARD_ZHI_HUI_GU.description": "At the start of turn, Gain {ZhiHuiPower:diff()} [gold]Thought[/gold].",
   "GU_ZHEN_REN_CARD_HUI_GU.title": "Regret Gu",

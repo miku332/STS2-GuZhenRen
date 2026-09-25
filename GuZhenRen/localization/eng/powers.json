@@ -24,7 +24,7 @@
   "GU_ZHEN_REN_POWER_JIAN_FENG_POWER.title": "Sword Edge",
   "GU_ZHEN_REN_POWER_JIAN_FENG_POWER.description": "After the Sword Path attack causes actual damage, the target will be given the same amount of Sword Mark.",
   "GU_ZHEN_REN_POWER_ZHUAN_YI_POWER.title": "Shift Will",
-  "GU_ZHEN_REN_POWER_ZHUAN_YI_POWER.description": "Whenever different statuses convert into each other, gain {Amount} [gold]Block[/gold].",
+  "GU_ZHEN_REN_POWER_ZHUAN_YI_POWER.description": "Whenever different statuses convert into each other, gain {Amount} Block.",
   "GU_ZHEN_REN_POWER_ZHI_HUI_POWER.title": "Wisdom",
   "GU_ZHEN_REN_POWER_ZHI_HUI_POWER.description": "At the start of turn, Gain {Amount} stack(s) of Thought.",
   "GU_ZHEN_REN_POWER_YI_XIN_ER_YONG_POWER.title": "Power Yi Xin Er Yong Power",

@@ -24,7 +24,7 @@
     "GU_ZHEN_REN_POWER_JIAN_FENG_POWER.title":  "剑锋",
     "GU_ZHEN_REN_POWER_JIAN_FENG_POWER.description":  "剑道攻击造成实际伤害后，给予目标等量剑痕。",
     "GU_ZHEN_REN_POWER_ZHUAN_YI_POWER.title":  "转意",
-    "GU_ZHEN_REN_POWER_ZHUAN_YI_POWER.description":  "不同状态间互相转化时，获得{Amount}点[gold]格挡[/gold]。",
+    "GU_ZHEN_REN_POWER_ZHUAN_YI_POWER.description":  "不同状态间互相转化时，获得{Amount}点格挡。",
     "GU_ZHEN_REN_POWER_ZHI_HUI_POWER.title":  "智慧",
     "GU_ZHEN_REN_POWER_ZHI_HUI_POWER.description":  "回合开始时，获得{Amount}层念。",
     "GU_ZHEN_REN_POWER_YI_XIN_ER_YONG_POWER.title":  "一心二用",
