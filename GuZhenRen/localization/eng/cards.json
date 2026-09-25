@@ -342,7 +342,7 @@
   "GU_ZHEN_REN_CARD_LUO_XUAN_GU_QIANG_GU.title": "Spiral Bone Spear Gu",
   "GU_ZHEN_REN_CARD_LUO_XUAN_GU_QIANG_GU.description": "Causes {Damage:diff()} points and ignores Block damage.\\nWhen entering the store, remove this card from deck and obtain {Gold:diff()}Gold.",
   "GU_ZHEN_REN_CARD_NI_LIU_HU_SHEN_YIN.title": "Reverse Flow Protection Seal",
-  "GU_ZHEN_REN_CARD_NI_LIU_HU_SHEN_YIN.description": "At the start of your turn, gain {NiLiuHuShenYinPower:diff()} layer Reverse Flow River water.",
+  "GU_ZHEN_REN_CARD_NI_LIU_HU_SHEN_YIN.description": "At the start of your turn, gain {NiLiuHuShenYinPower:diff()} [gold]Reverse Flow River Water[/gold].",
   "GU_ZHEN_REN_CARD_JIAN_MIAN_CENG_XIANG_SHI.title": "Familiar Face",
   "GU_ZHEN_REN_CARD_JIAN_MIAN_CENG_XIANG_SHI.description": "When the next {Battles:diff()} battle starts, give all enemies{FriendStacks:diff()} layer [gold]Friend[/gold]. While the\\neffect lasts, this card exists in the form of Relic.",
   "GU_ZHEN_REN_CARD_XING_XIU_QI_PAN.title": "Star Constellation Chessboard",
@@ -380,7 +380,7 @@
   "GU_ZHEN_REN_CARD_CHI_XIN.title": "Eat Heart",
   "GU_ZHEN_REN_CARD_CHI_XIN.description": "Kill an enemy whose current HP is lower than your Max HP.\\nWhen it is slain, gain {MaxHpGain:diff()} Max HP.",
   "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.title": "Chaotic Direction Fog",
-  "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "Stun ALL enemies.\\nApply {Chance:diff()} [gold]Dizzy[/gold] to ALL enemies.",
+  "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "[gold]Stun[/gold] ALL enemies for 1 turn.\\nAt the end of each enemy's turn, there is a {Chance:diff()}% [gold]Chance[/gold] it cannot act next turn. This chance decreases by 20% each turn.",
   "GU_ZHEN_REN_CARD_NIE_PAN_HUO.title": "Nirvana Fire",
   "GU_ZHEN_REN_CARD_NIE_PAN_HUO.description": "Lose all HP and heal to {HealPercent:diff()}% of your Max HP.\\nApply [gold]Burning[/gold] to ALL enemies equal to the HP lost."
 }

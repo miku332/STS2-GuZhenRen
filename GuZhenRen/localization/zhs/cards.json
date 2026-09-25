@@ -342,7 +342,7 @@
     "GU_ZHEN_REN_CARD_LUO_XUAN_GU_QIANG_GU.title": "螺旋骨枪蛊",
     "GU_ZHEN_REN_CARD_LUO_XUAN_GU_QIANG_GU.description": "造成{Damage:diff()}点无视格挡的伤害。\\n进入商店时，从牌组中移除此牌并获得{Gold:diff()}金币。",
     "GU_ZHEN_REN_CARD_NI_LIU_HU_SHEN_YIN.title": "逆流护身印",
-    "GU_ZHEN_REN_CARD_NI_LIU_HU_SHEN_YIN.description": "在你的回合开始时，获得{NiLiuHuShenYinPower:diff()}层逆流河水。",
+    "GU_ZHEN_REN_CARD_NI_LIU_HU_SHEN_YIN.description": "在你的回合开始时，获得{NiLiuHuShenYinPower:diff()}层[gold]逆流河水[/gold]。",
     "GU_ZHEN_REN_CARD_JIAN_MIAN_CENG_XIANG_SHI.title": "见面曾相识",
     "GU_ZHEN_REN_CARD_JIAN_MIAN_CENG_XIANG_SHI.description": "接下来{Battles:diff()}场战斗开始时，给予所有敌人{FriendStacks:diff()}层[gold]好友[/gold]。\\n效果持续期间，此牌以遗物形式存在。",
     "GU_ZHEN_REN_CARD_XING_XIU_QI_PAN.title": "星宿棋盘",
@@ -380,7 +380,7 @@
     "GU_ZHEN_REN_CARD_CHI_XIN.title": "吃心",
     "GU_ZHEN_REN_CARD_CHI_XIN.description": "杀死一名当前生命低于你最大生命的敌人。\\n斩杀时，提升{MaxHpGain:diff()}点最大生命。",
     "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.title": "乱方混向雾",
-    "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "给予所有敌人[gold]眩晕[/gold]。\\n给予所有敌人{Chance:diff()}层[gold]晕头转向[/gold]。",
+    "GU_ZHEN_REN_CARD_LUAN_FANG_HUN_XIANG_WU.description": "[gold]击晕[/gold]所有敌人1回合。\\n敌方回合结束时，{Chance:diff()}%[gold]概率[/gold]下回合无法行动，此概率每回合降低20%。",
     "GU_ZHEN_REN_CARD_NIE_PAN_HUO.title": "涅槃火",
     "GU_ZHEN_REN_CARD_NIE_PAN_HUO.description": "失去所有生命并回复至最大生命值的{HealPercent:diff()}%。\\n给予所有敌人等同于你失去生命值的[gold]焚烧[/gold]。"
 }

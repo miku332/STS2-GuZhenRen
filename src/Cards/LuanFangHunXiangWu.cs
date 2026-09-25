@@ -26,7 +26,9 @@ public sealed class LuanFangHunXiangWu : AbstractShaZhaoCard, IProbabilityCard
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        GuZhenRenKeywords.GaiLv
+        GuZhenRenKeywords.JiYun,
+        GuZhenRenKeywords.GaiLv,
+        CardKeyword.Exhaust
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
