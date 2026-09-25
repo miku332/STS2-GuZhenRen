@@ -197,7 +197,7 @@
   "GU_ZHEN_REN_CARD_WAN_WO.title": "Myriad Self",
   "GU_ZHEN_REN_CARD_WAN_WO.description": "Add X upgraded [gold]My Strength Phantom[/gold] to hand and trigger these cards immediately.",
   "GU_ZHEN_REN_CARD_SHANG_FANG_JIE_WA.title": "Tear Off the Roof",
-  "GU_ZHEN_REN_CARD_SHANG_FANG_JIE_WA.description": "Remove all Block and Defense type abilities from the target.\nCause {CalculatedDamage:diff()} points of damage.\n[gold]Strength[/gold] exerts {StrengthMultiplier:diff()} times the effect on this card.",
+  "GU_ZHEN_REN_CARD_SHANG_FANG_JIE_WA.description": "Remove all [gold]Block[/gold] and [gold]Defensive Effects[/gold] from one target.\nDeal {CalculatedDamage:diff()} damage. [gold]Strength[/gold] affects this card {StrengthMultiplier:diff()} times.",
   "GU_ZHEN_REN_CARD_TU_QIANG_GU.title": "Earth Wall Gu",
   "GU_ZHEN_REN_CARD_TU_QIANG_GU.description": "Gain {Block:diff()} Block.\nGain {JiTuPower:diff()} [gold]Piled Earth[/gold].",
   "GU_ZHEN_REN_CARD_YAN_ZHOU_GU.title": "Flame Armor Gu",

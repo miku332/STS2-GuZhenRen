@@ -10,6 +10,7 @@ using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
@@ -26,6 +27,9 @@ public sealed class ShangFangJieWa : AbstractShaZhaoCard
         PortraitPath: "res://GuZhenRen/images/cards/ShangFangJieWa.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.LiDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.FangYuLeiZhuangTai];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -87,6 +91,9 @@ public sealed class ShangFangJieWa : AbstractShaZhaoCard
         await RemovePowerIfPresent<CurlUpPower>(target);
         await RemovePowerIfPresent<GuardedPower>(target);
         await RemovePowerIfPresent<HardenedShellPower>(target);
+        await RemovePowerIfPresent<ShuiMuTianHuaGuPower>(target);
+        await RemovePowerIfPresent<TieBiPower>(target);
+        await RemovePowerIfPresent<GuiGuaYiPower>(target);
         await RemovePowerIfPresent<JiuLongWenHuShenPower>(target);
         await RemovePowerIfPresent<ArtifactPower>(target);
         await RemovePowerIfPresent<PlatingPower>(target);
