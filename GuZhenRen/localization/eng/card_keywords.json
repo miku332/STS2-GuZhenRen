@@ -16,7 +16,7 @@
   "GU_ZHEN_REN_KEYWORD_NI_LIU_HE_SHUI.title": "Reverse Flow River Water",
   "GU_ZHEN_REN_KEYWORD_NI_LIU_HE_SHUI.description": "Each time [gold]Reverse Flow River[/gold] reverses an attack, it consumes 1 [gold]Reverse Flow River Water[/gold].",
   "GU_ZHEN_REN_KEYWORD_GUO.title": "Fruit",
-  "GU_ZHEN_REN_KEYWORD_GUO.description": "Temporarily stores damage or a debuff, then applies it to the holder after 2 turns.",
+  "GU_ZHEN_REN_KEYWORD_GUO.description": "Temporarily stores damage or a debuff, then applies it to the holder after [blue]2[/blue] turns.",
   "GU_ZHEN_REN_KEYWORD_HEADER_SEPARATOR": ". ",
   "GU_ZHEN_REN_KEYWORD_HEADER_TERMINATOR": ".",
   "GU_ZHEN_REN_KEYWORD_PIN_JIE.title": "Rank",
