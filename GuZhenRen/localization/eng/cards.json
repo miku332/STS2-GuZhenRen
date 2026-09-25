@@ -302,7 +302,7 @@
   "GU_ZHEN_REN_CARD_OPTION_ZI_YOU.title": "Freedom",
   "GU_ZHEN_REN_CARD_OPTION_ZI_YOU.description": "Remove 2 cards from deck.",
   "GU_ZHEN_REN_CARD_ZHUAN_YUN.title": "Turn Luck",
-  "GU_ZHEN_REN_CARD_ZHUAN_YUN.description": "Gain {ZhuanYunPower:diff()} [gold]Turn Luck[/gold].",
+  "GU_ZHEN_REN_CARD_ZHUAN_YUN.description": "Whenever a [gold]Chance[/gold] card fails to trigger, increase its Chance by {ZhuanYunPower:diff()}%.",
   "GU_ZHEN_REN_CARD_YUN_SUAN.title": "Calculation Gu",
   "GU_ZHEN_REN_CARD_YUN_SUAN.description": "Exhaust {Cards:diff()} and hand.\\ndraws {Cards:diff()} cards. Chance of all [gold]Chance[/gold] brands in\\nhand increases {Increase:diff()}%.",
   "GU_ZHEN_REN_CARD_YUN_SUAN.selectionScreenPrompt": "Select {Cards} and Exhaust hand",
