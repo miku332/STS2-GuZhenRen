@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Audio.Debug;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Context;
@@ -10,6 +11,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using GuZhenRen.Powers;
@@ -491,6 +493,14 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
                     LocalContext.IsMe(Owner)
                         ? CardPreviewStyle.HorizontalLayout
                         : CardPreviewStyle.None);
+
+                if (LocalContext.IsMe(Owner))
+                {
+                    NDebugAudioManager.Instance?.Play(
+                        "card_smith.mp3",
+                        1f,
+                        PitchVariance.Small);
+                }
             }
 
             Entry.Logger.Info(
