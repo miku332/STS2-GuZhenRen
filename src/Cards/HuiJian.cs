@@ -70,6 +70,10 @@ public sealed class HuiJian : GuZhenRenCardTemplate
                 1,
                 Owner.Creature,
                 this);
+            await ZhuanYiPower.TriggerConversion(
+                Owner.Creature,
+                Owner.Creature,
+                this);
         }
     }
 

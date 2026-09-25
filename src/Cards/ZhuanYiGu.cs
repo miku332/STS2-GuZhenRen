@@ -25,9 +25,7 @@ public sealed class ZhuanYiGu : GuZhenRenCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<ZhuanYiPower>(3),
-        new PowerVar<NianPower>(0).WithPowerTooltip(),
-        new PowerVar<YiPower>(0).WithPowerTooltip()
+        new PowerVar<ZhuanYiPower>(3)
     ];
 
     public ZhuanYiGu()
