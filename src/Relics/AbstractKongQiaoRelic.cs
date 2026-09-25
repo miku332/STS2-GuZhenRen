@@ -587,7 +587,7 @@ public abstract class AbstractKongQiaoRelic : ModRelicTemplate, IModRightClickab
 
         if (Rank == 5)
         {
-            if (tribulationDisabled && Xp >= NeededXp)
+            if (tribulationDisabled)
             {
                 return string.Empty;
             }
