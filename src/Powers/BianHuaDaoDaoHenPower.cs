@@ -22,7 +22,9 @@ public sealed class BianHuaDaoDaoHenPower : ModPowerTemplate
         IconPath: "res://GuZhenRen/images/powers/BianHuaDaoDaoHenPower.png",
         BigIconPath: "res://GuZhenRen/images/powers/BianHuaDaoDaoHenPower_p.png");
 
-    public override async Task BeforeCardPlayed(CardPlay cardPlay)
+    public override async Task AfterCardPlayed(
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner.Creature != Owner
             || GuZhenRenTagRules.HasEffectiveTag(
