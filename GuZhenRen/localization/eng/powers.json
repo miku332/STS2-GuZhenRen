@@ -6,7 +6,7 @@
   "GU_ZHEN_REN_POWER_TAI_CHU_GUANG_POWER.title": "Primordial Light",
   "GU_ZHEN_REN_POWER_TAI_CHU_GUANG_POWER.description": "This turn, Radiance is not removed when you play a Light Path Attack.",
   "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.title": "Radiance",
-  "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.description": "Light Path's attack damage increased by 50%.",
+  "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.description": "The next [gold]Light Path[/gold] Attack you play deals [blue]{DamagePercent}%[/blue] more damage.",
   "GU_ZHEN_REN_POWER_RI_GUANG_POWER.title": "Sunlight",
   "GU_ZHEN_REN_POWER_RI_GUANG_POWER.description": "When {Amount} plays Light PathAttack card next time, Radiance will not be Exhaustd.",
   "GU_ZHEN_REN_POWER_JIAN_QI_POWER.title": "Sword Qi",
