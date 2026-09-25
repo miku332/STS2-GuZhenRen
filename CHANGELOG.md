@@ -1,5 +1,73 @@
 # 更新日志 / Changelog
 
+## 0.7.1
+
+### 中文
+
+#### 优化
+
+- 还原一代杀招蛊方掉落规则：普通战斗 15%，精英战斗 50%，Boss 战斗 100%；地灾使概率提升至 3 倍，天劫提升至 5 倍，浩劫及以上必定掉落。
+- 还原灾劫额外遗物奖励：地灾 40%，天劫 70%，浩劫及以上 100%。
+- 补全杀招蛊方奖励池，“爱情蛊”现在也能随机获得后续新增的杀招牌。
+- 所有凡蛊屋与仙蛊屋改为每回合开始时返回手牌。
+- “锐意蛊”现在会将卡牌原有流派替换为剑道，使其只触发剑道相关效果。
+- 变化道道痕改为在卡牌打出后转化，当前打出的牌不再提前获得转化后的道痕加成。
+- 还原“闪耀”与光道道痕的一代数值：每层光道道痕使光道攻击伤害提高 25%，每层闪耀提高 50%，两者可正确叠加。
+- 本命蛊自动升炼时新增原生锻造音效。
+- 放大蛊真人遗物及蛊方遗物的图片主体，使显示尺寸更接近原生遗物。
+- 优化空窍、仙窍、神不知、鬼不觉以及多张杀招与关键词的中英文描述，使其更接近一代效果。
+- 卡牌预览中无法确定的动态数值统一显示为蓝色 X。
+
+#### 修复
+
+- 修复虚影触发后卡面消失、手牌隐形、卡牌悬浮或战斗无法继续的问题。
+- 修复虚影效果导致奖励页面和选牌页面偶尔无法显示卡牌的问题。
+- 修复本命蛊升炼预览转数错误，以及空窍始终显示需要 0 点修为突破的问题。
+- 修复右键切换渡劫状态后遗物描述无法实时刷新，以及渡劫成功后无法正确升转的问题。
+- 修复五转渡劫结束后战斗无法进入下一房间的问题。
+- 修复拥有“神不知”时仍会触发渡劫、升转或显示无效进度的问题。
+- 修复“锐意蛊”生效后仍会触发原有流派效果，以及部分卡牌预览无法显示的问题。
+- 修复“上房揭瓦”无法移除罡气等二代防御性效果的问题。
+- 修正星念蛊、血神子、剑遁、转意蛊、缠绕等卡牌的转数、名称或效果错误。
+
+#### 兼容性
+
+- 支持《杀戮尖塔2》正式版 `v0.107.1`。
+- 需要 RitsuLib `0.5.12`。
+
+### English
+
+#### Improvements
+
+- Restored the original killer move recipe rates: 15% for normal combat, 50% for Elite combat, and 100% for Boss combat; Earthly Tribulation triples the chance, Heavenly Tribulation multiplies it by five, and Grand Tribulation or above guarantees a recipe.
+- Restored additional relic rewards after tribulations: 40% for Earthly, 70% for Heavenly, and 100% for Grand Tribulation or above.
+- Completed the killer move recipe reward pool, and Love Gu can now generate the newly added killer moves.
+- All mortal and immortal Gu Houses now return to the hand at the start of each turn.
+- Sharp Will now replaces a card's original Path with Sword Path, preventing it from retaining its original Path synergies.
+- Transformation Path Dao Marks now convert after a card is played, so the triggering card does not receive the converted bonus prematurely.
+- Restored the original Radiance and Light Path scaling: each Light Path Dao Mark grants 25% damage and each Radiance stack grants 50%, with both bonuses stacking correctly.
+- Added the native smithing sound when a Ben Ming Gu automatically refines.
+- Enlarged the visible artwork inside Gu Zhen Ren relic and recipe images to better match native relic sizes.
+- Updated the Chinese and English text for Apertures, Shen Bu Zhi, Gui Bu Jue, killer moves, and related keywords to better match the original mod.
+- Unknown dynamic values in card previews are now displayed as a blue X.
+
+#### Fixes
+
+- Fixed Phantom triggers causing card artwork to disappear, hand cards to become invisible, cards to remain suspended, or combat to stop progressing.
+- Fixed Phantom effects occasionally hiding cards on reward and selection screens.
+- Fixed incorrect Ben Ming Gu refinement previews and Apertures always showing that 0 Cultivation was required.
+- Fixed Aperture descriptions not refreshing after toggling tribulation and successful tribulations failing to advance rank correctly.
+- Fixed rank-five tribulations preventing progression to the next room.
+- Fixed Shen Bu Zhi still allowing tribulations or rank advancement and displaying unusable progress text.
+- Fixed Sharp Will cards retaining original Path effects or losing their card previews.
+- Fixed Tear Off the Roof failing to remove Gang Qi and other defensive effects introduced in Slay the Spire 2.
+- Corrected the ranks, names, or behavior of Star Thought Gu, Blood Deity, Sword Escape, Shift Will, Constrict, and related cards.
+
+#### Compatibility
+
+- Supports the stable `v0.107.1` build of Slay the Spire 2.
+- Requires RitsuLib `0.5.12`.
+
 ## 0.7.0
 
 ### 中文
