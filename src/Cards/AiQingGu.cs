@@ -255,9 +255,13 @@ public sealed class AiQingGu : GuZhenRenCardTemplate
         {
             ModelDb.Card<AngryBird>(),
             ModelDb.Card<AnQiSha>(),
+            ModelDb.Card<ChiXin>(),
             ModelDb.Card<GuangYinFeiRen>(),
             ModelDb.Card<JianHenSuoMing>(),
             ModelDb.Card<JianLangSanDie>(),
+            ModelDb.Card<LuanFangHunXiangWu>(),
+            ModelDb.Card<NiePanHuo>(),
+            ModelDb.Card<RanNianFeiShi>(),
             ModelDb.Card<SanShiSanTianGuang>(),
             ModelDb.Card<ShangFangJieWa>(),
             ModelDb.Card<SongYouFeng>(),
@@ -270,6 +274,7 @@ public sealed class AiQingGu : GuZhenRenCardTemplate
             ModelDb.Card<WuZhiQuanXinJian>(),
             ModelDb.Card<XueJianLeng>(),
             ModelDb.Card<XuePiaoLiu>(),
+            ModelDb.Card<XueRanZhengPao>(),
             ModelDb.Card<YangMangBeiHuoYi>(),
             ModelDb.Card<ZhuiMingHuo>()
         };
