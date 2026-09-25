@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -25,8 +26,9 @@ public sealed class XueShenZi : GuZhenRenCardTemplate
 
     public override int Rank => IsUpgraded ? 6 : 5;
 
-    public override string Title =>
-        IsUpgraded ? "血神子仙蛊" : base.Title;
+    public override string Title => IsUpgraded
+        ? new LocString("cards", $"{Id.Entry}.upgradeTitle").GetFormattedText()
+        : base.Title;
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: "res://GuZhenRen/images/cards/XueShenZi.png");
