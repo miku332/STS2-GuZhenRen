@@ -80,7 +80,10 @@ public sealed class ShanYaoPower : ModPowerTemplate
             return 1m;
         }
 
-        return 1m + Amount * DamagePercentPerStack / 100m;
+        var guangDaoMarks = Owner.GetPowerAmount<GuangDaoDaoHenPower>();
+        return 1m
+            + Amount * DamagePercentPerStack / 100m
+            + guangDaoMarks * GuangDaoDaoHenPower.DamagePercentPerStack / 100m;
     }
 
     public override async Task AfterCardPlayed(
