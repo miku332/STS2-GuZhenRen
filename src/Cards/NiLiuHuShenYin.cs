@@ -1,4 +1,5 @@
 using GuZhenRen.CardPools;
+using GuZhenRen.Keywords;
 using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
@@ -20,6 +21,9 @@ public sealed class NiLiuHuShenYin : AbstractShaZhaoCard
         PortraitPath: "res://GuZhenRen/images/cards/NiLiuHuShenYin.png");
 
     public override IEnumerable<CardTag> Tags => [GuZhenRenTags.LuDao];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [GuZhenRenKeywords.NiLiuHeShui];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

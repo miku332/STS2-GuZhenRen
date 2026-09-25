@@ -11,6 +11,8 @@ namespace GuZhenRen.Keywords;
 [RegisterOwnedCardKeyword(nameof(FangYuLeiZhuangTai))]
 [RegisterOwnedCardKeyword(nameof(AiQingGuPositiveEffect))]
 [RegisterOwnedCardKeyword(nameof(AiQingGuNegativeEffect))]
+[RegisterOwnedCardKeyword(nameof(JiYun))]
+[RegisterOwnedCardKeyword(nameof(NiLiuHeShui))]
 public sealed class GuZhenRenKeywords
 {
     public static readonly CardKeyword GaiLv =
@@ -30,4 +32,10 @@ public sealed class GuZhenRenKeywords
 
     public static readonly CardKeyword AiQingGuNegativeEffect =
         ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(AiQingGuNegativeEffect)).GetModCardKeyword();
+
+    public static readonly CardKeyword JiYun =
+        ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(JiYun)).GetModCardKeyword();
+
+    public static readonly CardKeyword NiLiuHeShui =
+        ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(NiLiuHeShui)).GetModCardKeyword();
 }
