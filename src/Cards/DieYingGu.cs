@@ -1,7 +1,10 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -26,7 +29,8 @@ public sealed class DieYingGu : GuZhenRenCardTemplate
     [
         new DamageVar(8, ValueProp.Move),
         new PowerVar<JianHenPower>(1).WithPowerTooltip(),
-        new DynamicVar("Growth", 2)
+        new DynamicVar("Growth", 2),
+        new CombatSwordMarkPreviewVar()
     ];
 
     public DieYingGu()
@@ -40,10 +44,7 @@ public sealed class DieYingGu : GuZhenRenCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var swordShadowCount = PileType.Exhaust
-            .GetPile(Owner)
-            .Cards
-            .Count(card => card is JianYing);
+        var swordShadowCount = CountSwordShadows(this);
         var growth = DynamicVars["Growth"].BaseValue;
         var damage = DynamicVars.Damage.BaseValue + swordShadowCount * growth;
         var swordMarks = DynamicVars["JianHenPower"].BaseValue + swordShadowCount * growth;
@@ -65,5 +66,37 @@ public sealed class DieYingGu : GuZhenRenCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars["Growth"].UpgradeValueBy(1);
+    }
+
+    private static int CountSwordShadows(CardModel card) =>
+        PileType.Exhaust
+            .GetPile(card.Owner)
+            .Cards
+            .Count(exhaustedCard => exhaustedCard is JianYing);
+
+    private sealed class CombatSwordMarkPreviewVar()
+        : StringVar("CombatPreview")
+    {
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            if (card.CombatState is null)
+            {
+                StringValue = string.Empty;
+                return;
+            }
+
+            var dieYingGu = (DieYingGu)card;
+            var swordMarks = dieYingGu.DynamicVars["JianHenPower"].BaseValue
+                + CountSwordShadows(card) * dieYingGu.DynamicVars["Growth"].BaseValue;
+            var preview = new LocString(
+                "cards",
+                "GU_ZHEN_REN_CARD_DIE_YING_GU.combatPreview");
+            preview.Add("SwordMarks", swordMarks);
+            StringValue = preview.GetFormattedText();
+        }
     }
 }

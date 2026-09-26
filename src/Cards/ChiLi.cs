@@ -3,7 +3,9 @@ using GuZhenRen.Relics;
 using GuZhenRen.Tags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -47,7 +49,8 @@ public sealed class ChiLi : GuZhenRenCardTemplate
     [
         new DamageVar(9, ValueProp.Move),
         new PowerVar<StrengthPower>(0).WithPowerTooltip(),
-        new DynamicVar("KillsRemaining", KillsRemaining)
+        new DynamicVar("KillsRemaining", KillsRemaining),
+        new CombatKillsPreviewVar()
     ];
 
     public ChiLi()
@@ -157,5 +160,28 @@ public sealed class ChiLi : GuZhenRenCardTemplate
             1,
             Owner.Creature,
             this);
+    }
+
+    private sealed class CombatKillsPreviewVar()
+        : StringVar("CombatPreview")
+    {
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            if (card.CombatState is null)
+            {
+                StringValue = string.Empty;
+                return;
+            }
+
+            var preview = new LocString(
+                "cards",
+                "GU_ZHEN_REN_CARD_CHI_LI.combatPreview");
+            preview.Add("Remaining", ((ChiLi)card).KillsRemaining);
+            StringValue = preview.GetFormattedText();
+        }
     }
 }

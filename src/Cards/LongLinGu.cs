@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -36,6 +37,7 @@ public sealed class LongLinGu : GuZhenRenCardTemplate
         new BlockVar(BaseBlock, ValueProp.Move),
         new CalculationBaseVar(BaseTimes),
         new CalculationExtraVar(1),
+        new CombatBlockPreviewVar(),
         new CalculatedVar("CalculatedTimes")
             .WithMultiplier(static (CardModel card, Creature? _) =>
                 card.Owner?.Creature.Powers
@@ -71,5 +73,30 @@ public sealed class LongLinGu : GuZhenRenCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.CalculationBase.UpgradeValueBy(1);
+    }
+
+    private sealed class CombatBlockPreviewVar()
+        : StringVar("CombatPreview")
+    {
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            if (card.CombatState is null)
+            {
+                StringValue = string.Empty;
+                return;
+            }
+
+            var preview = new LocString(
+                "cards",
+                "GU_ZHEN_REN_CARD_LONG_LIN_GU.combatPreview");
+            preview.Add("Block", card.DynamicVars.Block.BaseValue);
+            preview.Add("Times", ((CalculatedVar)card.DynamicVars["CalculatedTimes"])
+                .Calculate(target));
+            StringValue = preview.GetFormattedText();
+        }
     }
 }

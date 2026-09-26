@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -28,6 +29,7 @@ public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
         new DamageVar(4, ValueProp.Move),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
+        new CombatHitsPreviewVar(),
         new CalculatedVar("CalculatedHits")
             .WithMultiplier(static (CardModel card, Creature? _) =>
                 CalculateHits(card))
@@ -73,5 +75,28 @@ public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
                     handCard,
                     GuZhenRenTags.GuangDao));
         return 1 + otherLightDaoCards;
+    }
+
+    private sealed class CombatHitsPreviewVar()
+        : StringVar("CombatPreview")
+    {
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            if (card.CombatState is null)
+            {
+                StringValue = string.Empty;
+                return;
+            }
+
+            var preview = new LocString(
+                "cards",
+                "GU_ZHEN_REN_CARD_JIANG_HE_RI_XIA_GU.combatPreview");
+            preview.Add("Hits", CalculateHits(card));
+            StringValue = preview.GetFormattedText();
+        }
     }
 }

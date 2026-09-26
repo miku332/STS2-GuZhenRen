@@ -2,7 +2,9 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -30,6 +32,7 @@ public sealed class YuHuo : GuZhenRenCardTemplate
         new PowerVar<FenShaoPower>(1).WithPowerTooltip(),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
+        new CombatExhaustPreviewVar(),
         new CalculatedVar("ExhaustedThisTurn")
             .WithMultiplier(static (card, _) =>
                 ((YuHuo)card).CountExhaustedThisTurn())
@@ -78,5 +81,28 @@ public sealed class YuHuo : GuZhenRenCardTemplate
             .Count(entry =>
                 entry.HappenedThisTurn(CombatState)
                 && entry.Card.Owner == Owner);
+    }
+
+    private sealed class CombatExhaustPreviewVar()
+        : StringVar("CombatPreview")
+    {
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            if (card.CombatState is null)
+            {
+                StringValue = string.Empty;
+                return;
+            }
+
+            var preview = new LocString(
+                "cards",
+                "GU_ZHEN_REN_CARD_YU_HUO.combatPreview");
+            preview.Add("Count", ((YuHuo)card).CountExhaustedThisTurn());
+            StringValue = preview.GetFormattedText();
+        }
     }
 }

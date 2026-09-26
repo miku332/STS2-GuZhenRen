@@ -1,7 +1,10 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -27,6 +30,7 @@ public sealed class KuLiGu : GuZhenRenCardTemplate
         new PowerVar<KuLiGuStrengthPower>(0),
         new PowerVar<StrengthPower>(0).WithPowerTooltip(),
         new DynamicVar("Threshold", 6),
+        new CombatStrengthPreviewVar(),
         ModCardVars.Computed(
             "CalculatedStrength",
             0,
@@ -75,5 +79,28 @@ public sealed class KuLiGu : GuZhenRenCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars["Threshold"].UpgradeValueBy(-2);
+    }
+
+    private sealed class CombatStrengthPreviewVar()
+        : StringVar("CombatPreview")
+    {
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            if (card.CombatState is null)
+            {
+                StringValue = string.Empty;
+                return;
+            }
+
+            var preview = new LocString(
+                "cards",
+                "GU_ZHEN_REN_CARD_KU_LI_GU.combatPreview");
+            preview.Add("Strength", card.DynamicVars.GetComputedValue("CalculatedStrength"));
+            StringValue = preview.GetFormattedText();
+        }
     }
 }

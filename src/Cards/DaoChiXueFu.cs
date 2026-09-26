@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -29,6 +30,7 @@ public sealed class DaoChiXueFu : GuZhenRenCardTemplate
         new DamageVar(8, ValueProp.Move),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
+        new CombatHitsPreviewVar(),
         new CalculatedVar("Hits")
             .WithMultiplier(static (card, _) =>
                 ((DaoChiXueFu)card).CountCombatCopies())
@@ -89,6 +91,29 @@ public sealed class DaoChiXueFu : GuZhenRenCardTemplate
             {
                 cards.Add(card);
             }
+        }
+    }
+
+    private sealed class CombatHitsPreviewVar()
+        : StringVar("CombatPreview")
+    {
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            if (card.CombatState is null)
+            {
+                StringValue = string.Empty;
+                return;
+            }
+
+            var preview = new LocString(
+                "cards",
+                "GU_ZHEN_REN_CARD_DAO_CHI_XUE_FU.combatPreview");
+            preview.Add("Hits", ((DaoChiXueFu)card).CountCombatCopies());
+            StringValue = preview.GetFormattedText();
         }
     }
 }

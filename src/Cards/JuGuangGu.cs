@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -35,6 +36,7 @@ public sealed class JuGuangGu : GuZhenRenCardTemplate
         new PowerVar<ShanYaoPower>(1).WithPowerTooltip(),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
+        new CombatShanYaoPreviewVar(),
         new CalculatedVar("CalculatedShanYao")
             .WithMultiplier(static (CardModel card, Creature? _) =>
             {
@@ -80,5 +82,30 @@ public sealed class JuGuangGu : GuZhenRenCardTemplate
     {
         DynamicVars["ShanYaoPower"].UpgradeValueBy(1);
         DynamicVars.CalculationExtra.UpgradeValueBy(1);
+    }
+
+    private sealed class CombatShanYaoPreviewVar()
+        : StringVar("CombatPreview")
+    {
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            if (card.CombatState is null)
+            {
+                StringValue = string.Empty;
+                return;
+            }
+
+            var amount = (int)((CalculatedVar)card.DynamicVars["CalculatedShanYao"])
+                .Calculate(target);
+            var preview = new LocString(
+                "cards",
+                "GU_ZHEN_REN_CARD_JU_GUANG_GU.combatPreview");
+            preview.Add("Amount", amount);
+            StringValue = preview.GetFormattedText();
+        }
     }
 }
