@@ -6,8 +6,10 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -33,6 +35,7 @@ public sealed class SanShiSanTianGuang : AbstractShaZhaoCard
         new DamageVar(4, ValueProp.Move),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
+        new CombatShanYaoPreviewVar(),
         new CalculatedVar("ShanYaoGained")
             .WithMultiplier(static (CardModel card, Creature? _) =>
                 card.Owner.Creature.GetPowerAmount<ShanYaoHistoryPower>())
@@ -76,5 +79,30 @@ public sealed class SanShiSanTianGuang : AbstractShaZhaoCard
             amountToGain,
             Owner.Creature,
             this);
+    }
+
+    private sealed class CombatShanYaoPreviewVar()
+        : StringVar("CombatPreview")
+    {
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            if (card.CombatState is null)
+            {
+                StringValue = string.Empty;
+                return;
+            }
+
+            var amount = card.Owner.Creature
+                .GetPowerAmount<ShanYaoHistoryPower>();
+            var preview = new LocString(
+                "cards",
+                "GU_ZHEN_REN_CARD_SAN_SHI_SAN_TIAN_GUANG.combatPreview");
+            preview.Add("Amount", amount);
+            StringValue = preview.GetFormattedText();
+        }
     }
 }
