@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using GuZhenRen.CardPools;
+using GuZhenRen.Powers;
 using GuZhenRen.Tags;
 
 namespace GuZhenRen.Cards;
@@ -16,6 +17,8 @@ namespace GuZhenRen.Cards;
 [RegisterCard(typeof(GuZhenRenCardPool))]
 public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
 {
+    private int _pendingShanYaoGain;
+
     public override int Rank => IsUpgraded ? 5 : 4;
 
     public override CardAssetProfile AssetProfile => new(
@@ -60,6 +63,7 @@ public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
                 card,
                 GuZhenRenTags.GuangDao));
         var hits = handLightDaoCount + (Pile?.Type == PileType.Hand ? 0 : 1);
+        _pendingShanYaoGain = hits;
 
         for (var i = 0; i < hits; i++)
         {
@@ -69,6 +73,25 @@ public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
         }
+    }
+
+    public override async Task AfterCardPlayedLate(
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay)
+    {
+        if (cardPlay.Card != this || _pendingShanYaoGain <= 0)
+        {
+            return;
+        }
+
+        var amountToGain = _pendingShanYaoGain;
+        _pendingShanYaoGain = 0;
+        await ShanYaoPower.Apply(
+            choiceContext,
+            Owner.Creature,
+            amountToGain,
+            Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()

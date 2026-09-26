@@ -34,7 +34,7 @@
   "GU_ZHEN_REN_CARD_WU_ZHI_QUAN_XIN_JIAN.title": "Five-Finger Fist-Heart Sword",
   "GU_ZHEN_REN_CARD_WU_ZHI_QUAN_XIN_JIAN.description": "Cause {Damage:diff()} points of damage.\nIn this battle, the basic damage will be {Multiplier:diff()} times after each hit.\n{RemainingUses:diff()} can still be played a number of times; it will be Exhaustd after the number of times is exhausted.",
   "GU_ZHEN_REN_CARD_JIANG_HE_RI_XIA_GU.title": "River-Decline Gu",
-  "GU_ZHEN_REN_CARD_JIANG_HE_RI_XIA_GU.description": "According to the number of Light Path cards in hand, repeatedly attack all enemies, causing {Damage:diff()} points of damage each time.",
+  "GU_ZHEN_REN_CARD_JIANG_HE_RI_XIA_GU.description": "For each [gold]Light Path[/gold] card in your hand, deal {Damage:diff()} damage to ALL enemies.\\nAfter attacking, gain {CalculatedHits:diff()} [gold]Radiance[/gold].",
   "GU_ZHEN_REN_CARD_LANG_JIAN.title": "Wave Sword",
   "GU_ZHEN_REN_CARD_LANG_JIAN.description": "Cause {Damage:diff()} points of damage.\\nWhen you play another Sword PathAttack card, if this card is in discard pile, return hand.",
   "GU_ZHEN_REN_CARD_JIAN_QIAO_GU.title": "Sword Sheath Gu",
