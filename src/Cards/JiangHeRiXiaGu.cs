@@ -30,18 +30,7 @@ public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
         new CalculationExtraVar(1),
         new CalculatedVar("CalculatedHits")
             .WithMultiplier(static (CardModel card, Creature? _) =>
-            {
-                if (card.CombatState is null)
-                {
-                    return 1;
-                }
-
-                var hand = PileType.Hand.GetPile(card.Owner);
-                return hand.Cards.Count(
-                    handCard => GuZhenRenTagRules.HasEffectiveTag(
-                        handCard,
-                        GuZhenRenTags.GuangDao));
-            })
+                CalculateHits(card))
     ];
 
     public JiangHeRiXiaGu()
@@ -55,11 +44,7 @@ public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
     {
         ArgumentNullException.ThrowIfNull(CombatState);
 
-        var handLightDaoCount = PileType.Hand.GetPile(Owner).Cards.Count(
-            card => GuZhenRenTagRules.HasEffectiveTag(
-                card,
-                GuZhenRenTags.GuangDao));
-        var hits = handLightDaoCount + (Pile?.Type == PileType.Hand ? 0 : 1);
+        var hits = CalculateHits(this);
         for (var i = 0; i < hits; i++)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
@@ -73,5 +58,20 @@ public sealed class JiangHeRiXiaGu : GuZhenRenCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2);
+    }
+
+    private static int CalculateHits(CardModel card)
+    {
+        if (card.CombatState is null)
+        {
+            return 1;
+        }
+
+        var otherLightDaoCards = PileType.Hand.GetPile(card.Owner).Cards.Count(
+            handCard => !ReferenceEquals(handCard, card)
+                && GuZhenRenTagRules.HasEffectiveTag(
+                    handCard,
+                    GuZhenRenTags.GuangDao));
+        return 1 + otherLightDaoCards;
     }
 }
