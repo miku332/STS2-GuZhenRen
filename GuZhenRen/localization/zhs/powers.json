@@ -2,7 +2,7 @@
     "GU_ZHEN_REN_POWER_XIAN_ATTACK_POWER.title": "限（内部效果）",
     "GU_ZHEN_REN_POWER_XIAN_ATTACK_POWER.description": "限的临时伤害结算效果。",
     "GU_ZHEN_REN_POWER_SHAN_YAO_HISTORY_POWER.title": "闪耀记录（内部效果）",
-    "GU_ZHEN_REN_POWER_SHAN_YAO_HISTORY_POWER.description": "记录本回合获得的闪耀。",
+    "GU_ZHEN_REN_POWER_SHAN_YAO_HISTORY_POWER.description": "记录本场战斗累计获得的闪耀。",
     "GU_ZHEN_REN_POWER_TAI_CHU_GUANG_POWER.title": "太初光",
     "GU_ZHEN_REN_POWER_TAI_CHU_GUANG_POWER.description": "本回合，闪耀不会因打出光道攻击牌而消失。",
     "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.title":  "闪耀",

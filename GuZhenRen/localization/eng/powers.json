@@ -2,7 +2,7 @@
   "GU_ZHEN_REN_POWER_XIAN_ATTACK_POWER.title": "Power Xian Attack Power",
   "GU_ZHEN_REN_POWER_XIAN_ATTACK_POWER.description": "Limit's temporary damage settlement effect.",
   "GU_ZHEN_REN_POWER_SHAN_YAO_HISTORY_POWER.title": "Radiance History (Internal)",
-  "GU_ZHEN_REN_POWER_SHAN_YAO_HISTORY_POWER.description": "Tracks Radiance gained this turn.",
+  "GU_ZHEN_REN_POWER_SHAN_YAO_HISTORY_POWER.description": "Tracks total Radiance gained this combat.",
   "GU_ZHEN_REN_POWER_TAI_CHU_GUANG_POWER.title": "Primordial Light",
   "GU_ZHEN_REN_POWER_TAI_CHU_GUANG_POWER.description": "This turn, Radiance is not removed when you play a Light Path Attack.",
   "GU_ZHEN_REN_POWER_SHAN_YAO_POWER.title": "Radiance",
