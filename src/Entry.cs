@@ -36,6 +36,7 @@ public static class Entry
 
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        GuZhenRenSettingsPage.Register();
         NetGuZhenRenActions.Register();
         new Harmony(ModId + ".act4").PatchAll(assembly);
         _updateCheckRegistration ??= ModUpdateSystem.Register(assembly);
