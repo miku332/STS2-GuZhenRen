@@ -1,6 +1,6 @@
 {
-  "GU_ZHEN_REN_POTION_SHENG_JI_YE.title": "Potion Sheng Ji Ye",
+  "GU_ZHEN_REN_POTION_SHENG_JI_YE.title": "Vitality Leaf",
   "GU_ZHEN_REN_POTION_SHENG_JI_YE.description": "Heal {Heal:diff()} HP.",
-  "GU_ZHEN_REN_POTION_FU_REN_XIN.title": "Potion Fu Ren Xin",
-  "GU_ZHEN_REN_POTION_FU_REN_XIN.description": "Apply {PoisonPower} Poison. Whenever a non-Minion enemy is killed, gain 3 additional Poison."
+  "GU_ZHEN_REN_POTION_FU_REN_XIN.title": "A Woman's Heart",
+  "GU_ZHEN_REN_POTION_FU_REN_XIN.description": "Apply {PoisonPower} Poison. Whenever a non-Minion enemy dies, this potion gains 3 additional Poison."
 }
